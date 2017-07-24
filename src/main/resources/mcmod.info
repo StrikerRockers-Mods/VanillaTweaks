@@ -1,0 +1,16 @@
+[
+{
+  "modid": "vt",
+  "name": "Vanilla Tweaks",
+  "description": "",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["StrikerRocker"],
+  "credits": "Thanks to anon10 for creating the mod",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
