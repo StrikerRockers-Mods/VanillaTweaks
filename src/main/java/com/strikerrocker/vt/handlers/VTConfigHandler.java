@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * The config handler for vt
+ * The config handler for VanillaTweaks
  */
 public class VTConfigHandler {
     /**
@@ -44,6 +44,7 @@ public class VTConfigHandler {
     public static boolean renameButtons;
     public static boolean craftingTableChanges;
     public static boolean alternateLogo;
+    public static boolean pedestal;
 
     /**
      * Initializes the config handler for Craft++
@@ -93,6 +94,7 @@ public class VTConfigHandler {
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
         craftingTableChanges = get(miscRequiresRestartCategory, "Crafting table changes", true, "Is the way to create a 3x3 crafting device changed?");
         alternateLogo = get(miscRequiresRestartCategory, "Use alternate logo", false, "Use the alternate logo in the Mods page?");
+        pedestal = get(miscRequiresRestartCategory, "Enable the Pedestal", true, "Enabling the Pedestal");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);
 

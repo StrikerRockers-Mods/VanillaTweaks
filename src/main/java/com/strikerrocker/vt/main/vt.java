@@ -38,7 +38,7 @@ import org.apache.logging.log4j.Logger;
         name = vtModInfo.NAME,
         version = vtModInfo.VERSION,
         dependencies = "after:*",
-        guiFactory = vtModInfo.PACKAGE_LOCATION + ".gui.VTGuiFactory")
+        guiFactory = vtModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
 @SuppressWarnings("unused")
 public final class vt {
 

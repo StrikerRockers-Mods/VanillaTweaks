@@ -1,6 +1,7 @@
 package com.strikerrocker.vt.blocks;
 
 import com.strikerrocker.vt.blocks.Pedestal.BlockPedestal;
+import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.items.ItemModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -20,7 +21,9 @@ public class VTBlocks {
         sugar = register(new BlockSugar("sugarblock"));
         flint = register(new BlockFlint("flintblock"));
         charcoal = register(new BlockCharcoal("charcoalblock"));
-        pedestal = register(new BlockPedestal());
+        if (VTConfigHandler.pedestal) {
+            pedestal = register(new BlockPedestal());
+        }
     }
 
     private static <T extends Block> T register(T block, ItemBlock itemBlock) {

@@ -3,6 +3,7 @@ package com.strikerrocker.vt.recipes;
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.items.VTItems;
+import net.minecraft.block.BlockHalfStoneSlab;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -37,6 +38,10 @@ public class VTRecipes {
         GameRegistry.addRecipe(new ItemStack(VTItems.binoculars), "DDD", "LIL", "DDD", 'D', dyeStack, 'L', VTItems.lens, 'I', Items.IRON_INGOT);
         //Better Vanilla
         GameRegistry.addShapelessRecipe(new ItemStack(Items.STRING, 4), Blocks.WOOL);
+        //pedestal
+        if(VTConfigHandler.pedestal){
+                GameRegistry.addRecipe(new ItemStack(VTBlocks.pedestal), "SSS", " B ", "SBS", 'S',new ItemStack(Blocks.STONE_SLAB,1,5), 'B',new ItemStack(Blocks.STONEBRICK,1,0));
+        }
     }
 
     /**

@@ -29,11 +29,6 @@ public class BlockBase extends Block implements ItemModelProvider {
         vt.proxy.registerItemRenderer(item, 0, name);
     }
 
-    @Override
-    public BlockBase setCreativeTab(CreativeTabs tab) {
-        super.setCreativeTab(tab);
-        return this;
-    }
 
 
 }

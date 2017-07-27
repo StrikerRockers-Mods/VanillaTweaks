@@ -4,6 +4,7 @@ import com.strikerrocker.vt.blocks.BlockTileEntity;
 import com.strikerrocker.vt.main.vt;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,8 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
 
     public BlockPedestal() {
         super(Material.ROCK, "pedestal");
+        this.setCreativeTab(CreativeTabs.DECORATIONS);
+
     }
 
     @Override
