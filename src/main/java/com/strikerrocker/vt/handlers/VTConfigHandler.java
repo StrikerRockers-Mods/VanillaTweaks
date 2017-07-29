@@ -45,6 +45,7 @@ public class VTConfigHandler {
     public static boolean craftingTableChanges;
     public static boolean alternateLogo;
     public static boolean pedestal;
+    public static boolean NoMoreLavaPocketGen;
 
     /**
      * Initializes the config handler for Craft++
@@ -86,6 +87,7 @@ public class VTConfigHandler {
         binocularZoomAmount = (float) get(miscCategory, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
         additionalFallingBlocks = Arrays.stream(config.getStringList("Additional Falling Blocks", miscCategory, new String[]{"minecraft:dirt", "minecraft:clay"}, "A list of additional blocks that can fall like sand.")).map(Block::getBlockFromName).filter(block -> block != null).collect(Collectors.toList());
         mobSpawnerSilkTouchDrop = get(miscCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
+        NoMoreLavaPocketGen = get(miscCategory,"No More Lava Pockets", true,"Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";

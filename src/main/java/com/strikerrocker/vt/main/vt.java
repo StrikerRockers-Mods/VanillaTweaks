@@ -1,5 +1,6 @@
 package com.strikerrocker.vt.main;
 
+import com.strikerrocker.vt.WorldGen.NetherPocketer;
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.dispenser.VTDispenserBehaviors;
@@ -102,6 +103,9 @@ public final class vt {
         network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
+        //Nether Pocketer
+        NetherPocketer handler = new NetherPocketer();
+        MinecraftForge.TERRAIN_GEN_BUS.register(handler);
         VTItems.init();
         logInfo("Pre-initialization completed successfully");
     }
