@@ -1,5 +1,6 @@
 package com.strikerrocker.vt.handlers;
 
+import com.strikerrocker.vt.blocks.Pedestal.TileEntityPedestal;
 import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import com.strikerrocker.vt.enchantments.EntityTickingEnchantment;
@@ -9,6 +10,7 @@ import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.main.VTUtils;
 import com.strikerrocker.vt.main.vtModInfo;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -35,6 +37,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -58,6 +61,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 import java.util.Random;
@@ -385,4 +390,8 @@ public final class VTEventHandler {
         if (event.getEntity() instanceof EntityItem)
             event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
     }
+
+
+
+
 }

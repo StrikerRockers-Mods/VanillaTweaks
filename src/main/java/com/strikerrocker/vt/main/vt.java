@@ -6,10 +6,7 @@ import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.dispenser.VTDispenserBehaviors;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.VTEntities;
-import com.strikerrocker.vt.handlers.VTConfigHandler;
-import com.strikerrocker.vt.handlers.VTEventHandler;
-import com.strikerrocker.vt.handlers.VTFuelHandler;
-import com.strikerrocker.vt.handlers.VTGuiHandler;
+import com.strikerrocker.vt.handlers.*;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
@@ -27,6 +24,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -150,5 +148,10 @@ public final class vt {
         logInfo("Initializing the crafting recipe remover");
         VTRecipeReplacer.replaceRecipes();
         logInfo("Initialization completed successfully");
+    }
+
+    @EventHandler
+    public void onPostInit(FMLPostInitializationEvent event){
+        VanillaHandler.frame();
     }
 }

@@ -46,6 +46,7 @@ public class VTConfigHandler {
     public static boolean alternateLogo;
     public static boolean pedestal;
     public static boolean NoMoreLavaPocketGen;
+    public static boolean endframebroken;
 
     /**
      * Initializes the config handler for Craft++
@@ -68,6 +69,7 @@ public class VTConfigHandler {
         batLeatherDropChance = get(mobDropsCategory, "Chance of bats dropping leather", 10D, "The chance of bats dropping leather, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
         config.setCategoryComment(mobDropsCategory, "Modify mob drops");
 
+
         String recipesCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Recipes";
         useBetterStoneToolRecipes = get(recipesCategory, "Stone tools crafted from stone", true, "Are stone tools crafted out of stone?");
         useBetterStairsRecipes = get(recipesCategory, "Better stairs recipe enabled", true, "Is the better stairs recipe enabled?");
@@ -88,6 +90,7 @@ public class VTConfigHandler {
         additionalFallingBlocks = Arrays.stream(config.getStringList("Additional Falling Blocks", miscCategory, new String[]{"minecraft:dirt", "minecraft:clay"}, "A list of additional blocks that can fall like sand.")).map(Block::getBlockFromName).filter(block -> block != null).collect(Collectors.toList());
         mobSpawnerSilkTouchDrop = get(miscCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
         NoMoreLavaPocketGen = get(miscCategory,"No More Lava Pockets", true,"Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
+        endframebroken = get(miscCategory,"No More Lava Pockets", true,"Makes the End Portal Frame to be broken");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
