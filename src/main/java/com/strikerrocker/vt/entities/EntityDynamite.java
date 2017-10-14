@@ -51,7 +51,7 @@ public class EntityDynamite extends EntityThrowable {
 
     @Override
     public void onUpdate() {
-        super.onUpdate();
+        super.onUpdate();   
         if (!this.world.isRemote) {
             if (this.isWet()) {
                 this.setTicksWet(this.getTicksWet() + 1);

@@ -41,7 +41,7 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("unused")
 public final class vt {
 
-    public static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":copper", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
+    public static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
     /**
      * The proxy of vanilla Tweaks
      */
@@ -152,6 +152,5 @@ public final class vt {
 
     @EventHandler
     public void onPostInit(FMLPostInitializationEvent event){
-        VanillaHandler.frame();
     }
 }
