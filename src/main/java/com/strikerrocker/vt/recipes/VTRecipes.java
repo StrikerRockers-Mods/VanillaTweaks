@@ -20,10 +20,10 @@ public class VTRecipes {
      */
     public static void registerRecipes() {
         //Storage Blocks
-        GameRegistry.addRecipe(new ItemStack(VTBlocks.flint), "III", "III", "III", 'I', Items.FLINT);
-        GameRegistry.addRecipe(new ItemStack(VTBlocks.sugar), "III", "III", "III", 'I', Items.SUGAR);
-        GameRegistry.addRecipe(new ItemStack(VTBlocks.charcoal), "III", "III", "III", 'I', Items.COAL);
-        GameRegistry.addShapelessRecipe(new ItemStack(Items.COAL, 9, 1), VTBlocks.charcoal);
+        GameRegistry.addRecipe(new ItemStack(VTBlocks.flint), "III", "III", "III", 'I', new ItemStack(Items.FLINT,1));
+        GameRegistry.addRecipe(new ItemStack(VTBlocks.sugar), "III", "III", "III", 'I', new ItemStack(Items.SUGAR,1));
+        GameRegistry.addRecipe(new ItemStack(VTBlocks.charcoal), "III", "III", "III", 'I', new ItemStack(Items.COAL,1,1));
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.COAL, 9,1), VTBlocks.charcoal);
         GameRegistry.addShapelessRecipe(new ItemStack(Items.FLINT, 9), VTBlocks.flint);
         GameRegistry.addShapelessRecipe(new ItemStack(Items.SUGAR, 9), VTBlocks.sugar);
         //Vanilla Tweaks Items
@@ -38,6 +38,10 @@ public class VTRecipes {
         GameRegistry.addRecipe(new ItemStack(VTItems.binoculars), "DDD", "LIL", "DDD", 'D', dyeStack, 'L', VTItems.lens, 'I', Items.IRON_INGOT);
         //Better Vanilla
         GameRegistry.addShapelessRecipe(new ItemStack(Items.STRING, 4), Blocks.WOOL);
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.LEATHER,1),new ItemStack(Items.ROTTEN_FLESH,9));
+        GameRegistry.addRecipe(new ItemStack(Items.NAME_TAG), "  I", " P ", "P  ", 'I', Items.IRON_INGOT, 'P', Items.PAPER);
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.PACKED_ICE), new ItemStack(Blocks.ICE,4));
+        
         //pedestal
         if(VTConfigHandler.pedestal){
                 GameRegistry.addRecipe(new ItemStack(VTBlocks.pedestal), "SSS", " B ", "SBS", 'S',new ItemStack(Blocks.STONE_SLAB,1,5), 'B',new ItemStack(Blocks.STONEBRICK,1,0));

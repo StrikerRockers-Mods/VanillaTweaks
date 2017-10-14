@@ -27,7 +27,6 @@ public class ItemDynamite extends ItemBase {
         setUnlocalizedName(name);
     }
 
-    @SuppressWarnings({"NullableProblems", "ConstantConditions"})
     public ActionResult<ItemStack> onRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
         if (!world.isRemote) {

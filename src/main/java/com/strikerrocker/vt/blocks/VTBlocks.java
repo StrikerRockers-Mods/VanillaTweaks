@@ -4,6 +4,7 @@ import com.strikerrocker.vt.blocks.Pedestal.BlockPedestal;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.items.ItemModelProvider;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -24,6 +25,7 @@ public class VTBlocks {
         if (VTConfigHandler.pedestal) {
             pedestal = register(new BlockPedestal());
         }
+        Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 3);
     }
 
     private static <T extends Block> T register(T block, ItemBlock itemBlock) {
