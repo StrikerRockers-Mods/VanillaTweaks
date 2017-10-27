@@ -29,7 +29,6 @@ public class TileEntityPedestal extends TileEntity {
     };
 
 
-
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("inventory", inventory.serializeNBT());

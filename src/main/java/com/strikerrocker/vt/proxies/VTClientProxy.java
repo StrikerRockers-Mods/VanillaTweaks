@@ -17,6 +17,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class VTClientProxy extends VTCommonProxy {
     private static final Minecraft minecraft = Minecraft.getMinecraft(); //the Minecraft instance
 
+    @Override
     public void registerItemRenderer(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(vtModInfo.MOD_ID + ":" + id, "inventory"));
     }

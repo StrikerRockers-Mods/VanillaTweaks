@@ -16,7 +16,7 @@ import net.minecraft.world.World;
  */
 public class ItemCraftingPad extends ItemBase {
 
-    private String name;
+    protected String name;
 
     public ItemCraftingPad(String name) {
         super(name);

@@ -7,7 +7,7 @@ import static com.strikerrocker.vt.main.vt.proxy;
 /**
  * Created by thari on 22/07/2017.
  */
-public class ItemBase extends Item implements ItemModelProvider {
+public class ItemBase extends Item {
 
     protected String name;
 
@@ -17,12 +17,9 @@ public class ItemBase extends Item implements ItemModelProvider {
         setRegistryName(name);
     }
 
-
-    @Override
-    public void registerItemModel(Item item) {
+    public void registerItemModel() {
         proxy.registerItemRenderer(this, 0, name);
     }
 
 
 }
-

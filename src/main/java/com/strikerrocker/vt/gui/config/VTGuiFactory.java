@@ -28,13 +28,9 @@ public class VTGuiFactory implements IModGuiFactory {
         return null;
     }
 
-    @Override
+
     public Class<? extends GuiScreen> mainConfigGuiClass() {
         return GuiVTConfig.class;
     }
 
-    @Override
-    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
-        return null;
-    }
 }

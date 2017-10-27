@@ -6,26 +6,30 @@ import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.dispenser.VTDispenserBehaviors;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.VTEntities;
-import com.strikerrocker.vt.handlers.*;
+import com.strikerrocker.vt.handlers.VTConfigHandler;
+import com.strikerrocker.vt.handlers.VTEventHandler;
+import com.strikerrocker.vt.handlers.VTFuelHandler;
+import com.strikerrocker.vt.handlers.VTGuiHandler;
+import com.strikerrocker.vt.items.ItemArmor;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import com.strikerrocker.vt.proxies.VTCommonProxy;
-import com.strikerrocker.vt.recipes.VTRecipeReplacer;
-import com.strikerrocker.vt.recipes.VTRecipes;
+import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -54,7 +58,7 @@ public final class vt {
      * The mod instance of vanilla Tweaks
      */
 
-    @Instance(vtModInfo.MOD_ID)
+    @Mod.Instance(vtModInfo.MOD_ID)
     public static vt instance;
 
     /**
@@ -81,7 +85,7 @@ public final class vt {
      *
      * @param event The FMLPreInitializationEvent
      */
-    @EventHandler
+    @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         logInfo("Initialized the logger");
@@ -104,7 +108,6 @@ public final class vt {
         //Nether Pocketer
         NetherPocketer handler = new NetherPocketer();
         MinecraftForge.TERRAIN_GEN_BUS.register(handler);
-        VTItems.init();
         logInfo("Pre-initialization completed successfully");
     }
 
@@ -125,7 +128,7 @@ public final class vt {
      *
      * @param event The FMLInitializationEvent
      */
-    @EventHandler
+    @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         logInfo("Registering the entities");
         VTEntities.init();
@@ -138,7 +141,6 @@ public final class vt {
         logInfo("Registering the fuel handler");
         GameRegistry.registerFuelHandler(new VTFuelHandler());
         logInfo("Registering the crafting/furnace recipes");
-        VTRecipes.registerRecipes();
         logInfo("Registering the dispenser behaviors");
         VTDispenserBehaviors.registerDispenserBehaviors();
         logInfo("Registering the self-planting");
@@ -146,11 +148,33 @@ public final class vt {
         logInfo("Initializing the vanilla properties changer");
         VTVanillaPropertiesChanger.init();
         logInfo("Initializing the crafting recipe remover");
-        VTRecipeReplacer.replaceRecipes();
         logInfo("Initialization completed successfully");
     }
 
-    @EventHandler
-    public void onPostInit(FMLPostInitializationEvent event){
+    @Mod.EventHandler
+    public void onPostInit(FMLPostInitializationEvent event) {
     }
+
+    @Mod.EventBusSubscriber
+    public static class RegsitrationHandler {
+
+        @SubscribeEvent
+        public static void registerItems(RegistryEvent.Register<Item> event) {
+            VTItems.register(event.getRegistry());
+            VTBlocks.registerItemBlocks(event.getRegistry());
+        }
+
+        @SubscribeEvent
+        public static void registerBlocks(RegistryEvent.Register<Block> event) {
+            VTBlocks.register(event.getRegistry());
+        }
+
+        @SubscribeEvent
+        public static void registerModels(ModelRegistryEvent event) {
+            VTItems.registerModels();
+            VTBlocks.registerModels();
+        }
+
+    }
+
 }
