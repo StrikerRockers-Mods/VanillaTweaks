@@ -11,7 +11,6 @@ import net.minecraftforge.client.model.ModelLoader;
  */
 public class VTCommonProxy {
     public void registerItemRenderer(Item item, int meta, String id) {
-        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(vtModInfo.MOD_ID + ":" + id, "inventory"));
     }
 
     public String localize(String unlocalized, Object... args) {
