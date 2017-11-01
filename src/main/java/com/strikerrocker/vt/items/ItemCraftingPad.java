@@ -1,5 +1,6 @@
 package com.strikerrocker.vt.items;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import com.strikerrocker.vt.main.vt;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +10,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 /**
@@ -34,6 +37,12 @@ public class ItemCraftingPad extends ItemBase {
 
     public void registerItemModel(Item item) {
         vt.proxy.registerItemRenderer(this, 0, name);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, java.util.List<String> info, boolean par4) {
+        info.add(ChatFormatting.RED + "This doesn't work.");
     }
 
 
