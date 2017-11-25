@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.network;
 
-import com.strikerrocker.vt.blocks.Pedestal.TileEntityPedestal;
+import com.strikerrocker.vt.blocks.pedestal.TileEntityPedestal;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;

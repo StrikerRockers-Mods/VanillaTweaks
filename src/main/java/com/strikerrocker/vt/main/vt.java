@@ -1,13 +1,11 @@
 package com.strikerrocker.vt.main;
 
-import com.strikerrocker.vt.WorldGen.NetherPocketer;
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.dispenser.VTDispenserBehaviors;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.VTEntities;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
-import com.strikerrocker.vt.handlers.VTEventHandler;
 import com.strikerrocker.vt.handlers.VTFuelHandler;
 import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.items.ItemArmor;
@@ -16,6 +14,7 @@ import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import com.strikerrocker.vt.proxies.VTCommonProxy;
+import com.strikerrocker.vt.worldGen.NetherPocketer;
 import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -46,45 +45,29 @@ import org.apache.logging.log4j.Logger;
 public final class vt {
 
     public static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
-    /**
-     * The proxy of vanilla Tweaks
-     */
+    //The proxy of vanilla Tweaks
+
     @SidedProxy(modId = vtModInfo.MOD_ID, clientSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")
     public static VTCommonProxy proxy;
 
     public static SimpleNetworkWrapper network;
 
-    /**
-     * The mod instance of vanilla Tweaks
-     */
+    //The mod instance of vanilla Tweaks
+
 
     @Mod.Instance(vtModInfo.MOD_ID)
     public static vt instance;
 
-    /**
-     * The logger for vanilla Tweaks
-     */
+    //     * The logger for vanilla Tweaks
     private static Logger logger;
 
-    /**
-     * Logs a message with vanilla Tweaks's logger with the INFO level
-     *
-     * @param message The string to be logged
-     */
+    //Logs a message with vanilla Tweaks's logger with the INFO level
+    //@param message The string to be logged
+
     public static void logInfo(String message) {
         logger.info("VanillaTweaks: " + message);
     }
 
-    /**
-     * Performs the following actions: <br>
-     * - Initializes the logger <br>
-     * - Hard-codes the mcmod.info <br>
-     * - Initializes the config handler <br>
-     * - Enables the Version Checker support <br>
-     * - Registers the blocks and items
-     *
-     * @param event The FMLPreInitializationEvent
-     */
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
@@ -102,6 +85,7 @@ public final class vt {
         logInfo("Registering the items");
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         proxy.registerRenderers();
+        //Pedestal
         network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
@@ -111,23 +95,6 @@ public final class vt {
         logInfo("Pre-initialization completed successfully");
     }
 
-    /**
-     * Performs the following actions: <br>
-     * - Registers the entities <br>
-     * - Registers the renderers <br>
-     * - Registers the GUI handler <br>
-     * - Registers the enchantments <br>
-     * - Registers the event handler <br>
-     * - Registers the key bindings <br>
-     * - Registers the fuel handler <br>
-     * - Registers the crafting recipes <br>
-     * - Registers the dispenser behaviors <br>
-     * - Registers the self-planting <br>
-     * - Initializes the vanilla properties changer <br>
-     * - Initializes the recipe remover
-     *
-     * @param event The FMLInitializationEvent
-     */
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         logInfo("Registering the entities");
@@ -136,8 +103,6 @@ public final class vt {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         logInfo("Registering the enchantments");
         VTEnchantments.registerEnchantments();
-        logInfo("Registering the event handler");
-        MinecraftForge.EVENT_BUS.register(VTEventHandler.instance);
         logInfo("Registering the fuel handler");
         GameRegistry.registerFuelHandler(new VTFuelHandler());
         logInfo("Registering the crafting/furnace recipes");

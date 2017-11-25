@@ -20,6 +20,7 @@ import net.minecraftforge.registries.GameData;
 
 public class RecipeHelper {
 
+
     /**
      * Adds a shaped recipe that supports string inputparamers corisponding to an oredict entry, can also be used for recipes without ore dict ingredients
      *

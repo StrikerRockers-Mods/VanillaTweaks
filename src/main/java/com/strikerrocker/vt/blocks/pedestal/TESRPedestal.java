@@ -1,4 +1,4 @@
-package com.strikerrocker.vt.blocks.Pedestal;
+package com.strikerrocker.vt.blocks.pedestal;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

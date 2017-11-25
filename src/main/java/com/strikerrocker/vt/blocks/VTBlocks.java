@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.blocks;
 
-import com.strikerrocker.vt.blocks.Pedestal.BlockPedestal;
+import com.strikerrocker.vt.blocks.pedestal.BlockPedestal;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -22,10 +22,14 @@ public class VTBlocks {
         sugar = new BlockSugar("sugarblock");
         flint = new BlockFlint("flintblock");
         charcoal = new BlockCharcoal("charcoalblock");
+
         if (VTConfigHandler.pedestal) {
             pedestal = new BlockPedestal();
         }
-        Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 3);
+        if (VTConfigHandler.endframebroken) {
+            Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 2);
+            Blocks.END_PORTAL_FRAME.setHardness(5.0F);
+        }
     }
 
 
@@ -55,5 +59,6 @@ public class VTBlocks {
         flint.registerItemModel(Item.getItemFromBlock(flint));
         pedestal.registerItemModel(Item.getItemFromBlock(pedestal));
         sugar.registerItemModel(Item.getItemFromBlock(sugar));
+        charcoal.registerItemModel(Item.getItemFromBlock(charcoal));
     }
 }

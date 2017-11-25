@@ -10,5 +10,6 @@ public class BlockFlint extends BlockBase {
         super(Material.SAND, name);
         this.name = name;
         this.setUnlocalizedName(name);
+        this.setHardness(1.0F);
     }
 }

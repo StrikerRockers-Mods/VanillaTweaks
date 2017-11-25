@@ -5,8 +5,10 @@ import com.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import com.strikerrocker.vt.enchantments.EntityTickingEnchantment;
 import com.strikerrocker.vt.enchantments.VTEnchantmentBase;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
+import com.strikerrocker.vt.items.ItemCraftingPad;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.main.VTUtils;
+import com.strikerrocker.vt.main.vt;
 import com.strikerrocker.vt.main.vtModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -230,6 +232,7 @@ public final class VTEventHandler {
      * @param event The ItemTooltipEvent
      */
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         Block block = Block.getBlockFromItem(stack.getItem());
@@ -374,5 +377,23 @@ public final class VTEventHandler {
             event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
     }
 
+    @SubscribeEvent
+    public void onPortalBreak(BlockEvent.BreakEvent event) {
+        EntityPlayer player = event.getPlayer();
+        World world = event.getWorld();
+        BlockPos blockPos = event.getPos();
+        ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
+        EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);
+        portalEntityItem.setDefaultPickupDelay();
+        world.spawnEntity(portalEntityItem);
+    }
+
+    @SubscribeEvent
+    public void onpadclick(PlayerInteractEvent.RightClickItem e){
+        if (e.getEntityPlayer().getHeldEquipment() == VTItems.pad){
+            e.getEntityPlayer().openGui(vt.instance, VTGuiHandler.PAD, e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ());
+        }
+
+    }
 
 }

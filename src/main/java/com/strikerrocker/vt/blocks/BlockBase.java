@@ -1,11 +1,11 @@
 package com.strikerrocker.vt.blocks;
 
-import com.strikerrocker.vt.main.vt;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+
+import static com.strikerrocker.vt.main.vt.proxy;
 
 /**
  * Created by thari on 22/07/2017.
@@ -21,17 +21,10 @@ public class BlockBase extends Block {
 
         setUnlocalizedName(name);
         setRegistryName(name);
-
     }
 
     public void registerItemModel(Item item) {
-        vt.proxy.registerItemRenderer(item, 0, name);
-    }
-
-    @Override
-    public BlockBase setCreativeTab(CreativeTabs tab) {
-        super.setCreativeTab(tab);
-        return this;
+        proxy.registerItemRenderer(item, 0, name);
     }
 
     public Item createItemBlock() {
