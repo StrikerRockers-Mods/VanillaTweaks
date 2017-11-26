@@ -14,6 +14,7 @@ public class VTCommonProxy {
     }
 
     public void registerRenderers() {
+
     }
 
     public String localize(String unlocalized, Object... args) {
