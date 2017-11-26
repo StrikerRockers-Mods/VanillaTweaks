@@ -1,5 +1,6 @@
 package com.strikerrocker.vt.items;
 
+
 import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.main.vt;
 import net.minecraft.client.util.ITooltipFlag;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+
 
 
 /**
@@ -54,6 +56,7 @@ public class ItemCraftingPad extends ItemBase {
         {
 
             tooltip.add(TextFormatting.RED + "This doesn't work");
+
 
         }
     }
