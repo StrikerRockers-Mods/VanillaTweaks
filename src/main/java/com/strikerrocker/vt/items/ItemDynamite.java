@@ -34,7 +34,7 @@ public class ItemDynamite extends ItemBase {
         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
         if (!world.isRemote) {
             EntityDynamite dynamite = new EntityDynamite(world, player);
-            dynamite.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 1.5F, 0);
+            dynamite.setPositionAndRotation(player.posX, player.posY, player.posZ, 0F, 1.5F);
             player.getEntityWorld().spawnEntity(dynamite);
         }
         player.addStat(StatList.getObjectUseStats(this));

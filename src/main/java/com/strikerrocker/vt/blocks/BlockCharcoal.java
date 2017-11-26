@@ -13,5 +13,6 @@ public class BlockCharcoal extends BlockBase {
         super(Material.ROCK, name);
         this.name = name;
         this.setUnlocalizedName(name);
+        this.setHardness(1.0F);
     }
 }

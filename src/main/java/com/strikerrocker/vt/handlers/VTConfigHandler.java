@@ -89,8 +89,8 @@ public class VTConfigHandler {
         binocularZoomAmount = (float) get(miscCategory, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
         additionalFallingBlocks = Arrays.stream(config.getStringList("Additional Falling Blocks", miscCategory, new String[]{"minecraft:dirt", "minecraft:clay"}, "A list of additional blocks that can fall like sand.")).map(Block::getBlockFromName).filter(block -> block != null).collect(Collectors.toList());
         mobSpawnerSilkTouchDrop = get(miscCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
-        NoMoreLavaPocketGen = get(miscCategory,"No More Lava Pockets", true,"Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
-        endframebroken = get(miscCategory,"No More Lava Pockets", true,"Makes the End Portal Frame to be broken");
+        NoMoreLavaPocketGen = get(miscCategory, "No More Lava Pockets", true, "Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
+        endframebroken = get(miscCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
@@ -99,7 +99,7 @@ public class VTConfigHandler {
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
         craftingTableChanges = get(miscRequiresRestartCategory, "Crafting table changes", true, "Is the way to create a 3x3 crafting device changed?");
         alternateLogo = get(miscRequiresRestartCategory, "Use alternate logo", false, "Use the alternate logo in the Mods page?");
-        pedestal = get(miscRequiresRestartCategory, "Enable the Pedestal", true, "Enabling the Pedestal");
+        pedestal = get(miscRequiresRestartCategory, "Enable the pedestal", true, "Enabling the pedestal");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);
 

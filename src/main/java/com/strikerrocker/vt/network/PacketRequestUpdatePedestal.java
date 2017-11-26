@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.network;
 
-import com.strikerrocker.vt.blocks.Pedestal.TileEntityPedestal;
+import com.strikerrocker.vt.blocks.pedestal.TileEntityPedestal;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  * Created by thari on 23/07/2017.
  */
 public class PacketRequestUpdatePedestal implements IMessage {
+
     private BlockPos pos;
     private int dimension;
 
@@ -44,8 +45,8 @@ public class PacketRequestUpdatePedestal implements IMessage {
 
         @Override
         public PacketUpdatePedestal onMessage(PacketRequestUpdatePedestal message, MessageContext ctx) {
-            World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(message.dimension);
-            TileEntityPedestal te = (TileEntityPedestal)world.getTileEntity(message.pos);
+            World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(message.dimension);
+            TileEntityPedestal te = (TileEntityPedestal) world.getTileEntity(message.pos);
             if (te != null) {
                 return new PacketUpdatePedestal(te);
             } else {
@@ -54,4 +55,5 @@ public class PacketRequestUpdatePedestal implements IMessage {
         }
 
     }
+
 }

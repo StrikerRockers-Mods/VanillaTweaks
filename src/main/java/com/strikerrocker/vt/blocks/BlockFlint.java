@@ -2,9 +2,6 @@ package com.strikerrocker.vt.blocks;
 
 import net.minecraft.block.material.Material;
 
-/**
- * Created by thari on 22/07/2017.
- */
 public class BlockFlint extends BlockBase {
 
     String name;
@@ -13,5 +10,6 @@ public class BlockFlint extends BlockBase {
         super(Material.SAND, name);
         this.name = name;
         this.setUnlocalizedName(name);
+        this.setHardness(1.0F);
     }
 }
