@@ -1,7 +1,6 @@
 package com.strikerrocker.vt.gui;
 
 import com.strikerrocker.vt.blocks.VTBlocks;
-import com.strikerrocker.vt.blocks.pedestal.ContainerPedestal;
 import com.strikerrocker.vt.main.vtModInfo;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,7 +8,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 public class GuiPedestal extends GuiContainer {
 
@@ -23,8 +21,7 @@ public class GuiPedestal extends GuiContainer {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String name = I18n.format(VTBlocks.pedestal.getUnlocalizedName() + ".name");
         fontRenderer.drawString(name, xSize / 2 - fontRenderer.getStringWidth(name) / 2, 6, 0x404040);
         fontRenderer.drawString(playerInv.getDisplayName().getUnformattedText(), 8, ySize - 94, 0x404040);

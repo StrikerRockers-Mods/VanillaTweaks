@@ -1,5 +1,7 @@
 package com.strikerrocker.vt.enchantments;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,23 +13,26 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.UUID;
 
+import static com.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
+
 /**
  * Gives the wearer an extra heart per enchantment level
  */
 @SuppressWarnings("unused")
 @EntityTickingEnchantment
-public class EnchantmentVigor extends VTEnchantmentBase {
+public class EnchantmentVigor extends Enchantment {
     private static UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
 
     public EnchantmentVigor() {
-        super("vigor", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, EntityEquipmentSlot.CHEST);
+        super(Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[]{EntityEquipmentSlot.CHEST});
+        this.setRegistryName("vigor");
     }
 
-    @Override
+
     public void performAction(Entity entity, Event baseEvent) {
         if (entity instanceof EntityLivingBase) {
             EntityLivingBase livingEntity = (EntityLivingBase) entity;
-            int enchantmentLevel = this.getEnchantmentLevel(livingEntity.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
+            int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(Vigor, livingEntity.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
             if (enchantmentLevel > 0)
                 addVigorBuff(livingEntity, enchantmentLevel);
             else
@@ -35,17 +40,17 @@ public class EnchantmentVigor extends VTEnchantmentBase {
         }
     }
 
-    @Override
+
     public int getMinimumEnchantability(int enchantmentLevel) {
         return 5 + (enchantmentLevel - 1) * 8;
     }
 
-    @Override
+
     public int getMaximumEnchantability(int enchantmentLevel) {
         return enchantmentLevel * 10 + 51;
     }
 
-    @Override
+
     public int getMaxLevel() {
         return 3;
     }

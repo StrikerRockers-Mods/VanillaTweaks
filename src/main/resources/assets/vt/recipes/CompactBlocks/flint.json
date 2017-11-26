@@ -1,0 +1,14 @@
+
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vt:flintblock"
+    }
+  ],
+  "result": {
+    "item": "minecraft:flint",
+    "data": 0,
+    "count": 9
+  }
+}

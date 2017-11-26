@@ -1,5 +1,16 @@
 Changelog:
-Build 2551:
+Build 2554:
+	LexManos: Version bump for Recommended Build.
+
+Build 1.12.2-14.23.0.2553:
+	williewillus: Add TAG_LONG_ARRAY to Constants.NBT (#4552)
+
+Build 1.12.2-14.23.0.2552:
+	LexManos:
+		Create custom shapeless recipe matching system. Should solve #4516
+		damageable items in shapeless recipes.
+
+Build 1.12.2-14.23.0.2551:
 	mezz: Clean up old code for detecting BaseMods. Close #4530 (#4540)
 
 Build 1.12.2-14.23.0.2550:

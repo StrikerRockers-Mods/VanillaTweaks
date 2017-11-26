@@ -5,8 +5,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
 
-;
-
 /**
  * Contains, initializes, and registers all of Craft++'s items
  */
