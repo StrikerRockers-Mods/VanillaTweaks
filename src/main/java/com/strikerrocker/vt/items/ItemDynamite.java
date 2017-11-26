@@ -42,7 +42,6 @@ public class ItemDynamite extends ItemBase {
     }
 
     @SideOnly(Side.CLIENT)
-    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, java.util.List<String> info, boolean par4) {
         info.add(ChatFormatting.RED + "This doesn't work.");
     }

@@ -1,7 +1,5 @@
 package com.strikerrocker.vt.handlers;
 
-import com.google.common.collect.Maps;
-import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.main.vt;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
@@ -12,7 +10,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -30,7 +27,12 @@ public class VTConfigHandler {
     public static boolean useBetterStoneToolRecipes;
     public static boolean useBetterStairsRecipes;
     //Enchantments
-    public static Map<String, Boolean> enchantmentNameToEnable = Maps.newHashMap();
+    public static boolean vigor;
+    public static boolean Nimble;
+    public static boolean Hops;
+    public static boolean Veteran;
+    public static boolean siphon;
+    public static boolean Homing;
     //Miscellaneous
     public static boolean creeperBurnInDaylight;
     public static boolean babyZombieBurnInDaylight;
@@ -77,9 +79,12 @@ public class VTConfigHandler {
         config.setCategoryRequiresMcRestart(recipesCategory, true);
 
         String enchantmentsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Enchantments";
-        for (String enchantmentName : VTEnchantments.enchantmentNames)
-            enchantmentNameToEnable.put(enchantmentName, get(enchantmentsCategory, "Enable " + enchantmentName, true, "Is the " + enchantmentName + " enchantment enabled?"));
-        config.setCategoryComment(enchantmentsCategory, "Toggle each of Craft++'s enchantments");
+        vigor = get(enchantmentsCategory, "Enables Vigor Enchantment", true, "Enables Vigor Enchantment");
+        Nimble = get(enchantmentsCategory, "Enables Nimble Enchantment", true, "Enables Nimble Enchantment");
+        Hops = get(enchantmentsCategory, "Enables Hops Enchantment", true, "Enables Hops Enchantment");
+        Veteran = get(enchantmentsCategory, "Enables Veteran Enchantment", true, "Enables Veteran Enchantment");
+        siphon = get(enchantmentsCategory, "Enables siphon Enchantment", true, "Enables siphon Enchantment");
+        Homing = get(enchantmentsCategory, "Enables Homing Enchantment", true, "Enables Homing Enchantment");
         config.setCategoryRequiresMcRestart(enchantmentsCategory, true);
 
         String miscCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Miscellaneous";
@@ -119,6 +124,6 @@ public class VTConfigHandler {
     }
 
     public Configuration getConfiguration() {
-        return this.config;
+        return config;
     }
 }

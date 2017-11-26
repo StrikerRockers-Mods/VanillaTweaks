@@ -2,13 +2,8 @@ package com.strikerrocker.vt.handlers;
 
 import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.capabilities.SelfPlantingProvider;
-import com.strikerrocker.vt.enchantments.EntityTickingEnchantment;
-import com.strikerrocker.vt.enchantments.VTEnchantmentBase;
-import com.strikerrocker.vt.enchantments.VTEnchantments;
-import com.strikerrocker.vt.items.ItemCraftingPad;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.main.VTUtils;
-import com.strikerrocker.vt.main.vt;
 import com.strikerrocker.vt.main.vtModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -62,6 +57,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static com.strikerrocker.vt.enchantments.VTEnchantments.*;
 
 /**
  * The event handler for Vanilla Tweaks
@@ -221,8 +219,7 @@ public final class VTEventHandler {
             World world = event.world;
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
             entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null).handlePlantingLogic(entityItem));
-            for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
-                VTEnchantmentBase.cppEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
+            for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE)) ;
         }
     }
 
@@ -241,7 +238,7 @@ public final class VTEventHandler {
             if (stackTagCompound != null) {
                 NBTTagCompound blockEntityTagCompound = stackTagCompound.getCompoundTag("BlockEntityTag");
                 String entityName = blockEntityTagCompound.getCompoundTag("SpawnData").getString("id");
-                Class entityClass = (Class) EntityList.getEntityNameList().getClass();
+                Class entityClass = EntityList.getEntityNameList().getClass();
                 if (entityClass != null) {
                     TextFormatting color = IMob.class.isAssignableFrom(entityClass) ? TextFormatting.RED : TextFormatting.BLUE;
                     String unlocalizedEntityName = "entity." + entityName + ".name";
@@ -294,8 +291,10 @@ public final class VTEventHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onHarvestDrops(HarvestDropsEvent event) {
         EntityPlayer harvester = event.getHarvester();
-        VTEnchantments.performAction("blazing", harvester, event);
-        VTEnchantments.performAction("siphon", harvester, event);
+        if (harvester != null && EnchantmentHelper.getEnchantmentLevel(Siphon, harvester.getHeldItemMainhand()) > 0) {
+            List<ItemStack> drops = event.getDrops();
+            drops.removeAll(drops.stream().filter(event.getHarvester().inventory::addItemStackToInventory).collect(Collectors.toList()));
+        }
     }
 
     /**
@@ -305,7 +304,32 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onArrowNock(ArrowNockEvent event) {
-        VTEnchantments.performAction("quickdraw", event.getEntityPlayer(), event);
+        if (event.getEntity() instanceof EntityArrow) {
+            EntityArrow arrow = (EntityArrow) event.getEntity();
+            EntityLivingBase shooter = (EntityLivingBase) arrow.shootingEntity;
+            if (shooter != null && EnchantmentHelper.getEnchantmentLevel(Homing, shooter.getHeldItemMainhand()) > 0) {
+                int homingLevel = EnchantmentHelper.getEnchantmentLevel(Homing, shooter.getHeldItemMainhand());
+                double distance = Math.pow(2, homingLevel - 1) * 32;
+                World world = arrow.world;
+
+                @SuppressWarnings("unchecked") List<EntityLivingBase> livingEntities = world.getEntities(EntityLivingBase.class, EntitySelectors.NOT_SPECTATING);
+                EntityLivingBase target = null;
+                for (EntityLivingBase livingEntity : livingEntities) {
+                    double distanceToArrow = livingEntity.getDistance(arrow);
+
+                    if (distanceToArrow < distance && shooter.canEntityBeSeen(livingEntity) && !livingEntity.getPersistentID().equals(shooter.getPersistentID())) {
+                        distance = distanceToArrow;
+                        target = livingEntity;
+                    }
+                }
+                if (target != null) {
+                    double x = target.posX - arrow.posX;
+                    double y = target.getEntityBoundingBox().minY + target.height / 2 - (arrow.posY + arrow.height / 2);
+                    double z = target.posZ - arrow.posZ;
+                    arrow.setPositionAndRotationDirect(x, y, z, 1.25F, 0, 0, false);
+                }
+            }
+        }
     }
 
     /**
@@ -315,7 +339,9 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onLivingJump(LivingJumpEvent event) {
-        VTEnchantments.performAction("hops", event.getEntityLiving(), event);
+        float enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET));
+        if (event instanceof LivingJumpEvent)
+            event.getEntity().motionY += enchantmentLevel / 10;
     }
 
     /**
@@ -325,7 +351,10 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
-        VTEnchantments.performAction("hops", event.getEntityLiving(), event);
+        if (event instanceof LivingFallEvent) {
+            LivingFallEvent fallEvent = event;
+            fallEvent.setDistance(fallEvent.getDistance() - EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
+        }
     }
 
 
@@ -364,10 +393,50 @@ public final class VTEventHandler {
         if (world != null) {
             List<Entity> arrows = world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);
             for (Entity arrow : arrows)
-                VTEnchantments.performAction("homing", arrow, null);
+                if (arrows instanceof EntityArrow) {
+                    EntityArrow ar = (EntityArrow) arrows;
+                    EntityLivingBase shooter = (EntityLivingBase) ar.shootingEntity;
+                    if (shooter != null && EnchantmentHelper.getEnchantmentLevel(Homing, shooter.getHeldItemMainhand()) > 0) {
+                        int homingLevel = EnchantmentHelper.getEnchantmentLevel(Homing, shooter.getHeldItemMainhand());
+                        double distance = Math.pow(2, homingLevel - 1) * 32;
+
+                        @SuppressWarnings("unchecked") List<EntityLivingBase> livingEntities = world.getEntities(EntityLivingBase.class, EntitySelectors.NOT_SPECTATING);
+                        EntityLivingBase target = null;
+                        for (EntityLivingBase livingEntity : livingEntities) {
+                            double distanceToArrow = livingEntity.getDistance(arrow);
+
+                            if (distanceToArrow < distance && shooter.canEntityBeSeen(livingEntity) && !livingEntity.getPersistentID().equals(shooter.getPersistentID())) {
+                                distance = distanceToArrow;
+                                target = livingEntity;
+                            }
+                        }
+                        if (target != null) {
+                            double x = target.posX - arrow.posX;
+                            double y = target.getEntityBoundingBox().minY + target.height / 2 - (arrow.posY + arrow.height / 2);
+                            double z = target.posZ - arrow.posZ;
+                            arrow.setPositionAndRotationDirect(x, y, z, 1.25F, 0, 0, false);
+                        }
+                    }
+                }
             List<Entity> xpOrbs = world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE);
             for (Entity xpOrb : xpOrbs)
-                VTEnchantments.performAction("veteran", xpOrb, null);
+                if (xpOrbs instanceof EntityXPOrb) {
+                    double range = 32;
+                    EntityPlayer closestPlayer = world.getClosestPlayerToEntity(xpOrb, range);
+                    if (closestPlayer != null && EnchantmentHelper.getEnchantmentLevel(Veteran, closestPlayer.getItemStackFromSlot(EntityEquipmentSlot.HEAD)) > 0) {
+                        double xDiff = (closestPlayer.posX - xpOrb.posX) / range;
+                        double yDiff = (closestPlayer.posY + closestPlayer.getEyeHeight() - xpOrb.posY) / range;
+                        double zDiff = (closestPlayer.posZ - xpOrb.posZ) / range;
+                        double movementFactor = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
+                        double invertedMovementFactor = 1 - movementFactor;
+                        if (invertedMovementFactor > 0) {
+                            invertedMovementFactor *= invertedMovementFactor;
+                            xpOrb.motionX += xDiff / movementFactor * invertedMovementFactor * 0.1;
+                            xpOrb.motionY += yDiff / movementFactor * invertedMovementFactor * 0.1;
+                            xpOrb.motionZ += zDiff / movementFactor * invertedMovementFactor * 0.1;
+                        }
+                    }
+                }
         }
     }
 
@@ -388,12 +457,5 @@ public final class VTEventHandler {
         world.spawnEntity(portalEntityItem);
     }
 
-    @SubscribeEvent
-    public void onpadclick(PlayerInteractEvent.RightClickItem e){
-        if (e.getEntityPlayer().getHeldEquipment() == VTItems.pad){
-            e.getEntityPlayer().openGui(vt.instance, VTGuiHandler.PAD, e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ());
-        }
-
-    }
 
 }

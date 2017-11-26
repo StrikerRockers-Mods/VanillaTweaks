@@ -3,7 +3,6 @@ package com.strikerrocker.vt.main;
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.dispenser.VTDispenserBehaviors;
-import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.VTEntities;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.handlers.VTFuelHandler;
@@ -14,6 +13,7 @@ import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import com.strikerrocker.vt.proxies.VTCommonProxy;
+import com.strikerrocker.vt.recipes.VTRecipes;
 import com.strikerrocker.vt.worldGen.NetherPocketer;
 import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
@@ -80,9 +80,7 @@ public final class vt {
         modMetadata.name = vtModInfo.NAME;
         modMetadata.version = vtModInfo.VERSION;
         modMetadata.description = "A simple vanilla-enhancing mod";
-        logInfo("Registering the blocks");
         VTBlocks.init();
-        logInfo("Registering the items");
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         proxy.registerRenderers();
         //Pedestal
@@ -92,6 +90,7 @@ public final class vt {
         //Nether Pocketer
         NetherPocketer handler = new NetherPocketer();
         MinecraftForge.TERRAIN_GEN_BUS.register(handler);
+        VTRecipes.registerRecipes();
         logInfo("Pre-initialization completed successfully");
     }
 
@@ -101,8 +100,6 @@ public final class vt {
         VTEntities.init();
         logInfo("Registering the GUI handler");
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
-        logInfo("Registering the enchantments");
-        VTEnchantments.registerEnchantments();
         logInfo("Registering the fuel handler");
         GameRegistry.registerFuelHandler(new VTFuelHandler());
         logInfo("Registering the crafting/furnace recipes");
