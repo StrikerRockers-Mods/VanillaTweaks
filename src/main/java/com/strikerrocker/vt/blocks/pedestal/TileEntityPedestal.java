@@ -1,4 +1,4 @@
-package com.strikerrocker.vt.blocks.Pedestal;
+package com.strikerrocker.vt.blocks.pedestal;
 
 import com.strikerrocker.vt.main.vt;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
@@ -28,7 +28,17 @@ public class TileEntityPedestal extends TileEntity {
         }
     };
 
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
+    }
 
+    @Override
+    public void onLoad() {
+        if (world.isRemote) {
+            vt.network.sendToServer(new PacketRequestUpdatePedestal(this));
+        }
+    }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -55,16 +65,4 @@ public class TileEntityPedestal extends TileEntity {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T) inventory : super.getCapability(capability, facing);
     }
 
-    @Override
-    public void onLoad() {
-        if (world.isRemote) {
-            vt.network.sendToServer(new PacketRequestUpdatePedestal(this));
-        }
-
-    }
-
-    @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
-    }
 }

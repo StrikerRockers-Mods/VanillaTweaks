@@ -1,12 +1,7 @@
 package com.strikerrocker.vt.blocks;
 
-import com.strikerrocker.vt.main.vt;
-import com.strikerrocker.vt.main.vtModInfo;
-import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 
 public class BlockSugar extends BlockBase {
 

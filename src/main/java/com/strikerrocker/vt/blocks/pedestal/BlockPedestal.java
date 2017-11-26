@@ -1,17 +1,16 @@
-package com.strikerrocker.vt.blocks.Pedestal;
+package com.strikerrocker.vt.blocks.pedestal;
 
 import com.strikerrocker.vt.blocks.BlockTileEntity;
+import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.main.vt;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -22,8 +21,6 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
 
     public BlockPedestal() {
         super(Material.ROCK, "pedestal");
-        this.setCreativeTab(CreativeTabs.DECORATIONS);
-
     }
 
     @Override
@@ -36,17 +33,6 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
     @Deprecated
     public boolean isFullCube(IBlockState state) {
         return false;
-    }
-
-    @Override
-    public Class<TileEntityPedestal> getTileEntityClass() {
-        return TileEntityPedestal.class;
-    }
-
-    @Nullable
-    @Override
-    public TileEntityPedestal createTileEntity(World world, IBlockState state) {
-        return new TileEntityPedestal();
     }
 
     @Override
@@ -63,18 +49,11 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
                 }
                 tile.markDirty();
             } else {
-                ItemStack stack = itemHandler.getStackInSlot(0);
-                if (!stack.isEmpty()) {
-                    String localized = vt.proxy.localize(stack.getUnlocalizedName() + ".name");
-                    player.sendMessage(new TextComponentString(stack.getCount() + "x " + localized));
-                } else {
-                    player.sendMessage(new TextComponentString("Empty"));
-                }
+                player.openGui(vt.instance, VTGuiHandler.PEDESTAL, world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;
     }
-
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
@@ -88,5 +67,20 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
         super.breakBlock(world, pos, state);
     }
 
+    @Override
+    public Class<TileEntityPedestal> getTileEntityClass() {
+        return TileEntityPedestal.class;
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntityPedestal createTileEntity(World world, IBlockState state) {
+        return new TileEntityPedestal();
+    }
 
 }

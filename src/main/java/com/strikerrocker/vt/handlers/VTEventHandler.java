@@ -1,16 +1,16 @@
 package com.strikerrocker.vt.handlers;
 
-import com.strikerrocker.vt.blocks.Pedestal.TileEntityPedestal;
 import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import com.strikerrocker.vt.enchantments.EntityTickingEnchantment;
 import com.strikerrocker.vt.enchantments.VTEnchantmentBase;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
+import com.strikerrocker.vt.items.ItemCraftingPad;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.main.VTUtils;
+import com.strikerrocker.vt.main.vt;
 import com.strikerrocker.vt.main.vtModInfo;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -34,10 +34,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.AchievementList;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -56,13 +54,10 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 import java.util.Random;
@@ -118,10 +113,10 @@ public final class VTEventHandler {
         List<EntityItem> drops = event.getDrops();
         List<EntityItem> dropsCopy = VTUtils.copyList(drops);
         for (EntityItem dropEntity : dropsCopy) {
-            ItemStack dropItem = dropEntity.getEntityItem();
-            if (event.getSource().getEntity() != null) {
+            ItemStack dropItem = dropEntity.getItem();
+            if (event.getSource().getImmediateSource() != null) {
                 Item drop = dropItem.getItem();
-                Entity source = event.getSource().getEntity();
+                Entity source = event.getSource().getImmediateSource();
                 if (source instanceof EntityWolf && entity instanceof EntitySheep) {
                     if (drop == Items.MUTTON || drop == Items.COOKED_MUTTON)
                         drops.remove(dropEntity);
@@ -155,7 +150,7 @@ public final class VTEventHandler {
         if (!livingEntity.world.isRemote) {
             World world = livingEntity.world;
             if (((livingEntity instanceof EntityCreeper && VTConfigHandler.creeperBurnInDaylight) || (livingEntity instanceof EntityZombie && livingEntity.isChild() && VTConfigHandler.babyZombieBurnInDaylight)) && world.isDaytime()) {
-                float f = livingEntity.getBrightness(1);
+                float f = livingEntity.getBrightness();
                 Random random = world.rand;
                 BlockPos blockPos = new BlockPos(livingEntity.posX, Math.round(livingEntity.posY), livingEntity.posZ);
                 if (f > 0.5 && random.nextFloat() * 30 < (f - 0.4) * 2 && world.canSeeSky(blockPos)) {
@@ -237,6 +232,7 @@ public final class VTEventHandler {
      * @param event The ItemTooltipEvent
      */
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         Block block = Block.getBlockFromItem(stack.getItem());
@@ -332,16 +328,6 @@ public final class VTEventHandler {
         VTEnchantments.performAction("hops", event.getEntityLiving(), event);
     }
 
-    /**
-     * Gives the player the workbenching achievement when crafting a crafting pad
-     *
-     * @param event The ItemCraftingEvent
-     */
-    @SubscribeEvent
-    public void onItemCrafted(ItemCraftedEvent event) {
-        if (event.crafting.getItem() == VTItems.pad)
-            event.player.addStat(AchievementList.BUILD_WORK_BENCH);
-    }
 
     /**
      * Syncs the config file if it changes
@@ -386,10 +372,28 @@ public final class VTEventHandler {
     }
 
     @SubscribeEvent
-    public void addItemCaps(AttachCapabilitiesEvent.Entity event) {
-        if (event.getEntity() instanceof EntityItem)
+    public void addItemCaps(AttachCapabilitiesEvent event) {
+        if (event.getObject() instanceof EntityItem)
             event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
     }
 
+    @SubscribeEvent
+    public void onPortalBreak(BlockEvent.BreakEvent event) {
+        EntityPlayer player = event.getPlayer();
+        World world = event.getWorld();
+        BlockPos blockPos = event.getPos();
+        ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
+        EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);
+        portalEntityItem.setDefaultPickupDelay();
+        world.spawnEntity(portalEntityItem);
+    }
+
+    @SubscribeEvent
+    public void onpadclick(PlayerInteractEvent.RightClickItem e){
+        if (e.getEntityPlayer().getHeldEquipment() == VTItems.pad){
+            e.getEntityPlayer().openGui(vt.instance, VTGuiHandler.PAD, e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ());
+        }
+
+    }
 
 }

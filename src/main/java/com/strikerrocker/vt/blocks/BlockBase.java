@@ -1,16 +1,16 @@
 package com.strikerrocker.vt.blocks;
 
-import com.strikerrocker.vt.items.ItemModelProvider;
-import com.strikerrocker.vt.main.vt;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+
+import static com.strikerrocker.vt.main.vt.proxy;
 
 /**
  * Created by thari on 22/07/2017.
  */
-public class BlockBase extends Block implements ItemModelProvider {
+public class BlockBase extends Block {
 
     protected String name;
 
@@ -23,13 +23,12 @@ public class BlockBase extends Block implements ItemModelProvider {
         setRegistryName(name);
     }
 
-    @Override
     public void registerItemModel(Item item) {
-
-        vt.proxy.registerItemRenderer(item, 0, name);
+        proxy.registerItemRenderer(item, 0, name);
     }
 
-
+    public Item createItemBlock() {
+        return new ItemBlock(this).setRegistryName(getRegistryName());
+    }
 
 }
-
