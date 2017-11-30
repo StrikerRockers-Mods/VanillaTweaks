@@ -10,6 +10,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Dynamite entity to go along-side dynamite item
@@ -62,12 +64,16 @@ public class EntityDynamite extends EntityThrowable {
             else
                 this.setTicksSinceWet(0);
         }
+        else{
+            this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL,this.posX,this.posY,this.posZ,0.0D,0.0D,0.0D);
+        }
         if (this.getTicksSinceWet() < WET_TICKS && !this.isInWater())
             for (int i = 0; i < 3; ++i) {
                 float xOffset = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
                 float zOffset = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
                 this.world.spawnParticle(EnumParticleTypes.DRIP_WATER, this.posX + xOffset, this.posY, this.posZ + zOffset, this.motionX, this.motionY, this.motionZ);
             }
+
     }
 
     @Override
@@ -78,7 +84,7 @@ public class EntityDynamite extends EntityThrowable {
                 if (isNotCreativeThrower())
                     this.dropItem(VTItems.dynamite, 1);
             } else
-                world.createExplosion(this, this.posX, this.posY, this.posZ, 2F, true);
+                world.createExplosion(this, this.posX, this.posY, this.posZ, 3F, true);
         this.setDead();
     }
 
@@ -127,4 +133,5 @@ public class EntityDynamite extends EntityThrowable {
         EntityLivingBase thrower = this.getThrower();
         return !(thrower instanceof EntityPlayer) || !((EntityPlayer) thrower).capabilities.isCreativeMode;
     }
+
 }

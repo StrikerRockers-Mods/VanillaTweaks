@@ -1,7 +1,7 @@
 package com.strikerrocker.vt.items;
 
 
-import com.strikerrocker.vt.main.vt;
+import com.strikerrocker.vt.main.VT;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -27,13 +27,13 @@ public class ItemCraftingPad extends ItemBase {
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        playerIn.openGui(vt.instance, 0, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
+        playerIn.openGui(VT.instance, 0, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
         return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
     }
 
 
     public void registerItemModel(Item item) {
-        vt.proxy.registerItemRenderer(this, 0, name);
+        VT.proxy.registerItemRenderer(this, 0, name);
     }
 
 }

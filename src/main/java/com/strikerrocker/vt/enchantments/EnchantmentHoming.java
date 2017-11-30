@@ -4,6 +4,7 @@ package com.strikerrocker.vt.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 
 @SuppressWarnings("unused")
 @EntityTickingEnchantment
@@ -13,7 +14,7 @@ public class EnchantmentHoming extends Enchantment {
     public EnchantmentHoming() {
         super(Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
         this.setRegistryName("homing");
-
+        this.setName("homing");
     }
 
 
@@ -33,6 +34,11 @@ public class EnchantmentHoming extends Enchantment {
 
     @Override
     public boolean isAllowedOnBooks() {
+        return true;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return true;
     }
 

@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
-import static com.strikerrocker.vt.main.vt.proxy;
+import static com.strikerrocker.vt.main.VT.proxy;
 
 /**
  * Created by thari on 22/07/2017.
