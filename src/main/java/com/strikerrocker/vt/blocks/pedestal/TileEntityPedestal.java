@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.blocks.pedestal;
 
-import com.strikerrocker.vt.main.vt;
+import com.strikerrocker.vt.main.VT;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +23,7 @@ public class TileEntityPedestal extends TileEntity {
         protected void onContentsChanged(int slot) {
             if (!world.isRemote) {
                 lastChangeTime = world.getTotalWorldTime();
-                vt.network.sendToAllAround(new PacketUpdatePedestal(TileEntityPedestal.this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+                VT.network.sendToAllAround(new PacketUpdatePedestal(TileEntityPedestal.this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
             }
         }
     };
@@ -36,7 +36,7 @@ public class TileEntityPedestal extends TileEntity {
     @Override
     public void onLoad() {
         if (world.isRemote) {
-            vt.network.sendToServer(new PacketRequestUpdatePedestal(this));
+            VT.network.sendToServer(new PacketRequestUpdatePedestal(this));
         }
     }
 

@@ -1,4 +1,4 @@
 /**
- * Contains the Craft++ coremod
+ * Contains the VanillaTweaks coremod
  */
 package com.strikerrocker.vt.coremod;

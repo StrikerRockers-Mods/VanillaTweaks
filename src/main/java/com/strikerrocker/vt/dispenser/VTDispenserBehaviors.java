@@ -2,7 +2,7 @@ package com.strikerrocker.vt.dispenser;
 
 import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.items.VTItems;
-import com.strikerrocker.vt.main.vt;
+import com.strikerrocker.vt.main.VT;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.item.Item;
@@ -42,9 +42,9 @@ public class VTDispenserBehaviors {
     private static void registerDispenserBehavior(Item item, BehaviorDefaultDispenseItem dispenserBehavior) {
         String localizedName = I18n.translateToLocal(item.getUnlocalizedName() + ".name");
         if (dispenserBehavior.getClass() != BehaviorDefaultDispenseItem.class)
-            vt.logInfo("Registering dispenser behavior for " + localizedName);
+            VT.logInfo("Registering dispenser behavior for " + localizedName);
         else
-            vt.logInfo("Registering default dispenser behavior for " + localizedName);
+            VT.logInfo("Registering default dispenser behavior for " + localizedName);
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, dispenserBehavior);
     }
 }

@@ -1,4 +1,4 @@
 /**
- * Contains the handlers for Craft++
+ * Contains the handlers for VanillaTweaks
  */
 package com.strikerrocker.vt.handlers;

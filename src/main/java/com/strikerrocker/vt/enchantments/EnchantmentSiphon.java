@@ -12,6 +12,7 @@ public class EnchantmentSiphon extends Enchantment {
     public EnchantmentSiphon() {
         super(Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
         this.setRegistryName("siphon");
+        this.setName("siphon");
     }
 
     public int getMinimumEnchantability(int enchantmentLevel) {

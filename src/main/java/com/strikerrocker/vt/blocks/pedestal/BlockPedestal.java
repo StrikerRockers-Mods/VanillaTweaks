@@ -2,7 +2,7 @@ package com.strikerrocker.vt.blocks.pedestal;
 
 import com.strikerrocker.vt.blocks.BlockTileEntity;
 import com.strikerrocker.vt.handlers.VTGuiHandler;
-import com.strikerrocker.vt.main.vt;
+import com.strikerrocker.vt.main.VT;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -49,7 +49,7 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
                 }
                 tile.markDirty();
             } else {
-                player.openGui(vt.instance, VTGuiHandler.PEDESTAL, world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(VT.instance, VTGuiHandler.PEDESTAL, world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

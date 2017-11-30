@@ -1,0 +1,20 @@
+{
+  "display": {
+    "icon": {
+      "item": "vt:sugar_block"
+    },
+    "title": {
+      "translate": "advancements.vt.storage"
+    }
+  },
+  "criteria": {
+    "trigger": "minecraft:inventory_changed",
+    "conditions": {
+      "items": [
+        {
+          "item": "vt:sugar_block"
+        }
+      ]
+    }
+  }
+}

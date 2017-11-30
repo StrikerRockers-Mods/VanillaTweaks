@@ -3,8 +3,10 @@ package com.strikerrocker.vt.main;
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.dispenser.VTDispenserBehaviors;
+import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.VTEntities;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
+import com.strikerrocker.vt.handlers.VTEventHandler;
 import com.strikerrocker.vt.handlers.VTFuelHandler;
 import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.items.ItemArmor;
@@ -14,8 +16,9 @@ import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import com.strikerrocker.vt.proxies.VTCommonProxy;
 import com.strikerrocker.vt.recipes.VTRecipes;
-import com.strikerrocker.vt.worldGen.NetherPocketer;
+import com.strikerrocker.vt.worldgen.NetherPocketer;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -36,33 +39,29 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod(modid = vtModInfo.MOD_ID,
-        name = vtModInfo.NAME,
-        version = vtModInfo.VERSION,
+@Mod(modid = VTModInfo.MOD_ID,
+        name = VTModInfo.NAME,
+        version = VTModInfo.VERSION,
         dependencies = "after:*",
-        guiFactory = vtModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
+        guiFactory = VTModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
 @SuppressWarnings("unused")
-public final class vt {
+public final class VT {
 
-    public static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
-    //The proxy of vanilla Tweaks
+    public static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 
-    @SidedProxy(modId = vtModInfo.MOD_ID, clientSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")
+
+    @SidedProxy(modId = VTModInfo.MOD_ID, clientSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")
     public static VTCommonProxy proxy;
 
     public static SimpleNetworkWrapper network;
 
-    //The mod instance of vanilla Tweaks
+
+    @Mod.Instance(VTModInfo.MOD_ID)
+    public static VT instance;
 
 
-    @Mod.Instance(vtModInfo.MOD_ID)
-    public static vt instance;
-
-    //     * The logger for vanilla Tweaks
     private static Logger logger;
 
-    //Logs a message with vanilla Tweaks's logger with the INFO level
-    //@param message The string to be logged
 
     public static void logInfo(String message) {
         logger.info("VanillaTweaks: " + message);
@@ -71,46 +70,27 @@ public final class vt {
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
-        logInfo("Initialized the logger");
-        logInfo("Initializing the config handler");
         VTConfigHandler.init(event.getSuggestedConfigurationFile());
-        logInfo("Hard-coding the mcmod.info");
-        ModMetadata modMetadata = event.getModMetadata();
-        modMetadata.modId = vtModInfo.MOD_ID;
-        modMetadata.name = vtModInfo.NAME;
-        modMetadata.version = vtModInfo.VERSION;
-        modMetadata.description = "A simple vanilla-enhancing mod";
         VTBlocks.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         proxy.registerRenderers();
-        //Pedestal
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(VTModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
-        //Nether Pocketer
         NetherPocketer handler = new NetherPocketer();
         MinecraftForge.TERRAIN_GEN_BUS.register(handler);
         VTRecipes.registerRecipes();
-        logInfo("Pre-initialization completed successfully");
+        VTEntities.init();
     }
 
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
-        logInfo("Registering the entities");
-        VTEntities.init();
-        logInfo("Registering the GUI handler");
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
-        logInfo("Registering the fuel handler");
         GameRegistry.registerFuelHandler(new VTFuelHandler());
-        logInfo("Registering the crafting/furnace recipes");
-        logInfo("Registering the dispenser behaviors");
+        MinecraftForge.EVENT_BUS.register(VTEventHandler.instance);
         VTDispenserBehaviors.registerDispenserBehaviors();
-        logInfo("Registering the self-planting");
         CapabilitySelfPlanting.register();
-        logInfo("Initializing the vanilla properties changer");
         VTVanillaPropertiesChanger.init();
-        logInfo("Initializing the crafting recipe remover");
-        logInfo("Initialization completed successfully");
     }
 
     @Mod.EventHandler
@@ -129,6 +109,11 @@ public final class vt {
         @SubscribeEvent
         public static void registerBlocks(RegistryEvent.Register<Block> event) {
             VTBlocks.register(event.getRegistry());
+        }
+
+        @SubscribeEvent
+        public static void registerEnchantment(RegistryEvent.Register<Enchantment> event) {
+            VTEnchantments.registerEnchantments(event.getRegistry());
         }
 
         @SubscribeEvent

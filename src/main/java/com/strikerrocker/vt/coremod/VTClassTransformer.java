@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.coremod;
 
-import com.strikerrocker.vt.main.vtModInfo;
+import com.strikerrocker.vt.main.VTModInfo;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -15,7 +15,7 @@ public class VTClassTransformer implements IClassTransformer {
     /**
      * The class name to delegate the methods to
      */
-    private static final String DELEGATE_CLASS_NAME = vtModInfo.PACKAGE_LOCATION.replace('.', '/') + "/coremod/VTCoremodHooks";
+    private static final String DELEGATE_CLASS_NAME = VTModInfo.PACKAGE_LOCATION.replace('.', '/') + "/coremod/VTCoremodHooks";
 
     protected static boolean obfuscated;
 

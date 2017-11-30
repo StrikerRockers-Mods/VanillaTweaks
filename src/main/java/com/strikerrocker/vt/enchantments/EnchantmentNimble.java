@@ -7,6 +7,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ public class EnchantmentNimble extends Enchantment {
     public EnchantmentNimble() {
         super(Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{EntityEquipmentSlot.FEET});
         this.setRegistryName("nimble");
+        this.setName("nimble");
     }
 
 
@@ -68,5 +70,10 @@ public class EnchantmentNimble extends Enchantment {
             AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", (float) enchantmentLevel * 0.20000000298023224, 2);
             speedAttribute.removeModifier(speedModifier);
         }
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return true;
     }
 }
