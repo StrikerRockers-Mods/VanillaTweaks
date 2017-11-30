@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.handlers;
 
-import com.strikerrocker.vt.main.vt;
+import com.strikerrocker.vt.main.VT;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -45,7 +45,6 @@ public class VTConfigHandler {
     public static boolean enableFlintAndSteelDispenserBehavior;
     public static boolean renameButtons;
     public static boolean craftingTableChanges;
-    public static boolean alternateLogo;
     public static boolean pedestal;
     public static boolean NoMoreLavaPocketGen;
     public static boolean endframebroken;
@@ -65,7 +64,7 @@ public class VTConfigHandler {
      * Syncs the config file
      */
     public static void syncConfig() {
-        vt.logInfo("Syncing config file");
+        VT.logInfo("Syncing config file");
         String mobDropsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Mob Drops";
         creeperDropTntChance = get(mobDropsCategory, "Chance of creepers dropping TNT", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
         batLeatherDropChance = get(mobDropsCategory, "Chance of bats dropping leather", 10D, "The chance of bats dropping leather, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
@@ -103,7 +102,6 @@ public class VTConfigHandler {
         enableFlintAndSteelDispenserBehavior = get(miscRequiresRestartCategory, "Enable flint and steel dispenser behavior", false, "Can you use flint and steel with dispensers?");
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
         craftingTableChanges = get(miscRequiresRestartCategory, "Crafting table changes", true, "Is the way to create a 3x3 crafting device changed?");
-        alternateLogo = get(miscRequiresRestartCategory, "Use alternate logo", false, "Use the alternate logo in the Mods page?");
         pedestal = get(miscRequiresRestartCategory, "Enable the pedestal", true, "Enabling the pedestal");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);

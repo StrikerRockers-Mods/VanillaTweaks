@@ -2,7 +2,7 @@ package com.strikerrocker.vt.items;
 
 import net.minecraft.item.Item;
 
-import static com.strikerrocker.vt.main.vt.proxy;
+import static com.strikerrocker.vt.main.VT.proxy;
 
 /**
  * Created by thari on 22/07/2017.

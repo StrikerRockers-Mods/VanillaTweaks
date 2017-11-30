@@ -1,0 +1,20 @@
+{
+  "display": {
+    "icon": {
+      "item": "vt:pad"
+    },
+    "title": {
+      "translate": "advancements.vt.pad"
+    }
+  },
+  "criteria": {
+    "trigger": "minecraft:inventory_changed",
+    "conditions": {
+      "items": [
+        {
+          "item": "vt:pad"
+        }
+      ]
+    }
+  }
+}

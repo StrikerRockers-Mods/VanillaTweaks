@@ -30,19 +30,31 @@ public class ItemDynamite extends ItemBase {
         setUnlocalizedName(name);
     }
 
-    public ActionResult<ItemStack> onRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
-        world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-        if (!world.isRemote) {
-            EntityDynamite dynamite = new EntityDynamite(world, player);
-            dynamite.setPositionAndRotation(player.posX, player.posY, player.posZ, 0F, 1.5F);
-            player.getEntityWorld().spawnEntity(dynamite);
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+
+        ItemStack itemstack =playerIn.getHeldItem(handIn);
+
+        if(!playerIn.isCreative()){
+            itemstack.shrink(1);
         }
-        player.addStat(StatList.getObjectUseStats(this));
-        return new ActionResult<>(EnumActionResult.SUCCESS, itemStack);
+
+        worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+
+
+        if (!worldIn.isRemote) {
+            EntityDynamite dynamite = new EntityDynamite(worldIn, playerIn);
+            dynamite.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0, 1.5F, 0);
+            playerIn.getEntityWorld().spawnEntity(dynamite);
+        }
+        playerIn.addStat(StatList.getObjectUseStats(this));
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS,itemstack);
+
     }
+
 
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, java.util.List<String> info, boolean par4) {
         info.add(ChatFormatting.RED + "This doesn't work.");
     }
+
 }
