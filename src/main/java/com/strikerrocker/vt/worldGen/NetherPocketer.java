@@ -1,4 +1,4 @@
-package com.strikerrocker.vt.worldGen;
+package com.strikerrocker.vt.worldgen;
 
 import com.strikerrocker.vt.handlers.VTConfigHandler;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;

@@ -18,6 +18,9 @@ item.binoculars.name=Binoculars
 
 key.potionDisplay=Potion Effect Display
 
+advancements.vt.storage=Craft an storage block
+advancements.vt.pad=Craft an Crafting Pad
+
 enchantment.nimble=Nimble
 enchantment.hops=Hops
 enchantment.vigor=Vigor
