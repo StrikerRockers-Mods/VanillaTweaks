@@ -5,6 +5,9 @@
     },
     "title": {
       "translate": "advancements.vt.storage"
+    },
+    "description": {
+      "translate": "advancements.vt.storage"
     }
   },
   "criteria": {
@@ -12,7 +15,7 @@
     "conditions": {
       "items": [
         {
-          "item": "vt:sugar_block"
+          "item": "vt:sugarblock"
         }
       ]
     }

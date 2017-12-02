@@ -5,6 +5,9 @@
     },
     "title": {
       "translate": "advancements.vt.pad"
+    },
+    "description": {
+      "translate": "advancements.vt.pad"
     }
   },
   "criteria": {

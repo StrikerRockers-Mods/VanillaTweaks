@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.handlers;
 
-import com.strikerrocker.vt.main.VT;
+import com.strikerrocker.vt.vt;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -64,7 +64,7 @@ public class VTConfigHandler {
      * Syncs the config file
      */
     public static void syncConfig() {
-        VT.logInfo("Syncing config file");
+        vt.logInfo("Syncing config file");
         String mobDropsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Mob Drops";
         creeperDropTntChance = get(mobDropsCategory, "Chance of creepers dropping TNT", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
         batLeatherDropChance = get(mobDropsCategory, "Chance of bats dropping leather", 10D, "The chance of bats dropping leather, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
