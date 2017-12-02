@@ -3,7 +3,7 @@ package com.strikerrocker.vt.items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemFood;
 
-import static com.strikerrocker.vt.main.VT.proxy;
+import static com.strikerrocker.vt.vt.proxy;
 
 /**
  * Created by thari on 23/07/2017.

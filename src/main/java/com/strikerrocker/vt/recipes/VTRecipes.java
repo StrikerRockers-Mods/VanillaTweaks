@@ -1,12 +1,7 @@
 package com.strikerrocker.vt.recipes;
 
-import com.strikerrocker.vt.blocks.VTBlocks;
-import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.items.VTItems;
-import com.strikerrocker.vt.misc.RecipeHelper;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 

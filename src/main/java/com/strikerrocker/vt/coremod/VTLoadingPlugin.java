@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.coremod;
 
-import com.strikerrocker.vt.main.VTModInfo;
+import com.strikerrocker.vt.vtModInfo;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
@@ -11,9 +11,9 @@ import java.util.Map;
 /**
  * The coremod loading plugin of Craft++
  */
-@Name(VTModInfo.NAME + " Coremod")
+@Name(vtModInfo.NAME + " Coremod")
 @MCVersion("1.10.2")
-@TransformerExclusions(VTModInfo.PACKAGE_LOCATION + ".coremod")
+@TransformerExclusions(vtModInfo.PACKAGE_LOCATION + ".coremod")
 public class VTLoadingPlugin implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {

@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.gui;
 
-import com.strikerrocker.vt.main.VT;
+import com.strikerrocker.vt.vt;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -25,9 +25,9 @@ public class GuiCraftingPad extends GuiContainer {
             Method registerGuiOverlayHandlerMethod = neiApi.getMethod("registerGuiOverlayHandler", Class.class, overlayHandler, String.class);
             registerGuiOverlayMethod.invoke(null, GuiCraftingPad.class, "crafting");
             registerGuiOverlayHandlerMethod.invoke(null, GuiCraftingPad.class, defaultOverlayHandler.newInstance(), "crafting");
-            VT.logInfo("Registered NEI integration for crafting pad");
+            vt.logInfo("Registered NEI integration for crafting pad");
         } catch (NoSuchMethodException | ClassNotFoundException ignored) {
-            VT.logInfo("Could not find NEI; skipping NEI integration for crafting pad");
+            vt.logInfo("Could not find NEI; skipping NEI integration for crafting pad");
         } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
         }

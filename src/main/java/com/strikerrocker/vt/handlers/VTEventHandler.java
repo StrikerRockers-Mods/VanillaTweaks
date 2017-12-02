@@ -1,11 +1,11 @@
 package com.strikerrocker.vt.handlers;
 
+import com.strikerrocker.vt.VTUtils;
 import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import com.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.items.VTItems;
-import com.strikerrocker.vt.main.VTModInfo;
-import com.strikerrocker.vt.main.VTUtils;
+import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -369,7 +369,7 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onConfigChanged(OnConfigChangedEvent event) {
-        if (event.getModID().equals(VTModInfo.MOD_ID))
+        if (event.getModID().equals(vtModInfo.MOD_ID))
             VTConfigHandler.syncConfig();
     }
 
@@ -448,7 +448,7 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void addItemCaps(AttachCapabilitiesEvent event) {
         if (event.getObject() instanceof EntityItem)
-            event.addCapability(new ResourceLocation(VTModInfo.MOD_ID), new SelfPlantingProvider());
+            event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
     }
 
     /**
