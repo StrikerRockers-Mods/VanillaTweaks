@@ -1,6 +1,10 @@
 package com.strikerrocker.vt.misc;
 
 
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.strikerrocker.vt.handlers.VTConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,8 +22,12 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.GameData;
 
-public class RecipeHelper {
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
+public class RecipeHelper {
 
     /**
      * Adds a shaped recipe that supports string inputparamers corisponding to an oredict entry, can also be used for recipes without ore dict ingredients
@@ -107,27 +115,8 @@ public class RecipeHelper {
         return list;
     }
 
-    public static void addSmelting(Block input, ItemStack output, float xp) {
-        GameRegistry.addSmelting(input, output, xp);
-    }
-
-    public static void addSmelting(Item input, ItemStack output, float xp) {
-        GameRegistry.addSmelting(input, output, xp);
-    }
-
-    public static void addSmelting(ItemStack input, ItemStack output, float xp) {
-        GameRegistry.addSmelting(input, output, xp);
-    }
-
-    public static void addSmelting(ItemStack input, ItemStack output) {
-        addSmelting(input, output, 1F);
-    }
-
-    public static void addSmelting(Item input, ItemStack output) {
-        addSmelting(input, output, 1F);
-    }
-
-    public static void addSmelting(Block input, ItemStack output) {
-        addSmelting(input, output, 1F);
+    public static void replaceStairsRecipe(Block stairs, ItemStack material) {
+        ItemStack stairsStack = new ItemStack(stairs, 4);
+        addShapedRecipe(stairsStack," S", "SS", 'S', material);
     }
 }

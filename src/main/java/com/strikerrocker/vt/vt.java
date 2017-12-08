@@ -1,8 +1,6 @@
 package com.strikerrocker.vt;
 
 import com.strikerrocker.vt.blocks.VTBlocks;
-import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
-import com.strikerrocker.vt.dispenser.VTDispenserBehaviors;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.VTEntities;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
@@ -11,6 +9,7 @@ import com.strikerrocker.vt.handlers.VTFuelHandler;
 import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.items.ItemArmor;
 import com.strikerrocker.vt.items.VTItems;
+import com.strikerrocker.vt.misc.NetherPortalFix;
 import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
@@ -82,10 +81,10 @@ public class vt {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         GameRegistry.registerFuelHandler(new VTFuelHandler());
         MinecraftForge.EVENT_BUS.register(VTEventHandler.instance);
-        VTDispenserBehaviors.registerDispenserBehaviors();
-        CapabilitySelfPlanting.register();
         VTVanillaPropertiesChanger.init();
+        //MinecraftForge.EVENT_BUS.register(NetherPortalFix);
     }
+
 
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {
@@ -93,3 +92,5 @@ public class vt {
 
 
 }
+
+

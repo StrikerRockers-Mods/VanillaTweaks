@@ -1,23 +1,46 @@
 {
   "display": {
     "icon": {
-      "item": "vt:sugar_block"
+      "item": "vt:sugarblock"
     },
     "title": {
       "translate": "advancements.vt.storage"
     },
     "description": {
-      "translate": "advancements.vt.storage"
+      "translate": "advancements.vt.storage.desc"
     }
   },
+  "parent": "vt:pad",
   "criteria": {
-    "trigger": "minecraft:inventory_changed",
-    "conditions": {
-      "items": [
-        {
-          "item": "vt:sugarblock"
-        }
-      ]
+    "sugar_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "vt:sugarblock"
+          }
+        ]
+      }
+    },
+    "charcoal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "vt:charcoalblock"
+          }
+        ]
+      }
+    },
+    "flint": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "vt:flintblock"
+          }
+        ]
+      }
     }
   }
 }

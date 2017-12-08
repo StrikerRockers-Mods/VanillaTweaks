@@ -8,6 +8,9 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import static com.strikerrocker.vt.handlers.VTConfigHandler.endFrameBroken;
+import static com.strikerrocker.vt.handlers.VTConfigHandler.storageBlocks;
+
 /**
  * Contains, initializes, and registers all of Craft++'s blocks
  */
@@ -19,14 +22,16 @@ public class VTBlocks {
     public static BlockPedestal pedestal;
 
     public static void init() {
-        sugar = new BlockSugar("sugarblock");
-        flint = new BlockFlint("flintblock");
-        charcoal = new BlockCharcoal("charcoalblock");
+        if (storageBlocks) {
+            sugar = new BlockSugar("sugarblock");
+            flint = new BlockFlint("flintblock");
+            charcoal = new BlockCharcoal("charcoalblock");
+        }
 
         if (VTConfigHandler.pedestal) {
             pedestal = new BlockPedestal();
         }
-        if (VTConfigHandler.endframebroken) {
+        if (endFrameBroken) {
             Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 2);
             Blocks.END_PORTAL_FRAME.setHardness(5.0F);
         }

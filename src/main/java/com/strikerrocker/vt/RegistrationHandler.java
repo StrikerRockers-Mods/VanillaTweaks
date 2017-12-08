@@ -27,7 +27,7 @@ public class RegistrationHandler {
 
     @SubscribeEvent
     public static void registerEnchantment(RegistryEvent.Register<Enchantment> event) {
-        VTEnchantments.registerEnchantments(event.getRegistry());
+        VTEnchantments.VTEnchantments(event.getRegistry());
     }
 
     @SubscribeEvent

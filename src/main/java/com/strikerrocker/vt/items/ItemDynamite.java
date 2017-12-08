@@ -32,9 +32,9 @@ public class ItemDynamite extends ItemBase {
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 
-        ItemStack itemstack =playerIn.getHeldItem(handIn);
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
 
-        if(!playerIn.isCreative()){
+        if (!playerIn.isCreative()) {
             itemstack.shrink(1);
         }
 
@@ -47,7 +47,7 @@ public class ItemDynamite extends ItemBase {
             playerIn.getEntityWorld().spawnEntity(dynamite);
         }
         playerIn.addStat(StatList.getObjectUseStats(this));
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS,itemstack);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
 
     }
 
