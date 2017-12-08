@@ -1,9 +1,12 @@
 package com.strikerrocker.vt.items;
 
+import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.vt;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import static com.strikerrocker.vt.handlers.VTConfigHandler.craftingPad;
 
 /**
  * Contains, initializes, and registers all of Craft++'s items
@@ -18,14 +21,20 @@ public class VTItems {
 
 
     public static void register(IForgeRegistry<Item> registry) {
-        registry.registerAll(
-                binoculars, pad, friedegg, dynamite, lens
-        );
+        if (craftingPad) {
+            registry.register(pad);
+        }
+        registry.register(binoculars);
+        registry.register(friedegg);
+        registry.register(dynamite);
+        registry.register(lens);
     }
 
     public static void registerModels() {
         binoculars.registerItemModel();
-        pad.registerItemModel();
+        if (craftingPad) {
+            pad.registerItemModel();
+        }
         friedegg.registerItemModel();
         dynamite.registerItemModel();
         lens.registerItemModel();

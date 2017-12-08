@@ -1,8 +1,6 @@
 package com.strikerrocker.vt.handlers;
 
 import com.strikerrocker.vt.VTUtils;
-import com.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
-import com.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.vtModInfo;
@@ -29,14 +27,18 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemShears;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.FOVUpdateEvent;
@@ -52,6 +54,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -66,6 +69,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.strikerrocker.vt.enchantments.VTEnchantments.*;
+import static com.strikerrocker.vt.handlers.VTConfigHandler.clearSigns;
+import static com.strikerrocker.vt.handlers.VTConfigHandler.editSigns;
 
 /**
  * The event handler for Vanilla Tweaks
@@ -171,7 +176,7 @@ public final class VTEventHandler {
                         }
                     }
                     if (doSetFire)
-                        livingEntity.setFire(8);
+                        livingEntity.setFire(10);
                 }
             }
         }
@@ -212,22 +217,6 @@ public final class VTEventHandler {
         }
     }
 
-
-    /**
-     * Allows thrown seeds to plant themselves in farmland, and gives the Homing enchantment functionality
-     *
-     * @param event The WorldTickEvent
-     */
-    @SuppressWarnings("ConstantConditions")
-    @SubscribeEvent
-    public void onWorldTick(WorldTickEvent event) {
-        if (VTConfigHandler.autoSeedPlanting && !event.world.isRemote) {
-            World world = event.world;
-            List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
-            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null).handlePlantingLogic(entityItem));
-            for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE)) ;
-        }
-    }
 
     /**
      * Adds tooltips for monster spawners
@@ -308,6 +297,7 @@ public final class VTEventHandler {
      * @param event The ArrowNockEvent
      */
     @SubscribeEvent
+
     public void onArrowNock(ArrowNockEvent event) {
         if (event.getEntity() instanceof EntityArrow) {
             EntityArrow arrow = (EntityArrow) event.getEntity();
@@ -331,7 +321,7 @@ public final class VTEventHandler {
                     double x = target.posX - arrow.posX;
                     double y = target.getEntityBoundingBox().minY + target.height / 2 - (arrow.posY + arrow.height / 2);
                     double z = target.posZ - arrow.posZ;
-                    arrow.setPositionAndRotationDirect(x, y, z, 1.25F, 0, 0, false);
+                    arrow.setPositionAndRotation(x, y, z, 1.25F, 0);
                 }
             }
         }
@@ -445,11 +435,6 @@ public final class VTEventHandler {
         }
     }
 
-    @SubscribeEvent
-    public void addItemCaps(AttachCapabilitiesEvent event) {
-        if (event.getObject() instanceof EntityItem)
-            event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
-    }
 
     /**
      * Allows the End_portal_Frame drops
@@ -496,6 +481,29 @@ public final class VTEventHandler {
                         event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        boolean success = false;
+
+        TileEntity te = event.getWorld().getTileEntity(event.getPos());
+        if (te instanceof TileEntitySign) {
+            TileEntitySign sign = (TileEntitySign) te;
+            if (event.getEntityPlayer().isSneaking() && clearSigns) {
+                ITextComponent[] text = new ITextComponent[]{new TextComponentString(""), new TextComponentString(""), new TextComponentString(""), new TextComponentString("")};
+                ObfuscationReflectionHelper.setPrivateValue(TileEntitySign.class, sign, text, "signText", "field_145915_a");
+                success = true;
+            } else if (editSigns) {
+                event.getEntityPlayer().openEditSign(sign);
+                success = true;
+            }
+        }
+
+        if (success) {
+            event.setCanceled(true);
+            event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
         }
     }
 

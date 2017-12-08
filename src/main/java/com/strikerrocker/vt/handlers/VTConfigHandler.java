@@ -26,6 +26,7 @@ public class VTConfigHandler {
     //Recipes
     public static boolean useBetterStoneToolRecipes;
     public static boolean useBetterStairsRecipes;
+    public static boolean useBetterChestRecipe;
     //Enchantments
     public static boolean vigor;
     public static boolean Nimble;
@@ -36,21 +37,21 @@ public class VTConfigHandler {
     //Miscellaneous
     public static boolean creeperBurnInDaylight;
     public static boolean babyZombieBurnInDaylight;
-    public static boolean autoSeedPlanting;
     public static float binocularZoomAmount;
-    public static List<Block> additionalFallingBlocks;
     public static boolean mobSpawnerSilkTouchDrop;
     //Miscellaneous: Requires Restart
     public static boolean commandBlockInRedstoneTab;
-    public static boolean enableFlintAndSteelDispenserBehavior;
+    public static boolean storageBlocks;
     public static boolean renameButtons;
-    public static boolean craftingTableChanges;
+    public static boolean craftingPad;
     public static boolean pedestal;
     public static boolean NoMoreLavaPocketGen;
-    public static boolean endframebroken;
+    public static boolean endFrameBroken;
+    public static boolean editSigns;
+    public static boolean clearSigns;
 
     /**
-     * Initializes the config handler for Craft++
+     * Initializes the config handler for VanillaTweaks
      *
      * @param configFile The configuration file (fetched from the FMLPreInitializationEvent)
      */
@@ -74,7 +75,8 @@ public class VTConfigHandler {
         String recipesCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Recipes";
         useBetterStoneToolRecipes = get(recipesCategory, "Stone tools crafted from stone", true, "Are stone tools crafted out of stone?");
         useBetterStairsRecipes = get(recipesCategory, "Better stairs recipe enabled", true, "Is the better stairs recipe enabled?");
-        config.setCategoryComment(recipesCategory, "Toggle Craft++'s recipe enhancements");
+        useBetterChestRecipe = get(recipesCategory, "Better Chest recipe enabled", true, "Is the better chest recipe enabled");
+        config.setCategoryComment(recipesCategory, "Toggle VanillaTweaks's recipe enhancements");
         config.setCategoryRequiresMcRestart(recipesCategory, true);
 
         String enchantmentsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Enchantments";
@@ -89,20 +91,20 @@ public class VTConfigHandler {
         String miscCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Miscellaneous";
         creeperBurnInDaylight = get(miscCategory, "Creepers burn in daylight", true, "Do creepers burn in daylight?");
         babyZombieBurnInDaylight = get(miscCategory, "Baby zombies burn in daylight", true, "Do baby zombies burn in daylight?");
-        autoSeedPlanting = get(miscCategory, "Enable automatic seed planting", true, "Do dropped seeds plant themselves?");
         binocularZoomAmount = (float) get(miscCategory, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
-        additionalFallingBlocks = Arrays.stream(config.getStringList("Additional Falling Blocks", miscCategory, new String[]{"minecraft:dirt", "minecraft:clay"}, "A list of additional blocks that can fall like sand.")).map(Block::getBlockFromName).filter(block -> block != null).collect(Collectors.toList());
         mobSpawnerSilkTouchDrop = get(miscCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
         NoMoreLavaPocketGen = get(miscCategory, "No More Lava Pockets", true, "Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
-        endframebroken = get(miscCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
         commandBlockInRedstoneTab = get(miscRequiresRestartCategory, "Command Blocks in creative menu", true, "Can command blocks be obtained from the redstone creative tab?");
-        enableFlintAndSteelDispenserBehavior = get(miscRequiresRestartCategory, "Enable flint and steel dispenser behavior", false, "Can you use flint and steel with dispensers?");
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
-        craftingTableChanges = get(miscRequiresRestartCategory, "Crafting table changes", true, "Is the way to create a 3x3 crafting device changed?");
+        craftingPad = get(miscRequiresRestartCategory, "Crafting table changes", true, "Is there an way to create a portable crafting device?");
         pedestal = get(miscRequiresRestartCategory, "Enable the pedestal", true, "Enabling the pedestal");
+        endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
+        editSigns = get(miscRequiresRestartCategory, "Sign Editing", true, "Right-click to edit signs");
+        clearSigns = get(miscRequiresRestartCategory, "Clearing Signs", true, "Shift+right-click to clear signs");
+        storageBlocks=get(miscRequiresRestartCategory,"Enables storage blocks",true,"Enables the Storage Blocks");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);
 

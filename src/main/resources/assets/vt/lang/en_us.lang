@@ -18,8 +18,18 @@ item.binoculars.name=Binoculars
 
 key.potionDisplay=Potion Effect Display
 
-advancements.vt.storage=Craft an storage block
-advancements.vt.pad=Craft an Crafting Pad
+
+advancements.vt.pad=Crafting Pad
+advancements.vt.storage=Storage Blocks
+advancements.vt.zoom=Zoom
+advancements.vt.boom=Boom!!
+advancements.vt.friedegg=Fried Egg!!
+
+advancements.vt.storage.desc=Craft the storage block
+advancements.vt.pad.desc=Craft an Crafting Pad
+advancements.vt.zoom.desc=Craft an Binoculars
+advancements.vt.boom.desc=Craft an Dynamite
+advancements.vt.friedegg.desc=Smelt an Egg
 
 enchantment.nimble=Nimble
 enchantment.hops=Hops
@@ -28,6 +38,8 @@ enchantment.veteran=Veteran
 enchantment.blazing=Blazing
 enchantment.siphon=Siphon
 enchantment.homing=Homing
+
+vt:portal_destroyed=§cYour return portal has been destroyed.
 
 enchantment.level.11=XI
 enchantment.level.12=XII
