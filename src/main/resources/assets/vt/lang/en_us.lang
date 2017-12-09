@@ -8,13 +8,11 @@ tile.sand.name=Sand/Red Sand
 tile.pedestal.name=Pedestal
 
 item.dynamite.name=Dynamite
-item.boatStone.name=Stone Boat
-item.boatObsidian.name=Obsidian Boat
 item.friedegg.name=Fried Egg
-item.spongeWipe.name=Sponge Wipe
 item.pad.name=Crafting Pad
 item.lens.name=Binocular Lens
 item.binoculars.name=Binoculars
+item.slime.name=Slime Finder
 
 key.potionDisplay=Potion Effect Display
 

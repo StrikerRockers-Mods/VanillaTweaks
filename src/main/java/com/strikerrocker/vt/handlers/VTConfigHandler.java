@@ -1,16 +1,13 @@
 package com.strikerrocker.vt.handlers;
 
-import com.strikerrocker.vt.vt;
-import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.config.GuiConfigEntries.NumberSliderEntry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import static com.strikerrocker.vt.vt.logInfo;
 
 /**
  * The config handler for VanillaTweaks
@@ -39,6 +36,9 @@ public class VTConfigHandler {
     public static boolean babyZombieBurnInDaylight;
     public static float binocularZoomAmount;
     public static boolean mobSpawnerSilkTouchDrop;
+    public static boolean autoClimbLadder;
+    public static boolean editSigns;
+    public static boolean clearSigns;
     //Miscellaneous: Requires Restart
     public static boolean commandBlockInRedstoneTab;
     public static boolean storageBlocks;
@@ -47,8 +47,7 @@ public class VTConfigHandler {
     public static boolean pedestal;
     public static boolean NoMoreLavaPocketGen;
     public static boolean endFrameBroken;
-    public static boolean editSigns;
-    public static boolean clearSigns;
+    public static boolean slimeChunkFinder;
 
     /**
      * Initializes the config handler for VanillaTweaks
@@ -65,7 +64,7 @@ public class VTConfigHandler {
      * Syncs the config file
      */
     public static void syncConfig() {
-        vt.logInfo("Syncing config file");
+        logInfo("Syncing config file");
         String mobDropsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Mob Drops";
         creeperDropTntChance = get(mobDropsCategory, "Chance of creepers dropping TNT", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
         batLeatherDropChance = get(mobDropsCategory, "Chance of bats dropping leather", 10D, "The chance of bats dropping leather, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
@@ -94,6 +93,9 @@ public class VTConfigHandler {
         binocularZoomAmount = (float) get(miscCategory, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
         mobSpawnerSilkTouchDrop = get(miscCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
         NoMoreLavaPocketGen = get(miscCategory, "No More Lava Pockets", true, "Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
+        autoClimbLadder = get(miscCategory, "Auto climbs Ladders", true, "Makes you climb ladders automatically by just looking upwards, rather than requiring a key to be held down.");
+        editSigns = get(miscCategory, "Sign Editing", true, "Right-click to edit signs");
+        clearSigns = get(miscCategory, "Clearing Signs", true, "Shift+right-click to clear signs");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
@@ -101,10 +103,9 @@ public class VTConfigHandler {
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
         craftingPad = get(miscRequiresRestartCategory, "Crafting table changes", true, "Is there an way to create a portable crafting device?");
         pedestal = get(miscRequiresRestartCategory, "Enable the pedestal", true, "Enabling the pedestal");
-        endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
-        editSigns = get(miscRequiresRestartCategory, "Sign Editing", true, "Right-click to edit signs");
-        clearSigns = get(miscRequiresRestartCategory, "Clearing Signs", true, "Shift+right-click to clear signs");
+        endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Po    rtal Frame to be broken");
         storageBlocks=get(miscRequiresRestartCategory,"Enables storage blocks",true,"Enables the Storage Blocks");
+        slimeChunkFinder = get(miscRequiresRestartCategory, "Enables slime chunk finder", true, "Enables the Slime Chunk Finder");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);
 
