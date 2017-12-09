@@ -3,9 +3,9 @@
     "modid": "vt",
     "name": "Vanilla Tweaks",
     "description": "",
-    "version": "1.1.11",
+    "version": "1.2.0",
     "mcversion": "1.12.2",
-    "url": "",
+    "url": "http://strikerrocker.github.io/VanillaTweaks",
     "updateUrl": "",
     "authorList": [
       "StrikerRocker"

@@ -1,12 +1,12 @@
 package com.strikerrocker.vt.items;
 
-import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.vt;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import static com.strikerrocker.vt.handlers.VTConfigHandler.craftingPad;
+import static com.strikerrocker.vt.handlers.VTConfigHandler.slimeChunkFinder;
 
 /**
  * Contains, initializes, and registers all of Craft++'s items
@@ -17,6 +17,7 @@ public class VTItems {
     public static ItemCraftingPad pad = new ItemCraftingPad("pad");
     public static ItemDynamite dynamite = new ItemDynamite("dynamite");
     public static ItemFriedEgg friedegg = new ItemFriedEgg();
+    public static ItemSlimeBucket slime = new ItemSlimeBucket("slime");
     public static ItemBase lens = new ItemBase("lens");
 
 
@@ -28,6 +29,9 @@ public class VTItems {
         registry.register(friedegg);
         registry.register(dynamite);
         registry.register(lens);
+        if (slimeChunkFinder) {
+            registry.register(slime);
+        }
     }
 
     public static void registerModels() {
@@ -38,6 +42,9 @@ public class VTItems {
         friedegg.registerItemModel();
         dynamite.registerItemModel();
         lens.registerItemModel();
+        if (slimeChunkFinder) {
+            slime.registerItemModel();
+        }
     }
 
 }

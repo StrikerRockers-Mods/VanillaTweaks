@@ -1,7 +1,6 @@
 package com.strikerrocker.vt.handlers;
 
 import com.strikerrocker.vt.VTUtils;
-import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
@@ -27,22 +26,23 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemShears;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.FOVUpdateEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -57,8 +57,8 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -68,9 +68,11 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static com.strikerrocker.vt.enchantments.VTEnchantments.Homing;
+import static com.strikerrocker.vt.enchantments.VTEnchantments.Hops;
 import static com.strikerrocker.vt.enchantments.VTEnchantments.*;
-import static com.strikerrocker.vt.handlers.VTConfigHandler.clearSigns;
-import static com.strikerrocker.vt.handlers.VTConfigHandler.editSigns;
+import static com.strikerrocker.vt.enchantments.VTEnchantments.Veteran;
+import static com.strikerrocker.vt.handlers.VTConfigHandler.*;
 
 /**
  * The event handler for Vanilla Tweaks
@@ -340,15 +342,9 @@ public final class VTEventHandler {
         }
     }
 
-    /**
-     * Prevents taking extra fall damage from the Hops enchantment
-     *
-     * @param event The LivingFallEvent
-     */
-    @SubscribeEvent
-    public void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0)
-            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
+    public static boolean isSlimeChunk(World world, int x, int z) {
+        Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
+        return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
     }
 
 
@@ -504,6 +500,43 @@ public final class VTEventHandler {
         if (success) {
             event.setCanceled(true);
             event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
+        }
+    }
+
+    /**
+     * Prevents taking extra fall damage from the Hops enchantment
+     *
+     * @param event The LivingFallEvent
+     */
+    @SubscribeEvent
+    public void onLivingFall(LivingFallEvent event) {
+        if (EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0)
+            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
+    }
+
+    @SubscribeEvent
+    public void onRightClick(PlayerInteractEvent.RightClickItem event) {
+        if (!event.getWorld().isRemote && slimeChunkFinder) {
+            ItemStack slimestack = new ItemStack(VTItems.slime);
+            if (event.getEntityPlayer().getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqual(slimestack)) {
+                int x = MathHelper.floor(event.getEntityPlayer().posX);
+                int y = MathHelper.floor(event.getEntityPlayer().posY);
+                int z = MathHelper.floor(event.getEntityPlayer().posZ);
+                boolean slime = isSlimeChunk(event.getWorld(), x, y);
+                if (slime) {
+                    event.getEntityPlayer().sendStatusMessage(new TextComponentString("Slime Chunk"), true);
+                }
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.START && autoClimbLadder) {
+            if (event.player.isOnLadder() && !event.player.isSneaking() && event.player.rotationPitch <= -50f) {
+                event.player.motionY = 0.5;
+            }
         }
     }
 

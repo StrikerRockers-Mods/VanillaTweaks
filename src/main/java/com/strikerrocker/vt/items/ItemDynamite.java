@@ -1,6 +1,5 @@
 package com.strikerrocker.vt.items;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import com.strikerrocker.vt.entities.EntityDynamite;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,8 +11,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Dynamite item to go along-side dynamite entity
@@ -49,12 +46,6 @@ public class ItemDynamite extends ItemBase {
         playerIn.addStat(StatList.getObjectUseStats(this));
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
 
-    }
-
-
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, java.util.List<String> info, boolean par4) {
-        info.add(ChatFormatting.RED + "This doesn't work.");
     }
 
 }
