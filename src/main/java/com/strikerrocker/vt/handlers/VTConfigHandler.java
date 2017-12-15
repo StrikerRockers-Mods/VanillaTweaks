@@ -39,6 +39,7 @@ public class VTConfigHandler {
     public static boolean autoClimbLadder;
     public static boolean editSigns;
     public static boolean clearSigns;
+    public static boolean stairSit;
     //Miscellaneous: Requires Restart
     public static boolean commandBlockInRedstoneTab;
     public static boolean storageBlocks;
@@ -96,6 +97,7 @@ public class VTConfigHandler {
         autoClimbLadder = get(miscCategory, "Auto climbs Ladders", true, "Makes you climb ladders automatically by just looking upwards, rather than requiring a key to be held down.");
         editSigns = get(miscCategory, "Sign Editing", true, "Right-click to edit signs");
         clearSigns = get(miscCategory, "Clearing Signs", true, "Shift+right-click to clear signs");
+        stairSit = get(miscCategory, "Sit on Stair & slabs", true, "Allows the player to sit on slabs & stairs");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
