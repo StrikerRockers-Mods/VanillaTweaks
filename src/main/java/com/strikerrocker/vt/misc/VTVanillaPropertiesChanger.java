@@ -4,6 +4,8 @@ import com.strikerrocker.vt.handlers.VTConfigHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 
+import static com.strikerrocker.vt.handlers.VTConfigHandler.endFrameBroken;
+
 /**
  * The vanilla properties changer for Vanilla Tweaks
  */
@@ -21,6 +23,11 @@ public class VTVanillaPropertiesChanger {
         if (VTConfigHandler.renameButtons) {
             Blocks.STONE_BUTTON.setUnlocalizedName("buttonStone");
             Blocks.WOODEN_BUTTON.setUnlocalizedName("buttonWood");
+        }
+        //Modifying End Portal Frame harvestability
+        if (endFrameBroken) {
+            Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 2);
+            Blocks.END_PORTAL_FRAME.setHardness(5.0F);
         }
     }
 }
