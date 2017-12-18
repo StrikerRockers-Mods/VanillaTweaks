@@ -1,7 +1,9 @@
 package com.strikerrocker.vt.gui;
 
+import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.vt;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -15,6 +17,7 @@ import java.lang.reflect.Method;
 @SideOnly(Side.CLIENT)
 public class GuiCraftingPad extends GuiContainer {
     private static final ResourceLocation craftingTableGuiTexture = new ResourceLocation("textures/gui/container/crafting_table.png");
+    private InventoryPlayer playerInv;
 
     static {
         try {
@@ -39,6 +42,8 @@ public class GuiCraftingPad extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        String name = I18n.format(VTItems.pad.getUnlocalizedName() + ".name");
+        fontRenderer.drawString(name, xSize / 2 - fontRenderer.getStringWidth(name) / 2, 6, 0x404040);
     }
 
     @Override

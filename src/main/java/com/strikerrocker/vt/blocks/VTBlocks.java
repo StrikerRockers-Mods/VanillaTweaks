@@ -3,12 +3,10 @@ package com.strikerrocker.vt.blocks;
 import com.strikerrocker.vt.blocks.pedestal.BlockPedestal;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import static com.strikerrocker.vt.handlers.VTConfigHandler.endFrameBroken;
 import static com.strikerrocker.vt.handlers.VTConfigHandler.storageBlocks;
 
 /**
@@ -30,10 +28,6 @@ public class VTBlocks {
 
         if (VTConfigHandler.pedestal) {
             pedestal = new BlockPedestal();
-        }
-        if (endFrameBroken) {
-            Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 2);
-            Blocks.END_PORTAL_FRAME.setHardness(5.0F);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.strikerrocker.vt.blocks.pedestal;
 
 import com.strikerrocker.vt.blocks.BlockTileEntity;
+import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.vt;
 import net.minecraft.block.material.Material;
@@ -60,9 +61,12 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
         TileEntityPedestal tile = getTileEntity(world, pos);
         IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
         ItemStack stack = itemHandler.getStackInSlot(0);
+        ItemStack ped = new ItemStack(VTBlocks.pedestal);
         if (!stack.isEmpty()) {
             EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+            EntityItem pedestal = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), ped);
             world.spawnEntity(item);
+            world.spawnEntity(pedestal);
         }
         super.breakBlock(world, pos, state);
     }

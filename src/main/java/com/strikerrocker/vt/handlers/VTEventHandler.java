@@ -90,6 +90,11 @@ public final class VTEventHandler {
     private static boolean displayPotionEffects = true;
 
 
+    /**
+     * Returns if the given chunk is an slime chunk or not
+     *
+     * @param world World,x int,z int
+     */
     public static boolean isSlimeChunk(World world, int x, int z) {
         Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
@@ -277,6 +282,11 @@ public final class VTEventHandler {
         }
     }
 
+    /**
+     * Allows the End Portal Frame to be broken
+     *
+     * @param event The BreakEvent
+     */
     @SubscribeEvent
     public void onPortalBreak(BlockEvent.BreakEvent event) {
         EntityPlayer player = event.getPlayer();
@@ -415,6 +425,11 @@ public final class VTEventHandler {
         }
     }
 
+    /**
+     * Enables auto ladder climber
+     *
+     * @param event The PlayerTickEvent
+     */
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -425,6 +440,11 @@ public final class VTEventHandler {
         }
     }
 
+    /**
+     * Allows the player to dismount from the Entity Sitting
+     *
+     * @param event The EntityMountEvent
+     */
     @SubscribeEvent
     public void onEntityMount(EntityMountEvent event) {
         if (event.isDismounting()) {
@@ -437,6 +457,11 @@ public final class VTEventHandler {
         }
     }
 
+    /**
+     * Allows the player to edit and clear signs
+     *
+     * @param event The RightClickBlockEvent
+     */
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         boolean success = false;
@@ -460,6 +485,11 @@ public final class VTEventHandler {
         }
     }
 
+    /**
+     * Enables the functionality of slime finder
+     *
+     * @param event The RightClickItemEvent
+     */
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent.RightClickItem event) {
         if (!event.getWorld().isRemote && slimeChunkFinder) {
@@ -510,6 +540,12 @@ public final class VTEventHandler {
             }
         }
     }
+
+    /**
+     * Allows the sitting functionality
+     *
+     * @param event The RightClickBlockEvent
+     */
 
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent.RightClickBlock event) {
@@ -562,6 +598,5 @@ public final class VTEventHandler {
             }
         }
     }
-
 
 }

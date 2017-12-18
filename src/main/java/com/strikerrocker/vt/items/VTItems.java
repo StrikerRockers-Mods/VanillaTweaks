@@ -9,7 +9,7 @@ import static com.strikerrocker.vt.handlers.VTConfigHandler.craftingPad;
 import static com.strikerrocker.vt.handlers.VTConfigHandler.slimeChunkFinder;
 
 /**
- * Contains, initializes, and registers all of Craft++'s items
+ * Contains, initializes, and registers all of VanillaTweaks's items
  */
 public class VTItems {
 
