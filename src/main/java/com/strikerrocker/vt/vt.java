@@ -2,10 +2,7 @@ package com.strikerrocker.vt;
 
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.entities.VTEntities;
-import com.strikerrocker.vt.handlers.VTConfigHandler;
-import com.strikerrocker.vt.handlers.VTEventHandler;
-import com.strikerrocker.vt.handlers.VTFuelHandler;
-import com.strikerrocker.vt.handlers.VTGuiHandler;
+import com.strikerrocker.vt.handlers.*;
 import com.strikerrocker.vt.items.ItemArmor;
 import com.strikerrocker.vt.misc.NetherPortalFix;
 import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
@@ -73,6 +70,7 @@ public class vt {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         GameRegistry.registerFuelHandler(new VTFuelHandler());
         MinecraftForge.EVENT_BUS.register(VTEventHandler.instance);
+        MinecraftForge.EVENT_BUS.register(new VTSoundHandler());
         VTVanillaPropertiesChanger.init();
         MinecraftForge.EVENT_BUS.register(NetherPortalFix.class);
     }

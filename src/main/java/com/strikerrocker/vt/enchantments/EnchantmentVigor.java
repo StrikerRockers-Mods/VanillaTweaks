@@ -7,7 +7,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 
 import java.util.UUID;
 
@@ -71,9 +70,5 @@ public class EnchantmentVigor extends Enchantment {
         }
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return true;
-    }
 
 }

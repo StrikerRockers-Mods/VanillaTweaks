@@ -3,7 +3,6 @@ package com.strikerrocker.vt.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 
 /**
  * Gives the wearer jump boost
@@ -34,8 +33,5 @@ public class EnchantmentHops extends Enchantment {
         return true;
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return true;
-    }
+
 }
