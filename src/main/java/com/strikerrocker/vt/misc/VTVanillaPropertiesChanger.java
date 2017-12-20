@@ -29,5 +29,7 @@ public class VTVanillaPropertiesChanger {
             Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 2);
             Blocks.END_PORTAL_FRAME.setHardness(5.0F);
         }
+
+
     }
 }

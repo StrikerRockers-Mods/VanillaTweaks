@@ -9,7 +9,11 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -31,9 +35,11 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.tileentity.TileEntitySign;
@@ -46,7 +52,10 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -61,6 +70,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -95,7 +105,7 @@ public final class VTEventHandler {
      *
      * @param world World,x int,z int
      */
-    public static boolean isSlimeChunk(World world, int x, int z) {
+    private static boolean isSlimeChunk(World world, int x, int z) {
         Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
     }
@@ -117,8 +127,7 @@ public final class VTEventHandler {
      * @param event The ArrowNockEvent
      */
     @SubscribeEvent
-
-    public void onArrowNock(ArrowNockEvent event) {
+    public void onArrowLoose(ArrowNockEvent event) {
         if (event.getEntity() instanceof EntityArrow) {
             EntityArrow arrow = (EntityArrow) event.getEntity();
             EntityLivingBase shooter = (EntityLivingBase) arrow.shootingEntity;
@@ -127,7 +136,7 @@ public final class VTEventHandler {
                 double distance = Math.pow(2, homingLevel - 1) * 32;
                 World world = arrow.world;
 
-                @SuppressWarnings("unchecked") List<EntityLivingBase> livingEntities = world.getEntities(EntityLivingBase.class, EntitySelectors.NOT_SPECTATING);
+                List<EntityLivingBase> livingEntities = world.getEntities(EntityLivingBase.class, EntitySelectors.NOT_SPECTATING);
                 EntityLivingBase target = null;
                 for (EntityLivingBase livingEntity : livingEntities) {
                     double distanceToArrow = livingEntity.getDistance(arrow);
@@ -141,7 +150,7 @@ public final class VTEventHandler {
                     double x = target.posX - arrow.posX;
                     double y = target.getEntityBoundingBox().minY + target.height / 2 - (arrow.posY + arrow.height / 2);
                     double z = target.posZ - arrow.posZ;
-                    arrow.setPositionAndRotation(x, y, z, 1.25F, 0);
+                    arrow.setPositionAndUpdate(x, y, z);
                 }
             }
         }
@@ -179,8 +188,9 @@ public final class VTEventHandler {
      *
      * @param event The ClientTickEvent
      */
-    @SideOnly(Side.CLIENT)
+
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onClientTick(TickEvent.ClientTickEvent event) {
         World world = Minecraft.getMinecraft().world;
         if (world != null) {
@@ -386,7 +396,7 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void onFOVUpdate(FOVUpdateEvent event) {
         ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-        if (helmet != null && helmet.getItem() == VTItems.binoculars)
+        if (!helmet.isEmpty() && helmet.getItem() == VTItems.binoculars)
             event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
     }
 
@@ -407,8 +417,8 @@ public final class VTEventHandler {
                 BlockPos blockPos = new BlockPos(livingEntity.posX, Math.round(livingEntity.posY), livingEntity.posZ);
                 if (f > 0.5 && random.nextFloat() * 30 < (f - 0.4) * 2 && world.canSeeSky(blockPos)) {
                     ItemStack itemstack = livingEntity.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                    boolean doSetFire = true;
-                    if (itemstack != null) {
+                    boolean doSetFire = false;
+                    if (!itemstack.isEmpty()) {
                         doSetFire = true;
                         if (itemstack.isItemStackDamageable()) {
                             itemstack.setItemDamage(itemstack.getItemDamage() + random.nextInt(2));
@@ -425,20 +435,6 @@ public final class VTEventHandler {
         }
     }
 
-    /**
-     * Enables auto ladder climber
-     *
-     * @param event The PlayerTickEvent
-     */
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.START && autoClimbLadder) {
-            if (event.player.isOnLadder() && !event.player.isSneaking() && event.player.rotationPitch <= -50f) {
-                event.player.motionY = 0.5;
-            }
-        }
-    }
 
     /**
      * Allows the player to dismount from the Entity Sitting
@@ -513,12 +509,12 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void entityRightclick(PlayerInteractEvent.EntityInteract event) {
-        if (event.getEntityPlayer().getHeldItemMainhand() != null) {
+        if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty()) {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack heldItem = player.getHeldItemMainhand();
             World world = player.world;
             Entity target = event.getTarget();
-            if (heldItem != null && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
+            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
                 target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
                 target.entityDropItem(nameTag, 0);
@@ -526,12 +522,12 @@ public final class VTEventHandler {
                 heldItem.damageItem(1, player);
             }
         }
-        if (event.getEntityPlayer().getHeldItemOffhand() != null) {
+        if (!event.getEntityPlayer().getHeldItemOffhand().isEmpty()) {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack heldItem = player.getHeldItemOffhand();
             World world = player.world;
             Entity target = event.getTarget();
-            if (heldItem != null && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
+            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
                 target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
                 target.entityDropItem(nameTag, 0);
@@ -596,6 +592,62 @@ public final class VTEventHandler {
                         event.getToolTip().add(color + localizedEntityName);
                 }
             }
+        }
+    }
+
+    /**
+     * Prevents potion effects from shifting your inventory to the side.
+     *
+     * @param event The PotionShiftEventf
+     */
+    @SubscribeEvent
+    public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
+        event.setCanceled(true);
+    }
+
+
+    /**
+     * Adds an tooltip for foods to show the hunger bars
+     *
+     * @param event The PostTextEvent
+     */
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void renderTooltip(RenderTooltipEvent.PostText event) {
+        if (!event.getStack().isEmpty() && event.getStack().getItem() instanceof ItemFood) {
+            int divisor = 2;
+            GlStateManager.pushMatrix();
+            GlStateManager.color(1F, 1F, 1F);
+            Minecraft mc = Minecraft.getMinecraft();
+            mc.getTextureManager().bindTexture(GuiIngameForge.ICONS);
+            ItemFood food = ((ItemFood) event.getStack().getItem());
+            int pips = food.getHealAmount(event.getStack());
+            PotionEffect eff = ReflectionHelper.getPrivateValue(ItemFood.class, food, VTUtils.POTION_ID);
+            boolean poison = eff != null && eff.getPotion() != null && eff.getPotion().isBadEffect();
+            for (int i = 0; i < Math.ceil((double) pips / divisor); i++) {
+                int x = event.getX() + i * 9 - 2;
+                int y = event.getY() + 12;
+
+                if (mc.currentScreen instanceof GuiContainerCreative && ((GuiContainerCreative) mc.currentScreen).getSelectedTabIndex() == CreativeTabs.SEARCH.getTabIndex())
+                    y += 10;
+
+                int u = 16;
+                if (poison)
+                    u += 117;
+                int v = 27;
+
+                Gui.drawModalRectWithCustomSizedTexture(x, y, u, v, 9, 9, 256, 256);
+
+                u = 52;
+                if (pips % 2 != 0 && i == 0)
+                    u += 9;
+                if (poison)
+                    u += 36;
+
+                Gui.drawModalRectWithCustomSizedTexture(x, y, u, v, 9, 9, 256, 256);
+            }
+
+            GlStateManager.popMatrix();
         }
     }
 

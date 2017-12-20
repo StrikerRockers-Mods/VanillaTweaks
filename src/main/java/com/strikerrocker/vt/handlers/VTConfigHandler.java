@@ -17,13 +17,17 @@ public class VTConfigHandler {
      * The actual configuration containing the configuration file
      */
     public static Configuration config;
-    //Mob Drops
+    //Drops
     public static double creeperDropTntChance;
     public static double batLeatherDropChance;
+    public static boolean creeperBurnInDaylight;
+    public static boolean babyZombieBurnInDaylight;
+    public static boolean mobSpawnerSilkTouchDrop;
     //Recipes
     public static boolean useBetterStoneToolRecipes;
     public static boolean useBetterStairsRecipes;
     public static boolean useBetterChestRecipe;
+    public static boolean useBetterMinecartRecipies;
     //Enchantments
     public static boolean vigor;
     public static boolean Nimble;
@@ -31,24 +35,24 @@ public class VTConfigHandler {
     public static boolean Veteran;
     public static boolean siphon;
     public static boolean Homing;
-    //Miscellaneous
-    public static boolean creeperBurnInDaylight;
-    public static boolean babyZombieBurnInDaylight;
+    //Vanillatweaks
     public static float binocularZoomAmount;
-    public static boolean mobSpawnerSilkTouchDrop;
-    public static boolean autoClimbLadder;
-    public static boolean editSigns;
-    public static boolean clearSigns;
-    public static boolean stairSit;
-    //Miscellaneous: Requires Restart
-    public static boolean commandBlockInRedstoneTab;
     public static boolean storageBlocks;
-    public static boolean renameButtons;
     public static boolean craftingPad;
     public static boolean pedestal;
     public static boolean NoMoreLavaPocketGen;
     public static boolean endFrameBroken;
     public static boolean slimeChunkFinder;
+    //Miscellaneous
+    public static boolean editSigns;
+    public static boolean clearSigns;
+    public static boolean stairSit;
+    public static boolean silenceWither;
+    public static boolean silenceDragon;
+    public static boolean silenceLightning;
+    //Miscellaneous: Requires Restart
+    public static boolean commandBlockInRedstoneTab;
+    public static boolean renameButtons;
 
     /**
      * Initializes the config handler for VanillaTweaks
@@ -66,16 +70,20 @@ public class VTConfigHandler {
      */
     public static void syncConfig() {
         logInfo("Syncing config file");
-        String mobDropsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Mob Drops";
-        creeperDropTntChance = get(mobDropsCategory, "Chance of creepers dropping TNT", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
-        batLeatherDropChance = get(mobDropsCategory, "Chance of bats dropping leather", 10D, "The chance of bats dropping leather, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
-        config.setCategoryComment(mobDropsCategory, "Modify mob drops");
+        String DropsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Drops";
+        creeperDropTntChance = get(DropsCategory, "Chance of creepers dropping TNT", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
+        batLeatherDropChance = get(DropsCategory, "Chance of bats dropping leather", 10D, "The chance of bats dropping leather, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
+        creeperBurnInDaylight = get(DropsCategory, "Creepers burn in daylight", true, "Do creepers burn in daylight?");
+        babyZombieBurnInDaylight = get(DropsCategory, "Baby zombies burn in daylight", true, "Do baby zombies burn in daylight?");
+        mobSpawnerSilkTouchDrop = get(DropsCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
+        config.setCategoryComment(DropsCategory, "Modify mob drops");
 
 
         String recipesCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Recipes";
         useBetterStoneToolRecipes = get(recipesCategory, "Stone tools crafted from stone", true, "Are stone tools crafted out of stone?");
         useBetterStairsRecipes = get(recipesCategory, "Better stairs recipe enabled", true, "Is the better stairs recipe enabled?");
         useBetterChestRecipe = get(recipesCategory, "Better Chest recipe enabled", true, "Is the better chest recipe enabled");
+        useBetterMinecartRecipies = get(recipesCategory, "Better Minecart recipies", true, "Are the better minecart recipies enaabled?");
         config.setCategoryComment(recipesCategory, "Toggle VanillaTweaks's recipe enhancements");
         config.setCategoryRequiresMcRestart(recipesCategory, true);
 
@@ -88,26 +96,28 @@ public class VTConfigHandler {
         Homing = get(enchantmentsCategory, "Enables Homing Enchantment", true, "Enables Homing Enchantment");
         config.setCategoryRequiresMcRestart(enchantmentsCategory, true);
 
+        String VanillaTweaks = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Blocks and Items from VT";
+        binocularZoomAmount = (float) get(VanillaTweaks, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
+        craftingPad = get(VanillaTweaks, "Crafting table changes", true, "Is there an way to create a portable crafting device?");
+        pedestal = get(VanillaTweaks, "Enable the pedestal", true, "Enabling the pedestal");
+        endFrameBroken = get(VanillaTweaks, "Breakable End Portal Frame", false, "Makes the End Po    rtal Frame to be broken");
+        storageBlocks = get(VanillaTweaks, "Enables storage blocks", true, "Enables the Storage Blocks");
+        slimeChunkFinder = get(VanillaTweaks, "Enables slime chunk finder", true, "Enables the Slime Chunk Finder");
+        config.setCategoryComment(VanillaTweaks, "Config for blocks and items from VT");
+        config.setCategoryRequiresMcRestart(VanillaTweaks, true);
+
         String miscCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Miscellaneous";
-        creeperBurnInDaylight = get(miscCategory, "Creepers burn in daylight", true, "Do creepers burn in daylight?");
-        babyZombieBurnInDaylight = get(miscCategory, "Baby zombies burn in daylight", true, "Do baby zombies burn in daylight?");
-        binocularZoomAmount = (float) get(miscCategory, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
-        mobSpawnerSilkTouchDrop = get(miscCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
         NoMoreLavaPocketGen = get(miscCategory, "No More Lava Pockets", true, "Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
-        autoClimbLadder = get(miscCategory, "Auto climbs Ladders", true, "Makes you climb ladders automatically by just looking upwards, rather than requiring a key to be held down.");
         editSigns = get(miscCategory, "Sign Editing", true, "Right-click to edit signs");
         clearSigns = get(miscCategory, "Clearing Signs", true, "Shift+right-click to clear signs");
         stairSit = get(miscCategory, "Sit on Stair & slabs", true, "Allows the player to sit on slabs & stairs");
+        silenceDragon = get(miscCategory, "", true, "Silence the Brodcast of ender dragon sound");
+        silenceWither = get(miscCategory, "", true, "Silence the Brodcast of wither sound");
+        silenceLightning = get(miscCategory, "", true, "Silence the sound of lightning");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
-        commandBlockInRedstoneTab = get(miscRequiresRestartCategory, "Command Blocks in creative menu", true, "Can command blocks be obtained from the redstone creative tab?");
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
-        craftingPad = get(miscRequiresRestartCategory, "Crafting table changes", true, "Is there an way to create a portable crafting device?");
-        pedestal = get(miscRequiresRestartCategory, "Enable the pedestal", true, "Enabling the pedestal");
-        endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Po    rtal Frame to be broken");
-        storageBlocks=get(miscRequiresRestartCategory,"Enables storage blocks",true,"Enables the Storage Blocks");
-        slimeChunkFinder = get(miscRequiresRestartCategory, "Enables slime chunk finder", true, "Enables the Slime Chunk Finder");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);
 

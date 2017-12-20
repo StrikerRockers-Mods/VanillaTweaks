@@ -3,7 +3,6 @@ package com.strikerrocker.vt.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 
 /**
  * Draws experience points and item entities toward the wearer
@@ -30,8 +29,4 @@ public class EnchantmentVeteran extends Enchantment {
         return 40;
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return true;
-    }
 }
