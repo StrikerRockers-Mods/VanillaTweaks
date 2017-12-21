@@ -11,9 +11,11 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-version = "1.1.14"
+version = "1.1.16"
 group = "com.StrikerRocker.vt" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "VanillaTweaks"
+
+
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -26,7 +28,18 @@ minecraft {
     mappings = "snapshot_20171003"
 }
 
+repositories {
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+}
+
+
 dependencies {
+    deobfCompile "mezz.jei:jei_${jei_mcversion}:${jei_version}:api"
+    runtime "mezz.jei:jei_${jei_mcversion}:${jei_version}"
 }
 
 processResources {

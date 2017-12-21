@@ -53,6 +53,7 @@ public class VTConfigHandler {
     //Miscellaneous: Requires Restart
     public static boolean commandBlockInRedstoneTab;
     public static boolean renameButtons;
+    public static double stackSize;
 
     /**
      * Initializes the config handler for VanillaTweaks
@@ -76,6 +77,8 @@ public class VTConfigHandler {
         creeperBurnInDaylight = get(DropsCategory, "Creepers burn in daylight", true, "Do creepers burn in daylight?");
         babyZombieBurnInDaylight = get(DropsCategory, "Baby zombies burn in daylight", true, "Do baby zombies burn in daylight?");
         mobSpawnerSilkTouchDrop = get(DropsCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
+        stackSize = get(DropsCategory, "", 4D, "", true).setMinValue(1).setMaxValue(16).getDouble();
+        ;
         config.setCategoryComment(DropsCategory, "Modify mob drops");
 
 
@@ -83,7 +86,6 @@ public class VTConfigHandler {
         useBetterStoneToolRecipes = get(recipesCategory, "Stone tools crafted from stone", true, "Are stone tools crafted out of stone?");
         useBetterStairsRecipes = get(recipesCategory, "Better stairs recipe enabled", true, "Is the better stairs recipe enabled?");
         useBetterChestRecipe = get(recipesCategory, "Better Chest recipe enabled", true, "Is the better chest recipe enabled");
-        useBetterMinecartRecipies = get(recipesCategory, "Better Minecart recipies", true, "Are the better minecart recipies enaabled?");
         config.setCategoryComment(recipesCategory, "Toggle VanillaTweaks's recipe enhancements");
         config.setCategoryRequiresMcRestart(recipesCategory, true);
 
@@ -100,7 +102,6 @@ public class VTConfigHandler {
         binocularZoomAmount = (float) get(VanillaTweaks, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
         craftingPad = get(VanillaTweaks, "Crafting table changes", true, "Is there an way to create a portable crafting device?");
         pedestal = get(VanillaTweaks, "Enable the pedestal", true, "Enabling the pedestal");
-        endFrameBroken = get(VanillaTweaks, "Breakable End Portal Frame", false, "Makes the End Po    rtal Frame to be broken");
         storageBlocks = get(VanillaTweaks, "Enables storage blocks", true, "Enables the Storage Blocks");
         slimeChunkFinder = get(VanillaTweaks, "Enables slime chunk finder", true, "Enables the Slime Chunk Finder");
         config.setCategoryComment(VanillaTweaks, "Config for blocks and items from VT");
@@ -118,8 +119,10 @@ public class VTConfigHandler {
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
+        endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);
+
 
         if (config.hasChanged())
             config.save();
