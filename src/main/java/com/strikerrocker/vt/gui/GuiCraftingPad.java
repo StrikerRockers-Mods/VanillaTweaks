@@ -1,7 +1,6 @@
 package com.strikerrocker.vt.gui;
 
 import com.strikerrocker.vt.items.VTItems;
-import com.strikerrocker.vt.vt;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,30 +10,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 @SideOnly(Side.CLIENT)
 public class GuiCraftingPad extends GuiContainer {
     private static final ResourceLocation craftingTableGuiTexture = new ResourceLocation("textures/gui/container/crafting_table.png");
     private InventoryPlayer playerInv;
-
-    static {
-        try {
-            Class<?> neiApi = Class.forName("codechicken.nei.api.API");
-            Class<?> overlayHandler = Class.forName("codechicken.nei.api.IOverlayHandler");
-            Class<?> defaultOverlayHandler = Class.forName("codechicken.nei.recipe.DefaultOverlayHandler");
-            Method registerGuiOverlayMethod = neiApi.getMethod("registerGuiOverlay", Class.class, String.class);
-            Method registerGuiOverlayHandlerMethod = neiApi.getMethod("registerGuiOverlayHandler", Class.class, overlayHandler, String.class);
-            registerGuiOverlayMethod.invoke(null, GuiCraftingPad.class, "crafting");
-            registerGuiOverlayHandlerMethod.invoke(null, GuiCraftingPad.class, defaultOverlayHandler.newInstance(), "crafting");
-            vt.logInfo("Registered NEI integration for crafting pad");
-        } catch (NoSuchMethodException | ClassNotFoundException ignored) {
-            vt.logInfo("Could not find NEI; skipping NEI integration for crafting pad");
-        } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            e.printStackTrace();
-        }
-    }
 
     public GuiCraftingPad(InventoryPlayer inventoryPlayer, World world) {
         super(new ContainerCraftingPad(inventoryPlayer, world));

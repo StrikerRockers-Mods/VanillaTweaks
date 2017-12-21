@@ -28,7 +28,6 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
@@ -61,7 +60,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -79,7 +77,6 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.strikerrocker.vt.enchantments.VTEnchantments.Homing;
 import static com.strikerrocker.vt.enchantments.VTEnchantments.Hops;
 import static com.strikerrocker.vt.enchantments.VTEnchantments.*;
 import static com.strikerrocker.vt.enchantments.VTEnchantments.Veteran;
@@ -121,40 +118,6 @@ public final class VTEventHandler {
             VTConfigHandler.syncConfig();
     }
 
-    /**
-     * Enables the Homing enchantment functionality
-     *
-     * @param event The ArrowNockEvent
-     */
-    @SubscribeEvent
-    public void onArrowLoose(ArrowNockEvent event) {
-        if (event.getEntity() instanceof EntityArrow) {
-            EntityArrow arrow = (EntityArrow) event.getEntity();
-            EntityLivingBase shooter = (EntityLivingBase) arrow.shootingEntity;
-            if (shooter != null && EnchantmentHelper.getEnchantmentLevel(Homing, shooter.getHeldItemMainhand()) > 0) {
-                int homingLevel = EnchantmentHelper.getEnchantmentLevel(Homing, shooter.getHeldItemMainhand());
-                double distance = Math.pow(2, homingLevel - 1) * 32;
-                World world = arrow.world;
-
-                List<EntityLivingBase> livingEntities = world.getEntities(EntityLivingBase.class, EntitySelectors.NOT_SPECTATING);
-                EntityLivingBase target = null;
-                for (EntityLivingBase livingEntity : livingEntities) {
-                    double distanceToArrow = livingEntity.getDistance(arrow);
-
-                    if (distanceToArrow < distance && shooter.canEntityBeSeen(livingEntity) && !livingEntity.getPersistentID().equals(shooter.getPersistentID())) {
-                        distance = distanceToArrow;
-                        target = livingEntity;
-                    }
-                }
-                if (target != null) {
-                    double x = target.posX - arrow.posX;
-                    double y = target.getEntityBoundingBox().minY + target.height / 2 - (arrow.posY + arrow.height / 2);
-                    double z = target.posZ - arrow.posZ;
-                    arrow.setPositionAndUpdate(x, y, z);
-                }
-            }
-        }
-    }
 
     /**
      * Enables the Siphon enchantment functionality
@@ -188,15 +151,16 @@ public final class VTEventHandler {
      *
      * @param event The ClientTickEvent
      */
-
-    @SubscribeEvent
     @SideOnly(Side.CLIENT)
+    @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         World world = Minecraft.getMinecraft().world;
         if (world != null) {
+
             List<Entity> xpOrbs = world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE);
             for (Entity xpOrb : xpOrbs)
-                if (xpOrbs instanceof EntityXPOrb) {
+                if (xpOrb instanceof EntityXPOrb) {
+                    World world1 = xpOrb.world;
                     double range = 32;
                     EntityPlayer closestPlayer = world.getClosestPlayerToEntity(xpOrb, range);
                     if (closestPlayer != null && EnchantmentHelper.getEnchantmentLevel(Veteran, closestPlayer.getItemStackFromSlot(EntityEquipmentSlot.HEAD)) > 0) {
@@ -213,34 +177,18 @@ public final class VTEventHandler {
                         }
                     }
                 }
+        }
+    }
 
-            List<Entity> arrows = world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);
-            for (Entity arrow : arrows)
-                if (arrows instanceof EntityArrow) {
-                    EntityArrow ar = (EntityArrow) arrows;
-                    EntityLivingBase shooter = (EntityLivingBase) ar.shootingEntity;
-                    if (shooter != null && EnchantmentHelper.getEnchantmentLevel(Homing, shooter.getHeldItemMainhand()) > 0) {
-                        int homingLevel = EnchantmentHelper.getEnchantmentLevel(Homing, shooter.getHeldItemMainhand());
-                        double distance = Math.pow(2, homingLevel - 1) * 32;
+    @SubscribeEvent
+    public void onWorldTick(TickEvent.WorldTickEvent event) {
+        if (!event.world.isRemote) {
+            World world = event.world;
+            List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
+            for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE)) {
 
-                        @SuppressWarnings("unchecked") List<EntityLivingBase> livingEntities = world.getEntities(EntityLivingBase.class, EntitySelectors.NOT_SPECTATING);
-                        EntityLivingBase target = null;
-                        for (EntityLivingBase livingEntity : livingEntities) {
-                            double distanceToArrow = livingEntity.getDistance(arrow);
+            }
 
-                            if (distanceToArrow < distance && shooter.canEntityBeSeen(livingEntity) && !livingEntity.getPersistentID().equals(shooter.getPersistentID())) {
-                                distance = distanceToArrow;
-                                target = livingEntity;
-                            }
-                        }
-                        if (target != null) {
-                            double x = target.posX - arrow.posX;
-                            double y = target.getEntityBoundingBox().minY + target.height / 2 - (arrow.posY + arrow.height / 2);
-                            double z = target.posZ - arrow.posZ;
-                            arrow.setPositionAndRotationDirect(x, y, z, 1.25F, 0, 0, false);
-                        }
-                    }
-                }
         }
     }
 
@@ -626,7 +574,7 @@ public final class VTEventHandler {
             boolean poison = eff != null && eff.getPotion() != null && eff.getPotion().isBadEffect();
             for (int i = 0; i < Math.ceil((double) pips / divisor); i++) {
                 int x = event.getX() + i * 9 - 2;
-                int y = event.getY() + 12;
+                int y = event.getY() + 15;
 
                 if (mc.currentScreen instanceof GuiContainerCreative && ((GuiContainerCreative) mc.currentScreen).getSelectedTabIndex() == CreativeTabs.SEARCH.getTabIndex())
                     y += 10;
