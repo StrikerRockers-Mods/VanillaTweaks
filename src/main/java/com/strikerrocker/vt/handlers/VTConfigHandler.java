@@ -77,8 +77,6 @@ public class VTConfigHandler {
         creeperBurnInDaylight = get(DropsCategory, "Creepers burn in daylight", true, "Do creepers burn in daylight?");
         babyZombieBurnInDaylight = get(DropsCategory, "Baby zombies burn in daylight", true, "Do baby zombies burn in daylight?");
         mobSpawnerSilkTouchDrop = get(DropsCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
-        stackSize = get(DropsCategory, "", 4D, "", true).setMinValue(1).setMaxValue(16).getDouble();
-        ;
         config.setCategoryComment(DropsCategory, "Modify mob drops");
 
 
@@ -96,25 +94,26 @@ public class VTConfigHandler {
         Veteran = get(enchantmentsCategory, "Enables Veteran Enchantment", true, "Enables Veteran Enchantment");
         siphon = get(enchantmentsCategory, "Enables siphon Enchantment", true, "Enables siphon Enchantment");
         Homing = get(enchantmentsCategory, "Enables Homing Enchantment", true, "Enables Homing Enchantment");
+        config.setCategoryComment(enchantmentsCategory, "Toggles VT Enchantments");
         config.setCategoryRequiresMcRestart(enchantmentsCategory, true);
 
-        String VanillaTweaks = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Blocks and Items from VT";
-        binocularZoomAmount = (float) get(VanillaTweaks, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
-        craftingPad = get(VanillaTweaks, "Crafting table changes", true, "Is there an way to create a portable crafting device?");
-        pedestal = get(VanillaTweaks, "Enable the pedestal", true, "Enabling the pedestal");
-        storageBlocks = get(VanillaTweaks, "Enables storage blocks", true, "Enables the Storage Blocks");
-        slimeChunkFinder = get(VanillaTweaks, "Enables slime chunk finder", true, "Enables the Slime Chunk Finder");
-        config.setCategoryComment(VanillaTweaks, "Config for blocks and items from VT");
-        config.setCategoryRequiresMcRestart(VanillaTweaks, true);
+        String vanillaTweaks = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Blocks and Items from VT";
+        binocularZoomAmount = (float) get(vanillaTweaks, "Binocular Zoom Amount", 4, "By how much do binoculars divide your FOV?", false).setMinValue(1D).getDouble();
+        craftingPad = get(vanillaTweaks, "Crafting table changes", true, "Is there an way to create a portable crafting device?");
+        pedestal = get(vanillaTweaks, "Enable the pedestal", true, "Enabling the pedestal");
+        storageBlocks = get(vanillaTweaks, "Enables storage blocks", true, "Enables the Storage Blocks");
+        slimeChunkFinder = get(vanillaTweaks, "Enables slime chunk finder", true, "Enables the Slime Chunk Finder");
+        config.setCategoryComment(vanillaTweaks, "Config for blocks and items from VT");
+        config.setCategoryRequiresMcRestart(vanillaTweaks, true);
 
         String miscCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Miscellaneous";
         NoMoreLavaPocketGen = get(miscCategory, "No More Lava Pockets", true, "Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
         editSigns = get(miscCategory, "Sign Editing", true, "Right-click to edit signs");
         clearSigns = get(miscCategory, "Clearing Signs", true, "Shift+right-click to clear signs");
         stairSit = get(miscCategory, "Sit on Stair & slabs", true, "Allows the player to sit on slabs & stairs");
-        silenceDragon = get(miscCategory, "", true, "Silence the Brodcast of ender dragon sound");
-        silenceWither = get(miscCategory, "", true, "Silence the Brodcast of wither sound");
-        silenceLightning = get(miscCategory, "", true, "Silence the sound of lightning");
+        silenceDragon = get(miscCategory, "Silence the Brodcast of ender dragon sound", true, "Silence the Brodcast of ender dragon sound");
+        silenceWither = get(miscCategory, "Silence the Brodcast of wither sound", true, "Silence the Brodcast of wither sound");
+        silenceLightning = get(miscCategory, "Silence the sound of lightning", true, "Silence the sound of lightning");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
