@@ -3,7 +3,7 @@ package com.strikerrocker.vt.items;
 import com.strikerrocker.vt.vt;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import static com.strikerrocker.vt.handlers.VTConfigHandler.craftingPad;
 import static com.strikerrocker.vt.handlers.VTConfigHandler.slimeChunkFinder;
@@ -13,38 +13,37 @@ import static com.strikerrocker.vt.handlers.VTConfigHandler.slimeChunkFinder;
  */
 public class VTItems {
 
-    public static ItemArmor binoculars = new ItemArmor(vt.binoculars, EntityEquipmentSlot.HEAD, "binoculars");
-    public static ItemCraftingPad pad = new ItemCraftingPad("pad");
-    public static ItemDynamite dynamite = new ItemDynamite("dynamite");
-    public static ItemFriedEgg friedegg = new ItemFriedEgg();
-    public static ItemSlimeBucket slime = new ItemSlimeBucket("slime");
-    public static ItemBase lens = new ItemBase("lens");
+
+    public static ItemArmor binoculars;
+    public static ItemCraftingPad pad;
+    public static ItemDynamite dynamite;
+    public static ItemFriedEgg friedegg;
+    public static ItemSlimeBucket slime;
+    public static ItemBase lens;
 
 
-    public static void register(IForgeRegistry<Item> registry) {
+    public static void init() {
+        binoculars = register(new ItemArmor(vt.binoculars, EntityEquipmentSlot.HEAD, "binoculars"));
+
         if (craftingPad) {
-            registry.register(pad);
+            pad = register(new ItemCraftingPad("pad"));
         }
-        registry.register(binoculars);
-        registry.register(friedegg);
-        registry.register(dynamite);
-        registry.register(lens);
+        dynamite = register(new ItemDynamite("dynamite"));
+        friedegg = register(new ItemFriedEgg());
         if (slimeChunkFinder) {
-            registry.register(slime);
+            slime = register(new ItemSlimeBucket("slime"));
         }
+        lens = register(new ItemBase("lens"));
     }
 
-    public static void registerModels() {
-        binoculars.registerItemModel();
-        if (craftingPad) {
-            pad.registerItemModel();
+    private static <T extends Item> T register(T item) {
+        GameRegistry.register(item);
+
+        if (item instanceof ItemModelProvider) {
+            ((ItemModelProvider) item).registerItemModel(item);
         }
-        friedegg.registerItemModel();
-        dynamite.registerItemModel();
-        lens.registerItemModel();
-        if (slimeChunkFinder) {
-            slime.registerItemModel();
-        }
+
+        return item;
     }
 
 }

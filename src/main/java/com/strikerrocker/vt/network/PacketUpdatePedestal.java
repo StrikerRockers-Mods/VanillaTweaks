@@ -9,11 +9,16 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Created by thari on 23/07/2017.
  */
+
+@SideOnly(Side.CLIENT)
 public class PacketUpdatePedestal implements IMessage {
+
     private BlockPos pos;
     private ItemStack stack;
     private long lastChangeTime;
@@ -50,7 +55,7 @@ public class PacketUpdatePedestal implements IMessage {
         @Override
         public IMessage onMessage(PacketUpdatePedestal message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> {
-                TileEntityPedestal te = (TileEntityPedestal) Minecraft.getMinecraft().world.getTileEntity(message.pos);
+                TileEntityPedestal te = (TileEntityPedestal) Minecraft.getMinecraft().theWorld.getTileEntity(message.pos);
                 te.inventory.setStackInSlot(0, message.stack);
                 te.lastChangeTime = message.lastChangeTime;
             });

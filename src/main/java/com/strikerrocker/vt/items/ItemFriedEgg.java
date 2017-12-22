@@ -1,6 +1,7 @@
 package com.strikerrocker.vt.items;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 
 import static com.strikerrocker.vt.vt.proxy;
@@ -8,15 +9,18 @@ import static com.strikerrocker.vt.vt.proxy;
 /**
  * Created by thari on 23/07/2017.
  */
-public class ItemFriedEgg extends ItemFood {
+public class ItemFriedEgg extends ItemFood implements ItemModelProvider {
+    String name = "friedegg";
+
     public ItemFriedEgg() {
-        super(3, 0.6f, false);
-        setUnlocalizedName("friedegg");
-        setRegistryName("friedegg");
+        super(3, 1f, false);
+        setUnlocalizedName(name);
+        setRegistryName(name);
         setCreativeTab(CreativeTabs.FOOD);
     }
 
-    public void registerItemModel() {
-        proxy.registerItemRenderer(this, 0, "friedegg");
+    @Override
+    public void registerItemModel(Item item) {
+        proxy.registerItemRenderer(item,0,name);
     }
 }

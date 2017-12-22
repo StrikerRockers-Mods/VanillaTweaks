@@ -10,17 +10,13 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class VTGuiFactory implements IModGuiFactory {
     @Override
-    public void initialize(Minecraft minecraft) {
+    public void initialize(Minecraft minecraftInstance) {
+
     }
 
     @Override
-    public boolean hasConfigGui() {
-        return true;
-    }
-
-    @Override
-    public GuiScreen createConfigGui(GuiScreen parentScreen) {
-        return new GuiVTConfig(parentScreen);
+    public Class<? extends GuiScreen> mainConfigGuiClass() {
+        return GuiVTConfig.class;
     }
 
     @Override
@@ -28,9 +24,8 @@ public class VTGuiFactory implements IModGuiFactory {
         return null;
     }
 
-
-    public Class<? extends GuiScreen> mainConfigGuiClass() {
-        return GuiVTConfig.class;
+    @Override
+    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
+        return null;
     }
-
 }

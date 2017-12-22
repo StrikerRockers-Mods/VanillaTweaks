@@ -4,14 +4,14 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
+//Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-version = "1.1.17"
+version = "1.1.18"
 group = "com.StrikerRocker.vt" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "VanillaTweaks"
 
@@ -23,9 +23,10 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.1.2556"
+    version = "1.10.2-12.18.3.2511"
     runDir = "run"
-    mappings = "snapshot_20171003"
+    mappings = "snapshot_20161111"
+
 }
 
 repositories {

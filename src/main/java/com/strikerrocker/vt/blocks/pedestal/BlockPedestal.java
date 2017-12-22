@@ -1,7 +1,6 @@
 package com.strikerrocker.vt.blocks.pedestal;
 
 import com.strikerrocker.vt.blocks.BlockTileEntity;
-import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.vt;
 import net.minecraft.block.material.Material;
@@ -37,18 +36,16 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            ItemStack heldItem = player.getHeldItem(hand);
             TileEntityPedestal tile = getTileEntity(world, pos);
             IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
             if (!player.isSneaking()) {
-                if (heldItem.isEmpty()) {
+                if (heldItem == null) {
                     player.setHeldItem(hand, itemHandler.extractItem(0, 64, false));
                 } else {
                     player.setHeldItem(hand, itemHandler.insertItem(0, heldItem, false));
                 }
-                tile.markDirty();
             } else {
                 player.openGui(vt.instance, VTGuiHandler.PEDESTAL, world, pos.getX(), pos.getY(), pos.getZ());
             }
@@ -61,12 +58,9 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
         TileEntityPedestal tile = getTileEntity(world, pos);
         IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
         ItemStack stack = itemHandler.getStackInSlot(0);
-        ItemStack ped = new ItemStack(VTBlocks.pedestal);
-        if (!stack.isEmpty()) {
+        if (stack != null) {
             EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-            EntityItem pedestal = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), ped);
-            world.spawnEntity(item);
-            world.spawnEntity(pedestal);
+            world.spawnEntityInWorld(item);
         }
         super.breakBlock(world, pos, state);
     }

@@ -1,14 +1,15 @@
 package com.strikerrocker.vt;
 
 import com.strikerrocker.vt.blocks.VTBlocks;
+import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.VTEntities;
 import com.strikerrocker.vt.handlers.*;
 import com.strikerrocker.vt.items.ItemArmor;
-import com.strikerrocker.vt.misc.NetherPortalFix;
+import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
-import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import com.strikerrocker.vt.proxies.VTCommonProxy;
+import com.strikerrocker.vt.recipes.VTRecipeReplacer;
 import com.strikerrocker.vt.recipes.VTRecipes;
 import com.strikerrocker.vt.worldgen.NetherPocketer;
 import net.minecraft.init.SoundEvents;
@@ -24,7 +25,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
-
 
 @Mod(modid = vtModInfo.MOD_ID, name = vtModInfo.NAME, version = vtModInfo.VERSION, dependencies = "after:*", guiFactory = vtModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
 public class vt {
@@ -54,30 +54,34 @@ public class vt {
         logger = event.getModLog();
         VTConfigHandler.init(event.getSuggestedConfigurationFile());
         VTBlocks.init();
+        VTEntities.registerEntities(this);
+        VTItems.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         proxy.registerRenderers();
         network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
-        network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
         NetherPocketer handler = new NetherPocketer();
         MinecraftForge.TERRAIN_GEN_BUS.register(handler);
         VTRecipes.registerRecipes();
-        VTEntities.init();
+        VTRecipeReplacer.replaceRecipes();
+        logInfo("Pre-Init Complete");
     }
 
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         GameRegistry.registerFuelHandler(new VTFuelHandler());
+        VTEnchantments.registerEnchantments();
         MinecraftForge.EVENT_BUS.register(VTEventHandler.instance);
         MinecraftForge.EVENT_BUS.register(new VTSoundHandler());
         VTVanillaPropertiesChanger.init();
-        MinecraftForge.EVENT_BUS.register(NetherPortalFix.class);
+        logInfo("Init Complete");
     }
 
 
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {
+        logInfo("Post-Init Complete");
     }
 
 

@@ -1,12 +1,13 @@
 package com.strikerrocker.vt.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.UUID;
 
@@ -15,20 +16,31 @@ import java.util.UUID;
  */
 @SuppressWarnings("unused")
 @EntityTickingEnchantment
-public class EnchantmentNimble extends Enchantment {
+public class EnchantmentNimble extends VTEnchantmentBase {
     private static UUID nimbleUUID = UUID.fromString("05b61a62-ae84-492e-8536-f365b7143296");
 
     public EnchantmentNimble() {
-        super(Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{EntityEquipmentSlot.FEET});
-        this.setRegistryName("nimble");
-        this.setName("nimble");
+        super("nimble", Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, EntityEquipmentSlot.FEET);
     }
 
+    @Override
+    public void performAction(Entity entity, Event baseEvent) {
+        if (entity instanceof EntityLivingBase) {
+            EntityLivingBase livingEntity = (EntityLivingBase) entity;
+            int enchantmentLevel = this.getEnchantmentLevel(livingEntity.getItemStackFromSlot(EntityEquipmentSlot.FEET));
+            if (enchantmentLevel > 0)
+                addSpeedBuff(livingEntity, enchantmentLevel);
+            else
+                removeSpeedBuff(livingEntity, enchantmentLevel);
+        }
+    }
 
+    @Override
     public int getMinimumEnchantability(int enchantmentLevel) {
         return 5 + (enchantmentLevel - 1) * 8;
     }
 
+    @Override
     public int getMaximumEnchantability(int enchantmentLevel) {
         return enchantmentLevel * 10 + 51;
     }
@@ -36,11 +48,6 @@ public class EnchantmentNimble extends Enchantment {
     @Override
     public int getMaxLevel() {
         return 3;
-    }
-
-    @Override
-    public boolean isAllowedOnBooks() {
-        return true;
     }
 
     /**
@@ -70,6 +77,4 @@ public class EnchantmentNimble extends Enchantment {
             speedAttribute.removeModifier(speedModifier);
         }
     }
-
-
 }

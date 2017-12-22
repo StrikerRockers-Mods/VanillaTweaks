@@ -1,5 +1,6 @@
 package com.strikerrocker.vt.items;
 
+import com.strikerrocker.vt.vt;
 import net.minecraft.item.Item;
 
 import static com.strikerrocker.vt.vt.proxy;
@@ -7,7 +8,8 @@ import static com.strikerrocker.vt.vt.proxy;
 /**
  * Created by thari on 22/07/2017.
  */
-public class ItemBase extends Item {
+public class ItemBase extends Item implements ItemModelProvider {
+
 
     protected String name;
 
@@ -17,9 +19,9 @@ public class ItemBase extends Item {
         setRegistryName(name);
     }
 
-    public void registerItemModel() {
-        proxy.registerItemRenderer(this, 0, name);
+
+    @Override
+    public void registerItemModel(Item item) {
+        vt.proxy.registerItemRenderer(this,0,name);
     }
-
-
 }

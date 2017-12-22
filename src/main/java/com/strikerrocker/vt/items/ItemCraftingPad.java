@@ -6,7 +6,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
@@ -25,14 +24,14 @@ public class ItemCraftingPad extends ItemBase {
         this.setCreativeTab(CreativeTabs.TOOLS);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
         playerIn.openGui(vt.instance, 0, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+        return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
     }
 
-
+    @Override
     public void registerItemModel(Item item) {
-        vt.proxy.registerItemRenderer(this, 0, name);
+        vt.proxy.registerItemRenderer(this,0,name);
     }
-
 }

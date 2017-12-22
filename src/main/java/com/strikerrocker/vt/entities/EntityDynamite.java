@@ -52,7 +52,7 @@ public class EntityDynamite extends EntityThrowable {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (!this.world.isRemote) {
+        if (!this.worldObj.isRemote) {
             if (this.isWet()) {
                 this.setTicksWet(this.getTicksWet() + 1);
             } else
@@ -63,20 +63,20 @@ public class EntityDynamite extends EntityThrowable {
                 this.setTicksSinceWet(0);
         }
         else{
-            this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL,this.posX,this.posY,this.posZ,0.0D,0.0D,0.0D);
+            this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
         }
         if (this.getTicksSinceWet() < WET_TICKS && !this.isInWater())
             for (int i = 0; i < 3; ++i) {
                 float xOffset = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
                 float zOffset = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
-                this.world.spawnParticle(EnumParticleTypes.DRIP_WATER, this.posX + xOffset, this.posY, this.posZ + zOffset, this.motionX, this.motionY, this.motionZ);
+                this.worldObj.spawnParticle(EnumParticleTypes.DRIP_WATER, this.posX + xOffset, this.posY, this.posZ + zOffset, this.motionX, this.motionY, this.motionZ);
             }
 
     }
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        World world = this.world;
+        World world = this.worldObj;
         if (!world.isRemote)
             if (this.getTicksSinceWet() < WET_TICKS) {
                 if (isNotCreativeThrower())

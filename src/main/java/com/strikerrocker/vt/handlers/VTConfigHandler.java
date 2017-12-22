@@ -1,11 +1,14 @@
 package com.strikerrocker.vt.handlers;
 
+import com.google.common.collect.Maps;
+import com.strikerrocker.vt.enchantments.VTEnchantments;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.config.GuiConfigEntries.NumberSliderEntry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.io.File;
+import java.util.Map;
 
 import static com.strikerrocker.vt.vt.logInfo;
 
@@ -29,12 +32,7 @@ public class VTConfigHandler {
     public static boolean useBetterChestRecipe;
     public static boolean useBetterMinecartRecipies;
     //Enchantments
-    public static boolean vigor;
-    public static boolean Nimble;
-    public static boolean Hops;
-    public static boolean Veteran;
-    public static boolean siphon;
-    public static boolean Homing;
+    public static Map<String, Boolean> enchantmentNameToEnable = Maps.newHashMap();
     //Vanillatweaks
     public static float binocularZoomAmount;
     public static boolean storageBlocks;
@@ -88,12 +86,8 @@ public class VTConfigHandler {
         config.setCategoryRequiresMcRestart(recipesCategory, true);
 
         String enchantmentsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Enchantments";
-        vigor = get(enchantmentsCategory, "Enables Vigor Enchantment", true, "Enables Vigor Enchantment");
-        Nimble = get(enchantmentsCategory, "Enables Nimble Enchantment", true, "Enables Nimble Enchantment");
-        Hops = get(enchantmentsCategory, "Enables Hops Enchantment", true, "Enables Hops Enchantment");
-        Veteran = get(enchantmentsCategory, "Enables Veteran Enchantment", true, "Enables Veteran Enchantment");
-        siphon = get(enchantmentsCategory, "Enables siphon Enchantment", true, "Enables siphon Enchantment");
-        Homing = get(enchantmentsCategory, "Enables Homing Enchantment", true, "Enables Homing Enchantment");
+        for (String enchantmentName : VTEnchantments.enchantmentNames)
+            enchantmentNameToEnable.put(enchantmentName, get(enchantmentsCategory, "Enable " + enchantmentName, true, "Is the " + enchantmentName + " enchantment enabled?"));
         config.setCategoryComment(enchantmentsCategory, "Toggles VT Enchantments");
         config.setCategoryRequiresMcRestart(enchantmentsCategory, true);
 
@@ -125,16 +119,17 @@ public class VTConfigHandler {
 
         if (config.hasChanged())
             config.save();
+
     }
 
-    public static Property get(String category, String key, double defaultValue, String comment, boolean slider) {
+    private static Property get(String category, String key, double defaultValue, String comment, boolean slider) {
         Property property = config.get(category, key, defaultValue, comment);
         if (slider && FMLCommonHandler.instance().getEffectiveSide().isClient())
             return property.setConfigEntryClass(NumberSliderEntry.class);
         return property;
     }
 
-    public static boolean get(String category, String key, boolean defaultValue, String comment) {
+    private static boolean get(String category, String key, boolean defaultValue, String comment) {
         return config.get(category, key, defaultValue, comment).getBoolean();
     }
 

@@ -2,10 +2,10 @@ package com.strikerrocker.vt.blocks;
 
 import com.strikerrocker.vt.blocks.pedestal.BlockPedestal;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
+import com.strikerrocker.vt.items.ItemModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import static com.strikerrocker.vt.handlers.VTConfigHandler.storageBlocks;
 
@@ -21,43 +21,37 @@ public class VTBlocks {
 
     public static void init() {
         if (storageBlocks) {
-            sugar = new BlockSugar("sugarblock");
-            flint = new BlockFlint("flintblock");
-            charcoal = new BlockCharcoal("charcoalblock");
+            sugar = register(new BlockSugar("sugarblock"));
+            flint = register(new BlockFlint("flintblock"));
+            charcoal = register(new BlockCharcoal("charcoalblock"));
         }
-
         if (VTConfigHandler.pedestal) {
-            pedestal = new BlockPedestal();
+            pedestal = register(new BlockPedestal());
         }
     }
 
+    private static <T extends Block> T register(T block, ItemBlock itemBlock) {
+        GameRegistry.register(block);
+        if (itemBlock != null) {
+            GameRegistry.register(itemBlock);
 
-    public static void register(IForgeRegistry<Block> registry) {
-        registry.registerAll(
-                flint,
-                sugar,
-                pedestal,
-                charcoal
-        );
+            if (block instanceof ItemModelProvider) {
+                ((ItemModelProvider) block).registerItemModel(itemBlock);
+            }
+        }
 
-        GameRegistry.registerTileEntity(pedestal.getTileEntityClass(), pedestal.getRegistryName().toString());
+        if (block instanceof BlockTileEntity) {
+            GameRegistry.registerTileEntity(((BlockTileEntity<?>) block).getTileEntityClass(), block.getRegistryName().toString());
+        }
+
+        return block;
+    }
+
+    private static <T extends Block> T register(T block) {
+        ItemBlock itemBlock = new ItemBlock(block);
+        itemBlock.setRegistryName(block.getRegistryName());
+        return register(block, itemBlock);
     }
 
 
-    public static void registerItemBlocks(IForgeRegistry<Item> registry) {
-        registry.registerAll(
-                pedestal.createItemBlock(),
-                sugar.createItemBlock(),
-                flint.createItemBlock(),
-                charcoal.createItemBlock()
-
-        );
-    }
-
-    public static void registerModels() {
-        flint.registerItemModel(Item.getItemFromBlock(flint));
-        pedestal.registerItemModel(Item.getItemFromBlock(pedestal));
-        sugar.registerItemModel(Item.getItemFromBlock(sugar));
-        charcoal.registerItemModel(Item.getItemFromBlock(charcoal));
-    }
 }

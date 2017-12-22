@@ -1,6 +1,9 @@
 package com.strikerrocker.vt.handlers;
 
 import com.strikerrocker.vt.VTUtils;
+import com.strikerrocker.vt.enchantments.EntityTickingEnchantment;
+import com.strikerrocker.vt.enchantments.VTEnchantmentBase;
+import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.EntitySitting;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.vtModInfo;
@@ -18,9 +21,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -28,6 +28,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
@@ -39,6 +40,7 @@ import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.stats.AchievementList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.tileentity.TileEntitySign;
@@ -57,9 +59,9 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -67,6 +69,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -74,12 +77,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
-import static com.strikerrocker.vt.enchantments.VTEnchantments.Hops;
-import static com.strikerrocker.vt.enchantments.VTEnchantments.*;
-import static com.strikerrocker.vt.enchantments.VTEnchantments.Veteran;
 import static com.strikerrocker.vt.handlers.VTConfigHandler.*;
 
 /**
@@ -127,10 +125,8 @@ public final class VTEventHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onHarvestDrops(BlockEvent.HarvestDropsEvent event) {
         EntityPlayer harvester = event.getHarvester();
-        if (harvester != null && EnchantmentHelper.getEnchantmentLevel(Siphon, harvester.getHeldItemMainhand()) > 0) {
-            List<ItemStack> drops = event.getDrops();
-            drops.removeAll(drops.stream().filter(event.getHarvester().inventory::addItemStackToInventory).collect(Collectors.toList()));
-        }
+        VTEnchantments.performAction("blazing", harvester, event);
+        VTEnchantments.performAction("siphon", harvester, event);
     }
 
     /**
@@ -140,85 +136,46 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
-            float enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET));
-            event.getEntity().motionY = event.getEntity().motionY + enchantmentLevel / 10;
-        }
+        VTEnchantments.performAction("hops", event.getEntityLiving(), event);
     }
 
     /**
-     * Syncs up Veteran enchantment to the client
+     * Syncs up motion-affecting enchantments to the client
      *
      * @param event The ClientTickEvent
      */
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        World world = Minecraft.getMinecraft().world;
+        World world = Minecraft.getMinecraft().theWorld;
         if (world != null) {
-
+            List<Entity> arrows = world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);
+            for (Entity arrow : arrows)
+                VTEnchantments.performAction("homing", arrow, null);
             List<Entity> xpOrbs = world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE);
             for (Entity xpOrb : xpOrbs)
-                if (xpOrb instanceof EntityXPOrb) {
-                    World world1 = xpOrb.world;
-                    double range = 32;
-                    EntityPlayer closestPlayer = world.getClosestPlayerToEntity(xpOrb, range);
-                    if (closestPlayer != null && EnchantmentHelper.getEnchantmentLevel(Veteran, closestPlayer.getItemStackFromSlot(EntityEquipmentSlot.HEAD)) > 0) {
-                        double xDiff = (closestPlayer.posX - xpOrb.posX) / range;
-                        double yDiff = (closestPlayer.posY + closestPlayer.getEyeHeight() - xpOrb.posY) / range;
-                        double zDiff = (closestPlayer.posZ - xpOrb.posZ) / range;
-                        double movementFactor = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
-                        double invertedMovementFactor = 1 - movementFactor;
-                        if (invertedMovementFactor > 0) {
-                            invertedMovementFactor *= invertedMovementFactor;
-                            xpOrb.motionX += xDiff / movementFactor * invertedMovementFactor * 0.1;
-                            xpOrb.motionY += yDiff / movementFactor * invertedMovementFactor * 0.1;
-                            xpOrb.motionZ += zDiff / movementFactor * invertedMovementFactor * 0.1;
-                        }
-                    }
-                }
-        }
-    }
-
-    @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (!event.world.isRemote) {
-            World world = event.world;
-            List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
-            for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE)) {
-
-            }
-
+                VTEnchantments.performAction("veteran", xpOrb, null);
         }
     }
 
     /**
-     * Enables the Vigor Functionality
+     * Enables the Quickdraw enchantment functionality
      *
-     * @param event The LivingEquipmentChangeEvent
+     * @param event The ArrowNockEvent
      */
-
     @SubscribeEvent
-    public void onLivingUpdate(LivingEquipmentChangeEvent event) {
-        if (event.getEntity() instanceof EntityLivingBase) {
-            UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
-            int lvl = EnchantmentHelper.getEnchantmentLevel(Vigor, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST));
-            if (lvl > 0) {
-                IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-                if (vigorAttribute.getModifier(vigorUUID) == null) {
-                    AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) lvl / 10, 1);
-                    vigorAttribute.applyModifier(vigorModifier);
-                }
-            } else {
-                IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-                if (vigorAttribute.getModifier(vigorUUID) != null) {
-                    AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) lvl / 10, 1);
-                    vigorAttribute.removeModifier(vigorModifier);
-                    if (event.getEntityLiving().getHealth() > event.getEntityLiving().getMaxHealth())
-                        event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
-                }
-            }
-        }
+    public void onArrowNock(ArrowNockEvent event) {
+        VTEnchantments.performAction("quickdraw", event.getEntityPlayer(), event);
+    }
+
+
+    @SuppressWarnings("ConstantConditions")
+    @SubscribeEvent
+    public void onWorldTick(TickEvent.WorldTickEvent event) {
+        World world = event.world;
+        List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
+        for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
+            VTEnchantmentBase.cppEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
     }
 
     /**
@@ -228,8 +185,7 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0)
-            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
+        VTEnchantments.performAction("hops", event.getEntityLiving(), event);
     }
 
     @SubscribeEvent
@@ -254,7 +210,7 @@ public final class VTEventHandler {
             ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
             EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);
             portalEntityItem.setDefaultPickupDelay();
-            world.spawnEntity(portalEntityItem);
+            world.spawnEntityInWorld(portalEntityItem);
         }
     }
 
@@ -282,7 +238,7 @@ public final class VTEventHandler {
             spawnerStack.setTagCompound(stackTagCompound);
             EntityItem spawnerEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, spawnerStack);
             spawnerEntityItem.setDefaultPickupDelay();
-            world.spawnEntity(spawnerEntityItem);
+            world.spawnEntityInWorld(spawnerEntityItem);
             event.setExpToDrop(0);
         }
     }
@@ -295,7 +251,7 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void onLivingDrops(LivingDropsEvent event) {
         Entity entity = event.getEntity();
-        World world = entity.world;
+        World world = entity.worldObj;
         //New Drops
         if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot")) {
             //Living entities drop their name tags
@@ -321,10 +277,10 @@ public final class VTEventHandler {
         List<EntityItem> drops = event.getDrops();
         List<EntityItem> dropsCopy = VTUtils.copyList(drops);
         for (EntityItem dropEntity : dropsCopy) {
-            ItemStack dropItem = dropEntity.getItem();
-            if (event.getSource().getImmediateSource() != null) {
+            ItemStack dropItem = dropEntity.getEntityItem();
+            if (event.getSource().getEntity() != null) {
                 Item drop = dropItem.getItem();
-                Entity source = event.getSource().getImmediateSource();
+                Entity source = event.getSource().getEntity();
                 if (source instanceof EntityWolf && entity instanceof EntitySheep) {
                     if (drop == Items.MUTTON || drop == Items.COOKED_MUTTON)
                         drops.remove(dropEntity);
@@ -344,7 +300,7 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void onFOVUpdate(FOVUpdateEvent event) {
         ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-        if (!helmet.isEmpty() && helmet.getItem() == VTItems.binoculars)
+        if (helmet != null && helmet.getItem() == VTItems.binoculars)
             event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
     }
 
@@ -357,16 +313,16 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         EntityLivingBase livingEntity = event.getEntityLiving();
-        if (!livingEntity.world.isRemote) {
-            World world = livingEntity.world;
+        if (!livingEntity.worldObj.isRemote) {
+            World world = livingEntity.worldObj;
             if (((livingEntity instanceof EntityCreeper && VTConfigHandler.creeperBurnInDaylight) || (livingEntity instanceof EntityZombie && livingEntity.isChild() && VTConfigHandler.babyZombieBurnInDaylight)) && world.isDaytime()) {
-                float f = livingEntity.getBrightness();
+                float f = livingEntity.getBrightness(1);
                 Random random = world.rand;
                 BlockPos blockPos = new BlockPos(livingEntity.posX, Math.round(livingEntity.posY), livingEntity.posZ);
                 if (f > 0.5 && random.nextFloat() * 30 < (f - 0.4) * 2 && world.canSeeSky(blockPos)) {
                     ItemStack itemstack = livingEntity.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                     boolean doSetFire = false;
-                    if (!itemstack.isEmpty()) {
+                    if (itemstack != null) {
                         doSetFire = true;
                         if (itemstack.isItemStackDamageable()) {
                             itemstack.setItemDamage(itemstack.getItemDamage() + random.nextInt(2));
@@ -439,16 +395,16 @@ public final class VTEventHandler {
         if (!event.getWorld().isRemote && slimeChunkFinder) {
             ItemStack slimestack = new ItemStack(VTItems.slime);
             if (event.getEntityPlayer().getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqual(slimestack)) {
-                int x = MathHelper.floor(event.getEntityPlayer().posX);
-                int y = MathHelper.floor(event.getEntityPlayer().posY);
-                int z = MathHelper.floor(event.getEntityPlayer().posZ);
+                int x = MathHelper.floor_double(event.getEntityPlayer().posX);
+                int y = MathHelper.floor_double(event.getEntityPlayer().posY);
+                int z = MathHelper.floor_double(event.getEntityPlayer().posZ);
                 boolean slime = isSlimeChunk(event.getWorld(), x, y);
-                if (slime) {
-                    event.getEntityPlayer().sendStatusMessage(new TextComponentString("Slime Chunk"), true);
-                }
+                if (slime)
+                    event.getEntityPlayer().addChatComponentMessage(new TextComponentString("Slime Chunk"));
             }
         }
     }
+
 
     /**
      * Allows a player to shear name tags off living entities
@@ -457,12 +413,12 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void entityRightclick(PlayerInteractEvent.EntityInteract event) {
-        if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty()) {
+        if (event.getEntityPlayer().getHeldItemMainhand() != null) {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack heldItem = player.getHeldItemMainhand();
-            World world = player.world;
+            World world = player.worldObj;
             Entity target = event.getTarget();
-            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
+            if (heldItem != null && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
                 target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
                 target.entityDropItem(nameTag, 0);
@@ -470,12 +426,12 @@ public final class VTEventHandler {
                 heldItem.damageItem(1, player);
             }
         }
-        if (!event.getEntityPlayer().getHeldItemOffhand().isEmpty()) {
+        if (event.getEntityPlayer().getHeldItemOffhand() != null) {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack heldItem = player.getHeldItemOffhand();
-            World world = player.world;
+            World world = player.worldObj;
             Entity target = event.getTarget();
-            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
+            if (heldItem != null && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
                 target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
                 target.entityDropItem(nameTag, 0);
@@ -500,7 +456,7 @@ public final class VTEventHandler {
             Block b = w.getBlockState(p).getBlock();
             EntityPlayer e = event.getEntityPlayer();
 
-            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && e.getHeldItemMainhand() == ItemStack.EMPTY) {
+            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && e.getHeldItemMainhand() == null) {
                 if (b instanceof BlockSlab && s.getValue(BlockSlab.HALF) != BlockSlab.EnumBlockHalf.BOTTOM)
                     return;
                 else if (b instanceof BlockStairs && s.getValue(BlockStairs.HALF) != BlockStairs.EnumHalf.BOTTOM)
@@ -508,7 +464,7 @@ public final class VTEventHandler {
 
                 EntitySitting sit = new EntitySitting(w, p);
 
-                w.spawnEntity(sit);
+                w.spawnEntityInWorld(sit);
                 e.startRiding(sit);
             }
         }
@@ -562,7 +518,7 @@ public final class VTEventHandler {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void renderTooltip(RenderTooltipEvent.PostText event) {
-        if (!event.getStack().isEmpty() && event.getStack().getItem() instanceof ItemFood) {
+        if (event.getStack() != null && event.getStack().getItem() instanceof ItemFood) {
             int divisor = 2;
             GlStateManager.pushMatrix();
             GlStateManager.color(1F, 1F, 1F);
@@ -597,6 +553,17 @@ public final class VTEventHandler {
 
             GlStateManager.popMatrix();
         }
+    }
+
+    /**
+     * Gives the player the workbenching achievement when crafting a crafting pad
+     *
+     * @param event The ItemCraftingEvent
+     */
+    @SubscribeEvent
+    public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
+        if (event.crafting.getItem() == VTItems.pad)
+            event.player.addStat(AchievementList.BUILD_WORK_BENCH);
     }
 
 }
