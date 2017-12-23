@@ -28,5 +28,7 @@ public class VTClientProxy extends VTCommonProxy {
     public void registerRenderers() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
     }
+
+
 }
 

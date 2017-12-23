@@ -39,6 +39,7 @@ public class ItemDynamite extends ItemBase {
             --itemstack.stackSize;
         }
 
+        playerIn.getCooldownTracker().setCooldown(this, 20);
         worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
         if (!worldIn.isRemote) {

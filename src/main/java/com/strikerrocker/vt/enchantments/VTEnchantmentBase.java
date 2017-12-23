@@ -11,8 +11,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.OptionalInt;
@@ -84,7 +82,6 @@ public abstract class VTEnchantmentBase extends Enchantment {
 
     public abstract int getMaximumEnchantability(int enchantmentLevel);
 
-    @SideOnly(Side.CLIENT)
     private static class NoFreeEnchantmentIDException extends RuntimeException {
         private NoFreeEnchantmentIDException(String enchantmentName) {
             super("Could not find a free enchantment ID for " + I18n.format("enchantment." + enchantmentName));

@@ -505,6 +505,7 @@ public final class VTEventHandler {
      * @param event The PotionShiftEventf
      */
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
         event.setCanceled(true);
     }
