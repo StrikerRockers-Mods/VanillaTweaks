@@ -27,7 +27,6 @@ public class VTConfigHandler {
     public static boolean useBetterStoneToolRecipes;
     public static boolean useBetterStairsRecipes;
     public static boolean useBetterChestRecipe;
-    public static boolean useBetterMinecartRecipies;
     //Enchantments
     public static boolean vigor;
     public static boolean Nimble;
@@ -35,6 +34,7 @@ public class VTConfigHandler {
     public static boolean Veteran;
     public static boolean siphon;
     public static boolean Homing;
+    public static boolean Blazing;
     //Vanillatweaks
     public static float binocularZoomAmount;
     public static boolean storageBlocks;
@@ -94,6 +94,7 @@ public class VTConfigHandler {
         Veteran = get(enchantmentsCategory, "Enables Veteran Enchantment", true, "Enables Veteran Enchantment");
         siphon = get(enchantmentsCategory, "Enables siphon Enchantment", true, "Enables siphon Enchantment");
         Homing = get(enchantmentsCategory, "Enables Homing Enchantment", true, "Enables Homing Enchantment");
+        Blazing = get(enchantmentsCategory, "Enables Blazing Enchantment", true, "Enables Blazing Enchantment");
         config.setCategoryComment(enchantmentsCategory, "Toggles VT Enchantments");
         config.setCategoryRequiresMcRestart(enchantmentsCategory, true);
 

@@ -1,6 +1,7 @@
 package com.strikerrocker.vt.handlers;
 
 import com.strikerrocker.vt.VTUtils;
+import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.EntitySitting;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.vtModInfo;
@@ -28,6 +29,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
@@ -75,11 +77,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.strikerrocker.vt.enchantments.VTEnchantments.Hops;
-import static com.strikerrocker.vt.enchantments.VTEnchantments.*;
-import static com.strikerrocker.vt.enchantments.VTEnchantments.Veteran;
+import static com.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
 import static com.strikerrocker.vt.handlers.VTConfigHandler.*;
 
 /**
@@ -127,10 +127,8 @@ public final class VTEventHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onHarvestDrops(BlockEvent.HarvestDropsEvent event) {
         EntityPlayer harvester = event.getHarvester();
-        if (harvester != null && EnchantmentHelper.getEnchantmentLevel(Siphon, harvester.getHeldItemMainhand()) > 0) {
-            List<ItemStack> drops = event.getDrops();
-            drops.removeAll(drops.stream().filter(event.getHarvester().inventory::addItemStackToInventory).collect(Collectors.toList()));
-        }
+        VTEnchantments.performAction("blazing", harvester, event);
+        VTEnchantments.performAction("siphon", harvester, event);
     }
 
     /**
@@ -138,57 +136,46 @@ public final class VTEventHandler {
      *
      * @param event The LivingJumpEvent
      */
+    /**
+     * Enables the Hops enchantment functionality
+     *
+     * @param event The LivingJumpEvent
+     */
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
-            float enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET));
-            event.getEntity().motionY = event.getEntity().motionY + enchantmentLevel / 10;
-        }
+        VTEnchantments.performAction("hops", event.getEntityLiving(), event);
     }
 
     /**
-     * Syncs up Veteran enchantment to the client
+     * Syncs up motion-affecting enchantments to the client
      *
      * @param event The ClientTickEvent
      */
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        World world = Minecraft.getMinecraft().world;
-        if (world != null) {
 
+    @SubscribeEvent
+    public void onClientTick(TickEvent.WorldTickEvent event) {
+        World world = event.world;
+        if (world != null) {
+            List<Entity> arrows = world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);
+            for (Entity arrow : arrows)
+                VTEnchantments.performAction("homing", arrow, null);
             List<Entity> xpOrbs = world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE);
             for (Entity xpOrb : xpOrbs)
-                if (xpOrb instanceof EntityXPOrb) {
-                    World world1 = xpOrb.world;
-                    double range = 32;
-                    EntityPlayer closestPlayer = world.getClosestPlayerToEntity(xpOrb, range);
-                    if (closestPlayer != null && EnchantmentHelper.getEnchantmentLevel(Veteran, closestPlayer.getItemStackFromSlot(EntityEquipmentSlot.HEAD)) > 0) {
-                        double xDiff = (closestPlayer.posX - xpOrb.posX) / range;
-                        double yDiff = (closestPlayer.posY + closestPlayer.getEyeHeight() - xpOrb.posY) / range;
-                        double zDiff = (closestPlayer.posZ - xpOrb.posZ) / range;
-                        double movementFactor = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
-                        double invertedMovementFactor = 1 - movementFactor;
-                        if (invertedMovementFactor > 0) {
-                            invertedMovementFactor *= invertedMovementFactor;
-                            xpOrb.motionX += xDiff / movementFactor * invertedMovementFactor * 0.1;
-                            xpOrb.motionY += yDiff / movementFactor * invertedMovementFactor * 0.1;
-                            xpOrb.motionZ += zDiff / movementFactor * invertedMovementFactor * 0.1;
-                        }
-                    }
-                }
+                VTEnchantments.performAction("veteran", xpOrb, null);
         }
     }
 
+
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (!event.world.isRemote) {
-            World world = event.world;
-            List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
-            for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE)) {
-
-            }
-
+        World world = event.world;
+        if (world != null) {
+            List<Entity> arrows = world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);
+            for (Entity arrow : arrows)
+                VTEnchantments.performAction("homing", arrow, null);
+            List<Entity> xpOrbs = world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE);
+            for (Entity xpOrb : xpOrbs)
+                VTEnchantments.performAction("veteran", xpOrb, null);
         }
     }
 
