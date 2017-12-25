@@ -5,9 +5,7 @@ import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.EntitySitting;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.vtModInfo;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -22,6 +20,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -35,10 +34,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemShears;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
@@ -46,6 +42,7 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -57,6 +54,7 @@ import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -107,6 +105,31 @@ public final class VTEventHandler {
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
     }
 
+
+    /**
+     * Returns whether the block is harvestable for hoe sickle
+     *
+     * @param state IBlockState
+     */
+    private boolean canHarvest(IBlockState state) {
+        Block block = state.getBlock();
+        return (block instanceof BlockBush && !(block instanceof BlockLilyPad)) || block instanceof BlockReed;
+    }
+
+    /**
+     * Swaps the items in armour with player's armor
+     *
+     * @param player
+     * @param armorStand
+     * @param slot
+     */
+    private void swapSlot(EntityPlayer player, EntityArmorStand armorStand, EntityEquipmentSlot slot) {
+        ItemStack playerItem = player.getItemStackFromSlot(slot);
+        ItemStack armorStandItem = armorStand.getItemStackFromSlot(slot);
+        player.setItemStackToSlot(slot, armorStandItem);
+        armorStand.setItemStackToSlot(slot, playerItem);
+    }
+
     /**
      * Syncs the config file if it changes
      *
@@ -131,11 +154,6 @@ public final class VTEventHandler {
         VTEnchantments.performAction("siphon", harvester, event);
     }
 
-    /**
-     * Enables the Hops enchantment functionality
-     *
-     * @param event The LivingJumpEvent
-     */
     /**
      * Enables the Hops enchantment functionality
      *
@@ -367,9 +385,11 @@ public final class VTEventHandler {
                         livingEntity.setFire(10);
                 }
             }
+            if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Nimble, livingEntity.getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
+                VTEnchantments.performAction("nimble", livingEntity, event);
+            }
         }
     }
-
 
     /**
      * Allows the player to dismount from the Entity Sitting
@@ -586,5 +606,80 @@ public final class VTEventHandler {
             GlStateManager.popMatrix();
         }
     }
+
+
+    /**
+     * Enables the sponges dry in nether functionality
+     *
+     * @param event The PlaceEvent
+     */
+    @SubscribeEvent
+    public void onItemPlaced(BlockEvent.PlaceEvent event) {
+        if (event.getPlacedBlock().equals(Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) &&
+                BiomeDictionary.getTypes(event.getWorld().getBiome(event.getPos())).contains(BiomeDictionary.Type.NETHER)) {
+            World world = event.getWorld();
+            world.playSound(null, event.getPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 2.4F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.9F);
+            world.setBlockState(event.getPos(), Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, false));
+        }
+    }
+
+    /**
+     * Makes Hoe act as Sickle
+     *
+     * @param event BreakEvent
+     */
+
+    @SubscribeEvent
+    public void onBlockBroken(BlockEvent.BreakEvent event) {
+        ItemStack stack = event.getPlayer().getHeldItemMainhand();
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemHoe && canHarvest(event.getState())) {
+            World world = event.getWorld();
+            EntityPlayer player = event.getPlayer();
+            BlockPos basePos = event.getPos();
+
+            int range = 1;
+            if (stack.getItem() == Items.DIAMOND_HOE)
+                range++;
+
+            for (int i = -range; i < range + 1; i++)
+                for (int k = -range; k < range + 1; k++) {
+                    if (i == 0 && k == 0)
+                        continue;
+
+                    BlockPos pos = basePos.add(i, 0, k);
+                    IBlockState state = world.getBlockState(pos);
+                    if (canHarvest(state)) {
+                        Block block = state.getBlock();
+                        if (block.canHarvestBlock(world, pos, player))
+                            block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), stack);
+                        world.setBlockToAir(pos);
+                        world.playEvent(2001, pos, Block.getIdFromBlock(block) + (block.getMetaFromState(state) << 12));
+                    }
+                }
+
+            stack.damageItem(1, player);
+        }
+    }
+
+    /**
+     * @param event EntityInteractSpecific
+     */
+    @SubscribeEvent
+    public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
+        EntityPlayer player = event.getEntityPlayer();
+
+        if (event.getTarget().world.isRemote || player.isSpectator() || player.isCreative() || !(event.getTarget() instanceof EntityArmorStand))
+            return;
+
+        if (player.isSneaking()) {
+            event.setCanceled(true);
+            EntityArmorStand armorStand = (EntityArmorStand) event.getTarget();
+            swapSlot(player, armorStand, EntityEquipmentSlot.HEAD);
+            swapSlot(player, armorStand, EntityEquipmentSlot.CHEST);
+            swapSlot(player, armorStand, EntityEquipmentSlot.LEGS);
+            swapSlot(player, armorStand, EntityEquipmentSlot.FEET);
+        }
+    }
+
 
 }

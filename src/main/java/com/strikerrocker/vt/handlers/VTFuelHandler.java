@@ -13,4 +13,5 @@ public class VTFuelHandler implements IFuelHandler {
     public int getBurnTime(ItemStack fuel) {
         return fuel.getItem() == Item.getItemFromBlock(VTBlocks.charcoal) ? 16000 : 0;
     }
+
 }
