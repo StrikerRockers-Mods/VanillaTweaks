@@ -11,7 +11,10 @@ import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import com.strikerrocker.vt.proxies.VTCommonProxy;
 import com.strikerrocker.vt.recipes.VTRecipes;
 import com.strikerrocker.vt.worldgen.NetherPocketer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.Mod;
@@ -63,6 +66,7 @@ public class vt {
         MinecraftForge.TERRAIN_GEN_BUS.register(handler);
         VTRecipes.registerRecipes();
         VTEntities.init();
+        GameRegistry.registerFuelHandler((ItemStack stack) -> stack.getItem() == Item.getItemFromBlock(Blocks.TORCH) ? 400 : 0);
     }
 
     @Mod.EventHandler
