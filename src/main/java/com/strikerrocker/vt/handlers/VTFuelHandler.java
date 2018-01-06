@@ -14,4 +14,5 @@ public class VTFuelHandler implements IFuelHandler {
         return fuel.getItem() == Item.getItemFromBlock(VTBlocks.charcoal) ? 16000 : 0;
     }
 
+
 }

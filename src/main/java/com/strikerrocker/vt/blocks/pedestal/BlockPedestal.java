@@ -4,6 +4,7 @@ import com.strikerrocker.vt.blocks.BlockTileEntity;
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.vt;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -21,7 +22,7 @@ import javax.annotation.Nullable;
 public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
 
     public BlockPedestal() {
-        super(Material.ROCK, "pedestal");
+        super(Material.ROCK, "pedestal", MapColor.GRAY_STAINED_HARDENED_CLAY);
     }
 
     @Override
