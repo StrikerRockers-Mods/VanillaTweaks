@@ -1,7 +1,6 @@
 package com.strikerrocker.vt.recipes;
 
 import com.strikerrocker.vt.handlers.VTConfigHandler;
-import com.strikerrocker.vt.misc.RecipeHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -11,7 +10,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 import static com.strikerrocker.vt.misc.RecipeHelper.addShapedRecipe;
@@ -86,5 +84,6 @@ public class VTRecipeReplacer {
             addShapedRecipe(new ItemStack(Items.STONE_HOE), "SS", " T", " T", 'S', "stone", 'T', "stickWood");
         }
     }
+
 }
 

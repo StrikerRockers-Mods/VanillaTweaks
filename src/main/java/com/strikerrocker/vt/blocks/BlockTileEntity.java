@@ -1,5 +1,6 @@
 package com.strikerrocker.vt.blocks;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -11,8 +12,8 @@ import javax.annotation.Nullable;
 
 public abstract class BlockTileEntity<TE extends TileEntity> extends BlockBase {
 
-    public BlockTileEntity(Material material, String name) {
-        super(material, name);
+    public BlockTileEntity(Material material, String name, MapColor mapColor) {
+        super(material, name, mapColor);
     }
 
     public abstract Class<TE> getTileEntityClass();
