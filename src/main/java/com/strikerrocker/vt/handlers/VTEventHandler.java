@@ -370,7 +370,7 @@ public final class VTEventHandler {
                 BlockPos blockPos = new BlockPos(livingEntity.posX, Math.round(livingEntity.posY), livingEntity.posZ);
                 if (f > 0.5 && random.nextFloat() * 30 < (f - 0.4) * 2 && world.canSeeSky(blockPos)) {
                     ItemStack itemstack = livingEntity.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                    boolean doSetFire = false;
+                    boolean doSetFire = true;
                     if (!itemstack.isEmpty()) {
                         doSetFire = true;
                         if (itemstack.isItemStackDamageable()) {
