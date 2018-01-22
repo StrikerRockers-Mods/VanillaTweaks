@@ -1,9 +1,11 @@
 package com.strikerrocker.vt.misc;
 
 import com.strikerrocker.vt.handlers.VTConfigHandler;
+import com.strikerrocker.vt.items.VTItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraftforge.oredict.OreDictionary;
 
 import static com.strikerrocker.vt.handlers.VTConfigHandler.endFrameBroken;
 import static com.strikerrocker.vt.handlers.VTConfigHandler.stackSize;
@@ -44,5 +46,8 @@ public class VTVanillaPropertiesChanger {
             Items.SPRUCE_BOAT.setMaxStackSize(myInt);
             Items.ENDER_PEARL.setMaxStackSize(64);
         }
+        OreDictionary.registerOre("egg", VTItems.friedegg);
+        OreDictionary.registerOre("ingredientEgg", VTItems.friedegg);
     }
+
 }

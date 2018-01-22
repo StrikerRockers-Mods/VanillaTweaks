@@ -40,8 +40,6 @@ public class VTConfigHandler {
     public static boolean storageBlocks;
     public static boolean craftingPad;
     public static boolean pedestal;
-    public static boolean NoMoreLavaPocketGen;
-    public static boolean endFrameBroken;
     public static boolean slimeChunkFinder;
     //Miscellaneous
     public static boolean editSigns;
@@ -50,6 +48,8 @@ public class VTConfigHandler {
     public static boolean silenceWither;
     public static boolean silenceDragon;
     public static boolean silenceLightning;
+    public static boolean NoMoreLavaPocketGen;
+    public static boolean endFrameBroken;
     //Miscellaneous: Requires Restart
     public static boolean commandBlockInRedstoneTab;
     public static boolean renameButtons;

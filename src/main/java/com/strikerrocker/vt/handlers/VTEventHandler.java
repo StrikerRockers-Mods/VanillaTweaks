@@ -7,12 +7,7 @@ import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiContainerCreative;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -34,9 +29,11 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemShears;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.tileentity.TileEntitySign;
@@ -50,10 +47,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -68,7 +63,6 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -83,24 +77,18 @@ import static com.strikerrocker.vt.handlers.VTConfigHandler.*;
 /**
  * The event handler for Vanilla Tweaks
  */
-@SuppressWarnings({"unused", "unchecked"})
 public final class VTEventHandler {
     /**
      * The singleton instance of the event handler
      */
     public static VTEventHandler instance = new VTEventHandler();
-    /**
-     * Whether or not to enable the potion effect overlay
-     */
-    private static boolean displayPotionEffects = true;
-
 
     /**
      * Returns if the given chunk is an slime chunk or not
      *
      * @param world World,x int,z int
      */
-    private static boolean isSlimeChunk(World world, int x, int z) {
+    public static boolean isSlimeChunk(World world, int x, int z) {
         Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
     }
@@ -119,9 +107,9 @@ public final class VTEventHandler {
     /**
      * Swaps the items in armour with player's armor
      *
-     * @param player
-     * @param armorStand
-     * @param slot
+     * @param player the player
+     * @param armorStand the armour stand
+     * @param slot the slots
      */
     private void swapSlot(EntityPlayer player, EntityArmorStand armorStand, EntityEquipmentSlot slot) {
         ItemStack playerItem = player.getItemStackFromSlot(slot);
@@ -252,7 +240,6 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onPortalBreak(BlockEvent.BreakEvent event) {
-        EntityPlayer player = event.getPlayer();
         World world = event.getWorld();
         BlockPos blockPos = event.getPos();
         if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME) {
@@ -448,7 +435,6 @@ public final class VTEventHandler {
             if (event.getEntityPlayer().getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqual(slimestack)) {
                 int x = MathHelper.floor(event.getEntityPlayer().posX);
                 int y = MathHelper.floor(event.getEntityPlayer().posY);
-                int z = MathHelper.floor(event.getEntityPlayer().posZ);
                 boolean slime = isSlimeChunk(event.getWorld(), x, y);
                 if (slime) {
                     event.getEntityPlayer().sendStatusMessage(new TextComponentString("Slime Chunk"), true);
@@ -561,53 +547,6 @@ public final class VTEventHandler {
         event.setCanceled(true);
     }
 
-
-    /**
-     * Adds an tooltip for foods to show the hunger bars
-     *
-     * @param event The PostTextEvent
-     */
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void renderTooltip(RenderTooltipEvent.PostText event) {
-        if (!event.getStack().isEmpty() && event.getStack().getItem() instanceof ItemFood) {
-            int divisor = 2;
-            GlStateManager.pushMatrix();
-            GlStateManager.color(1F, 1F, 1F);
-            Minecraft mc = Minecraft.getMinecraft();
-            mc.getTextureManager().bindTexture(GuiIngameForge.ICONS);
-            ItemFood food = ((ItemFood) event.getStack().getItem());
-            int pips = food.getHealAmount(event.getStack());
-            PotionEffect eff = ReflectionHelper.getPrivateValue(ItemFood.class, food, VTUtils.POTION_ID);
-            boolean poison = eff != null && eff.getPotion() != null && eff.getPotion().isBadEffect();
-            for (int i = 0; i < Math.ceil((double) pips / divisor); i++) {
-                int x = event.getX() + i * 9 - 2;
-                int y = event.getY() + 15;
-
-                if (mc.currentScreen instanceof GuiContainerCreative && ((GuiContainerCreative) mc.currentScreen).getSelectedTabIndex() == CreativeTabs.SEARCH.getTabIndex())
-                    y += 10;
-
-                int u = 16;
-                if (poison)
-                    u += 117;
-                int v = 27;
-
-                Gui.drawModalRectWithCustomSizedTexture(x, y, u, v, 9, 9, 256, 256);
-
-                u = 52;
-                if (pips % 2 != 0 && i == 0)
-                    u += 9;
-                if (poison)
-                    u += 36;
-
-                Gui.drawModalRectWithCustomSizedTexture(x, y, u, v, 9, 9, 256, 256);
-            }
-
-            GlStateManager.popMatrix();
-        }
-    }
-
-
     /**
      * Enables the sponges dry in nether functionality
      *
@@ -662,6 +601,8 @@ public final class VTEventHandler {
     }
 
     /**
+     * Swaps the players armour with armor stand's armour
+     *
      * @param event EntityInteractSpecific
      */
     @SubscribeEvent

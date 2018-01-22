@@ -1,5 +1,10 @@
-
 {
+  "conditions": [
+    {
+      "type": "vt:storage_blocks",
+      "value": true
+    }
+  ],
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {

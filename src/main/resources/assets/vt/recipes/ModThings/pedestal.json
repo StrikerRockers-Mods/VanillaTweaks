@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "vt:pedestal",
+      "value": true
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "SSS",

@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "vt:pad",
+      "value": true
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "   ",
