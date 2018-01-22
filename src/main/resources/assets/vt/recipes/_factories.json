@@ -1,0 +1,9 @@
+{
+  "conditions": {
+    "pad": "com.strikerrocker.vt.recipes.VTConditionFactory",
+    "pedestal": "com.strikerrocker.vt.recipes.VTConditionFactory",
+    "storage_blocks": "com.strikerrocker.vt.recipes.VTConditionFactory",
+    "slime": "com.strikerrocker.vt.recipes.VTConditionFactory",
+    "chest": "com.strikerrocker.vt.recipes.VTConditionFactory"
+  }
+}

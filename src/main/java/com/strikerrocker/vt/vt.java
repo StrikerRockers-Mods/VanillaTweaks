@@ -2,20 +2,18 @@ package com.strikerrocker.vt;
 
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.entities.VTEntities;
-import com.strikerrocker.vt.handlers.*;
+import com.strikerrocker.vt.handlers.VTConfigHandler;
+import com.strikerrocker.vt.handlers.VTFuelHandler;
+import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.items.ItemArmor;
-import com.strikerrocker.vt.misc.NetherPortalFix;
 import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import com.strikerrocker.vt.proxies.VTCommonProxy;
-import com.strikerrocker.vt.recipes.VTRecipes;
-import com.strikerrocker.vt.worldgen.NetherPocketer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -62,9 +60,6 @@ public class vt {
         network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
-        NetherPocketer handler = new NetherPocketer();
-        MinecraftForge.TERRAIN_GEN_BUS.register(handler);
-        VTRecipes.registerRecipes();
         VTEntities.init();
         GameRegistry.registerFuelHandler((ItemStack stack) -> stack.getItem() == Item.getItemFromBlock(Blocks.TORCH) ? 400 : 0);
     }
@@ -73,10 +68,7 @@ public class vt {
     public void onInit(FMLInitializationEvent event) {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         GameRegistry.registerFuelHandler(new VTFuelHandler());
-        MinecraftForge.EVENT_BUS.register(VTEventHandler.instance);
-        MinecraftForge.EVENT_BUS.register(new VTSoundHandler());
         VTVanillaPropertiesChanger.init();
-        MinecraftForge.EVENT_BUS.register(NetherPortalFix.class);
     }
 
 
