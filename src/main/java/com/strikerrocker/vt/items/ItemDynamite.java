@@ -17,11 +17,8 @@ import net.minecraft.world.World;
  */
 public class ItemDynamite extends ItemBase {
 
-    private String name;
-
     public ItemDynamite(String name) {
         super(name);
-        this.name = name;
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(16);
         setUnlocalizedName(name);
@@ -44,7 +41,7 @@ public class ItemDynamite extends ItemBase {
             playerIn.getEntityWorld().spawnEntity(dynamite);
         }
         playerIn.addStat(StatList.getObjectUseStats(this));
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
 
     }
 

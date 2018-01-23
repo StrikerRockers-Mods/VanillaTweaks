@@ -5,9 +5,6 @@ import net.minecraft.item.ItemFood;
 
 import static com.strikerrocker.vt.vt.proxy;
 
-/**
- * Created by thari on 23/07/2017.
- */
 public class ItemFriedEgg extends ItemFood {
     public ItemFriedEgg() {
         super(3, 0.6f, false);

@@ -10,9 +10,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-/**
- * Created by thari on 25/11/2017.
- */
 public class ContainerPedestal extends Container {
 
     public ContainerPedestal(InventoryPlayer playerInv, final TileEntityPedestal pedestal) {

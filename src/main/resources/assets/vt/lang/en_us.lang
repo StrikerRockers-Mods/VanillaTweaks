@@ -1,6 +1,12 @@
 tile.flintblock.name=Block of Flint
 tile.sugarblock.name=Block of Sugar
 tile.charcoalblock.name=Block of Charcoal
+tile.acaciabark.name=Acacia Bark
+tile.birchbark.name=Birch Bark
+tile.darkoakbark.name=Dark Oak Bark
+tile.oakbark.name=Oak Bark
+tile.sprucebark.name=Spruce Bark
+tile.junglebark.name=Jungle Bark
 
 tile.buttonStone.name=Stone Button
 tile.buttonWood.name=Wooden Button
@@ -17,7 +23,7 @@ item.slime.name=Slime Finder
 key.potionDisplay=Potion Effect Display
 
 
-advancements.vt.pad=Crafting Pad
+advancements.vt.pad=Vanilla Tweaks
 advancements.vt.storage=Storage Blocks
 advancements.vt.zoom=Zoom
 advancements.vt.boom=Boom!!

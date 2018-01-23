@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "vt:chest",
+      "value": true
+    }
+  ],
   "type": "forge:ore_shaped",
   "pattern": [
     "OOO",

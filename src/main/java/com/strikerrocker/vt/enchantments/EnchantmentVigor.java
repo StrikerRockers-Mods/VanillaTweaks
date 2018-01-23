@@ -23,6 +23,7 @@ public class EnchantmentVigor extends VTEnchantmentBase {
     public EnchantmentVigor() {
         super("vigor", Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, EntityEquipmentSlot.CHEST);
         this.setRegistryName("vigor");
+        this.setName("vigot");
     }
 
     @Override

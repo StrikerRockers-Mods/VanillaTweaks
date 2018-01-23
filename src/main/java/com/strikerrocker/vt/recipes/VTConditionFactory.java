@@ -27,6 +27,9 @@ public class VTConditionFactory implements IConditionFactory {
         if (key.equals(vtModInfo.MOD_ID + ":slime")) {
             return () -> VTConfigHandler.slimeChunkFinder == value;
         }
+        if (key.equals(vtModInfo.MOD_ID + ":barks")) {
+            return () -> VTConfigHandler.barks == value;
+        }
         if (key.equals(vtModInfo.MOD_ID + ":chest")) {
             return () -> VTConfigHandler.useBetterChestRecipe == value;
         }

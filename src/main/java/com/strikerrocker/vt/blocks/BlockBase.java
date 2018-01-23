@@ -8,9 +8,6 @@ import net.minecraft.item.ItemBlock;
 
 import static com.strikerrocker.vt.vt.proxy;
 
-/**
- * Created by thari on 22/07/2017.
- */
 public class BlockBase extends Block {
 
     protected String name;

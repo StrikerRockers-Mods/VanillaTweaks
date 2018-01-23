@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class EnchantmentSiphon extends VTEnchantmentBase {
     public EnchantmentSiphon() {
         super("siphon", Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);
-
+        this.setName("siphon");
         this.setRegistryName("siphon");
     }
 

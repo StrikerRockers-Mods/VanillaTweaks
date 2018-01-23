@@ -15,7 +15,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /**
  * The client-side proxy for Vanilla Tweaks
  */
-@SuppressWarnings("unused")
 public class VTClientProxy extends VTCommonProxy {
     private static final Minecraft minecraft = Minecraft.getMinecraft(); //the Minecraft instance
 
@@ -31,7 +30,6 @@ public class VTClientProxy extends VTCommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public String localize(String unlocalized, Object... args) {
         return I18n.format(unlocalized, args);

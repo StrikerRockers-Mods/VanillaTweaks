@@ -1,34 +1,18 @@
-package com.strikerrocker.vt.misc;
-
+package com.strikerrocker.vt.recipes;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.GameData;
 
 public class RecipeHelper {
-
-    /**
-     * Adds a shaped recipe that supports string inputparamers corisponding to an oredict entry, can also be used for recipes without ore dict ingredients
-     *
-     * @param output The stack that should be produced
-     */
-    public static void addShapedOreRecipe(ItemStack output, Object... params) {
-        ResourceLocation location = getNameForRecipe(output);
-        ShapedOreRecipe recipe = new ShapedOreRecipe(location, output, params);
-        recipe.setRegistryName(location);
-        GameData.register_impl(recipe);
-    }
 
     /**
      * Adds a basic shaped recipe
@@ -44,33 +28,9 @@ public class RecipeHelper {
     }
 
     /**
-     * Adds a shapeless ore recipe
+     * Generates a unique name based of the active mod, and the itemstack that the recipe outputs
      *
-     * @param output The stack that should be produced
-     */
-    public static void addShapelessOreRecipe(ItemStack output, Object... input) {
-        ResourceLocation location = getNameForRecipe(output);
-        ShapelessOreRecipe recipe = new ShapelessOreRecipe(location, output, input);
-        recipe.setRegistryName(location);
-        GameData.register_impl(recipe);
-    }
-
-    /**
-     * Adds a basic shapeless recipe
-     *
-     * @param output The stack that should be produced
-     */
-    public static void addShapelessRecipe(ItemStack output, Object... input) {
-        ResourceLocation location = getNameForRecipe(output);
-        ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), output, buildInput(input));
-        recipe.setRegistryName(location);
-        GameData.register_impl(recipe);
-    }
-
-    /**
-     * Genereates a unique name based of the active mod, and the itemstack that the recipe outputs
-     *
-     * @param output an itemstack, usualy the one the the recipe produces
+     * @param output an itemstack, usually the one the the recipe produces
      * @return a unique ResourceLocation based off the item item
      */
     public static ResourceLocation getNameForRecipe(ItemStack output) {

@@ -1,18 +1,12 @@
 package com.strikerrocker.vt.worldgen;
 
 import com.strikerrocker.vt.handlers.VTConfigHandler;
-import com.strikerrocker.vt.vtModInfo;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.*;
 
-/**
- * Created by thari on 28/07/2017.
- */
-@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
 public class NetherPocketer {
     @SubscribeEvent
     public void onPopulateChunk(PopulateChunkEvent.Populate event) {

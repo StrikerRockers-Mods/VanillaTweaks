@@ -23,9 +23,6 @@ public final class VTUtils {
     private VTUtils() {
     }
 
-    // ItemFood
-    public static final String[] POTION_ID = new String[]{"f", "field_77851_ca", "potionId"};
-
     public static FakePlayer getFakePlayer(World world) {
         if (world instanceof WorldServer)
             return FakePlayerFactory.getMinecraft((WorldServer) world);
