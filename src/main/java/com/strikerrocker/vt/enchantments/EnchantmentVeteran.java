@@ -17,6 +17,7 @@ public class EnchantmentVeteran extends VTEnchantmentBase {
     public EnchantmentVeteran() {
         super("veteran", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_HEAD, EntityEquipmentSlot.HEAD);
         this.setRegistryName("veteran");
+        this.setName("veteran");
     }
 
     @Override

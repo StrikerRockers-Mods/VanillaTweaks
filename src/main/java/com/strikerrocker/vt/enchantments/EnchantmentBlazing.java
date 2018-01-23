@@ -26,6 +26,7 @@ public class EnchantmentBlazing extends VTEnchantmentBase {
     public EnchantmentBlazing() {
         super("blazing", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);
         this.setRegistryName("blazing");
+        this.setName("blazing");
     }
 
     @Override
@@ -38,7 +39,7 @@ public class EnchantmentBlazing extends VTEnchantmentBase {
             for (ItemStack drop : dropsCopy)
                 if (drop != null) {
                     ItemStack smeltingResult = FurnaceRecipes.instance().getSmeltingResult(drop);
-                    if (smeltingResult != null) {
+                    if (!smeltingResult.isEmpty()) {
                         smeltingResult = smeltingResult.copy();
                         smeltingResult.stackSize *= drop.stackSize;
                         int fortuneLevel = event.getFortuneLevel();

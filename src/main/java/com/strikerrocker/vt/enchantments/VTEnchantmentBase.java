@@ -1,7 +1,6 @@
 package com.strikerrocker.vt.enchantments;
 
 import com.google.common.collect.Lists;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -13,11 +12,11 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import java.util.List;
 
 /**
- * Base class for all of Craft++'s enchantments
+ * Base class for all of VanillaTweaks's enchantments
  */
 public abstract class VTEnchantmentBase extends Enchantment {
     /**
-     * A list of all of Craft++'s enchantments
+     * A list of all of VanillaTweaks's enchantments
      */
     public static List<VTEnchantmentBase> cppEnchantments = Lists.newArrayList();
 
@@ -59,9 +58,4 @@ public abstract class VTEnchantmentBase extends Enchantment {
 
     public abstract int getMaximumEnchantability(int enchantmentLevel);
 
-    private static class NoFreeEnchantmentIDException extends RuntimeException {
-        private NoFreeEnchantmentIDException(String enchantmentName) {
-            super("Could not find a free enchantment ID for " + I18n.format("enchantment." + enchantmentName));
-        }
-    }
 }

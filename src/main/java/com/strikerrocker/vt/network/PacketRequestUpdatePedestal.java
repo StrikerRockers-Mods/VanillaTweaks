@@ -9,9 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/**
- * Created by thari on 23/07/2017.
- */
 public class PacketRequestUpdatePedestal implements IMessage {
 
     private BlockPos pos;

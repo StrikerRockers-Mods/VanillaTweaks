@@ -54,6 +54,7 @@ public class VTConfigHandler {
     public static boolean commandBlockInRedstoneTab;
     public static boolean renameButtons;
     public static double stackSize;
+    public static boolean barks;
 
     /**
      * Initializes the config handler for VanillaTweaks
@@ -120,6 +121,7 @@ public class VTConfigHandler {
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
         endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
+        barks = get(miscRequiresRestartCategory, "1.13 barks", true, "Enables 1.13 bark blocks");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);
 

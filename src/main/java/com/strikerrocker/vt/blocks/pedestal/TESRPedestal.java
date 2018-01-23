@@ -11,9 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.opengl.GL11;
 
-/**
- * Created by thari on 23/07/2017.
- */
 public class TESRPedestal extends TileEntitySpecialRenderer<TileEntityPedestal> {
 
     @Override

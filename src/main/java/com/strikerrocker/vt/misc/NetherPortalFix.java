@@ -1,6 +1,5 @@
 package com.strikerrocker.vt.misc;
 
-import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -22,7 +21,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -30,7 +28,6 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nullable;
 
-@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
 public class NetherPortalFix {
     private static final int MAX_PORTAL_DISTANCE_SQ = 16;
     private static final String NETHER_PORTAL_FIX = "NetherPortalFix";
@@ -84,7 +81,7 @@ public class NetherPortalFix {
                             player.getEntityData().setTag(SCHEDULED_TELEPORT, tagCompound);
                             event.setCanceled(true);
                         } else {
-                            player.sendStatusMessage(new TextComponentTranslation("vt:portal_destroyed"), true);
+                            player.sendStatusMessage(new TextComponentTranslation("vt:portal_destroyed"), false);
                             removeReturnPortal(portalList, returnPortal);
                         }
                     }
@@ -214,7 +211,7 @@ public class NetherPortalFix {
 //                System.out.println("Updated connection: " + triggerPos + " => " + returnPos);
                 found.setLong(TO, returnPos.toLong());
             } else {
-//                System.out.println("Used existing connection.");
+                System.out.println("Used existing connection.");
             }
         }
     }

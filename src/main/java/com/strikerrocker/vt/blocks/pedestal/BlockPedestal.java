@@ -25,11 +25,6 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
         super(Material.ROCK, "pedestal", MapColor.GRAY_STAINED_HARDENED_CLAY);
     }
 
-    @Override
-    @Deprecated
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
 
     @Override
     @Deprecated

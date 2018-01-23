@@ -21,6 +21,7 @@ public class EnchantmentHoming extends VTEnchantmentBase {
     public EnchantmentHoming() {
         super("homing", Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.BOW, EntityEquipmentSlot.MAINHAND);
         this.setRegistryName("homing");
+        this.setName("homing");
     }
 
     @Override

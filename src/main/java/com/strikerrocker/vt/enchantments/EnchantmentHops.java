@@ -16,6 +16,7 @@ public class EnchantmentHops extends VTEnchantmentBase {
     public EnchantmentHops() {
         super("hops", Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, EntityEquipmentSlot.FEET);
         this.setRegistryName("hops");
+        this.setName("hops");
     }
 
     @Override

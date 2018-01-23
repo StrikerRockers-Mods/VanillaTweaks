@@ -17,7 +17,6 @@ public class VTVanillaPropertiesChanger {
     /**
      * Initializes the vanilla properties changer
      */
-    @SuppressWarnings("unchecked")
     public static void init() {
         //Modifying block creative tabs
         if (VTConfigHandler.commandBlockInRedstoneTab)

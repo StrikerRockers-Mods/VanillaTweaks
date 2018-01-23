@@ -13,7 +13,7 @@ public class GuiPedestal extends GuiContainer {
 
     private static final ResourceLocation BG_TEXTURE = new ResourceLocation(vtModInfo.MOD_ID, "textures/gui/pedestal.png");
 
-    private InventoryPlayer playerInv;
+    private final InventoryPlayer playerInv;
 
     public GuiPedestal(Container container, InventoryPlayer playerInv) {
         super(container);

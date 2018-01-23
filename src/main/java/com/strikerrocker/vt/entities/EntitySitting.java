@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 
 public class EntitySitting extends Entity {
-    public static final HashMap<BlockPos, EntitySitting> OCCUPIED = new HashMap<BlockPos, EntitySitting>();
+    public static final HashMap<BlockPos, EntitySitting> OCCUPIED = new HashMap<>();
 
     public EntitySitting(World world) {
         super(world);

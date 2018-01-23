@@ -28,7 +28,7 @@ public final class VTEnchantments {
      * Registers the enchantments for Craft++
      */
 
-    public static void VTEnchantments(IForgeRegistry<Enchantment> registry) {
+    public static void init(IForgeRegistry<Enchantment> registry) {
         if (vigor)
             registry.register(Vigor);
         if (VTConfigHandler.Nimble)
@@ -64,7 +64,6 @@ public final class VTEnchantments {
      */
     public static void performAction(String enchantmentName, Entity entity, Event baseEvent) {
         Optional<VTEnchantmentBase> cppEnchantment = getByName(enchantmentName);
-        if (cppEnchantment.isPresent())
-            cppEnchantment.get().performAction(entity, baseEvent);
+        cppEnchantment.ifPresent(vtEnchantmentBase -> vtEnchantmentBase.performAction(entity, baseEvent));
     }
 }

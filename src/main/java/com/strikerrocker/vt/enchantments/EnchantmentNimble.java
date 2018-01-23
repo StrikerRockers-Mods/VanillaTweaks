@@ -22,6 +22,7 @@ public class EnchantmentNimble extends VTEnchantmentBase {
     public EnchantmentNimble() {
         super("nimble", Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, EntityEquipmentSlot.FEET);
         this.setRegistryName("nimble");
+        this.setName("nimble");
     }
 
     @Override

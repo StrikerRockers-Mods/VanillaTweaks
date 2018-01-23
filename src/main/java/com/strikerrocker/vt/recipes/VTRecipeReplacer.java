@@ -14,8 +14,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
-import static com.strikerrocker.vt.misc.RecipeHelper.addShapedRecipe;
-import static com.strikerrocker.vt.misc.RecipeHelper.replaceStairsRecipe;
+import static com.strikerrocker.vt.recipes.RecipeHelper.addShapedRecipe;
+import static com.strikerrocker.vt.recipes.RecipeHelper.replaceStairsRecipe;
 
 @Mod.EventBusSubscriber
 public class VTRecipeReplacer {

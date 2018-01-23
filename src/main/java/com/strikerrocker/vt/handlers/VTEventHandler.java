@@ -57,6 +57,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -70,6 +71,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import static com.strikerrocker.vt.blocks.VTBlocks.*;
 import static com.strikerrocker.vt.enchantments.VTEnchantments.Hops;
 import static com.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
 import static com.strikerrocker.vt.handlers.VTConfigHandler.*;
@@ -107,9 +109,9 @@ public final class VTEventHandler {
     /**
      * Swaps the items in armour with player's armor
      *
-     * @param player the player
+     * @param player     the player
      * @param armorStand the armour stand
-     * @param slot the slots
+     * @param slot       the slots
      */
     private void swapSlot(EntityPlayer player, EntityArmorStand armorStand, EntityEquipmentSlot slot) {
         ItemStack playerItem = player.getItemStackFromSlot(slot);
@@ -210,6 +212,9 @@ public final class VTEventHandler {
                     if (event.getEntityLiving().getHealth() > event.getEntityLiving().getMaxHealth())
                         event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
                 }
+            }
+            if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Nimble, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
+                VTEnchantments.performAction("nimble", event.getEntityLiving(), event);
             }
         }
     }
@@ -336,7 +341,7 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void onFOVUpdate(FOVUpdateEvent event) {
         ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-        if (!helmet.isEmpty() && helmet.getItem() == VTItems.binoculars)
+        if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
             event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
     }
 
@@ -371,9 +376,6 @@ public final class VTEventHandler {
                     if (doSetFire)
                         livingEntity.setFire(10);
                 }
-            }
-            if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Nimble, livingEntity.getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
-                VTEnchantments.performAction("nimble", livingEntity, event);
             }
         }
     }
@@ -620,6 +622,26 @@ public final class VTEventHandler {
             swapSlot(player, armorStand, EntityEquipmentSlot.LEGS);
             swapSlot(player, armorStand, EntityEquipmentSlot.FEET);
         }
+    }
+
+    @SubscribeEvent
+    public void fuel(FurnaceFuelBurnTimeEvent event) {
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(charcoal))
+            event.setBurnTime(16000);
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(Blocks.TORCH))
+            event.setBurnTime(400);
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(acaciabark))
+            event.setBurnTime(500);
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(birchbark))
+            event.setBurnTime(500);
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(darkoakbark))
+            event.setBurnTime(500);
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(junglebark))
+            event.setBurnTime(500);
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(oakbark))
+            event.setBurnTime(500);
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(sprucebark))
+            event.setBurnTime(500);
     }
 
 

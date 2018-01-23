@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "vt:barks",
+      "value": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FF",
+    "FF"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:log",
+      "data": 1
+    }
+  },
+  "result": {
+    "item": "vt:sprucebark",
+    "count": 4
+  }
+}
