@@ -16,7 +16,6 @@ public class BlockBase extends Block {
         super(material, mapColor);
 
         this.name = name;
-
         setUnlocalizedName(name);
         setRegistryName(name);
     }
@@ -28,5 +27,4 @@ public class BlockBase extends Block {
     public Item createItemBlock() {
         return new ItemBlock(this).setRegistryName(getRegistryName());
     }
-
 }

@@ -12,7 +12,7 @@ public class BlockCharcoal extends BlockBase {
         super(Material.ROCK, name, MapColor.BLACK);
         this.setUnlocalizedName(name);
         this.setHardness(1.0F);
-
+        this.name = name;
     }
 
     @Override

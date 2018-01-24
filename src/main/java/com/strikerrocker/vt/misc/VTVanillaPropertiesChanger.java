@@ -45,8 +45,8 @@ public class VTVanillaPropertiesChanger {
             Items.SPRUCE_BOAT.setMaxStackSize(myInt);
             Items.ENDER_PEARL.setMaxStackSize(64);
         }
-        OreDictionary.registerOre("egg", VTItems.friedegg);
-        OreDictionary.registerOre("ingredientEgg", VTItems.friedegg);
+        OreDictionary.registerOre("egg", VTItems.fried_egg);
+        OreDictionary.registerOre("ingredientEgg", VTItems.fried_egg);
     }
 
 }

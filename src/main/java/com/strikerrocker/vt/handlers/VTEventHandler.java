@@ -1,5 +1,7 @@
 package com.strikerrocker.vt.handlers;
 
+import baubles.api.BaublesApi;
+import baubles.api.cap.IBaublesItemHandler;
 import com.strikerrocker.vt.VTUtils;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.EntitySitting;
@@ -84,15 +86,31 @@ public final class VTEventHandler {
      * The singleton instance of the event handler
      */
     public static VTEventHandler instance = new VTEventHandler();
+    public static boolean fov = false;
 
     /**
      * Returns if the given chunk is an slime chunk or not
      *
      * @param world World,x int,z int
      */
-    public static boolean isSlimeChunk(World world, int x, int z) {
+    private static boolean isSlimeChunk(World world, int x, int z) {
         Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
+    }
+
+    public static boolean hasBaubles(EntityPlayer player) {
+        if (fov) {
+            IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
+            if (handler == null) {
+                return false;
+            }
+            ItemStack stackInSlot = handler.getStackInSlot(4);
+            if (!stackInSlot.isEmpty() && stackInSlot.getItem() == VTItems.bb) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
 
@@ -340,9 +358,13 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onFOVUpdate(FOVUpdateEvent event) {
-        ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-        if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
-            event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+        if (event.getEntity() != null) {
+            if (event.getEntity() instanceof EntityPlayer) {
+                ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular || hasBaubles(event.getEntity()))
+                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+            }
+        }
     }
 
     /**

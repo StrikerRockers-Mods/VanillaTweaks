@@ -34,12 +34,14 @@ repositories {
         name = "Progwml6 maven"
         url = "http://dvs1.progwml6.com/files/maven"
     }
+    maven { url 'https://jitpack.io' }
 }
 
 
 dependencies {
     deobfCompile "mezz.jei:jei_${jei_mcversion}:${jei_version}:api"
     runtime "mezz.jei:jei_${jei_mcversion}:${jei_version}"
+    deobfCompile "com.github.azanor:Baubles:${baubles_version}"
 }
 
 processResources {

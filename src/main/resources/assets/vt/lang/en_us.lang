@@ -19,6 +19,7 @@ item.pad.name=Crafting Pad
 item.lens.name=Binocular Lens
 item.binoculars.name=Binoculars
 item.slime.name=Slime Finder
+item.binoculars.name=Binoculars(Baubles)
 
 key.potionDisplay=Potion Effect Display
 
@@ -42,6 +43,9 @@ enchantment.veteran=Veteran
 enchantment.blazing=Blazing
 enchantment.siphon=Siphon
 enchantment.homing=Homing
+
+key.categories.modtut=VanillaTweajs
+key.tutorial=Zoom Key
 
 vt:portal_destroyed=§cYour return portal has been destroyed.
 

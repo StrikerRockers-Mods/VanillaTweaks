@@ -11,6 +11,7 @@ public class BlockSugar extends BlockBase {
         this.setUnlocalizedName(name);
         this.setSoundType(SoundType.SAND);
         this.setHardness(0.5F);
+        this.name = name;
     }
 
 }
