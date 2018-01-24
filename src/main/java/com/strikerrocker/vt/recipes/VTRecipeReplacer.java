@@ -85,7 +85,7 @@ public class VTRecipeReplacer {
             addShapedRecipe(new ItemStack(Items.STONE_AXE), "SS", "ST", " T", 'S', "stone", 'T', "stickWood");
             addShapedRecipe(new ItemStack(Items.STONE_HOE), "SS", " T", " T", 'S', "stone", 'T', "stickWood");
         }
-        GameRegistry.addSmelting(Items.EGG, new ItemStack(VTItems.friedegg), 0.35F);
+        GameRegistry.addSmelting(Items.EGG, new ItemStack(VTItems.fried_egg), 0.35F);
     }
 
 }

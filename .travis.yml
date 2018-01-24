@@ -1,13 +1,22 @@
-
-sudo: false
-
 language: java
-
 jdk:
-- oraclejdk8
+  - oraclejdk8
 
+sudo: required
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
 
+jobs:
+  include:
+    - stage: build
+      install: ./gradlew setupCiWorkspace
+      script: ./gradlew build publish
+    - stage: checkstyle
+      install: echo "skipping default ./gradlew assemble"
+      script: ./gradlew checkstyle
 
-install: "./gradlew setupCIWorkspace"
-script: "./gradlew build"
-after_success: "./gradlew bintrayUpload"
+env:
+  global:
+TERM=dumb
