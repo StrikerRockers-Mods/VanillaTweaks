@@ -120,6 +120,7 @@ public class VTConfigHandler {
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
+        commandBlockInRedstoneTab = get(miscRequiresRestartCategory,"",true,"");
         endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
         barks = get(miscRequiresRestartCategory, "1.13 barks", true, "Enables 1.13 bark blocks");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");

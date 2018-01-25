@@ -1,4 +1,4 @@
-package com.strikerrocker.vt.compat;
+package com.strikerrocker.vt.compat.jei;
 
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.gui.ContainerCraftingPad;

@@ -1,9 +1,9 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "forge:ore_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:wool",
-      "data": 0
+      "ore": "wool",
+      "type": "forge:ore_dict"
     }
   ],
   "result": {

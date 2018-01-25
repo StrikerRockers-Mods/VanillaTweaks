@@ -18,6 +18,8 @@ public class RegistrationHandler {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         VTItems.register(event.getRegistry());
         VTBlocks.registerItemBlocks(event.getRegistry());
+        if (vt.baubles)
+            event.getRegistry().register(VTItems.bb);
     }
 
     @SubscribeEvent
@@ -34,6 +36,8 @@ public class RegistrationHandler {
     public static void registerModels(ModelRegistryEvent event) {
         VTItems.registerModels();
         VTBlocks.registerModels();
+        if (vt.baubles)
+            VTItems.bb.registerItemModel();
     }
 
 

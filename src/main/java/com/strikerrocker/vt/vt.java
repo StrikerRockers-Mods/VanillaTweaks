@@ -1,21 +1,18 @@
 package com.strikerrocker.vt;
 
-import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.entities.VTEntities;
 import com.strikerrocker.vt.handlers.VTConfigHandler;
 import com.strikerrocker.vt.handlers.VTEventHandler;
 import com.strikerrocker.vt.handlers.VTGuiHandler;
 import com.strikerrocker.vt.handlers.VTSoundHandler;
-import com.strikerrocker.vt.input.KeyBindings;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.misc.NetherPortalFix;
+import com.strikerrocker.vt.misc.OreDictionaryRegistry;
 import com.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import com.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import com.strikerrocker.vt.network.PacketUpdatePedestal;
 import com.strikerrocker.vt.proxies.VTCommonProxy;
 import com.strikerrocker.vt.worldgen.NetherPocketer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +22,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
@@ -50,6 +46,7 @@ public class vt {
         if (baubles){
             logInfo("Baubles Support Enabled");
         }
+        OreDictionaryRegistry.init();
         logger = event.getModLog();
         VTConfigHandler.init(event.getSuggestedConfigurationFile());
         VTItems.init();
@@ -79,5 +76,3 @@ public class vt {
 
 
 }
-
-

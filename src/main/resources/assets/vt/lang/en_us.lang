@@ -7,7 +7,6 @@ tile.darkoakbark.name=Dark Oak Bark
 tile.oakbark.name=Oak Bark
 tile.sprucebark.name=Spruce Bark
 tile.junglebark.name=Jungle Bark
-
 tile.buttonStone.name=Stone Button
 tile.buttonWood.name=Wooden Button
 tile.sand.name=Sand/Red Sand
@@ -19,7 +18,7 @@ item.pad.name=Crafting Pad
 item.lens.name=Binocular Lens
 item.binoculars.name=Binoculars
 item.slime.name=Slime Finder
-item.binoculars.name=Binoculars(Baubles)
+item.binocular_bauble.name=Binoculars(Baubles)
 
 key.potionDisplay=Potion Effect Display
 
@@ -44,8 +43,8 @@ enchantment.blazing=Blazing
 enchantment.siphon=Siphon
 enchantment.homing=Homing
 
-key.categories.modtut=VanillaTweajs
-key.tutorial=Zoom Key
+key.category.vt=VanillaTweajs
+key.vt=Zoom Key
 
 vt:portal_destroyed=§cYour return portal has been destroyed.
 
