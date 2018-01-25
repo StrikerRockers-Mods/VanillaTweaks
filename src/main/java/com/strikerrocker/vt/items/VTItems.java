@@ -1,7 +1,7 @@
 package com.strikerrocker.vt.items;
 
 
-import com.strikerrocker.vt.compat.BinocularBauble;
+import com.strikerrocker.vt.compat.baubles.BinocularBauble;
 import com.strikerrocker.vt.vt;
 import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.init.SoundEvents;
@@ -23,7 +23,7 @@ public class VTItems {
     public static ItemFriedEgg fried_egg;
     public static ItemSlimeBucket slime;
     private static ItemBase lens;
-    public static BinocularBauble bb;
+    public static BinocularBauble bb= new BinocularBauble();
 
     public static void init() {
         binocular = new ItemArmor(binoculars, EntityEquipmentSlot.HEAD, "binoculars");
@@ -32,7 +32,6 @@ public class VTItems {
         fried_egg = new ItemFriedEgg();
         slime = new ItemSlimeBucket("slime");
         lens = new ItemBase("lens");
-        bb = new BinocularBauble("binocular_bauble");
     }
 
 
@@ -43,9 +42,6 @@ public class VTItems {
         registry.register(dynamite);
         registry.register(lens);
         registry.register(slime);
-        if (vt.baubles) {
-            registry.register(bb);
-        }
     }
 
     public static void registerModels() {
@@ -55,9 +51,6 @@ public class VTItems {
         dynamite.registerItemModel();
         lens.registerItemModel();
         slime.registerItemModel();
-        if (vt.baubles) {
-            bb.registerItemModel();
-        }
     }
 
 }

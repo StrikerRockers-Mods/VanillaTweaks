@@ -5,7 +5,9 @@ import baubles.api.cap.IBaublesItemHandler;
 import com.strikerrocker.vt.VTUtils;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.EntitySitting;
+import com.strikerrocker.vt.input.KeyBindings;
 import com.strikerrocker.vt.items.VTItems;
+import com.strikerrocker.vt.vt;
 import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
@@ -65,6 +67,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -86,7 +89,7 @@ public final class VTEventHandler {
      * The singleton instance of the event handler
      */
     public static VTEventHandler instance = new VTEventHandler();
-    public static boolean fov = false;
+    private static boolean fov = false;
 
     /**
      * Returns if the given chunk is an slime chunk or not
@@ -98,15 +101,15 @@ public final class VTEventHandler {
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
     }
 
-    public static boolean hasBaubles(EntityPlayer player) {
+    private static boolean hasBaubles(EntityPlayer player) {
         if (fov) {
-            IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
-            if (handler == null) {
-                return false;
-            }
-            ItemStack stackInSlot = handler.getStackInSlot(4);
-            if (!stackInSlot.isEmpty() && stackInSlot.getItem() == VTItems.bb) {
-                return true;
+            if (vt.baubles) {
+                IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
+                if (handler == null) {
+                    return false;
+                }
+                ItemStack stackInSlot = handler.getStackInSlot(4);
+                return !stackInSlot.isEmpty() && (stackInSlot.getItem() == VTItems.bb);
             }
             return false;
         }
@@ -666,5 +669,9 @@ public final class VTEventHandler {
             event.setBurnTime(500);
     }
 
-
+    @SubscribeEvent
+    public void input(InputEvent.KeyInputEvent event) {
+        if (KeyBindings.bauble.isPressed())
+            fov = !fov;
+    }
 }
