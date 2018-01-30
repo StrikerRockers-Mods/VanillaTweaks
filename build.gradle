@@ -23,9 +23,9 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.1.2556"
+    version = "1.12.2-14.23.1.2604"
     runDir = "run"
-    mappings = "snapshot_20171003"
+    mappings = "snapshot_20180128"
 }
 
 repositories {
@@ -41,7 +41,7 @@ repositories {
 dependencies {
     deobfCompile "mezz.jei:jei_${jei_mcversion}:${jei_version}:api"
     runtime "mezz.jei:jei_${jei_mcversion}:${jei_version}"
-    deobfCompile "com.github.azanor:Baubles:${baubles_version}"
+    compileOnly "com.github.azanor:Baubles:${baubles_version}"
 }
 
 processResources {
