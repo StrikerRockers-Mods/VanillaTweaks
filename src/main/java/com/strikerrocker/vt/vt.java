@@ -1,10 +1,7 @@
 package com.strikerrocker.vt;
 
 import com.strikerrocker.vt.entities.VTEntities;
-import com.strikerrocker.vt.handlers.VTConfigHandler;
-import com.strikerrocker.vt.handlers.VTEventHandler;
-import com.strikerrocker.vt.handlers.VTGuiHandler;
-import com.strikerrocker.vt.handlers.VTSoundHandler;
+import com.strikerrocker.vt.handlers.*;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.misc.NetherPortalFix;
 import com.strikerrocker.vt.misc.OreDictionaryRegistry;
@@ -34,19 +31,20 @@ public class vt {
 
     @Mod.Instance(vtModInfo.MOD_ID)
     public static vt instance;
-    private static Logger logger;
     public static boolean baubles = false;
     public static SimpleNetworkWrapper network;
+    private static Logger logger;
+
     public static void logInfo(String message) {
-        logger.info("VanillaTweaks: " + message);
+        logger.info(message);
     }
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        if (baubles){
+        baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
+        if (baubles) {
             logInfo("Baubles Support Enabled");
         }
-        OreDictionaryRegistry.init();
         logger = event.getModLog();
         VTConfigHandler.init(event.getSuggestedConfigurationFile());
         VTItems.init();
@@ -56,17 +54,18 @@ public class vt {
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
         VTEntities.init();
-        baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
     }
 
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
+        OreDictionaryRegistry.init();
         VTVanillaPropertiesChanger.init();
-        MinecraftForge.EVENT_BUS.register(new VTEventHandler());
         MinecraftForge.EVENT_BUS.register(new VTSoundHandler());
         MinecraftForge.EVENT_BUS.register(new NetherPortalFix());
         MinecraftForge.TERRAIN_GEN_BUS.register(new NetherPocketer());
+        MinecraftForge.EVENT_BUS.register(new VTEventHandler());
+        MinecraftForge.EVENT_BUS.register(new VTInputHandler());
     }
 
 

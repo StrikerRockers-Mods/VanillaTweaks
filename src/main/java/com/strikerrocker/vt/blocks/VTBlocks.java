@@ -13,7 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
  */
 public class VTBlocks {
 
-    public static BlockSugar sugar =new BlockSugar("sugarblock");
+    public static BlockSugar sugar = new BlockSugar("sugarblock");
     public static BlockFlint flint = new BlockFlint("flintblock");
     public static BlockCharcoal charcoal = new BlockCharcoal("charcoalblock");
     public static BlockPedestal pedestal = new BlockPedestal();

@@ -1,28 +1,25 @@
-tile.flintBlock.name=Bloque de Flint
-tile.sugarBlock.name=Bloque de Azúcar
-tile.charcoalBlock.name=Bloque de Carbón
+tile.flintblock.name=Bloque de Flint
+tile.sugarblock.name=Bloque de Azï¿½car
+tile.charcoalblock.name=Bloque de Carbï¿½n
 
-tile.buttonStone.name=Botón de Piedra
-tile.buttonWood.name=Botón de Madera
+tile.buttonStone.name=Botï¿½n de Piedra
+tile.buttonWood.name=Botï¿½n de Madera
 tile.sand.name=Arena/Arena Roja
 
 item.dynamite.name=Dinamita
-item.boatStone.name=Barco de Piedra
-item.boatObsidian.name=Obsidiana Barco
-item.eggFried.name=Huevo Frito
-item.spongeWipe.name=Esponja Limpie
-item.craftingPad.name=Almohadilla Artesanía
-item.binocularLens.name=Binocular Lente
-item.binoculars.name=Prismáticos
+item.friedegg.name=Huevo Frito
+item.pad.name=Almohadilla Artesanï¿½a
+item.lens.name=Binocular Lente
+item.binoculars.name=Prismï¿½ticos
 
-key.potionDisplay=Efecto Poción Display
+key.potionDisplay=Efecto Pociï¿½n Display
 
-enchantment.nimble=Ágil
-enchantment.hops=Lúpulo
+enchantment.nimble=ï¿½gil
+enchantment.hops=Lï¿½pulo
 enchantment.vigor=Vigor
 enchantment.veteran=Veterano
 enchantment.blazing=Flameante
-enchantment.siphon=Sifón
+enchantment.siphon=Sifï¿½n
 enchantment.homing=Buscador de Blancos
 
 enchantment.level.11=XI
