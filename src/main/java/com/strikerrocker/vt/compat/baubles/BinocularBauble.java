@@ -1,7 +1,6 @@
 package com.strikerrocker.vt.compat.baubles;
 
 import baubles.api.BaubleType;
-import com.strikerrocker.vt.items.ItemBase;
 import baubles.api.IBauble;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -9,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 import static com.strikerrocker.vt.vt.proxy;
 
-public class BinocularBauble extends Item implements IBauble{
+public class BinocularBauble extends Item implements IBauble {
     public BinocularBauble() {
         this.setUnlocalizedName("binocular_bauble");
         this.setRegistryName("binocular_bauble");

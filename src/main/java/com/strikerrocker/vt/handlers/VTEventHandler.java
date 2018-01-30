@@ -3,10 +3,11 @@ package com.strikerrocker.vt.handlers;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import com.strikerrocker.vt.VTUtils;
+import com.strikerrocker.vt.compat.baubles.BaubleTools;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.EntitySitting;
-import com.strikerrocker.vt.input.KeyBindings;
 import com.strikerrocker.vt.items.VTItems;
+import com.strikerrocker.vt.proxies.VTClientProxy;
 import com.strikerrocker.vt.vt;
 import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.*;
@@ -77,7 +78,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import static com.strikerrocker.vt.blocks.VTBlocks.*;
-import static com.strikerrocker.vt.enchantments.VTEnchantments.Hops;
 import static com.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
 import static com.strikerrocker.vt.handlers.VTConfigHandler.*;
 
@@ -85,11 +85,8 @@ import static com.strikerrocker.vt.handlers.VTConfigHandler.*;
  * The event handler for Vanilla Tweaks
  */
 public final class VTEventHandler {
-    /**
-     * The singleton instance of the event handler
-     */
-    public static VTEventHandler instance = new VTEventHandler();
-    private static boolean fov = false;
+
+    public static boolean fov = false;
 
     /**
      * Returns if the given chunk is an slime chunk or not
@@ -99,21 +96,6 @@ public final class VTEventHandler {
     private static boolean isSlimeChunk(World world, int x, int z) {
         Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
-    }
-
-    private static boolean hasBaubles(EntityPlayer player) {
-        if (fov) {
-            if (vt.baubles) {
-                IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
-                if (handler == null) {
-                    return false;
-                }
-                ItemStack stackInSlot = handler.getStackInSlot(4);
-                return !stackInSlot.isEmpty() && (stackInSlot.getItem() == VTItems.bb);
-            }
-            return false;
-        }
-        return false;
     }
 
 
@@ -247,8 +229,8 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0)
-            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
+        if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0)
+            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
     }
 
     @SubscribeEvent
@@ -364,7 +346,7 @@ public final class VTEventHandler {
         if (event.getEntity() != null) {
             if (event.getEntity() instanceof EntityPlayer) {
                 ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular || hasBaubles(event.getEntity()))
+                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular || BaubleTools.hasProbeGoggle(event.getEntity()))
                     event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
             }
         }
@@ -398,8 +380,9 @@ public final class VTEventHandler {
                             }
                         }
                     }
-                    if (doSetFire)
+                    if (doSetFire) {
                         livingEntity.setFire(10);
+                    }
                 }
             }
         }
@@ -667,11 +650,5 @@ public final class VTEventHandler {
             event.setBurnTime(500);
         if (event.getItemStack().getItem() == Item.getItemFromBlock(sprucebark))
             event.setBurnTime(500);
-    }
-
-    @SubscribeEvent
-    public void input(InputEvent.KeyInputEvent event) {
-        if (KeyBindings.bauble.isPressed())
-            fov = !fov;
     }
 }

@@ -1,6 +1,7 @@
 package com.strikerrocker.vt;
 
 import com.strikerrocker.vt.blocks.VTBlocks;
+import com.strikerrocker.vt.compat.baubles.BaubleTools;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.items.VTItems;
 import net.minecraft.block.Block;
@@ -18,8 +19,6 @@ public class RegistrationHandler {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         VTItems.register(event.getRegistry());
         VTBlocks.registerItemBlocks(event.getRegistry());
-        if (vt.baubles)
-            event.getRegistry().register(VTItems.bb);
     }
 
     @SubscribeEvent
@@ -37,7 +36,7 @@ public class RegistrationHandler {
         VTItems.registerModels();
         VTBlocks.registerModels();
         if (vt.baubles)
-            VTItems.bb.registerItemModel();
+            BaubleTools.initModel(VTItems.bb);
     }
 
 

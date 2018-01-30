@@ -1,6 +1,7 @@
 package com.strikerrocker.vt.items;
 
 
+import com.strikerrocker.vt.compat.baubles.BaubleTools;
 import com.strikerrocker.vt.compat.baubles.BinocularBauble;
 import com.strikerrocker.vt.vt;
 import com.strikerrocker.vt.vtModInfo;
@@ -17,23 +18,17 @@ public class VTItems {
 
     private static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 
-    public static ItemArmor binocular;
-    public static ItemCraftingPad pad;
-    public static ItemDynamite dynamite;
-    public static ItemFriedEgg fried_egg;
-    public static ItemSlimeBucket slime;
-    private static ItemBase lens;
-    public static BinocularBauble bb= new BinocularBauble();
+    public static ItemArmor binocular = new ItemArmor(binoculars, EntityEquipmentSlot.HEAD, "binoculars");
+    public static ItemCraftingPad pad = new ItemCraftingPad("pad");
+    public static ItemDynamite dynamite = new ItemDynamite("dynamite");
+    public static ItemFriedEgg fried_egg = new ItemFriedEgg();
+    public static ItemSlimeBucket slime = new ItemSlimeBucket("slime");
+    public static Item bb;
+    private static ItemBase lens = new ItemBase("lens");
 
     public static void init() {
-        binocular = new ItemArmor(binoculars, EntityEquipmentSlot.HEAD, "binoculars");
-        pad = new ItemCraftingPad("pad");
-        dynamite = new ItemDynamite("dynamite");
-        fried_egg = new ItemFriedEgg();
-        slime = new ItemSlimeBucket("slime");
-        lens = new ItemBase("lens");
+        if (vt.baubles) bb = BaubleTools.initBinocularBauble();
     }
-
 
     public static void register(IForgeRegistry<Item> registry) {
         registry.register(pad);
@@ -42,6 +37,8 @@ public class VTItems {
         registry.register(dynamite);
         registry.register(lens);
         registry.register(slime);
+        if (vt.baubles)
+            registry.register(bb);
     }
 
     public static void registerModels() {
@@ -52,5 +49,4 @@ public class VTItems {
         lens.registerItemModel();
         slime.registerItemModel();
     }
-
 }

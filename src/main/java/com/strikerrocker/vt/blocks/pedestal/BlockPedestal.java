@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
 
-    private String name= "pedestal";
+    private String name = "pedestal";
 
     public BlockPedestal() {
         super(Material.ROCK, "pedestal", MapColor.GRAY_STAINED_HARDENED_CLAY);

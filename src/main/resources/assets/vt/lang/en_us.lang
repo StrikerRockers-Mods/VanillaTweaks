@@ -43,8 +43,8 @@ enchantment.blazing=Blazing
 enchantment.siphon=Siphon
 enchantment.homing=Homing
 
-key.category.vt=VanillaTweajs
-key.vt=Zoom Key
+key.category.vt:general=VanillaTweaks
+key.vt:zoom=Zoom Key
 
 vt:portal_destroyed=§cYour return portal has been destroyed.
 

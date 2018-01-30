@@ -61,9 +61,8 @@ public class EntityDynamite extends EntityThrowable {
                 this.setTicksSinceWet(this.getTicksSinceWet() + 1);
             else
                 this.setTicksSinceWet(0);
-        }
-        else{
-            this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL,this.posX,this.posY,this.posZ,0.0D,0.0D,0.0D);
+        } else {
+            this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
         }
         if (this.getTicksSinceWet() < WET_TICKS && !this.isInWater())
             for (int i = 0; i < 3; ++i) {
