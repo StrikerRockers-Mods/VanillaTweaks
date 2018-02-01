@@ -19,14 +19,11 @@ import org.lwjgl.input.Keyboard;
 public class VTClientProxy extends VTCommonProxy {
 
     private static final String CATEGORY = "key.category.vt:general";
-
     public static final KeyBinding bauble = new KeyBinding("key.vt:zoom", KeyConflictContext.IN_GAME, Keyboard.KEY_Z, CATEGORY);
 
     @Override
     public void registerKey() {
-        if (vt.baubles) {
-            ClientRegistry.registerKeyBinding(bauble);
-        }
+        if (vt.baubles) ClientRegistry.registerKeyBinding(bauble);
     }
 
     @Override
@@ -38,6 +35,5 @@ public class VTClientProxy extends VTCommonProxy {
     public void registerRenderers() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
     }
-
 }
 

@@ -36,16 +36,14 @@ public class vt {
     private static Logger logger;
 
     public static void logInfo(String message) {
-        logger.info(message);
+        logger.info("VanillaTweaks : " + message);
     }
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
-        if (baubles) {
-            logInfo("Baubles Support Enabled");
-        }
         logger = event.getModLog();
+        baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
+        if (baubles) logInfo("Baubles Support Enabled");
         VTConfigHandler.init(event.getSuggestedConfigurationFile());
         VTItems.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
@@ -54,6 +52,7 @@ public class vt {
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
         VTEntities.init();
+        logInfo("Pre-Initialization Complete");
     }
 
     @Mod.EventHandler
@@ -66,12 +65,12 @@ public class vt {
         MinecraftForge.TERRAIN_GEN_BUS.register(new NetherPocketer());
         MinecraftForge.EVENT_BUS.register(new VTEventHandler());
         MinecraftForge.EVENT_BUS.register(new VTInputHandler());
+        logInfo("Initialization Complete");
     }
 
 
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {
+        logInfo("Post-Initialization Complete");
     }
-
-
 }

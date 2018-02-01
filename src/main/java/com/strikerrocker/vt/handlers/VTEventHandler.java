@@ -1,14 +1,10 @@
 package com.strikerrocker.vt.handlers;
 
-import baubles.api.BaublesApi;
-import baubles.api.cap.IBaublesItemHandler;
-import com.strikerrocker.vt.VTUtils;
 import com.strikerrocker.vt.compat.baubles.BaubleTools;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.EntitySitting;
 import com.strikerrocker.vt.items.VTItems;
-import com.strikerrocker.vt.proxies.VTClientProxy;
-import com.strikerrocker.vt.vt;
+import com.strikerrocker.vt.misc.VTUtils;
 import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
@@ -68,7 +64,6 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -250,7 +245,7 @@ public final class VTEventHandler {
     public void onPortalBreak(BlockEvent.BreakEvent event) {
         World world = event.getWorld();
         BlockPos blockPos = event.getPos();
-        if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME) {
+        if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME && VTConfigHandler.endFrameBroken) {
             ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
             EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);
             portalEntityItem.setDefaultPickupDelay();
@@ -413,7 +408,6 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         boolean success = false;
-
         TileEntity te = event.getWorld().getTileEntity(event.getPos());
         if (te instanceof TileEntitySign) {
             TileEntitySign sign = (TileEntitySign) te;
@@ -459,7 +453,7 @@ public final class VTEventHandler {
      * @param event The EntityInteractEvent
      */
     @SubscribeEvent
-    public void entityRightclick(PlayerInteractEvent.EntityInteract event) {
+    public void entityRightClick(PlayerInteractEvent.EntityInteract event) {
         if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty()) {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack heldItem = player.getHeldItemMainhand();
@@ -549,7 +543,7 @@ public final class VTEventHandler {
     /**
      * Prevents potion effects from shifting your inventory to the side.
      *
-     * @param event The PotionShiftEventf
+     * @param event The PotionShiftEvent
      */
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
@@ -565,7 +559,7 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void onItemPlaced(BlockEvent.PlaceEvent event) {
         if (event.getPlacedBlock().equals(Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) &&
-                BiomeDictionary.getTypes(event.getWorld().getBiome(event.getPos())).contains(BiomeDictionary.Type.NETHER)) {
+                BiomeDictionary.getTypes(event.getWorld().getBiome(event.getPos())).contains(BiomeDictionary.Type.NETHER) && spongeDryInNether) {
             World world = event.getWorld();
             world.playSound(null, event.getPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 2.4F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.9F);
             world.setBlockState(event.getPos(), Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, false));
@@ -581,7 +575,7 @@ public final class VTEventHandler {
     @SubscribeEvent
     public void onBlockBroken(BlockEvent.BreakEvent event) {
         ItemStack stack = event.getPlayer().getHeldItemMainhand();
-        if (!stack.isEmpty() && stack.getItem() instanceof ItemHoe && canHarvest(event.getState())) {
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemHoe && canHarvest(event.getState()) && hoeAsSickle) {
             World world = event.getWorld();
             EntityPlayer player = event.getPlayer();
             BlockPos basePos = event.getPos();
@@ -619,10 +613,10 @@ public final class VTEventHandler {
     public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
         EntityPlayer player = event.getEntityPlayer();
 
-        if (event.getTarget().world.isRemote || player.isSpectator() || player.isCreative() || !(event.getTarget() instanceof EntityArmorStand))
+        if (event.getTarget().world.isRemote || player.isSpectator() || player.isCreative() || !(event.getTarget() instanceof EntityArmorStand) || !armourStandSwapping)
             return;
 
-        if (player.isSneaking()) {
+        if (player.isSneaking() && armourStandSwapping) {
             event.setCanceled(true);
             EntityArmorStand armorStand = (EntityArmorStand) event.getTarget();
             swapSlot(player, armorStand, EntityEquipmentSlot.HEAD);

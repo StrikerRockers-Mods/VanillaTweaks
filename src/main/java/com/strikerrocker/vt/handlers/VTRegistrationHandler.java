@@ -1,9 +1,11 @@
-package com.strikerrocker.vt;
+package com.strikerrocker.vt.handlers;
 
 import com.strikerrocker.vt.blocks.VTBlocks;
 import com.strikerrocker.vt.compat.baubles.BaubleTools;
 import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.items.VTItems;
+import com.strikerrocker.vt.vt;
+import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
@@ -13,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
-public class RegistrationHandler {
+public class VTRegistrationHandler {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {

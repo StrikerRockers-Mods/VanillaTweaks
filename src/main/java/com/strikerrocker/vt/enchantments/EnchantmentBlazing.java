@@ -1,6 +1,6 @@
 package com.strikerrocker.vt.enchantments;
 
-import com.strikerrocker.vt.VTUtils;
+import com.strikerrocker.vt.misc.VTUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
