@@ -1,18 +1,15 @@
+#blocks
 tile.flintBlock.name=Bloc de Flint
 tile.sugarBlock.name=Bloc de Sucre
 tile.charcoalBlock.name=Bloc de Charbon
-
 tile.buttonStone.name=Bouton Pierre
 tile.buttonWood.name=Bouton en Bois
 tile.sand.name=Sable/Sable Rouge
 
 item.dynamite.name=Dynamiter
-item.boatStone.name=Bateau de Pierre
-item.boatObsidian.name=Obsidian Bateau
-item.eggFried.name=Oeuf Frit
-item.spongeWipe.name=Essuyez L'éponge
-item.craftingPad.name=Pad D'artisanat
-item.binocularLens.name=Objectif Binoculaire
+item.friedegg.name=Oeuf Frit
+item.pad.name=Pad D'artisanat
+item.lens.name=Objectif Binoculaire
 item.binoculars.name=Jumelles
 
 key.potionDisplay=Potion Effet Affichage
@@ -21,7 +18,7 @@ enchantment.nimble=Agile
 enchantment.hops=Houblon
 enchantment.vigor=Vigueur
 enchantment.veteran=Ancien Combattant
-enchantment.blazing=Brûlant
+enchantment.blazing=Brï¿½lant
 enchantment.siphon=Siphon
 enchantment.homing=La Prise D'origine
 

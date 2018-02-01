@@ -23,6 +23,8 @@ public class VTConfigHandler {
     public static boolean creeperBurnInDaylight;
     public static boolean babyZombieBurnInDaylight;
     public static boolean mobSpawnerSilkTouchDrop;
+    public static boolean spongeDryInNether;
+    public static boolean hoeAsSickle;
     //Recipes
     public static boolean useBetterStoneToolRecipes;
     public static boolean useBetterStairsRecipes;
@@ -50,6 +52,7 @@ public class VTConfigHandler {
     public static boolean silenceLightning;
     public static boolean NoMoreLavaPocketGen;
     public static boolean endFrameBroken;
+    public static boolean armourStandSwapping;
     //Miscellaneous: Requires Restart
     public static boolean commandBlockInRedstoneTab;
     public static boolean renameButtons;
@@ -78,6 +81,8 @@ public class VTConfigHandler {
         creeperBurnInDaylight = get(DropsCategory, "Creepers burn in daylight", true, "Do creepers burn in daylight?");
         babyZombieBurnInDaylight = get(DropsCategory, "Baby zombies burn in daylight", true, "Do baby zombies burn in daylight?");
         mobSpawnerSilkTouchDrop = get(DropsCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
+        spongeDryInNether = get(DropsCategory, "Sponges dry in nether", true, "Sponges dry in nether");
+        hoeAsSickle = get(DropsCategory, "Hoe acts as a sickle", true, "Does Hoe acts as a sickle");
         config.setCategoryComment(DropsCategory, "Modify mob drops");
 
 
@@ -116,11 +121,12 @@ public class VTConfigHandler {
         silenceDragon = get(miscCategory, "Silence the Brodcast of ender dragon sound", true, "Silence the Brodcast of ender dragon sound");
         silenceWither = get(miscCategory, "Silence the Brodcast of wither sound", true, "Silence the Brodcast of wither sound");
         silenceLightning = get(miscCategory, "Silence the sound of lightning", true, "Silence the sound of lightning");
+        armourStandSwapping = get(miscCategory, "Swap armour in armour stand", true, "Shift click armour stand swap armor");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
         renameButtons = get(miscRequiresRestartCategory, "Rename buttons", true, "Do buttons get renamed based on their material?");
-        commandBlockInRedstoneTab = get(miscRequiresRestartCategory, "", true, "");
+        commandBlockInRedstoneTab = get(miscRequiresRestartCategory, "Commadn Block in redstone tab", true, "Command Block can be found in redstone creative tab");
         endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
         barks = get(miscRequiresRestartCategory, "1.13 barks", true, "Enables 1.13 bark blocks");
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
@@ -131,18 +137,14 @@ public class VTConfigHandler {
             config.save();
     }
 
-    public static Property get(String category, String key, double defaultValue, String comment, boolean slider) {
+    private static Property get(String category, String key, double defaultValue, String comment, boolean slider) {
         Property property = config.get(category, key, defaultValue, comment);
         if (slider && FMLCommonHandler.instance().getEffectiveSide().isClient())
             return property.setConfigEntryClass(NumberSliderEntry.class);
         return property;
     }
 
-    public static boolean get(String category, String key, boolean defaultValue, String comment) {
+    private static boolean get(String category, String key, boolean defaultValue, String comment) {
         return config.get(category, key, defaultValue, comment).getBoolean();
-    }
-
-    public Configuration getConfiguration() {
-        return config;
     }
 }

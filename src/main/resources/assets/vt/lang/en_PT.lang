@@ -1,21 +1,16 @@
+#blocks
 tile.flintBlock.name=Block o' Flint
 tile.sugarBlock.name=Block o' Sugar
 tile.charcoalBlock.name=Block o' Charcoal
-
-tile.buttonStone.name=Stone Button
-tile.buttonWood.name=Wooden Button
+tile.buttonStone.name=Stone Buttono
+tile.buttonWood.name=Wooden Buttono
 tile.sand.name=Sand/Red Sand
 
 item.dynamite.name=Dynamite
-item.boatStone.name=Stone Boat
-item.boatObsidian.name=Obsidian Boat
-item.eggFried.name=Fried Egg
-item.spongeWipe.name=Sponge Wipe
-item.craftingPad.name=Craftin' Pad
-item.binocularLens.name=Binocular Lens
+item.friedegg.name=Fried Egg
+item.pad.name=Craftin' Pad
+item.lens.name=Binocular Lens
 item.binoculars.name=Binoculars
-
-key.potionDisplay=Potion Effect Display
 
 enchantment.nimble=Nimble
 enchantment.hops=Hops
