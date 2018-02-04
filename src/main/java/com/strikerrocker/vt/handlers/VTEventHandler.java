@@ -61,6 +61,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -341,7 +342,7 @@ public final class VTEventHandler {
         if (event.getEntity() != null) {
             if (event.getEntity() instanceof EntityPlayer) {
                 ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular || BaubleTools.hasProbeGoggle(event.getEntity()))
+                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular || (Loader.isModLoaded("baubles") && BaubleTools.hasProbeGoggle(event.getEntity())))
                     event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
             }
         }
