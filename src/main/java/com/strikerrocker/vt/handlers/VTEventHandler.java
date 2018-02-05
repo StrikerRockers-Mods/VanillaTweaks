@@ -5,6 +5,7 @@ import com.strikerrocker.vt.enchantments.VTEnchantments;
 import com.strikerrocker.vt.entities.EntitySitting;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.misc.VTUtils;
+import com.strikerrocker.vt.vt;
 import com.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
@@ -341,8 +342,11 @@ public final class VTEventHandler {
         if (event.getEntity() != null) {
             if (event.getEntity() instanceof EntityPlayer) {
                 ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular || BaubleTools.hasProbeGoggle(event.getEntity()))
-                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
+                    if (fov) event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+                if (BaubleTools.hasProbeGoggle(event.getEntity()) && vt.baubles) {
+                    if (fov) event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+                }
             }
         }
     }

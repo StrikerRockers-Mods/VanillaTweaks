@@ -1,7 +1,10 @@
 package com.strikerrocker.vt;
 
 import com.strikerrocker.vt.entities.VTEntities;
-import com.strikerrocker.vt.handlers.*;
+import com.strikerrocker.vt.handlers.VTConfigHandler;
+import com.strikerrocker.vt.handlers.VTEventHandler;
+import com.strikerrocker.vt.handlers.VTGuiHandler;
+import com.strikerrocker.vt.handlers.VTSoundHandler;
 import com.strikerrocker.vt.items.VTItems;
 import com.strikerrocker.vt.misc.NetherPortalFix;
 import com.strikerrocker.vt.misc.OreDictionaryRegistry;
@@ -64,7 +67,6 @@ public class vt {
         MinecraftForge.EVENT_BUS.register(new NetherPortalFix());
         MinecraftForge.TERRAIN_GEN_BUS.register(new NetherPocketer());
         MinecraftForge.EVENT_BUS.register(new VTEventHandler());
-        MinecraftForge.EVENT_BUS.register(new VTInputHandler());
         logInfo("Initialization Complete");
     }
 
