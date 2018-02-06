@@ -1,6 +1,7 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "blocks/log_birch"
+    "all": "blocks/log_birch",
+    "particle": "blocks/log_birch"
   }
 }
