@@ -1,10 +1,10 @@
 {
   "conditions": {
-    "pad": "com.strikerrocker.vt.recipes.VTConditionFactory",
-    "pedestal": "com.strikerrocker.vt.recipes.VTConditionFactory",
-    "storage_blocks": "com.strikerrocker.vt.recipes.VTConditionFactory",
-    "slime": "com.strikerrocker.vt.recipes.VTConditionFactory",
-    "barks": "com.strikerrocker.vt.recipes.VTConditionFactory",
-    "chest": "com.strikerrocker.vt.recipes.VTConditionFactory"
+    "pad": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
+    "pedestal": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
+    "storage_blocks": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
+    "slime": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
+    "barks": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
+    "chest": "io.github.strikerrocker.vt.recipes.VTConditionFactory"
   }
 }

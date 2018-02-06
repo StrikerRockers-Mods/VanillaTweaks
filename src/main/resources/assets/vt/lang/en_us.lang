@@ -13,6 +13,7 @@ tile.buttonWood.name=Wooden Button
 tile.sand.name=Sand/Red Sand
 tile.pedestal.name=Pedestal
 
+#Items
 item.dynamite.name=Dynamite
 item.friedegg.name=Fried Egg
 item.pad.name=Crafting Pad
@@ -21,21 +22,21 @@ item.binoculars.name=Binoculars
 item.slime.name=Slime Finder
 item.binocular_bauble.name=Binoculars(Baubles)
 
-key.potionDisplay=Potion Effect Display
-
-
+#advancement
 advancements.vt.pad=Vanilla Tweaks
 advancements.vt.storage=Storage Blocks
 advancements.vt.zoom=Zoom
 advancements.vt.boom=Boom!!
 advancements.vt.friedegg=Fried Egg!!
 
+#advancement desc
 advancements.vt.storage.desc=Craft the storage block
 advancements.vt.pad.desc=Craft an Crafting Pad
 advancements.vt.zoom.desc=Craft an Binoculars
 advancements.vt.boom.desc=Craft an Dynamite
 advancements.vt.friedegg.desc=Smelt an Egg
 
+#enchantments
 enchantment.nimble=Nimble
 enchantment.hops=Hops
 enchantment.vigor=Vigor
@@ -44,7 +45,8 @@ enchantment.blazing=Blazing
 enchantment.siphon=Siphon
 enchantment.homing=Homing
 
-key.category.vt:general=VanillaTweaks
+#keybinds
+key.category.vt=VanillaTweaks
 key.vt:zoom=Zoom Key
 
 vt:portal_destroyed=§cYour return portal has been destroyed.
