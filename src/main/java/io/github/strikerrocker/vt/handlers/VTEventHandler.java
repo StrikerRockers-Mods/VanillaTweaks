@@ -1,6 +1,10 @@
 package io.github.strikerrocker.vt.handlers;
 
+import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
+import io.github.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
+import io.github.strikerrocker.vt.enchantments.EntityTickingEnchantment;
+import io.github.strikerrocker.vt.enchantments.VTEnchantmentBase;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.items.VTItems;
@@ -41,6 +45,7 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -52,6 +57,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -82,7 +88,6 @@ import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
  */
 public final class VTEventHandler {
 
-    public static boolean fov = false;
 
     /**
      * Returns if the given chunk is an slime chunk or not
@@ -173,16 +178,28 @@ public final class VTEventHandler {
     }
 
 
+    /**
+     * Allows thrown seeds to plant themselves in farmland, and gives the Homing enchantment functionality
+     *
+     * @param event The WorldTickEvent
+     */
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
-        World world = event.world;
-        if (world != null) {
-            List<Entity> arrows = world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);
-            for (Entity arrow : arrows)
-                VTEnchantments.performAction("homing", arrow, null);
-            List<Entity> xpOrbs = world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE);
-            for (Entity xpOrb : xpOrbs)
-                VTEnchantments.performAction("veteran", xpOrb, null);
+        if (VTConfigHandler.autoSeedPlanting && !event.world.isRemote) {
+            World world = event.world;
+            List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
+            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null).handlePlantingLogic(entityItem));
+
+            for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
+                VTEnchantmentBase.cppEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
+        }
+
+    }
+
+    @SubscribeEvent
+    public void addItemCaps(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject() instanceof EntityItem) {
+            event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
         }
     }
 
@@ -345,7 +362,7 @@ public final class VTEventHandler {
                 if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
                     event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
                 if (vt.baubles) if (BaubleTools.hasProbeGoggle(event.getEntity()))
-                    if (fov) event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
             }
         }
     }

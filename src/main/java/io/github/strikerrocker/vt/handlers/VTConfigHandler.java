@@ -53,6 +53,7 @@ public class VTConfigHandler {
     public static boolean NoMoreLavaPocketGen;
     public static boolean endFrameBroken;
     public static boolean armourStandSwapping;
+    public static boolean autoSeedPlanting;
     //Miscellaneous: Requires Restart
     public static boolean commandBlockInRedstoneTab;
     public static boolean renameButtons;
@@ -122,6 +123,7 @@ public class VTConfigHandler {
         silenceWither = get(miscCategory, "Silence the Brodcast of wither sound", true, "Silence the Brodcast of wither sound");
         silenceLightning = get(miscCategory, "Silence the sound of lightning", true, "Silence the sound of lightning");
         armourStandSwapping = get(miscCategory, "Swap armour in armour stand", true, "Shift click armour stand swap armor");
+        autoSeedPlanting = get(miscCategory, "Enable automatic seed planting", true, "Do dropped seeds plant themselves?");
         config.setCategoryComment(miscCategory, "Miscellaneous settings");
 
         String miscRequiresRestartCategory = miscCategory + Configuration.CATEGORY_SPLITTER + "Requires Restart";
