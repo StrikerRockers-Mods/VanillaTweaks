@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.handlers.events;
 
+import com.google.common.collect.Lists;
 import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.items.VTItems;
 import net.minecraft.block.Block;
@@ -15,6 +16,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.EnumHand;
@@ -26,12 +28,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
 import static io.github.strikerrocker.vt.handlers.events.VTEventHandler.isSlimeChunk;
 import static io.github.strikerrocker.vt.handlers.events.VTEventHandler.swapSlot;
 
-public class PlayerInteractEvents {
+public class PlayerEvents {
     /**
      * Swaps the players armour with armor stand's armour
      *
@@ -164,4 +167,16 @@ public class PlayerInteractEvents {
             }
         }
     }
+
+    /**
+     * Unlocks all the recipes
+     *
+     * @param event
+     */
+    @SubscribeEvent
+    public void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        event.player.unlockRecipes(Lists.newArrayList(CraftingManager.REGISTRY));
+    }
+
+
 }

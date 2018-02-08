@@ -28,7 +28,7 @@ public class VTCommonProxy {
         MinecraftForge.EVENT_BUS.register(new VTEventHandler());
         MinecraftForge.EVENT_BUS.register(new BlockEvents());
         MinecraftForge.EVENT_BUS.register(new EntityEvents());
-        MinecraftForge.EVENT_BUS.register(new PlayerInteractEvents());
+        MinecraftForge.EVENT_BUS.register(new PlayerEvents());
         MinecraftForge.EVENT_BUS.register(new TickEvents());
     }
 

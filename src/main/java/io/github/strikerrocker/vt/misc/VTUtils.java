@@ -6,6 +6,8 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -67,5 +69,12 @@ public final class VTUtils {
         }
     }
 
-
+    public static MethodHandle findFieldGetter(Class c, String... names) {
+        try {
+            return MethodHandles.lookup().unreflectGetter(ReflectionHelper.findField(c, names));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
