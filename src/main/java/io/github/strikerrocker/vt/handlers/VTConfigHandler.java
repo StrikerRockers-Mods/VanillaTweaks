@@ -30,6 +30,7 @@ public class VTConfigHandler {
     public static boolean mobSpawnerSilkTouchDrop;
     public static boolean spongeDryInNether;
     public static boolean hoeAsSickle;
+    public static boolean realisticRelationship;
     //Recipes
     public static boolean useBetterStoneToolRecipes;
     public static boolean useBetterStairsRecipes;
@@ -100,6 +101,7 @@ public class VTConfigHandler {
         mobSpawnerSilkTouchDrop = get(DropsCategory, "Mob spawner silk touch drop", true, "Do mob spawners drop themselves when harvested with silk touch?");
         spongeDryInNether = get(DropsCategory, "Sponges dry in nether", true, "Sponges dry in nether");
         hoeAsSickle = get(DropsCategory, "Hoe acts as a sickle", true, "Does Hoe acts as a sickle");
+        realisticRelationship = get(DropsCategory, "realistic predator/prey relationships", true, "realistic predator/prey relationships");
         config.setCategoryComment(DropsCategory, "Modify mob drops");
 
 
