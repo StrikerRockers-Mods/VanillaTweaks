@@ -2,18 +2,13 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.entities.VTEntities;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
-import io.github.strikerrocker.vt.handlers.VTEventHandler;
 import io.github.strikerrocker.vt.handlers.VTGuiHandler;
-import io.github.strikerrocker.vt.handlers.VTSoundHandler;
 import io.github.strikerrocker.vt.items.VTItems;
-import io.github.strikerrocker.vt.misc.NetherPortalFix;
 import io.github.strikerrocker.vt.misc.OreDictionaryRegistry;
 import io.github.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import io.github.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import io.github.strikerrocker.vt.network.PacketUpdatePedestal;
 import io.github.strikerrocker.vt.proxies.VTCommonProxy;
-import io.github.strikerrocker.vt.worldgen.NetherPocketer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -50,7 +45,7 @@ public class vt {
         VTConfigHandler.init(event.getSuggestedConfigurationFile());
         VTItems.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
-        proxy.registerRenderers();
+        proxy.regsiterRenderer();
         network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
@@ -63,10 +58,6 @@ public class vt {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         OreDictionaryRegistry.init();
         VTVanillaPropertiesChanger.init();
-        MinecraftForge.EVENT_BUS.register(new VTSoundHandler());
-        MinecraftForge.EVENT_BUS.register(new NetherPortalFix());
-        MinecraftForge.TERRAIN_GEN_BUS.register(new NetherPocketer());
-        MinecraftForge.EVENT_BUS.register(new VTEventHandler());
         logInfo("Initialization Complete");
     }
 

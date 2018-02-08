@@ -10,11 +10,11 @@ import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.Ev
 public class NetherPocketer {
     @SubscribeEvent
     public void onPopulateChunk(PopulateChunkEvent.Populate event) {
-        if ((VTConfigHandler.NoMoreLavaPocketGen) && event.getType() == NETHER_LAVA) {
+        if ((VTConfigHandler.noMoreLavaPocketGen) && event.getType() == NETHER_LAVA) {
             event.setResult(Event.Result.DENY);
-        } else if ((VTConfigHandler.NoMoreLavaPocketGen) && event.getType() == NETHER_LAVA2) {
+        } else if ((VTConfigHandler.noMoreLavaPocketGen) && event.getType() == NETHER_LAVA2) {
             event.setResult(Event.Result.DENY);
-        } else if ((VTConfigHandler.NoMoreLavaPocketGen) && event.getType() == NETHER_MAGMA) {
+        } else if ((VTConfigHandler.noMoreLavaPocketGen) && event.getType() == NETHER_MAGMA) {
             event.setResult(Event.Result.DENY);
         }
     }
