@@ -1,5 +1,10 @@
 package io.github.strikerrocker.vt.misc;
 
+import io.github.strikerrocker.vt.vt;
+import net.minecraft.block.BlockDispenser;
+import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.item.Item;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -76,5 +81,20 @@ public final class VTUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Registers a dispenser behavior for an item with the game
+     *
+     * @param item              The item dispensed by the dispenser
+     * @param dispenserBehavior The dispenser behavior carried out for the item
+     */
+    public static void registerDispenserBehavior(Item item, BehaviorDefaultDispenseItem dispenserBehavior) {
+        String localizedName = I18n.translateToLocal(item.getUnlocalizedName() + ".name");
+        if (dispenserBehavior.getClass() != BehaviorDefaultDispenseItem.class)
+            vt.logInfo("Registering dispenser behavior for " + localizedName);
+        else
+            vt.logInfo("Registering default dispenser behavior for " + localizedName);
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, dispenserBehavior);
     }
 }
