@@ -36,6 +36,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import static io.github.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
+import static io.github.strikerrocker.vt.handlers.VTConfigHandler.realisticRelationship;
 
 public class EntityEvents {
     /**
@@ -130,10 +131,10 @@ public class EntityEvents {
                 Item drop = dropItem.getItem();
                 Entity source = event.getSource().getImmediateSource();
                 if (source instanceof EntityWolf && entity instanceof EntitySheep) {
-                    if (drop == Items.MUTTON || drop == Items.COOKED_MUTTON)
+                    if ((drop == Items.MUTTON || drop == Items.COOKED_MUTTON) && realisticRelationship)
                         drops.remove(dropEntity);
                 } else if (source instanceof EntityOcelot && entity instanceof EntityChicken) {
-                    if (drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN)
+                    if ((drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN) && realisticRelationship)
                         drops.remove(dropEntity);
                 }
             }

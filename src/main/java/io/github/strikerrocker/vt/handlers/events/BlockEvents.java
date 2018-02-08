@@ -133,7 +133,7 @@ public class BlockEvents {
      * @param event The PlaceEvent
      */
     @SubscribeEvent
-    public void onItemPlaced(BlockEvent.PlaceEvent event) {
+    public void onBlockPlaced(BlockEvent.PlaceEvent event) {
         if (event.getPlacedBlock().equals(Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) &&
                 BiomeDictionary.getTypes(event.getWorld().getBiome(event.getPos())).contains(BiomeDictionary.Type.NETHER) && spongeDryInNether) {
             World world = event.getWorld();
