@@ -24,13 +24,13 @@ public class VTClientProxy extends VTCommonProxy {
     }
 
     @Override
-    public void regsiterRenderer() {
+    public void registerRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
     }
 
     @Override
-    public void onInit(FMLInitializationEvent event) {
-        super.onInit(event);
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
     }
 }
 

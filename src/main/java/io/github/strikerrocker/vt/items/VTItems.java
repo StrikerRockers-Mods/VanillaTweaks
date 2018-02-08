@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.items;
 
 
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
-import io.github.strikerrocker.vt.compat.baubles.BinocularBauble;
 import io.github.strikerrocker.vt.vt;
 import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.init.SoundEvents;

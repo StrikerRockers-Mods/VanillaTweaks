@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt;
 
+import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import io.github.strikerrocker.vt.entities.VTEntities;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.handlers.VTGuiHandler;
@@ -45,7 +46,7 @@ public class vt {
         VTConfigHandler.init(event.getSuggestedConfigurationFile());
         VTItems.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
-        proxy.regsiterRenderer();
+        proxy.registerRenderer();
         network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
@@ -58,9 +59,10 @@ public class vt {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         OreDictionaryRegistry.init();
         VTVanillaPropertiesChanger.init();
+        CapabilitySelfPlanting.register();
+        proxy.init(event);
         logInfo("Initialization Complete");
     }
-
 
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {

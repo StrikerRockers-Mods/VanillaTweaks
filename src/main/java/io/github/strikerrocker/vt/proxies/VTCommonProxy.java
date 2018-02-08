@@ -2,7 +2,10 @@ package io.github.strikerrocker.vt.proxies;
 
 import io.github.strikerrocker.vt.handlers.VTSoundHandler;
 import io.github.strikerrocker.vt.handlers.events.*;
+import io.github.strikerrocker.vt.items.VTItems;
+import io.github.strikerrocker.vt.misc.BehaviorDispenseDynamite;
 import io.github.strikerrocker.vt.misc.NetherPortalFix;
+import io.github.strikerrocker.vt.misc.VTUtils;
 import io.github.strikerrocker.vt.worldgen.NetherPocketer;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,11 +20,11 @@ public class VTCommonProxy {
     public void registerItemRenderer(Item item, int meta, String id) {
     }
 
-    public void regsiterRenderer() {
+    public void registerRenderer() {
 
     }
 
-    public void onInit(FMLInitializationEvent event) {
+    public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new VTSoundHandler());
         MinecraftForge.EVENT_BUS.register(new NetherPortalFix());
         MinecraftForge.TERRAIN_GEN_BUS.register(new NetherPocketer());
@@ -30,6 +33,7 @@ public class VTCommonProxy {
         MinecraftForge.EVENT_BUS.register(new EntityEvents());
         MinecraftForge.EVENT_BUS.register(new PlayerEvents());
         MinecraftForge.EVENT_BUS.register(new TickEvents());
+        VTUtils.registerDispenserBehavior(VTItems.dynamite, new BehaviorDispenseDynamite());
     }
 
 }

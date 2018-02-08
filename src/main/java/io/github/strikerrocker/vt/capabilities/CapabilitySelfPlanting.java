@@ -27,8 +27,6 @@ public class CapabilitySelfPlanting {
                 instance.setMinSteadyTicks(compound.getInteger(SelfPlantingHandler.MINSTEADYTICKS_KEY));
                 instance.setSteadyTicks(compound.getInteger(SelfPlantingHandler.STEADYTICKS_KEY));
             }
-
-
         }, SelfPlantingHandler::new);
     }
 }
