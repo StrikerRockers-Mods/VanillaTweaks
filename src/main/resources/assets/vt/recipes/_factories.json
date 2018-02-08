@@ -5,6 +5,7 @@
     "storage_blocks": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
     "slime": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
     "barks": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
-    "chest": "io.github.strikerrocker.vt.recipes.VTConditionFactory"
+    "chest": "io.github.strikerrocker.vt.recipes.VTConditionFactory",
+    "bauble": "io.github.strikerrocker.vt.recipes.VTConditionFactory"
   }
 }

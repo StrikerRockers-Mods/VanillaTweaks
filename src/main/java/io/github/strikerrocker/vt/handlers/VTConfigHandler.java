@@ -1,9 +1,13 @@
 package io.github.strikerrocker.vt.handlers;
 
+import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.config.GuiConfigEntries.NumberSliderEntry;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
@@ -12,6 +16,7 @@ import static io.github.strikerrocker.vt.vt.logInfo;
 /**
  * The config handler for VanillaTweaks
  */
+@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
 public class VTConfigHandler {
     /**
      * The actual configuration containing the configuration file
@@ -31,12 +36,12 @@ public class VTConfigHandler {
     public static boolean useBetterChestRecipe;
     //Enchantments
     public static boolean vigor;
-    public static boolean Nimble;
-    public static boolean Hops;
-    public static boolean Veteran;
+    public static boolean nimble;
+    public static boolean hops;
+    public static boolean veteran;
     public static boolean siphon;
-    public static boolean Homing;
-    public static boolean Blazing;
+    public static boolean homing;
+    public static boolean blazing;
     //Vanillatweaks
     public static float binocularZoomAmount;
     public static boolean storageBlocks;
@@ -50,7 +55,7 @@ public class VTConfigHandler {
     public static boolean silenceWither;
     public static boolean silenceDragon;
     public static boolean silenceLightning;
-    public static boolean NoMoreLavaPocketGen;
+    public static boolean noMoreLavaPocketGen;
     public static boolean endFrameBroken;
     public static boolean armourStandSwapping;
     public static boolean autoSeedPlanting;
@@ -72,9 +77,20 @@ public class VTConfigHandler {
     }
 
     /**
+     * Syncs the config file if it changes
+     *
+     * @param event The OnConfigChangedEvent
+     */
+    @SubscribeEvent
+    public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if (event.getModID().equals(vtModInfo.MOD_ID))
+            VTConfigHandler.syncConfig();
+    }
+
+    /**
      * Syncs the config file
      */
-    public static void syncConfig() {
+    private static void syncConfig() {
         logInfo("Syncing config file");
         String DropsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Drops";
         creeperDropTntChance = get(DropsCategory, "Chance of creepers dropping TNT", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
@@ -96,12 +112,12 @@ public class VTConfigHandler {
 
         String enchantmentsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Enchantments";
         vigor = get(enchantmentsCategory, "Enables Vigor Enchantment", true, "Enables Vigor Enchantment");
-        Nimble = get(enchantmentsCategory, "Enables Nimble Enchantment", true, "Enables Nimble Enchantment");
-        Hops = get(enchantmentsCategory, "Enables Hops Enchantment", true, "Enables Hops Enchantment");
-        Veteran = get(enchantmentsCategory, "Enables Veteran Enchantment", true, "Enables Veteran Enchantment");
+        nimble = get(enchantmentsCategory, "Enables Nimble Enchantment", true, "Enables Nimble Enchantment");
+        hops = get(enchantmentsCategory, "Enables Hops Enchantment", true, "Enables Hops Enchantment");
+        veteran = get(enchantmentsCategory, "Enables Veteran Enchantment", true, "Enables Veteran Enchantment");
         siphon = get(enchantmentsCategory, "Enables siphon Enchantment", true, "Enables siphon Enchantment");
-        Homing = get(enchantmentsCategory, "Enables Homing Enchantment", true, "Enables Homing Enchantment");
-        Blazing = get(enchantmentsCategory, "Enables Blazing Enchantment", true, "Enables Blazing Enchantment");
+        homing = get(enchantmentsCategory, "Enables Homing Enchantment", true, "Enables Homing Enchantment");
+        blazing = get(enchantmentsCategory, "Enables Blazing Enchantment", true, "Enables Blazing Enchantment");
         config.setCategoryComment(enchantmentsCategory, "Toggles VT Enchantments");
         config.setCategoryRequiresMcRestart(enchantmentsCategory, true);
 
@@ -115,7 +131,7 @@ public class VTConfigHandler {
         config.setCategoryRequiresMcRestart(vanillaTweaks, true);
 
         String miscCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Miscellaneous";
-        NoMoreLavaPocketGen = get(miscCategory, "No More Lava Pockets", true, "Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
+        noMoreLavaPocketGen = get(miscCategory, "No More Lava Pockets", true, "Makes the Nether Less Dangerous by preventing lava pockets to spawn.");
         editSigns = get(miscCategory, "Sign Editing", true, "Right-click to edit signs");
         clearSigns = get(miscCategory, "Clearing Signs", true, "Shift+right-click to clear signs");
         stairSit = get(miscCategory, "Sit on Stair & slabs", true, "Allows the player to sit on slabs & stairs");

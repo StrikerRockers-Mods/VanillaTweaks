@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt.recipes;
 
 import com.google.gson.JsonObject;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
+import io.github.strikerrocker.vt.vt;
 import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.util.JsonUtils;
 import net.minecraftforge.common.crafting.IConditionFactory;
@@ -32,6 +33,9 @@ public class VTConditionFactory implements IConditionFactory {
         }
         if (key.equals(vtModInfo.MOD_ID + ":chest")) {
             return () -> VTConfigHandler.useBetterChestRecipe == value;
+        }
+        if (key.equals(vtModInfo.MOD_ID + ":bauble")) {
+            return () -> vt.baubles == value;
         }
         return null;
     }

@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,8 +24,13 @@ public class VTClientProxy extends VTCommonProxy {
     }
 
     @Override
-    public void registerRenderers() {
+    public void regsiterRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
+    }
+
+    @Override
+    public void onInit(FMLInitializationEvent event) {
+        super.onInit(event);
     }
 }
 

@@ -1,0 +1,17 @@
+{
+  "conditions": [
+    {
+      "type": "vt:bauble",
+      "value": true
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vt:binoculars"
+    }
+  ],
+  "result": {
+    "item": "vt:binocular_bauble"
+  }
+}

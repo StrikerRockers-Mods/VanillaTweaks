@@ -1,6 +1,5 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -8,8 +7,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Optional;
 
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.siphon;
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.vigor;
+import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
 
 /**
  * Initializes Craft++'s enchantments
@@ -31,17 +29,17 @@ public final class VTEnchantments {
     public static void init(IForgeRegistry<Enchantment> registry) {
         if (vigor)
             registry.register(Vigor);
-        if (VTConfigHandler.Nimble)
+        if (nimble)
             registry.register(Nimble);
-        if (VTConfigHandler.Hops)
+        if (hops)
             registry.register(Hops);
-        if (VTConfigHandler.Veteran)
+        if (veteran)
             registry.register(Veteran);
         if (siphon)
             registry.register(Siphon);
-        if (VTConfigHandler.Homing)
+        if (homing)
             registry.register(Homing);
-        if (VTConfigHandler.Blazing)
+        if (blazing)
             registry.register(Blazing);
     }
 
