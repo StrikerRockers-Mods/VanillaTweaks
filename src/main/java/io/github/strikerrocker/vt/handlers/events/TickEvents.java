@@ -26,8 +26,9 @@ import java.util.List;
 
 public class TickEvents {
 
-    private final MethodHandle TOASTS_QUEUE = VTUtils.findFieldGetter(GuiToast.class, "toastsQueue", "field_191792_h");
-    private final MethodHandle RECIPES_OUTPUTS = VTUtils.findFieldGetter(RecipeToast.class, "recipesOutputs", "field_193666_c");
+    private MethodHandle TOASTS_QUEUE;
+    private MethodHandle RECIPES_OUTPUTS;
+
     /**
      * Allows thrown seeds to plant themselves in farmland, and gives the Homing enchantment functionality
      *
@@ -52,6 +53,7 @@ public class TickEvents {
      */
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onClientTick(TickEvent.WorldTickEvent event) {
         World world = event.world;
         if (world != null) {
@@ -68,6 +70,9 @@ public class TickEvents {
     @SideOnly(Side.CLIENT)
     public void onRenderTickPre(TickEvent.RenderTickEvent event) {
         try {
+            TOASTS_QUEUE = VTUtils.findFieldGetter(GuiToast.class, "toastsQueue", "field_191792_h");
+            RECIPES_OUTPUTS = VTUtils.findFieldGetter(RecipeToast.class, "recipesOutputs", "field_193666_c");
+
             Deque deque = (Deque) TOASTS_QUEUE.invoke(Minecraft.getMinecraft().getToastGui());
             for (Object o : deque) {
                 if (o instanceof RecipeToast) {
