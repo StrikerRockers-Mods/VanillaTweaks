@@ -8,11 +8,11 @@ import net.minecraft.item.ItemBlock;
 
 import static io.github.strikerrocker.vt.vt.proxy;
 
-public class BlockBase extends Block {
+class BlockBase extends Block {
 
-    protected String name;
+    String name;
 
-    public BlockBase(Material material, String name, MapColor mapColor) {
+    BlockBase(Material material, String name, MapColor mapColor) {
         super(material, mapColor);
 
         this.name = name;

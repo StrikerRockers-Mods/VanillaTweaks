@@ -149,6 +149,7 @@ public class VTConfigHandler {
         commandBlockInRedstoneTab = get(miscRequiresRestartCategory, "Commadn Block in redstone tab", true, "Command Block can be found in redstone creative tab");
         endFrameBroken = get(miscRequiresRestartCategory, "Breakable End Portal Frame", false, "Makes the End Portal Frame to be broken");
         barks = get(miscRequiresRestartCategory, "1.13 barks", true, "Enables 1.13 bark blocks");
+        stackSize = get(miscRequiresRestartCategory, "changes stack sizes for various item's", 4D, "changes stack sizes for various item's", true).setMinValue(3).setMaxValue(16).getDouble();
         config.setCategoryComment(miscRequiresRestartCategory, "Settings that require a Minecraft restart");
         config.setCategoryRequiresMcRestart(miscRequiresRestartCategory, true);
 

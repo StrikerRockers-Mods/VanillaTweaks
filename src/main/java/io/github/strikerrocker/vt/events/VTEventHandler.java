@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.handlers.events;
+package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
@@ -116,21 +116,13 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     public void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event) {
-        if (event.getItemStack().getItem() == Item.getItemFromBlock(charcoal))
+        Item item = event.getItemStack().getItem();
+        if (item == Item.getItemFromBlock(charcoal))
             event.setBurnTime(16000);
-        if (event.getItemStack().getItem() == Item.getItemFromBlock(Blocks.TORCH))
+        if (item == Item.getItemFromBlock(Blocks.TORCH))
             event.setBurnTime(400);
-        if (event.getItemStack().getItem() == Item.getItemFromBlock(acaciabark))
-            event.setBurnTime(500);
-        if (event.getItemStack().getItem() == Item.getItemFromBlock(birchbark))
-            event.setBurnTime(500);
-        if (event.getItemStack().getItem() == Item.getItemFromBlock(darkoakbark))
-            event.setBurnTime(500);
-        if (event.getItemStack().getItem() == Item.getItemFromBlock(junglebark))
-            event.setBurnTime(500);
-        if (event.getItemStack().getItem() == Item.getItemFromBlock(oakbark))
-            event.setBurnTime(500);
-        if (event.getItemStack().getItem() == Item.getItemFromBlock(sprucebark))
-            event.setBurnTime(500);
+        if (item == Item.getItemFromBlock(acaciabark) || item == Item.getItemFromBlock(birchbark) || item == Item.getItemFromBlock(darkoakbark)
+                || item == Item.getItemFromBlock(junglebark) || item == Item.getItemFromBlock(oakbark) || item == Item.getItemFromBlock(sprucebark))
+            event.setBurnTime(300);
     }
 }

@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.handlers.events;
+package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
@@ -111,18 +111,15 @@ public class EntityEvents {
                 entity.entityDropItem(nameTag, 0);
                 entity.setCustomNameTag("");
             }
-            //Bats drop leather
             if (entity instanceof EntityBat && VTConfigHandler.batLeatherDropChance > Math.random())
                 entity.dropItem(Items.LEATHER, 1);
             else if (entity instanceof EntityCreeper) {
                 if (event.getSource().damageType != null && VTConfigHandler.creeperDropTntChance > Math.random()) {
                     event.getDrops().clear();
-                    //noinspection ConstantConditions
                     entity.dropItem(Item.getItemFromBlock(Blocks.TNT), 1);
                 }
             }
         }
-        //Drop removals
         List<EntityItem> drops = event.getDrops();
         List<EntityItem> dropsCopy = VTUtils.copyList(drops);
         for (EntityItem dropEntity : dropsCopy) {
@@ -202,7 +199,6 @@ public class EntityEvents {
     public void onEntityMount(EntityMountEvent event) {
         if (event.isDismounting()) {
             Entity e = event.getEntityBeingMounted();
-
             if (e instanceof EntitySitting) {
                 e.setDead();
                 EntitySitting.OCCUPIED.remove(e.getPosition());

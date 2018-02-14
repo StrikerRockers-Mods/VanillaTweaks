@@ -18,7 +18,7 @@ import static io.github.strikerrocker.vt.vt.proxy;
  */
 public class ItemCraftingPad extends ItemBase {
 
-    protected String name;
+    private final String name;
 
     public ItemCraftingPad(String name) {
         super(name);

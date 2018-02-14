@@ -13,7 +13,6 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiCraftingPad extends GuiContainer {
     private static final ResourceLocation craftingTableGuiTexture = new ResourceLocation("textures/gui/container/crafting_table.png");
-    private InventoryPlayer playerInv;
 
     public GuiCraftingPad(InventoryPlayer inventoryPlayer, World world) {
         super(new ContainerCraftingPad(inventoryPlayer, world));

@@ -8,7 +8,7 @@ import static io.github.strikerrocker.vt.vt.proxy;
 public class ItemArmor extends net.minecraft.item.ItemArmor {
 
 
-    private String name;
+    private final String name;
 
     public ItemArmor(ArmorMaterial material, EntityEquipmentSlot slot, String name) {
         super(material, 0, slot);

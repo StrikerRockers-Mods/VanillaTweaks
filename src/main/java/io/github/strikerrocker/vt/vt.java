@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod(modid = vtModInfo.MOD_ID, name = vtModInfo.NAME, version = vtModInfo.VERSION, dependencies = "after:*", guiFactory = vtModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
+@Mod(modid = vtModInfo.MOD_ID, name = vtModInfo.NAME, version = vtModInfo.VERSION, guiFactory = vtModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
 public class vt {
 
     @SidedProxy(modId = vtModInfo.MOD_ID, clientSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")

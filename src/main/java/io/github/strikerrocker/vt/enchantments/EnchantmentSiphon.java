@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 /**
  * Gives you the drops directly when harvesting blocks
  */
-@SuppressWarnings("unused")
 public class EnchantmentSiphon extends VTEnchantmentBase {
     public EnchantmentSiphon() {
         super("siphon", Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);

@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * Makes arrows shot out of bows track down their targets
  */
-@SuppressWarnings("unused")
 @EntityTickingEnchantment
 public class EnchantmentHoming extends VTEnchantmentBase {
     public EnchantmentHoming() {

@@ -14,10 +14,9 @@ import java.util.UUID;
 /**
  * Gives the wearer speed
  */
-@SuppressWarnings("unused")
 @EntityTickingEnchantment
 public class EnchantmentNimble extends VTEnchantmentBase {
-    private static UUID nimbleUUID = UUID.fromString("05b61a62-ae84-492e-8536-f365b7143296");
+    private static final UUID nimbleUUID = UUID.fromString("05b61a62-ae84-492e-8536-f365b7143296");
 
     public EnchantmentNimble() {
         super("nimble", Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, EntityEquipmentSlot.FEET);

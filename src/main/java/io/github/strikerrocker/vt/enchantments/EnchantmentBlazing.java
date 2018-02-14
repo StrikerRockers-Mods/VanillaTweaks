@@ -19,7 +19,6 @@ import java.util.Random;
 /**
  * Automatically smelts the drops of harvested blocks
  */
-@SuppressWarnings("unused")
 public class EnchantmentBlazing extends VTEnchantmentBase {
     private static Random random = new Random();
 

@@ -12,14 +12,14 @@ import javax.annotation.Nullable;
 
 public abstract class BlockTileEntity<TE extends TileEntity> extends BlockBase {
 
-    public BlockTileEntity(Material material, String name, MapColor mapColor) {
+    protected BlockTileEntity(Material material, String name, MapColor mapColor) {
         super(material, name, mapColor);
     }
 
     public abstract Class<TE> getTileEntityClass();
 
     @SuppressWarnings("unchecked")
-    public TE getTileEntity(IBlockAccess world, BlockPos pos) {
+    protected TE getTileEntity(IBlockAccess world, BlockPos pos) {
         return (TE) world.getTileEntity(pos);
     }
 

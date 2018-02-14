@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.handlers.events;
+package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
@@ -25,9 +25,9 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import static io.github.strikerrocker.vt.events.VTEventHandler.canHarvest;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.hoeAsSickle;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.spongeDryInNether;
-import static io.github.strikerrocker.vt.handlers.events.VTEventHandler.canHarvest;
 
 public class BlockEvents {
     /**
