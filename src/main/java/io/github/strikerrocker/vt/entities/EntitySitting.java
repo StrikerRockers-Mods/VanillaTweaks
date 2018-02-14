@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class EntitySitting extends Entity {
     public static final HashMap<BlockPos, EntitySitting> OCCUPIED = new HashMap<>();
 
+    @SuppressWarnings("unused")
     public EntitySitting(World world) {
         super(world);
         noClip = true;

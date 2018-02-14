@@ -15,10 +15,9 @@ import java.util.UUID;
 /**
  * Gives the wearer an extra heart per enchantment level
  */
-@SuppressWarnings("unused")
 @EntityTickingEnchantment
 public class EnchantmentVigor extends VTEnchantmentBase {
-    private static UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
+    private static final UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
 
     public EnchantmentVigor() {
         super("vigor", Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, EntityEquipmentSlot.CHEST);

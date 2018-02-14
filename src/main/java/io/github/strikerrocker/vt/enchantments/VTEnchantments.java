@@ -14,13 +14,13 @@ import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
  */
 public final class VTEnchantments {
 
-    public static Enchantment Vigor = new EnchantmentVigor();
-    public static Enchantment Nimble = new EnchantmentNimble();
-    public static Enchantment Hops = new EnchantmentHops();
-    public static Enchantment Veteran = new EnchantmentVeteran();
-    public static Enchantment Siphon = new EnchantmentSiphon();
-    public static Enchantment Homing = new EnchantmentHoming();
-    public static Enchantment Blazing = new EnchantmentBlazing();
+    public static final Enchantment Vigor = new EnchantmentVigor();
+    public static final Enchantment Nimble = new EnchantmentNimble();
+    public static final Enchantment Hops = new EnchantmentHops();
+    private static final Enchantment Veteran = new EnchantmentVeteran();
+    private static final Enchantment Siphon = new EnchantmentSiphon();
+    private static final Enchantment Homing = new EnchantmentHoming();
+    private static final Enchantment Blazing = new EnchantmentBlazing();
 
     /**
      * Registers the enchantments for Craft++
@@ -49,8 +49,8 @@ public final class VTEnchantments {
      * @param enchantmentName The name of the enchantment
      * @return The enchantment with the specified name
      */
-    public static Optional<VTEnchantmentBase> getByName(String enchantmentName) {
-        return VTEnchantmentBase.cppEnchantments.stream().filter(enchantment -> enchantment.getName().replaceFirst("enchantment\\.", "").equals(enchantmentName)).findFirst();
+    private static Optional<VTEnchantmentBase> getByName(String enchantmentName) {
+        return VTEnchantmentBase.vtEnchantments.stream().filter(enchantment -> enchantment.getName().replaceFirst("enchantment\\.", "").equals(enchantmentName)).findFirst();
     }
 
     /**

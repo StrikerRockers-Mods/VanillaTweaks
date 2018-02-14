@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.handlers.events;
+package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import io.github.strikerrocker.vt.enchantments.EntityTickingEnchantment;
@@ -26,9 +26,6 @@ import java.util.List;
 
 public class TickEvents {
 
-    private MethodHandle TOASTS_QUEUE;
-    private MethodHandle RECIPES_OUTPUTS;
-
     /**
      * Allows thrown seeds to plant themselves in farmland, and gives the Homing enchantment functionality
      *
@@ -41,7 +38,7 @@ public class TickEvents {
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
             entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null).handlePlantingLogic(entityItem));
             for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
-                VTEnchantmentBase.cppEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
+                VTEnchantmentBase.vtEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
         }
 
     }
@@ -70,8 +67,8 @@ public class TickEvents {
     @SideOnly(Side.CLIENT)
     public void onRenderTickPre(TickEvent.RenderTickEvent event) {
         try {
-            TOASTS_QUEUE = VTUtils.findFieldGetter(GuiToast.class, "toastsQueue", "field_191792_h");
-            RECIPES_OUTPUTS = VTUtils.findFieldGetter(RecipeToast.class, "recipesOutputs", "field_193666_c");
+            MethodHandle TOASTS_QUEUE = VTUtils.findFieldGetter(GuiToast.class, "toastsQueue", "field_191792_h");
+            MethodHandle RECIPES_OUTPUTS = VTUtils.findFieldGetter(RecipeToast.class, "recipesOutputs", "field_193666_c");
 
             Deque deque = (Deque) TOASTS_QUEUE.invoke(Minecraft.getMinecraft().getToastGui());
             for (Object o : deque) {

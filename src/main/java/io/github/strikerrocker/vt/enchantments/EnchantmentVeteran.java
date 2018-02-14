@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 /**
  * Draws experience points and item entities toward the wearer
  */
-@SuppressWarnings("unused")
 @EntityTickingEnchantment
 public class EnchantmentVeteran extends VTEnchantmentBase {
     public EnchantmentVeteran() {

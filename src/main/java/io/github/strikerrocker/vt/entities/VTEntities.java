@@ -10,13 +10,9 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
  */
 public class VTEntities {
 
-    /**
-     * Registers the entities for Vanilla Tweaks
-     */
     public static void init() {
         EntityRegistry.registerModEntity(new ResourceLocation(vtModInfo.MOD_ID, "dynamite"), EntityDynamite.class, vtModInfo.MOD_ID + ".dynamite", 0, vt.instance, 64, 1, false);
         EntityRegistry.registerModEntity(new ResourceLocation(vtModInfo.MOD_ID, "entity_sit"), EntitySitting.class, "entity_sit", 1, vt.instance, 256, 20, false);
         EntityRegistry.registerModEntity(new ResourceLocation(vtModInfo.MOD_ID, "tnt"), EntityTntImproved.class, "tnt", 2, vt.instance, 64, 1, true);
     }
-
 }

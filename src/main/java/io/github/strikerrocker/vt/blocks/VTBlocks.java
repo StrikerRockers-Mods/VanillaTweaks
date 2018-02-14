@@ -13,16 +13,16 @@ import net.minecraftforge.registries.IForgeRegistry;
  */
 public class VTBlocks {
 
-    public static BlockSugar sugar = new BlockSugar("sugarblock");
-    public static BlockFlint flint = new BlockFlint("flintblock");
-    public static BlockCharcoal charcoal = new BlockCharcoal("charcoalblock");
-    public static BlockPedestal pedestal = new BlockPedestal();
-    public static BlockBark acaciabark = new BlockBark("acaciabark", MapColor.STONE);
-    public static BlockBark darkoakbark = new BlockBark("darkoakbark", BlockPlanks.EnumType.DARK_OAK.getMapColor());
-    public static BlockBark oakbark = new BlockBark("oakbark", BlockPlanks.EnumType.SPRUCE.getMapColor());
-    public static BlockBark sprucebark = new BlockBark("sprucebark", BlockPlanks.EnumType.DARK_OAK.getMapColor());
-    public static BlockBark junglebark = new BlockBark("junglebark", BlockPlanks.EnumType.SPRUCE.getMapColor());
-    public static BlockBark birchbark = new BlockBark("birchbark", MapColor.QUARTZ);
+    public static final BlockCharcoal charcoal = new BlockCharcoal("charcoalblock");
+    public static final BlockPedestal pedestal = new BlockPedestal();
+    public static final BlockBark acaciabark = new BlockBark("acaciabark", MapColor.STONE);
+    public static final BlockBark darkoakbark = new BlockBark("darkoakbark", BlockPlanks.EnumType.DARK_OAK.getMapColor());
+    public static final BlockBark oakbark = new BlockBark("oakbark", BlockPlanks.EnumType.SPRUCE.getMapColor());
+    public static final BlockBark sprucebark = new BlockBark("sprucebark", BlockPlanks.EnumType.DARK_OAK.getMapColor());
+    public static final BlockBark junglebark = new BlockBark("junglebark", BlockPlanks.EnumType.SPRUCE.getMapColor());
+    public static final BlockBark birchbark = new BlockBark("birchbark", MapColor.QUARTZ);
+    private static final BlockSugar sugar = new BlockSugar("sugarblock");
+    private static final BlockFlint flint = new BlockFlint("flintblock");
 
 
     public static void register(IForgeRegistry<Block> registry) {

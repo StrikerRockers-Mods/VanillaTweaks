@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.handlers.events;
+package io.github.strikerrocker.vt.events;
 
 import com.google.common.collect.Lists;
 import io.github.strikerrocker.vt.entities.EntitySitting;
@@ -30,9 +30,9 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
+import static io.github.strikerrocker.vt.events.VTEventHandler.isSlimeChunk;
+import static io.github.strikerrocker.vt.events.VTEventHandler.swapSlot;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
-import static io.github.strikerrocker.vt.handlers.events.VTEventHandler.isSlimeChunk;
-import static io.github.strikerrocker.vt.handlers.events.VTEventHandler.swapSlot;
 
 public class PlayerEvents {
     /**
@@ -77,7 +77,6 @@ public class PlayerEvents {
                 success = true;
             }
         }
-
         if (success) {
             event.setCanceled(true);
             event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
@@ -171,7 +170,7 @@ public class PlayerEvents {
     /**
      * Unlocks all the recipes
      *
-     * @param event
+     * @param event PlayerLoggedIn evemt
      */
     @SubscribeEvent
     public void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {

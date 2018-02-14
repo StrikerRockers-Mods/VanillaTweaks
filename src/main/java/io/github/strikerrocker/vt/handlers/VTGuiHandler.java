@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 public class VTGuiHandler implements IGuiHandler {
 
     public static final int PEDESTAL = 1;
-    public static final int PAD = 0;
+    private static final int PAD = 0;
 
     @Override
     public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

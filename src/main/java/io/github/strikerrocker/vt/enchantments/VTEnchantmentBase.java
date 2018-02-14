@@ -18,12 +18,12 @@ public abstract class VTEnchantmentBase extends Enchantment {
     /**
      * A list of all of VanillaTweaks's enchantments
      */
-    public static List<VTEnchantmentBase> cppEnchantments = Lists.newArrayList();
+    public static List<VTEnchantmentBase> vtEnchantments = Lists.newArrayList();
 
-    protected VTEnchantmentBase(String name, Enchantment.Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot... slots) {
+    VTEnchantmentBase(String name, Enchantment.Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot... slots) {
         super(rarityIn, typeIn, slots);
         this.setName(name);
-        cppEnchantments.add(this);
+        vtEnchantments.add(this);
     }
 
     /**
@@ -32,7 +32,7 @@ public abstract class VTEnchantmentBase extends Enchantment {
      * @param itemstack The ItemStack to check
      * @return The enchantment level of this enchantment on the ItemStack
      */
-    protected int getEnchantmentLevel(ItemStack itemstack) {
+    int getEnchantmentLevel(ItemStack itemstack) {
         return EnchantmentHelper.getEnchantmentLevel(this, itemstack);
     }
 
@@ -54,8 +54,8 @@ public abstract class VTEnchantmentBase extends Enchantment {
      */
     public abstract void performAction(Entity entity, Event baseEvent);
 
-    public abstract int getMinimumEnchantability(int enchantmentLevel);
+    protected abstract int getMinimumEnchantability(int enchantmentLevel);
 
-    public abstract int getMaximumEnchantability(int enchantmentLevel);
+    protected abstract int getMaximumEnchantability(int enchantmentLevel);
 
 }

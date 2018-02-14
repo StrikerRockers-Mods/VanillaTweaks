@@ -4,11 +4,11 @@ import net.minecraft.item.Item;
 
 import static io.github.strikerrocker.vt.vt.proxy;
 
-public class ItemBase extends Item {
+class ItemBase extends Item {
 
-    protected String name;
+    String name;
 
-    public ItemBase(String name) {
+    ItemBase(String name) {
         this.name = name;
         setUnlocalizedName(name);
         setRegistryName(name);

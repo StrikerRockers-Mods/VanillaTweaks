@@ -32,10 +32,10 @@ public class VTVanillaPropertiesChanger {
         }
         if (stackSize >= 2) {
             int myInt = (int) stackSize;
-            Items.BED.setMaxStackSize(myInt - 2);
+            Items.BED.setMaxStackSize(myInt);
             Items.TOTEM_OF_UNDYING.setMaxStackSize(myInt);
             Items.BOAT.setMaxStackSize(myInt);
-            Items.CAKE.setMaxStackSize(myInt + 2);
+            Items.CAKE.setMaxStackSize(myInt);
             Items.ACACIA_BOAT.setMaxStackSize(myInt);
             Items.BIRCH_BOAT.setMaxStackSize(myInt);
             Items.DARK_OAK_BOAT.setMaxStackSize(myInt);

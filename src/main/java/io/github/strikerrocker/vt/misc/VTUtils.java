@@ -91,6 +91,7 @@ public final class VTUtils {
      */
     public static void registerDispenserBehavior(Item item, BehaviorDefaultDispenseItem dispenserBehavior) {
         String localizedName = I18n.translateToLocal(item.getUnlocalizedName() + ".name");
+
         if (dispenserBehavior.getClass() != BehaviorDefaultDispenseItem.class)
             vt.logInfo("Registering dispenser behavior for " + localizedName);
         else

@@ -17,13 +17,13 @@ public class VTItems {
 
     private static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 
-    public static ItemArmor binocular = new ItemArmor(binoculars, EntityEquipmentSlot.HEAD, "binoculars");
-    public static ItemCraftingPad pad = new ItemCraftingPad("pad");
-    public static ItemDynamite dynamite = new ItemDynamite("dynamite");
-    public static ItemFriedEgg fried_egg = new ItemFriedEgg();
-    public static ItemSlimeBucket slime = new ItemSlimeBucket("slime");
+    public static final ItemArmor binocular = new ItemArmor(binoculars, EntityEquipmentSlot.HEAD, "binoculars");
+    public static final ItemCraftingPad pad = new ItemCraftingPad("pad");
+    public static final ItemDynamite dynamite = new ItemDynamite("dynamite");
+    public static final ItemFriedEgg fried_egg = new ItemFriedEgg();
+    public static final ItemSlimeBucket slime = new ItemSlimeBucket("slime");
     public static Item bb;
-    private static ItemBase lens = new ItemBase("lens");
+    private static final ItemBase lens = new ItemBase("lens");
 
     public static void init() {
         if (vt.baubles) bb = BaubleTools.initBinocularBauble();
