@@ -6,7 +6,7 @@ That is indeed the case. All rights reserved, as far as the code is concerned.
 
 Art and sound assets are released under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0), a summary of which can be found at: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-©2018 StrikerRocker
+©2017-2018 StrikerRocker
 
 #### You CAN
 
@@ -35,4 +35,4 @@ Essentially, take this and learn from it! Create addon mods that depend on it! I
 
 Don't be a jerk.
 
-©2018 StrikerRocker
+©2017-2018 StrikerRocker
