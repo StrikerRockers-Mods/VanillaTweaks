@@ -3,14 +3,14 @@
     "modid": "vt",
     "name": "Vanilla Tweaks",
     "description": "",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "mcversion": "${mcversion}",
     "url": "https://strikerrocker.github.io/VanillaTweaks",
     "updateUrl": "",
     "authorList": [
       "StrikerRocker"
     ],
-    "credits": "Thanks to anon10w1z for creating the mod",
+    "credits": "Thanks to anon10w1z for creating the mod and Subaraki for the textures",
     "logoFile": "assets/vt/textures/logos/logo.png",
     "screenshots": [],
     "dependencies": []

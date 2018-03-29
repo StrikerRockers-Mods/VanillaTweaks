@@ -37,6 +37,7 @@ public class ItemDynamite extends ItemBase {
 
         if (!worldIn.isRemote) {
             EntityDynamite dynamite = new EntityDynamite(worldIn, playerIn);
+            playerIn.getCooldownTracker().setCooldown(this,20);
             dynamite.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0, 1.5F, 0);
             playerIn.getEntityWorld().spawnEntity(dynamite);
         }

@@ -10,7 +10,7 @@ import java.util.Optional;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
 
 /**
- * Initializes Craft++'s enchantments
+ * Initializes VanillaTweaks's enchantments
  */
 public final class VTEnchantments {
 
@@ -23,7 +23,7 @@ public final class VTEnchantments {
     private static final Enchantment Blazing = new EnchantmentBlazing();
 
     /**
-     * Registers the enchantments for Craft++
+     * Registers the enchantments for VanillaTweaks
      */
 
     public static void init(IForgeRegistry<Enchantment> registry) {
@@ -61,7 +61,7 @@ public final class VTEnchantments {
      * @param baseEvent       The event to go along with the enchantment
      */
     public static void performAction(String enchantmentName, Entity entity, Event baseEvent) {
-        Optional<VTEnchantmentBase> cppEnchantment = getByName(enchantmentName);
-        cppEnchantment.ifPresent(vtEnchantmentBase -> vtEnchantmentBase.performAction(entity, baseEvent));
+        Optional<VTEnchantmentBase> vtEnchantment = getByName(enchantmentName);
+        vtEnchantment.ifPresent(vtEnchantmentBase -> vtEnchantmentBase.performAction(entity, baseEvent));
     }
 }
