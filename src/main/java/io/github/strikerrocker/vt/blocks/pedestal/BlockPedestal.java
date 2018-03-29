@@ -35,6 +35,11 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             ItemStack heldItem = player.getHeldItem(hand);

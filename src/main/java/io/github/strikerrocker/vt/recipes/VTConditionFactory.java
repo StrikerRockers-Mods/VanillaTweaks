@@ -34,6 +34,9 @@ public class VTConditionFactory implements IConditionFactory {
         if (key.equals(vtModInfo.MOD_ID + ":chest")) {
             return () -> VTConfigHandler.useBetterChestRecipe == value;
         }
+        if (key.equals(vtModInfo.MOD_ID + ":leather")) {
+            return () -> VTConfigHandler.leather == value;
+        }
         if (key.equals(vtModInfo.MOD_ID + ":bauble")) {
             return () -> vt.baubles == value;
         }

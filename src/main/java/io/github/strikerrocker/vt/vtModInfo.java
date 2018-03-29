@@ -17,7 +17,7 @@ public final class vtModInfo {
     /**
      * Vanilla Tweaks's version
      */
-    public static final String VERSION = "1.2.7";
+    public static final String VERSION = "1.2.8";
 
     /**
      * Vanilla Tweaks's package location
