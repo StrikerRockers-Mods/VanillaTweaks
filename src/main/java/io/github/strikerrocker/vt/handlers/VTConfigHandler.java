@@ -31,10 +31,12 @@ public class VTConfigHandler {
     public static boolean spongeDryInNether;
     public static boolean hoeAsSickle;
     public static boolean realisticRelationship;
+    public static boolean nameTag;
     //Recipes
     public static boolean useBetterStoneToolRecipes;
     public static boolean useBetterStairsRecipes;
     public static boolean useBetterChestRecipe;
+    public static boolean leather;
     //Enchantments
     public static boolean vigor;
     public static boolean nimble;
@@ -102,6 +104,7 @@ public class VTConfigHandler {
         spongeDryInNether = get(DropsCategory, "Sponges dry in nether", true, "Sponges dry in nether");
         hoeAsSickle = get(DropsCategory, "Hoe acts as a sickle", true, "Does Hoe acts as a sickle");
         realisticRelationship = get(DropsCategory, "realistic predator/prey relationships", true, "realistic predator/prey relationships");
+        nameTag = get(DropsCategory,"nametag drop",true,"to enable nametg drop or not");
         config.setCategoryComment(DropsCategory, "Modify mob drops");
 
 
@@ -109,6 +112,7 @@ public class VTConfigHandler {
         useBetterStoneToolRecipes = get(recipesCategory, "Stone tools crafted from stone", true, "Are stone tools crafted out of stone?");
         useBetterStairsRecipes = get(recipesCategory, "Better stairs recipe enabled", true, "Is the better stairs recipe enabled?");
         useBetterChestRecipe = get(recipesCategory, "Better Chest recipe enabled", true, "Is the better chest recipe enabled");
+        leather=get(recipesCategory,"rotten fresh to leather",true,"whether to enable rotten flesh to leather recipe");
         config.setCategoryComment(recipesCategory, "Toggle VanillaTweaks's recipe enhancements");
         config.setCategoryRequiresMcRestart(recipesCategory, true);
 

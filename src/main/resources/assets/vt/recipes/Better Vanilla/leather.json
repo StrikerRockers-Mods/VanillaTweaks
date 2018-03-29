@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "vt:leather",
+      "value": true
+    }
+  ],
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {

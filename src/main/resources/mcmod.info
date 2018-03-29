@@ -3,7 +3,7 @@
     "modid": "vt",
     "name": "Vanilla Tweaks",
     "description": "",
-    "version": "${version}",
+    "version": "1.2.8",
     "mcversion": "${mcversion}",
     "url": "https://strikerrocker.github.io/VanillaTweaks",
     "updateUrl": "",

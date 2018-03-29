@@ -16,6 +16,7 @@ import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.*;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -102,7 +103,7 @@ public class EntityEvents {
         Entity entity = event.getEntity();
         World world = entity.world;
         //New Drops
-        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot")) {
+        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot")&&event.getSource().getTrueSource() instanceof EntityPlayer && VTConfigHandler.nameTag) {
             //Living entities drop their name tags
             String entityNameTag = entity.getCustomNameTag();
             if (!entityNameTag.equals("")) {
