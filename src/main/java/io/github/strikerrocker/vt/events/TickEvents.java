@@ -46,11 +46,10 @@ public class TickEvents {
     /**
      * Syncs up motion-affecting enchantments to the client
      *
-     * @param event The ClientTickEvent
+     * @param event The WorldTickEvent
      */
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void onClientTick(TickEvent.WorldTickEvent event) {
         World world = event.world;
         if (world != null) {
