@@ -14,8 +14,6 @@ public class NetherPocketer {
             event.setResult(Event.Result.DENY);
         } else if ((VTConfigHandler.noMoreLavaPocketGen) && event.getType() == NETHER_LAVA2) {
             event.setResult(Event.Result.DENY);
-        } else if ((VTConfigHandler.noMoreLavaPocketGen) && event.getType() == NETHER_MAGMA) {
-            event.setResult(Event.Result.DENY);
         }
     }
 }
