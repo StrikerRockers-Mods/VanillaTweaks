@@ -80,8 +80,12 @@ public class EntityDynamite extends EntityThrowable {
             if (this.getTicksSinceWet() < WET_TICKS) {
                 if (isNotCreativeThrower())
                     this.dropItem(VTItems.dynamite, 1);
-            } else
-                world.createExplosion(this, this.posX, this.posY, this.posZ, 3F, true);
+            } else {
+                if (result.entityHit instanceof EntityDynamite)
+                    return;
+                else
+                    world.createExplosion(this, this.posX, this.posY, this.posZ, 2F, true);
+            }
         this.setDead();
     }
 
@@ -128,7 +132,7 @@ public class EntityDynamite extends EntityThrowable {
      */
     private boolean isNotCreativeThrower() {
         EntityLivingBase thrower = this.getThrower();
-        return !(thrower instanceof EntityPlayer) || !((EntityPlayer) thrower).capabilities.isCreativeMode;
+        return !(thrower instanceof EntityPlayer) || ((EntityPlayer) thrower).capabilities.isCreativeMode;
     }
 
 }

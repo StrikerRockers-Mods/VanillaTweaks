@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.2.8"
+version = "1.2.9"
 group = "com.strikerrocker.vt"
 archivesBaseName = "VanillaTweaks"
 
@@ -19,9 +19,9 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.1.2604"
+    version = "1.12.2-14.23.2.2611"
     runDir = "run"
-    mappings = "snapshot_20180128"
+    mappings = "snapshot_20180404"
 }
 
 repositories {
