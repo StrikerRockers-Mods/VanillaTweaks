@@ -21,15 +21,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.DyeUtils;
 
 import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
 
@@ -124,5 +127,12 @@ public final class VTEventHandler {
         if (item == Item.getItemFromBlock(acaciabark) || item == Item.getItemFromBlock(birchbark) || item == Item.getItemFromBlock(darkoakbark)
                 || item == Item.getItemFromBlock(junglebark) || item == Item.getItemFromBlock(oakbark) || item == Item.getItemFromBlock(sprucebark))
             event.setBurnTime(300);
+    }
+
+    @SubscribeEvent
+    public static void onAnvil(AnvilUpdateEvent event){
+        if (DyeUtils.isDye(event.getRight())){
+            event.setOutput(event.getLeft().setStackDisplayName(DyeUtils.colorFromStack(event.getLeft()) + event.getLeft().getDisplayName()));
+        }
     }
 }
