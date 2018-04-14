@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -29,6 +30,7 @@ import static io.github.strikerrocker.vt.events.VTEventHandler.canHarvest;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.hoeAsSickle;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.spongeDryInNether;
 
+@Mod.EventBusSubscriber
 public class BlockEvents
 {
     /**
@@ -37,7 +39,7 @@ public class BlockEvents
      * @param event The BreakEvent
      */
     @SubscribeEvent
-    public void onPortalBreak(BlockEvent.BreakEvent event)
+    public static void onPortalBreak(BlockEvent.BreakEvent event)
     {
         World world = event.getWorld();
         BlockPos blockPos = event.getPos();
@@ -57,7 +59,7 @@ public class BlockEvents
      * @param event The (Block) BreakEvent
      */
     @SubscribeEvent
-    public void onBlockBreak(BlockEvent.BreakEvent event)
+    public static void onBlockBreak(BlockEvent.BreakEvent event)
     {
         EntityPlayer player = event.getPlayer();
         if (VTConfigHandler.mobSpawnerSilkTouchDrop && !player.capabilities.isCreativeMode && event.getState().getBlock() == Blocks.MOB_SPAWNER && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) != 0 && player.canHarvestBlock(Blocks.MOB_SPAWNER.getDefaultState()))
@@ -89,7 +91,7 @@ public class BlockEvents
      */
 
     @SubscribeEvent
-    public void onBlockBroken(BlockEvent.BreakEvent event)
+    public static void onBlockBroken(BlockEvent.BreakEvent event)
     {
         ItemStack stack = event.getPlayer().getHeldItemMainhand();
         if (!stack.isEmpty() && stack.getItem() instanceof ItemHoe && canHarvest(event.getState()) && hoeAsSickle)
@@ -130,7 +132,7 @@ public class BlockEvents
      * @param event BreakEvent
      */
     @SubscribeEvent
-    public void onBreak(BlockEvent.BreakEvent event)
+    public static void onBreak(BlockEvent.BreakEvent event)
     {
         if (EntitySitting.OCCUPIED.containsKey(event.getPos()))
         {
@@ -145,7 +147,7 @@ public class BlockEvents
      * @param event The PlaceEvent
      */
     @SubscribeEvent
-    public void onBlockPlaced(BlockEvent.PlaceEvent event)
+    public static void onBlockPlaced(BlockEvent.PlaceEvent event)
     {
         if (event.getPlacedBlock().equals(Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) &&
                 BiomeDictionary.getTypes(event.getWorld().getBiome(event.getPos())).contains(BiomeDictionary.Type.NETHER) && spongeDryInNether)
@@ -163,7 +165,7 @@ public class BlockEvents
      * @param event The HarvestDropsEvent
      */
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onHarvestDrops(BlockEvent.HarvestDropsEvent event)
+    public static void onHarvestDrops(BlockEvent.HarvestDropsEvent event)
     {
         EntityPlayer harvester = event.getHarvester();
         VTEnchantments.performAction("blazing", harvester, event);

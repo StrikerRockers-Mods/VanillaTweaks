@@ -2,10 +2,10 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import io.github.strikerrocker.vt.entities.VTEntities;
+import io.github.strikerrocker.vt.handlers.OreDictionaryHandler;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.handlers.VTGuiHandler;
 import io.github.strikerrocker.vt.items.VTItems;
-import io.github.strikerrocker.vt.misc.OreDictionaryRegistry;
 import io.github.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
 import io.github.strikerrocker.vt.network.PacketRequestUpdatePedestal;
 import io.github.strikerrocker.vt.network.PacketUpdatePedestal;
@@ -61,7 +61,7 @@ public class vt
     public void onInit(FMLInitializationEvent event)
     {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
-        OreDictionaryRegistry.init();
+        OreDictionaryHandler.init();
         VTVanillaPropertiesChanger.init();
         CapabilitySelfPlanting.register();
         proxy.init(event);

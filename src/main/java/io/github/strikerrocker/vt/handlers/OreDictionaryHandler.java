@@ -1,11 +1,11 @@
-package io.github.strikerrocker.vt.misc;
+package io.github.strikerrocker.vt.handlers;
 
 import io.github.strikerrocker.vt.items.VTItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class OreDictionaryRegistry
+public class OreDictionaryHandler
 {
     public static void init()
     {

@@ -1,10 +1,15 @@
 package io.github.strikerrocker.vt.events;
 
+import com.google.common.collect.Lists;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.entities.EntityTntImproved;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.misc.VTUtils;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,9 +24,12 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -30,7 +38,9 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import java.util.List;
 import java.util.Random;
@@ -38,6 +48,7 @@ import java.util.UUID;
 
 import static io.github.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.realisticRelationship;
+import static io.github.strikerrocker.vt.handlers.VTConfigHandler.stairSit;
 
 public class EntityEvents
 {
@@ -47,7 +58,7 @@ public class EntityEvents
      * @param event The LivingJumpEvent
      */
     @SubscribeEvent
-    public void onLivingJump(LivingEvent.LivingJumpEvent event)
+    public static void onLivingJump(LivingEvent.LivingJumpEvent event)
     {
         VTEnchantments.performAction("hops", event.getEntityLiving(), event);
     }
@@ -59,7 +70,7 @@ public class EntityEvents
      */
 
     @SubscribeEvent
-    public void onLivingUpdate(LivingEquipmentChangeEvent event)
+    public static void onLivingUpdate(LivingEquipmentChangeEvent event)
     {
         if (event.getEntity() instanceof EntityLivingBase)
         {
@@ -90,6 +101,91 @@ public class EntityEvents
             }
         }
     }
+
+
+    /**
+     * Allows a player to shear name tags off living entities
+     *
+     * @param event The EntityInteractEvent
+     */
+    @SubscribeEvent
+    public static void entityRightClick(PlayerInteractEvent.EntityInteract event)
+    {
+        if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty())
+        {
+            EntityPlayer player = event.getEntityPlayer();
+            ItemStack heldItem = player.getHeldItemMainhand();
+            World world = player.world;
+            Entity target = event.getTarget();
+            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote)
+            {
+                target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
+                ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
+                target.entityDropItem(nameTag, 0);
+                target.setCustomNameTag("");
+                heldItem.damageItem(1, player);
+            }
+        }
+        if (!event.getEntityPlayer().getHeldItemOffhand().isEmpty())
+        {
+            EntityPlayer player = event.getEntityPlayer();
+            ItemStack heldItem = player.getHeldItemOffhand();
+            World world = player.world;
+            Entity target = event.getTarget();
+            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote)
+            {
+                target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
+                ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
+                target.entityDropItem(nameTag, 0);
+                target.setCustomNameTag("");
+                heldItem.damageItem(1, player);
+            }
+        }
+    }
+
+    /**
+     * Allows the sitting functionality
+     *
+     * @param event The RightClickBlockEvent
+     */
+
+    @SubscribeEvent
+    public static void onRightClick(PlayerInteractEvent.RightClickBlock event)
+    {
+        if (!event.getWorld().isRemote && stairSit)
+        {
+            World w = event.getWorld();
+            BlockPos p = event.getPos();
+            IBlockState s = w.getBlockState(p);
+            Block b = w.getBlockState(p).getBlock();
+            EntityPlayer e = event.getEntityPlayer();
+
+            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && e.getHeldItemMainhand() == ItemStack.EMPTY)
+            {
+                if (b instanceof BlockSlab && s.getValue(BlockSlab.HALF) != BlockSlab.EnumBlockHalf.BOTTOM)
+                    return;
+                else if (b instanceof BlockStairs && s.getValue(BlockStairs.HALF) != BlockStairs.EnumHalf.BOTTOM)
+                    return;
+
+                EntitySitting sit = new EntitySitting(w, p);
+
+                w.spawnEntity(sit);
+                e.startRiding(sit);
+            }
+        }
+    }
+
+    /**
+     * Unlocks all the recipes
+     *
+     * @param event PlayerLoggedIn evemt
+     */
+    @SubscribeEvent
+    public static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
+    {
+        event.player.unlockRecipes(Lists.newArrayList(CraftingManager.REGISTRY));
+    }
+
 
     /**
      * Prevents taking extra fall damage from the Hops enchantment

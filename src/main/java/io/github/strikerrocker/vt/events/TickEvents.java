@@ -6,6 +6,7 @@ import io.github.strikerrocker.vt.enchantments.VTEnchantmentBase;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.misc.VTUtils;
+import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.toasts.GuiToast;
 import net.minecraft.client.gui.toasts.RecipeToast;
@@ -15,6 +16,7 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,6 +26,7 @@ import java.lang.invoke.MethodHandle;
 import java.util.Deque;
 import java.util.List;
 
+@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
 public class TickEvents
 {
 
@@ -33,7 +36,7 @@ public class TickEvents
      * @param event The WorldTickEvent
      */
     @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event)
+    public static void onWorldTick(TickEvent.WorldTickEvent event)
     {
         if (VTConfigHandler.autoSeedPlanting && !event.world.isRemote)
         {
@@ -53,7 +56,7 @@ public class TickEvents
      */
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.WorldTickEvent event)
+    public static void onClientTick(TickEvent.WorldTickEvent event)
     {
         World world = event.world;
         if (world != null)
@@ -69,7 +72,7 @@ public class TickEvents
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onRenderTickPre(TickEvent.RenderTickEvent event)
+    public static void onRenderTickPre(TickEvent.RenderTickEvent event)
     {
         try
         {
