@@ -15,14 +15,17 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
  * The GUI handler for Vanilla Tweaks
  */
 
-public class VTGuiHandler implements IGuiHandler {
+public class VTGuiHandler implements IGuiHandler
+{
 
     public static final int PEDESTAL = 1;
     private static final int PAD = 0;
 
     @Override
-    public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        switch (ID) {
+    public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+    {
+        switch (ID)
+        {
             case PEDESTAL:
                 return new ContainerPedestal(player.inventory, (TileEntityPedestal) world.getTileEntity(new BlockPos(x, y, z)));
             case PAD:
@@ -33,8 +36,10 @@ public class VTGuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        switch (ID) {
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+    {
+        switch (ID)
+        {
             case PEDESTAL:
                 return new GuiPedestal(getServerGuiElement(ID, player, world, x, y, z), player.inventory);
             case PAD:

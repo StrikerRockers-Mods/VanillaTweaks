@@ -15,15 +15,19 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
  * The common (dual-side) proxy for Vanilla Tweaks
  */
 
-public class VTCommonProxy {
+public class VTCommonProxy
+{
 
-    public void registerItemRenderer(Item item, int meta, String id) {
+    public void registerItemRenderer(Item item, int meta, String id)
+    {
     }
 
-    public void registerRenderer() {
+    public void registerRenderer()
+    {
     }
 
-    public void init(FMLInitializationEvent event) {
+    public void init(FMLInitializationEvent event)
+    {
         MinecraftForge.EVENT_BUS.register(new VTSoundHandler());
         MinecraftForge.EVENT_BUS.register(new NetherPortalFix());
         MinecraftForge.TERRAIN_GEN_BUS.register(new NetherPocketer());

@@ -9,13 +9,16 @@ import net.minecraft.world.World;
 /**
  * The container for the crafting pad
  */
-public class ContainerCraftingPad extends ContainerWorkbench {
-    public ContainerCraftingPad(InventoryPlayer inventoryPlayer, World world) {
+public class ContainerCraftingPad extends ContainerWorkbench
+{
+    public ContainerCraftingPad(InventoryPlayer inventoryPlayer, World world)
+    {
         super(inventoryPlayer, world, BlockPos.ORIGIN);
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(EntityPlayer player)
+    {
         return true;
 
     }

@@ -23,14 +23,17 @@ import java.util.List;
  * Contains some utility functions used by Vanilla Tweaks
  */
 @SuppressWarnings("unchecked")
-public final class VTUtils {
+public final class VTUtils
+{
     /**
      * Prevents VTUtils from being instantiated
      */
-    private VTUtils() {
+    private VTUtils()
+    {
     }
 
-    public static FakePlayer getFakePlayer(World world) {
+    public static FakePlayer getFakePlayer(World world)
+    {
         if (world instanceof WorldServer)
             return FakePlayerFactory.getMinecraft((WorldServer) world);
         return null;
@@ -45,13 +48,17 @@ public final class VTUtils {
      * @param <T>            The data type of the object to return
      * @return An object of the specified type with the first possible of the passed names
      */
-    public static <T> T findObject(Object fieldContainer, String... fieldNames) {
+    public static <T> T findObject(Object fieldContainer, String... fieldNames)
+    {
         Class fieldClass = fieldContainer.getClass();
-        while (fieldClass != null) {
-            try {
+        while (fieldClass != null)
+        {
+            try
+            {
                 Field field = ReflectionHelper.findField(fieldContainer.getClass(), fieldNames);
                 return (T) field.get(fieldContainer);
-            } catch (Exception exception) {
+            } catch (Exception exception)
+            {
                 fieldClass = fieldClass.getSuperclass();
             }
         }
@@ -65,19 +72,25 @@ public final class VTUtils {
      * @param <T>  The type of the list
      * @return A copy of the given list
      */
-    public static <T> List<T> copyList(List<T> list) {
-        try {
+    public static <T> List<T> copyList(List<T> list)
+    {
+        try
+        {
             Constructor constructor = list.getClass().getConstructor(Collection.class);
             return (List<T>) constructor.newInstance(list);
-        } catch (Exception exception) {
+        } catch (Exception exception)
+        {
             return new ArrayList<>(list);
         }
     }
 
-    public static MethodHandle findFieldGetter(Class c, String... names) {
-        try {
+    public static MethodHandle findFieldGetter(Class c, String... names)
+    {
+        try
+        {
             return MethodHandles.lookup().unreflectGetter(ReflectionHelper.findField(c, names));
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e)
+        {
             e.printStackTrace();
             return null;
         }
@@ -89,7 +102,8 @@ public final class VTUtils {
      * @param item              The item dispensed by the dispenser
      * @param dispenserBehavior The dispenser behavior carried out for the item
      */
-    public static void registerDispenserBehavior(Item item, BehaviorDefaultDispenseItem dispenserBehavior) {
+    public static void registerDispenserBehavior(Item item, BehaviorDefaultDispenseItem dispenserBehavior)
+    {
         String localizedName = I18n.translateToLocal(item.getUnlocalizedName() + ".name");
 
         if (dispenserBehavior.getClass() != BehaviorDefaultDispenseItem.class)

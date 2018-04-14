@@ -5,19 +5,22 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import static io.github.strikerrocker.vt.vt.proxy;
 
 
-public class ItemArmor extends net.minecraft.item.ItemArmor {
+public class ItemArmor extends net.minecraft.item.ItemArmor
+{
 
 
     private final String name;
 
-    public ItemArmor(ArmorMaterial material, EntityEquipmentSlot slot, String name) {
+    public ItemArmor(ArmorMaterial material, EntityEquipmentSlot slot, String name)
+    {
         super(material, 0, slot);
         setRegistryName(name);
         setUnlocalizedName(name);
         this.name = name;
     }
 
-    public void registerItemModel() {
+    public void registerItemModel()
+    {
         proxy.registerItemRenderer(this, 0, name);
     }
 

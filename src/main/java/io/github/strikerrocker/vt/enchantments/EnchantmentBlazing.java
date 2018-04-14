@@ -19,26 +19,32 @@ import java.util.Random;
 /**
  * Automatically smelts the drops of harvested blocks
  */
-public class EnchantmentBlazing extends VTEnchantmentBase {
+public class EnchantmentBlazing extends VTEnchantmentBase
+{
     private static Random random = new Random();
 
-    public EnchantmentBlazing() {
+    public EnchantmentBlazing()
+    {
         super("blazing", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);
         this.setRegistryName("blazing");
         this.setName("blazing");
     }
 
     @Override
-    public void performAction(Entity entity, Event baseEvent) {
-        if (entity != null && this.getEnchantmentLevel(((EntityLivingBase) entity).getHeldItemMainhand()) > 0) {
+    public void performAction(Entity entity, Event baseEvent)
+    {
+        if (entity != null && this.getEnchantmentLevel(((EntityLivingBase) entity).getHeldItemMainhand()) > 0)
+        {
             HarvestDropsEvent event = (HarvestDropsEvent) baseEvent;
             List<ItemStack> drops = event.getDrops();
             List<ItemStack> dropsCopy = VTUtils.copyList(drops);
             drops.clear();
             for (ItemStack drop : dropsCopy)
-                if (drop != null) {
+                if (drop != null)
+                {
                     ItemStack smeltingResult = FurnaceRecipes.instance().getSmeltingResult(drop);
-                    if (!smeltingResult.isEmpty()) {
+                    if (!smeltingResult.isEmpty())
+                    {
                         smeltingResult = smeltingResult.copy();
                         smeltingResult.stackSize *= drop.stackSize;
                         int fortuneLevel = event.getFortuneLevel();
@@ -52,17 +58,20 @@ public class EnchantmentBlazing extends VTEnchantmentBase {
     }
 
     @Override
-    public int getMinimumEnchantability(int enchantmentLevel) {
+    public int getMinimumEnchantability(int enchantmentLevel)
+    {
         return 15;
     }
 
     @Override
-    public int getMaximumEnchantability(int enchantmentLevel) {
+    public int getMaximumEnchantability(int enchantmentLevel)
+    {
         return 61;
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean canApplyTogether(Enchantment enchantment)
+    {
         return super.canApplyTogether(enchantment) && enchantment != Enchantments.SILK_TOUCH;
     }
 }

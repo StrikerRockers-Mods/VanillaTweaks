@@ -16,18 +16,22 @@ import java.util.UUID;
  * Gives the wearer an extra heart per enchantment level
  */
 @EntityTickingEnchantment
-public class EnchantmentVigor extends VTEnchantmentBase {
+public class EnchantmentVigor extends VTEnchantmentBase
+{
     private static final UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
 
-    public EnchantmentVigor() {
+    public EnchantmentVigor()
+    {
         super("vigor", Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, EntityEquipmentSlot.CHEST);
         this.setRegistryName("vigor");
         this.setName("vigor");
     }
 
     @Override
-    public void performAction(Entity entity, Event baseEvent) {
-        if (entity instanceof EntityLivingBase) {
+    public void performAction(Entity entity, Event baseEvent)
+    {
+        if (entity instanceof EntityLivingBase)
+        {
             EntityLivingBase livingEntity = (EntityLivingBase) entity;
             int enchantmentLevel = this.getEnchantmentLevel(livingEntity.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
             if (enchantmentLevel > 0)
@@ -38,17 +42,20 @@ public class EnchantmentVigor extends VTEnchantmentBase {
     }
 
     @Override
-    public int getMinimumEnchantability(int enchantmentLevel) {
+    public int getMinimumEnchantability(int enchantmentLevel)
+    {
         return 5 + (enchantmentLevel - 1) * 8;
     }
 
     @Override
-    public int getMaximumEnchantability(int enchantmentLevel) {
+    public int getMaximumEnchantability(int enchantmentLevel)
+    {
         return enchantmentLevel * 10 + 51;
     }
 
     @Override
-    public int getMaxLevel() {
+    public int getMaxLevel()
+    {
         return 3;
     }
 
@@ -58,9 +65,11 @@ public class EnchantmentVigor extends VTEnchantmentBase {
      * @param livingEntity     The living entity to add the vigor buff to
      * @param enchantmentLevel The enchantment level of the vigor buff
      */
-    private void addVigorBuff(EntityLivingBase livingEntity, int enchantmentLevel) {
+    private void addVigorBuff(EntityLivingBase livingEntity, int enchantmentLevel)
+    {
         IAttributeInstance vigorAttribute = livingEntity.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-        if (vigorAttribute.getModifier(vigorUUID) == null) {
+        if (vigorAttribute.getModifier(vigorUUID) == null)
+        {
             AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) enchantmentLevel / 10, 1);
             vigorAttribute.applyModifier(vigorModifier);
         }
@@ -72,9 +81,11 @@ public class EnchantmentVigor extends VTEnchantmentBase {
      * @param livingEntity     The living entity to remove the vigor buff from
      * @param enchantmentLevel The enchantment level of the vigor buff
      */
-    private void removeVigorBuff(EntityLivingBase livingEntity, int enchantmentLevel) {
+    private void removeVigorBuff(EntityLivingBase livingEntity, int enchantmentLevel)
+    {
         IAttributeInstance vigorAttribute = livingEntity.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-        if (vigorAttribute.getModifier(vigorUUID) != null) {
+        if (vigorAttribute.getModifier(vigorUUID) != null)
+        {
             AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) enchantmentLevel / 10, 1);
             vigorAttribute.removeModifier(vigorModifier);
             if (livingEntity.getHealth() > livingEntity.getMaxHealth())

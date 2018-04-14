@@ -8,25 +8,32 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 
-public class BaubleTools {
-    public static boolean hasProbeGoggle(EntityPlayer player) {
-        if (Loader.isModLoaded("baubles")) {
+public class BaubleTools
+{
+    public static boolean hasProbeGoggle(EntityPlayer player)
+    {
+        if (Loader.isModLoaded("baubles"))
+        {
             IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
-            if (handler == null) {
+            if (handler == null)
+            {
                 return false;
             }
             ItemStack stackInSlot = handler.getStackInSlot(4);
             return !stackInSlot.isEmpty() && stackInSlot.getItem() == VTItems.bb;
-        } else {
+        } else
+        {
             return false;
         }
     }
 
-    public static Item initBinocularBauble() {
+    public static Item initBinocularBauble()
+    {
         return new BinocularBauble();
     }
 
-    public static void initModel(Item binocularBauble) {
+    public static void initModel(Item binocularBauble)
+    {
         ((BinocularBauble) binocularBauble).registerItemModel();
     }
 }

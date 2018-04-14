@@ -7,18 +7,21 @@ import net.minecraft.world.World;
 
 import java.util.HashMap;
 
-public class EntitySitting extends Entity {
+public class EntitySitting extends Entity
+{
     public static final HashMap<BlockPos, EntitySitting> OCCUPIED = new HashMap<>();
 
     @SuppressWarnings("unused")
-    public EntitySitting(World world) {
+    public EntitySitting(World world)
+    {
         super(world);
         noClip = true;
         height = 0.0001F;
         width = 0.0001F;
     }
 
-    public EntitySitting(World world, BlockPos pos) {
+    public EntitySitting(World world, BlockPos pos)
+    {
         super(world);
         setPosition(pos.getX() + 0.5D, pos.getY() + 0.25D, pos.getZ() + 0.5D);
         noClip = true;
@@ -28,14 +31,17 @@ public class EntitySitting extends Entity {
     }
 
     @Override
-    protected void entityInit() {
+    protected void entityInit()
+    {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound compound) {
+    protected void readEntityFromNBT(NBTTagCompound compound)
+    {
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound compound) {
+    protected void writeEntityToNBT(NBTTagCompound compound)
+    {
     }
 }
