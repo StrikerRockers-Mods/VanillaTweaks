@@ -28,6 +28,7 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,14 +39,15 @@ import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
 /**
  * The event handler for Vanilla Tweaks
  */
-public final class VTEventHandler
+@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
+public class VTEventHandler
 {
     /**
      * Returns if the given chunk is an slime chunk or not
      *
      * @param world World,x int,z int
      */
-    static boolean isSlimeChunk(World world, int x, int z)
+    public static boolean isSlimeChunk(World world, int x, int z)
     {
         Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;

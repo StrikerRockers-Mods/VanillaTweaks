@@ -4,12 +4,15 @@ import io.github.strikerrocker.vt.vt;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.oredict.DyeUtils;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -111,5 +114,14 @@ public final class VTUtils
         else
             vt.logInfo("Registering default dispenser behavior for " + localizedName);
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, dispenserBehavior);
+    }
+
+    public static TextFormatting getColorTextFromStack(ItemStack stack)
+    {
+        if (DyeUtils.isDye(stack))
+        {
+            //TODO finish this
+        }
+        return TextFormatting.WHITE;
     }
 }

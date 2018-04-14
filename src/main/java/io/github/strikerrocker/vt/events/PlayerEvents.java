@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.events;
 
 import com.google.common.collect.Lists;
 import io.github.strikerrocker.vt.entities.EntitySitting;
-import io.github.strikerrocker.vt.items.VTItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
@@ -10,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -21,19 +21,20 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-import static io.github.strikerrocker.vt.events.VTEventHandler.isSlimeChunk;
 import static io.github.strikerrocker.vt.events.VTEventHandler.swapSlot;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
 
+@Mod.EventBusSubscriber
 public class PlayerEvents
 {
     /**
@@ -42,7 +43,7 @@ public class PlayerEvents
      * @param event EntityInteractSpecific
      */
     @SubscribeEvent
-    public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event)
+    public static void onEntityInteractSpecific(EntityInteractSpecific event)
     {
         EntityPlayer player = event.getEntityPlayer();
 
@@ -66,7 +67,7 @@ public class PlayerEvents
      * @param event The RightClickBlockEvent
      */
     @SubscribeEvent
-    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
     {
         boolean success = false;
         TileEntity te = event.getWorld().getTileEntity(event.getPos());
@@ -92,36 +93,12 @@ public class PlayerEvents
     }
 
     /**
-     * Enables the functionality of slime finder
-     *
-     * @param event The RightClickItemEvent
-     */
-    @SubscribeEvent
-    public void onRightClick(PlayerInteractEvent.RightClickItem event)
-    {
-        if (!event.getWorld().isRemote && slimeChunkFinder)
-        {
-            ItemStack slimeStack = new ItemStack(VTItems.slime);
-            if (event.getEntityPlayer().getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqual(slimeStack))
-            {
-                int x = MathHelper.floor(event.getEntityPlayer().posX);
-                int y = MathHelper.floor(event.getEntityPlayer().posY);
-                boolean slime = isSlimeChunk(event.getWorld(), x, y);
-                if (slime)
-                {
-                    event.getEntityPlayer().sendStatusMessage(new TextComponentString("Slime Chunk"), true);
-                }
-            }
-        }
-    }
-
-    /**
      * Allows a player to shear name tags off living entities
      *
      * @param event The EntityInteractEvent
      */
     @SubscribeEvent
-    public void entityRightClick(PlayerInteractEvent.EntityInteract event)
+    public static void entityRightClick(PlayerInteractEvent.EntityInteract event)
     {
         if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty())
         {
@@ -162,7 +139,7 @@ public class PlayerEvents
      */
 
     @SubscribeEvent
-    public void onRightClick(PlayerInteractEvent.RightClickBlock event)
+    public static void onRightClick(PlayerInteractEvent.RightClickBlock event)
     {
         if (!event.getWorld().isRemote && stairSit)
         {
@@ -193,10 +170,24 @@ public class PlayerEvents
      * @param event PlayerLoggedIn evemt
      */
     @SubscribeEvent
-    public void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
+    public static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
     {
         event.player.unlockRecipes(Lists.newArrayList(CraftingManager.REGISTRY));
     }
 
-
+    /**
+     * Makes is so that you shift click item frame to reverse it
+     *
+     * @param event EntityInteractSpecific event
+     */
+    @SubscribeEvent
+    public static void onEntityInteract(EntityInteractSpecific event)
+    {
+        if (event.getTarget() instanceof EntityItemFrame && event.getEntityPlayer().isSneaking())
+        {
+            event.setCanceled(true);
+            EntityItemFrame frame = (EntityItemFrame) event.getTarget();
+            frame.setItemRotation(frame.getRotation() - 2);
+        }
+    }
 }
