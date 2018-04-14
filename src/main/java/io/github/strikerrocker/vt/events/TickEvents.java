@@ -24,7 +24,8 @@ import java.lang.invoke.MethodHandle;
 import java.util.Deque;
 import java.util.List;
 
-public class TickEvents {
+public class TickEvents
+{
 
     /**
      * Allows thrown seeds to plant themselves in farmland, and gives the Homing enchantment functionality
@@ -32,8 +33,10 @@ public class TickEvents {
      * @param event The WorldTickEvent
      */
     @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (VTConfigHandler.autoSeedPlanting && !event.world.isRemote) {
+    public void onWorldTick(TickEvent.WorldTickEvent event)
+    {
+        if (VTConfigHandler.autoSeedPlanting && !event.world.isRemote)
+        {
             World world = event.world;
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
             entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null).handlePlantingLogic(entityItem));
@@ -50,9 +53,11 @@ public class TickEvents {
      */
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.WorldTickEvent event) {
+    public void onClientTick(TickEvent.WorldTickEvent event)
+    {
         World world = event.world;
-        if (world != null) {
+        if (world != null)
+        {
             List<Entity> arrows = world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);
             for (Entity arrow : arrows)
                 VTEnchantments.performAction("homing", arrow, null);
@@ -64,18 +69,23 @@ public class TickEvents {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onRenderTickPre(TickEvent.RenderTickEvent event) {
-        try {
+    public void onRenderTickPre(TickEvent.RenderTickEvent event)
+    {
+        try
+        {
             MethodHandle TOASTS_QUEUE = VTUtils.findFieldGetter(GuiToast.class, "toastsQueue", "field_191792_h");
             MethodHandle RECIPES_OUTPUTS = VTUtils.findFieldGetter(RecipeToast.class, "recipesOutputs", "field_193666_c");
 
             Deque deque = (Deque) TOASTS_QUEUE.invoke(Minecraft.getMinecraft().getToastGui());
-            for (Object o : deque) {
-                if (o instanceof RecipeToast) {
+            for (Object o : deque)
+            {
+                if (o instanceof RecipeToast)
+                {
                     ((List) RECIPES_OUTPUTS.invoke(o)).clear();
                 }
             }
-        } catch (Throwable t) {
+        } catch (Throwable t)
+        {
             t.printStackTrace();
         }
     }

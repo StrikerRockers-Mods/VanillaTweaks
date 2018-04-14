@@ -21,7 +21,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.FOVUpdateEvent;
@@ -39,13 +38,15 @@ import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
 /**
  * The event handler for Vanilla Tweaks
  */
-public final class VTEventHandler {
+public final class VTEventHandler
+{
     /**
      * Returns if the given chunk is an slime chunk or not
      *
      * @param world World,x int,z int
      */
-    static boolean isSlimeChunk(World world, int x, int z) {
+    static boolean isSlimeChunk(World world, int x, int z)
+    {
         Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
     }
@@ -56,7 +57,8 @@ public final class VTEventHandler {
      *
      * @param state IBlockState
      */
-    static boolean canHarvest(IBlockState state) {
+    static boolean canHarvest(IBlockState state)
+    {
         Block block = state.getBlock();
         return (block instanceof BlockBush && !(block instanceof BlockLilyPad)) || block instanceof BlockReed;
     }
@@ -68,7 +70,8 @@ public final class VTEventHandler {
      * @param armorStand the armour stand
      * @param slot       the slots
      */
-    static void swapSlot(EntityPlayer player, EntityArmorStand armorStand, EntityEquipmentSlot slot) {
+    static void swapSlot(EntityPlayer player, EntityArmorStand armorStand, EntityEquipmentSlot slot)
+    {
         ItemStack playerItem = player.getItemStackFromSlot(slot);
         ItemStack armorStandItem = armorStand.getItemStackFromSlot(slot);
         player.setItemStackToSlot(slot, armorStandItem);
@@ -76,8 +79,10 @@ public final class VTEventHandler {
     }
 
     @SubscribeEvent
-    public void addItemCaps(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof EntityItem) {
+    public void addItemCaps(AttachCapabilitiesEvent<Entity> event)
+    {
+        if (event.getObject() instanceof EntityItem)
+        {
             event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
         }
     }
@@ -88,9 +93,12 @@ public final class VTEventHandler {
      * @param event The FOVUpdateEvent
      */
     @SubscribeEvent
-    public void onFOVUpdate(FOVUpdateEvent event) {
-        if (event.getEntity() != null) {
-            if (event.getEntity() instanceof EntityPlayer) {
+    public void onFOVUpdate(FOVUpdateEvent event)
+    {
+        if (event.getEntity() != null)
+        {
+            if (event.getEntity() instanceof EntityPlayer)
+            {
                 ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
                     event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
@@ -108,7 +116,8 @@ public final class VTEventHandler {
      */
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
+    public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event)
+    {
         event.setCanceled(true);
     }
 
@@ -118,7 +127,8 @@ public final class VTEventHandler {
      * @param event FurnaceFuelBurnTimeEvent
      */
     @SubscribeEvent
-    public void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event) {
+    public void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event)
+    {
         Item item = event.getItemStack().getItem();
         if (item == Item.getItemFromBlock(charcoal))
             event.setBurnTime(16000);
@@ -130,8 +140,10 @@ public final class VTEventHandler {
     }
 
     @SubscribeEvent
-    public static void onAnvil(AnvilUpdateEvent event){
-        if (DyeUtils.isDye(event.getRight())){
+    public static void onAnvil(AnvilUpdateEvent event)
+    {
+        if (DyeUtils.isDye(event.getRight()))
+        {
             event.setOutput(event.getLeft().setStackDisplayName(DyeUtils.colorFromStack(event.getLeft()) + event.getLeft().getDisplayName()));
         }
     }

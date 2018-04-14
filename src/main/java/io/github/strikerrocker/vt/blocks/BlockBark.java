@@ -8,9 +8,11 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockBark extends BlockBase {
+public class BlockBark extends BlockBase
+{
 
-    public BlockBark(String name, MapColor mapColor) {
+    public BlockBark(String name, MapColor mapColor)
+    {
         super(Material.WOOD, name, mapColor);
         this.setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
@@ -20,17 +22,20 @@ public class BlockBark extends BlockBase {
     }
 
     @Override
-    public boolean isWood(IBlockAccess world, BlockPos pos) {
+    public boolean isWood(IBlockAccess world, BlockPos pos)
+    {
         return true;
     }
 
     @Override
-    public boolean canSustainLeaves(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean canSustainLeaves(IBlockState state, IBlockAccess world, BlockPos pos)
+    {
         return true;
     }
 
     @Override
-    public boolean isBurning(IBlockAccess world, BlockPos pos) {
+    public boolean isBurning(IBlockAccess world, BlockPos pos)
+    {
         return true;
     }
 }

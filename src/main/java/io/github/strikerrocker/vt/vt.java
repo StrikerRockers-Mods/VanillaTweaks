@@ -23,7 +23,8 @@ import org.apache.logging.log4j.Logger;
 
 
 @Mod(modid = vtModInfo.MOD_ID, name = vtModInfo.NAME, version = vtModInfo.VERSION, guiFactory = vtModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
-public class vt {
+public class vt
+{
 
     @SidedProxy(modId = vtModInfo.MOD_ID, clientSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")
     public static VTCommonProxy proxy;
@@ -34,12 +35,14 @@ public class vt {
     public static SimpleNetworkWrapper network;
     private static Logger logger;
 
-    public static void logInfo(String message) {
+    public static void logInfo(String message)
+    {
         logger.info("VanillaTweaks : " + message);
     }
 
     @Mod.EventHandler
-    public void onPreInit(FMLPreInitializationEvent event) {
+    public void onPreInit(FMLPreInitializationEvent event)
+    {
         logger = event.getModLog();
         baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
         if (baubles) logInfo("Baubles Support Enabled");
@@ -55,7 +58,8 @@ public class vt {
     }
 
     @Mod.EventHandler
-    public void onInit(FMLInitializationEvent event) {
+    public void onInit(FMLInitializationEvent event)
+    {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         OreDictionaryRegistry.init();
         VTVanillaPropertiesChanger.init();
@@ -65,7 +69,8 @@ public class vt {
     }
 
     @Mod.EventHandler
-    public void onPostInit(FMLPostInitializationEvent event) {
+    public void onPostInit(FMLPostInitializationEvent event)
+    {
         logInfo("Post-Initialization Complete");
     }
 }

@@ -15,29 +15,34 @@ import net.minecraft.world.World;
 /**
  * Dynamite item to go along-side dynamite entity
  */
-public class ItemDynamite extends ItemBase {
+public class ItemDynamite extends ItemBase
+{
 
-    public ItemDynamite(String name) {
+    public ItemDynamite(String name)
+    {
         super(name);
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(16);
         setUnlocalizedName(name);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
 
         ItemStack itemstack = playerIn.getHeldItem(handIn);
 
-        if (!playerIn.isCreative()) {
+        if (!playerIn.isCreative())
+        {
             itemstack.shrink(1);
         }
 
         worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
 
-        if (!worldIn.isRemote) {
+        if (!worldIn.isRemote)
+        {
             EntityDynamite dynamite = new EntityDynamite(worldIn, playerIn);
-            playerIn.getCooldownTracker().setCooldown(this,20);
+            playerIn.getCooldownTracker().setCooldown(this, 20);
             dynamite.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0, 1.5F, 0);
             playerIn.getEntityWorld().spawnEntity(dynamite);
         }

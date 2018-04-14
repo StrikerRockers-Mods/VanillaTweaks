@@ -17,7 +17,8 @@ import static io.github.strikerrocker.vt.vt.logInfo;
  * The config handler for VanillaTweaks
  */
 @Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
-public class VTConfigHandler {
+public class VTConfigHandler
+{
     /**
      * The actual configuration containing the configuration file
      */
@@ -73,7 +74,8 @@ public class VTConfigHandler {
      *
      * @param configFile The configuration file (fetched from the FMLPreInitializationEvent)
      */
-    public static void init(File configFile) {
+    public static void init(File configFile)
+    {
         config = new Configuration(configFile);
         config.load();
         syncConfig();
@@ -85,7 +87,8 @@ public class VTConfigHandler {
      * @param event The OnConfigChangedEvent
      */
     @SubscribeEvent
-    public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+    public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+    {
         if (event.getModID().equals(vtModInfo.MOD_ID))
             VTConfigHandler.syncConfig();
     }
@@ -93,7 +96,8 @@ public class VTConfigHandler {
     /**
      * Syncs the config file
      */
-    private static void syncConfig() {
+    private static void syncConfig()
+    {
         logInfo("Syncing config file");
         String DropsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Drops";
         creeperDropTntChance = get(DropsCategory, "Chance of creepers dropping TNT", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
@@ -104,7 +108,7 @@ public class VTConfigHandler {
         spongeDryInNether = get(DropsCategory, "Sponges dry in nether", true, "Sponges dry in nether");
         hoeAsSickle = get(DropsCategory, "Hoe acts as a sickle", true, "Does Hoe acts as a sickle");
         realisticRelationship = get(DropsCategory, "realistic predator/prey relationships", true, "realistic predator/prey relationships");
-        nameTag = get(DropsCategory,"nametag drop",true,"to enable nametg drop or not");
+        nameTag = get(DropsCategory, "nametag drop", true, "to enable nametg drop or not");
         config.setCategoryComment(DropsCategory, "Modify mob drops");
 
 
@@ -112,7 +116,7 @@ public class VTConfigHandler {
         useBetterStoneToolRecipes = get(recipesCategory, "Stone tools crafted from stone", true, "Are stone tools crafted out of stone?");
         useBetterStairsRecipes = get(recipesCategory, "Better stairs recipe enabled", true, "Is the better stairs recipe enabled?");
         useBetterChestRecipe = get(recipesCategory, "Better Chest recipe enabled", true, "Is the better chest recipe enabled");
-        leather=get(recipesCategory,"rotten fresh to leather",true,"whether to enable rotten flesh to leather recipe");
+        leather = get(recipesCategory, "rotten fresh to leather", true, "whether to enable rotten flesh to leather recipe");
         config.setCategoryComment(recipesCategory, "Toggle VanillaTweaks's recipe enhancements");
         config.setCategoryRequiresMcRestart(recipesCategory, true);
 
@@ -162,14 +166,16 @@ public class VTConfigHandler {
             config.save();
     }
 
-    private static Property get(String category, String key, double defaultValue, String comment, boolean slider) {
+    private static Property get(String category, String key, double defaultValue, String comment, boolean slider)
+    {
         Property property = config.get(category, key, defaultValue, comment);
         if (slider && FMLCommonHandler.instance().getEffectiveSide().isClient())
             return property.setConfigEntryClass(NumberSliderEntry.class);
         return property;
     }
 
-    private static boolean get(String category, String key, boolean defaultValue, String comment) {
+    private static boolean get(String category, String key, boolean defaultValue, String comment)
+    {
         return config.get(category, key, defaultValue, comment).getBoolean();
     }
 }

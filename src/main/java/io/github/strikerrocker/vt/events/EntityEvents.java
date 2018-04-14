@@ -39,14 +39,16 @@ import java.util.UUID;
 import static io.github.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.realisticRelationship;
 
-public class EntityEvents {
+public class EntityEvents
+{
     /**
      * Enables the Hops enchantment functionality
      *
      * @param event The LivingJumpEvent
      */
     @SubscribeEvent
-    public void onLivingJump(LivingEvent.LivingJumpEvent event) {
+    public void onLivingJump(LivingEvent.LivingJumpEvent event)
+    {
         VTEnchantments.performAction("hops", event.getEntityLiving(), event);
     }
 
@@ -57,26 +59,33 @@ public class EntityEvents {
      */
 
     @SubscribeEvent
-    public void onLivingUpdate(LivingEquipmentChangeEvent event) {
-        if (event.getEntity() instanceof EntityLivingBase) {
+    public void onLivingUpdate(LivingEquipmentChangeEvent event)
+    {
+        if (event.getEntity() instanceof EntityLivingBase)
+        {
             UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
             int lvl = EnchantmentHelper.getEnchantmentLevel(Vigor, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST));
-            if (lvl > 0) {
+            if (lvl > 0)
+            {
                 IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-                if (vigorAttribute.getModifier(vigorUUID) == null) {
+                if (vigorAttribute.getModifier(vigorUUID) == null)
+                {
                     AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) lvl / 10, 1);
                     vigorAttribute.applyModifier(vigorModifier);
                 }
-            } else {
+            } else
+            {
                 IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-                if (vigorAttribute.getModifier(vigorUUID) != null) {
+                if (vigorAttribute.getModifier(vigorUUID) != null)
+                {
                     AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) lvl / 10, 1);
                     vigorAttribute.removeModifier(vigorModifier);
                     if (event.getEntityLiving().getHealth() > event.getEntityLiving().getMaxHealth())
                         event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
                 }
             }
-            if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Nimble, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
+            if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Nimble, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0)
+            {
                 VTEnchantments.performAction("nimble", event.getEntityLiving(), event);
             }
         }
@@ -88,7 +97,8 @@ public class EntityEvents {
      * @param event The LivingFallEvent
      */
     @SubscribeEvent
-    public void onLivingFall(LivingFallEvent event) {
+    public void onLivingFall(LivingFallEvent event)
+    {
         if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0)
             event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
     }
@@ -99,14 +109,17 @@ public class EntityEvents {
      * @param event The LivingDropsEvent
      */
     @SubscribeEvent
-    public void onLivingDrops(LivingDropsEvent event) {
+    public void onLivingDrops(LivingDropsEvent event)
+    {
         Entity entity = event.getEntity();
         World world = entity.world;
         //New Drops
-        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot")&&event.getSource().getTrueSource() instanceof EntityPlayer && VTConfigHandler.nameTag) {
+        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot") && event.getSource().getTrueSource() instanceof EntityPlayer && VTConfigHandler.nameTag)
+        {
             //Living entities drop their name tags
             String entityNameTag = entity.getCustomNameTag();
-            if (!entityNameTag.equals("")) {
+            if (!entityNameTag.equals(""))
+            {
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG);
                 nameTag.setStackDisplayName(entityNameTag);
                 entity.entityDropItem(nameTag, 0);
@@ -114,8 +127,10 @@ public class EntityEvents {
             }
             if (entity instanceof EntityBat && VTConfigHandler.batLeatherDropChance > Math.random())
                 entity.dropItem(Items.LEATHER, 1);
-            else if (entity instanceof EntityCreeper) {
-                if (event.getSource().damageType != null && VTConfigHandler.creeperDropTntChance > Math.random()) {
+            else if (entity instanceof EntityCreeper)
+            {
+                if (event.getSource().damageType != null && VTConfigHandler.creeperDropTntChance > Math.random())
+                {
                     event.getDrops().clear();
                     entity.dropItem(Item.getItemFromBlock(Blocks.TNT), 1);
                 }
@@ -123,15 +138,19 @@ public class EntityEvents {
         }
         List<EntityItem> drops = event.getDrops();
         List<EntityItem> dropsCopy = VTUtils.copyList(drops);
-        for (EntityItem dropEntity : dropsCopy) {
+        for (EntityItem dropEntity : dropsCopy)
+        {
             ItemStack dropItem = dropEntity.getItem();
-            if (event.getSource().getImmediateSource() != null) {
+            if (event.getSource().getImmediateSource() != null)
+            {
                 Item drop = dropItem.getItem();
                 Entity source = event.getSource().getImmediateSource();
-                if (source instanceof EntityWolf && entity instanceof EntitySheep) {
+                if (source instanceof EntityWolf && entity instanceof EntitySheep)
+                {
                     if ((drop == Items.MUTTON || drop == Items.COOKED_MUTTON) && realisticRelationship)
                         drops.remove(dropEntity);
-                } else if (source instanceof EntityOcelot && entity instanceof EntityChicken) {
+                } else if (source instanceof EntityOcelot && entity instanceof EntityChicken)
+                {
                     if ((drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN) && realisticRelationship)
                         drops.remove(dropEntity);
                 }
@@ -146,28 +165,36 @@ public class EntityEvents {
      * @param event The LivingUpdateEvent
      */
     @SubscribeEvent
-    public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
+    public void onLivingUpdate(LivingEvent.LivingUpdateEvent event)
+    {
         EntityLivingBase livingEntity = event.getEntityLiving();
-        if (!livingEntity.world.isRemote) {
+        if (!livingEntity.world.isRemote)
+        {
             World world = livingEntity.world;
-            if (((livingEntity instanceof EntityCreeper && VTConfigHandler.creeperBurnInDaylight) || (livingEntity instanceof EntityZombie && livingEntity.isChild() && VTConfigHandler.babyZombieBurnInDaylight)) && world.isDaytime()) {
+            if (((livingEntity instanceof EntityCreeper && VTConfigHandler.creeperBurnInDaylight) || (livingEntity instanceof EntityZombie && livingEntity.isChild() && VTConfigHandler.babyZombieBurnInDaylight)) && world.isDaytime())
+            {
                 float f = livingEntity.getBrightness();
                 Random random = world.rand;
                 BlockPos blockPos = new BlockPos(livingEntity.posX, Math.round(livingEntity.posY), livingEntity.posZ);
-                if (f > 0.5 && random.nextFloat() * 30 < (f - 0.4) * 2 && world.canSeeSky(blockPos)) {
+                if (f > 0.5 && random.nextFloat() * 30 < (f - 0.4) * 2 && world.canSeeSky(blockPos))
+                {
                     ItemStack itemstack = livingEntity.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                     boolean doSetFire = true;
-                    if (!itemstack.isEmpty()) {
+                    if (!itemstack.isEmpty())
+                    {
                         doSetFire = true;
-                        if (itemstack.isItemStackDamageable()) {
+                        if (itemstack.isItemStackDamageable())
+                        {
                             itemstack.setItemDamage(itemstack.getItemDamage() + random.nextInt(2));
-                            if (itemstack.getItemDamage() >= itemstack.getMaxDamage()) {
+                            if (itemstack.getItemDamage() >= itemstack.getMaxDamage())
+                            {
                                 livingEntity.renderBrokenItemStack(itemstack);
                                 livingEntity.setItemStackToSlot(EntityEquipmentSlot.HEAD, null);
                             }
                         }
                     }
-                    if (doSetFire) {
+                    if (doSetFire)
+                    {
                         livingEntity.setFire(10);
                     }
                 }
@@ -181,8 +208,10 @@ public class EntityEvents {
      * @param event EntityJoinWorldEvent
      */
     @SubscribeEvent
-    public void onEntitySpawn(EntityJoinWorldEvent event) {
-        if (event.getEntity().getClass() == EntityTNTPrimed.class) {
+    public void onEntitySpawn(EntityJoinWorldEvent event)
+    {
+        if (event.getEntity().getClass() == EntityTNTPrimed.class)
+        {
             event.setCanceled(true);
             EntityTntImproved tnt = new EntityTntImproved(event.getWorld(), event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ,
                     ((EntityTNTPrimed) event.getEntity()).getTntPlacedBy());
@@ -197,10 +226,13 @@ public class EntityEvents {
      * @param event The EntityMountEvent
      */
     @SubscribeEvent
-    public void onEntityMount(EntityMountEvent event) {
-        if (event.isDismounting()) {
+    public void onEntityMount(EntityMountEvent event)
+    {
+        if (event.isDismounting())
+        {
             Entity e = event.getEntityBeingMounted();
-            if (e instanceof EntitySitting) {
+            if (e instanceof EntitySitting)
+            {
                 e.setDead();
                 EntitySitting.OCCUPIED.remove(e.getPosition());
             }

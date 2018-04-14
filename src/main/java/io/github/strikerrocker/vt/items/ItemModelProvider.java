@@ -2,7 +2,8 @@ package io.github.strikerrocker.vt.items;
 
 import net.minecraft.item.Item;
 
-public interface ItemModelProvider {
+public interface ItemModelProvider
+{
 
     void registerItemModel(Item item);
 

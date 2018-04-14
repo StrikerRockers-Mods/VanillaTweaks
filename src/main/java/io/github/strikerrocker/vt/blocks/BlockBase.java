@@ -8,11 +8,13 @@ import net.minecraft.item.ItemBlock;
 
 import static io.github.strikerrocker.vt.vt.proxy;
 
-class BlockBase extends Block {
+class BlockBase extends Block
+{
 
     String name;
 
-    BlockBase(Material material, String name, MapColor mapColor) {
+    BlockBase(Material material, String name, MapColor mapColor)
+    {
         super(material, mapColor);
 
         this.name = name;
@@ -20,11 +22,13 @@ class BlockBase extends Block {
         setRegistryName(name);
     }
 
-    public void registerItemModel(Item item) {
+    public void registerItemModel(Item item)
+    {
         proxy.registerItemRenderer(item, 0, name);
     }
 
-    public Item createItemBlock() {
+    public Item createItemBlock()
+    {
         return new ItemBlock(this).setRegistryName(getRegistryName());
     }
 }

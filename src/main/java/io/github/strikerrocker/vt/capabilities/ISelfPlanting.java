@@ -2,7 +2,8 @@ package io.github.strikerrocker.vt.capabilities;
 
 import net.minecraft.entity.item.EntityItem;
 
-public interface ISelfPlanting {
+public interface ISelfPlanting
+{
     int getMinSteadyTicks();
 
     void setMinSteadyTicks(int minSteadyTicks);

@@ -10,13 +10,16 @@ import net.minecraftforge.fml.client.config.GuiConfig;
 /**
  * The config GUI for Vanilla Tweaks
  */
-public class GuiVTConfig extends GuiConfig {
+public class GuiVTConfig extends GuiConfig
+{
     @SuppressWarnings("unused")
-    public GuiVTConfig() {
+    public GuiVTConfig()
+    {
         this(null);
     }
 
-    public GuiVTConfig(GuiScreen parent) {
+    public GuiVTConfig(GuiScreen parent)
+    {
         super(parent, new ConfigElement(VTConfigHandler.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), vtModInfo.MOD_ID, false, false, GuiConfig.getAbridgedConfigPath(VTConfigHandler.config.toString()));
     }
 }

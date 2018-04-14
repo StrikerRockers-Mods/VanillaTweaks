@@ -13,7 +13,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 /**
  * Contains, initializes, and registers all of VanillaTweaks's items
  */
-public class VTItems {
+public class VTItems
+{
 
     private static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 
@@ -25,11 +26,13 @@ public class VTItems {
     public static Item bb;
     private static final ItemBase lens = new ItemBase("lens");
 
-    public static void init() {
+    public static void init()
+    {
         if (vt.baubles) bb = BaubleTools.initBinocularBauble();
     }
 
-    public static void register(IForgeRegistry<Item> registry) {
+    public static void register(IForgeRegistry<Item> registry)
+    {
         registry.register(pad);
         registry.register(binocular);
         registry.register(fried_egg);
@@ -40,7 +43,8 @@ public class VTItems {
             registry.register(bb);
     }
 
-    public static void registerModels() {
+    public static void registerModels()
+    {
         binocular.registerItemModel();
         pad.registerItemModel();
         fried_egg.registerItemModel();
