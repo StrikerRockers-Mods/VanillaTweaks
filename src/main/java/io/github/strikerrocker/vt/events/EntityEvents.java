@@ -39,6 +39,7 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
@@ -50,6 +51,7 @@ import static io.github.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.realisticRelationship;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.stairSit;
 
+@Mod.EventBusSubscriber
 public class EntityEvents
 {
     /**
