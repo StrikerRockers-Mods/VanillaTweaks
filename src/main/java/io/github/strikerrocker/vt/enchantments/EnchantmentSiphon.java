@@ -16,18 +16,15 @@ import java.util.stream.Collectors;
  */
 public class EnchantmentSiphon extends VTEnchantmentBase
 {
-    public EnchantmentSiphon()
-    {
+    public EnchantmentSiphon() {
         super("siphon", Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);
         this.setName("siphon");
         this.setRegistryName("siphon");
     }
 
     @Override
-    public void performAction(Entity entity, Event baseEvent)
-    {
-        if (entity != null && this.getEnchantmentLevel(((EntityLivingBase) entity).getHeldItemMainhand()) > 0)
-        {
+    public void performAction(Entity entity, Event baseEvent) {
+        if (entity != null && this.getEnchantmentLevel(((EntityLivingBase) entity).getHeldItemMainhand()) > 0) {
             HarvestDropsEvent event = (HarvestDropsEvent) baseEvent;
             List<ItemStack> drops = event.getDrops();
             drops.removeAll(drops.stream().filter(event.getHarvester().inventory::addItemStackToInventory).collect(Collectors.toList()));
@@ -35,14 +32,12 @@ public class EnchantmentSiphon extends VTEnchantmentBase
     }
 
     @Override
-    public int getMinimumEnchantability(int enchantmentLevel)
-    {
+    public int getMinimumEnchantability(int enchantmentLevel) {
         return 15;
     }
 
     @Override
-    public int getMaximumEnchantability(int enchantmentLevel)
-    {
+    public int getMaximumEnchantability(int enchantmentLevel) {
         return 61;
     }
 }

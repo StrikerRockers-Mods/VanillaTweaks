@@ -26,8 +26,7 @@ public class VTBlocks
     private static final BlockFlint flint = new BlockFlint("flintblock");
 
 
-    public static void register(IForgeRegistry<Block> registry)
-    {
+    public static void register(IForgeRegistry<Block> registry) {
         registry.registerAll(
                 sugar, flint, charcoal, pedestal, acaciabark, darkoakbark, oakbark, sprucebark, junglebark, birchbark
         );
@@ -36,8 +35,7 @@ public class VTBlocks
     }
 
 
-    public static void registerItemBlocks(IForgeRegistry<Item> registry)
-    {
+    public static void registerItemBlocks(IForgeRegistry<Item> registry) {
         registry.registerAll(
                 pedestal.createItemBlock(), sugar.createItemBlock(), flint.createItemBlock(),
                 charcoal.createItemBlock(), acaciabark.createItemBlock(), birchbark.createItemBlock(),
@@ -46,8 +44,7 @@ public class VTBlocks
         );
     }
 
-    public static void registerModels()
-    {
+    public static void registerModels() {
         sugar.registerItemModel(Item.getItemFromBlock(sugar));
         charcoal.registerItemModel(Item.getItemFromBlock(charcoal));
         flint.registerItemModel(Item.getItemFromBlock(flint));

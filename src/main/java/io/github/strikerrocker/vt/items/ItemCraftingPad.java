@@ -21,23 +21,20 @@ public class ItemCraftingPad extends ItemBase
 
     private final String name;
 
-    public ItemCraftingPad(String name)
-    {
+    public ItemCraftingPad(String name) {
         super(name);
         this.name = name;
         setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.TOOLS);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
-    {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         playerIn.openGui(vt.instance, 0, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
         return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
     }
 
 
-    public void registerItemModel(Item item)
-    {
+    public void registerItemModel(Item item) {
         proxy.registerItemRenderer(this, 0, name);
     }
 

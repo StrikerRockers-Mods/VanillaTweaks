@@ -9,15 +9,13 @@ class ItemBase extends Item
 
     String name;
 
-    ItemBase(String name)
-    {
+    ItemBase(String name) {
         this.name = name;
         setUnlocalizedName(name);
         setRegistryName(name);
     }
 
-    public void registerItemModel()
-    {
+    public void registerItemModel() {
         proxy.registerItemRenderer(this, 0, name);
     }
 

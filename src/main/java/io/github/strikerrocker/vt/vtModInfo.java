@@ -28,8 +28,7 @@ public final class vtModInfo
     /**
      * Prevents VTModInfo from being instantianted
      */
-    private vtModInfo()
-    {
+    private vtModInfo() {
 
     }
 }

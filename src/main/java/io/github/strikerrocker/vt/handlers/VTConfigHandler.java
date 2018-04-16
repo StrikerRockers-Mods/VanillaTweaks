@@ -74,8 +74,7 @@ public class VTConfigHandler
      *
      * @param configFile The configuration file (fetched from the FMLPreInitializationEvent)
      */
-    public static void init(File configFile)
-    {
+    public static void init(File configFile) {
         config = new Configuration(configFile);
         config.load();
         syncConfig();
@@ -87,8 +86,7 @@ public class VTConfigHandler
      * @param event The OnConfigChangedEvent
      */
     @SubscribeEvent
-    public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
-    {
+    public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID().equals(vtModInfo.MOD_ID))
             VTConfigHandler.syncConfig();
     }
@@ -96,8 +94,7 @@ public class VTConfigHandler
     /**
      * Syncs the config file
      */
-    private static void syncConfig()
-    {
+    private static void syncConfig() {
         logInfo("Syncing config file");
         String DropsCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Drops";
         creeperDropTntChance = get(DropsCategory, "Chance of creepers dropping TNT", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMinValue(0).setMaxValue(10).getDouble() / 10;
@@ -166,16 +163,14 @@ public class VTConfigHandler
             config.save();
     }
 
-    private static Property get(String category, String key, double defaultValue, String comment, boolean slider)
-    {
+    private static Property get(String category, String key, double defaultValue, String comment, boolean slider) {
         Property property = config.get(category, key, defaultValue, comment);
         if (slider && FMLCommonHandler.instance().getEffectiveSide().isClient())
             return property.setConfigEntryClass(NumberSliderEntry.class);
         return property;
     }
 
-    private static boolean get(String category, String key, boolean defaultValue, String comment)
-    {
+    private static boolean get(String category, String key, boolean defaultValue, String comment) {
         return config.get(category, key, defaultValue, comment).getBoolean();
     }
 }

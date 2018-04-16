@@ -23,8 +23,7 @@ public class VTRecipeReplacer
 {
 
     @SubscribeEvent
-    public static void removeRecipes(RegistryEvent.Register<IRecipe> event)
-    {
+    public static void removeRecipes(RegistryEvent.Register<IRecipe> event) {
         IForgeRegistryModifiable modRegistry = (IForgeRegistryModifiable) event.getRegistry();
         ResourceLocation oak = new ResourceLocation("minecraft:oak_stairs");
         ResourceLocation acacia = new ResourceLocation("minecraft:acacia_stairs");
@@ -46,8 +45,7 @@ public class VTRecipeReplacer
         ResourceLocation sspade = new ResourceLocation("minecraft:stone_shovel");
         ResourceLocation shoe = new ResourceLocation("minecraft:stone_hoe");
 
-        if (VTConfigHandler.useBetterStairsRecipes)
-        {
+        if (VTConfigHandler.useBetterStairsRecipes) {
             modRegistry.remove(oak);
             modRegistry.remove(darkoak);
             modRegistry.remove(acacia);
@@ -77,8 +75,7 @@ public class VTRecipeReplacer
             replaceStairsRecipe(Blocks.QUARTZ_STAIRS, new ItemStack(Blocks.QUARTZ_BLOCK, 1, OreDictionary.WILDCARD_VALUE));
         }
 
-        if (VTConfigHandler.useBetterStoneToolRecipes)
-        {
+        if (VTConfigHandler.useBetterStoneToolRecipes) {
             modRegistry.remove(spick);
             modRegistry.remove(saxe);
             modRegistry.remove(shoe);

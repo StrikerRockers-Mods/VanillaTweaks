@@ -35,14 +35,12 @@ public class vt
     public static SimpleNetworkWrapper network;
     private static Logger logger;
 
-    public static void logInfo(String message)
-    {
+    public static void logInfo(String message) {
         logger.info("VanillaTweaks : " + message);
     }
 
     @Mod.EventHandler
-    public void onPreInit(FMLPreInitializationEvent event)
-    {
+    public void onPreInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
         if (baubles) logInfo("Baubles Support Enabled");
@@ -58,8 +56,7 @@ public class vt
     }
 
     @Mod.EventHandler
-    public void onInit(FMLInitializationEvent event)
-    {
+    public void onInit(FMLInitializationEvent event) {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         OreDictionaryHandler.init();
         VTVanillaPropertiesChanger.init();
@@ -69,8 +66,7 @@ public class vt
     }
 
     @Mod.EventHandler
-    public void onPostInit(FMLPostInitializationEvent event)
-    {
+    public void onPostInit(FMLPostInitializationEvent event) {
         logInfo("Post-Initialization Complete");
     }
 }

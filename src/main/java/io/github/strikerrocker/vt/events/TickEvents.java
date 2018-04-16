@@ -36,10 +36,8 @@ public class TickEvents
      * @param event The WorldTickEvent
      */
     @SubscribeEvent
-    public static void onWorldTick(TickEvent.WorldTickEvent event)
-    {
-        if (VTConfigHandler.autoSeedPlanting && !event.world.isRemote)
-        {
+    public static void onWorldTick(TickEvent.WorldTickEvent event) {
+        if (VTConfigHandler.autoSeedPlanting && !event.world.isRemote) {
             World world = event.world;
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
             entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null).handlePlantingLogic(entityItem));
@@ -56,11 +54,9 @@ public class TickEvents
      */
 
     @SubscribeEvent
-    public static void onClientTick(TickEvent.WorldTickEvent event)
-    {
+    public static void onClientTick(TickEvent.WorldTickEvent event) {
         World world = event.world;
-        if (world != null)
-        {
+        if (world != null) {
             List<Entity> arrows = world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);
             for (Entity arrow : arrows)
                 VTEnchantments.performAction("homing", arrow, null);
@@ -72,23 +68,18 @@ public class TickEvents
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public static void onRenderTickPre(TickEvent.RenderTickEvent event)
-    {
-        try
-        {
+    public static void onRenderTickPre(TickEvent.RenderTickEvent event) {
+        try {
             MethodHandle TOASTS_QUEUE = VTUtils.findFieldGetter(GuiToast.class, "toastsQueue", "field_191792_h");
             MethodHandle RECIPES_OUTPUTS = VTUtils.findFieldGetter(RecipeToast.class, "recipesOutputs", "field_193666_c");
 
             Deque deque = (Deque) TOASTS_QUEUE.invoke(Minecraft.getMinecraft().getToastGui());
-            for (Object o : deque)
-            {
-                if (o instanceof RecipeToast)
-                {
+            for (Object o : deque) {
+                if (o instanceof RecipeToast) {
                     ((List) RECIPES_OUTPUTS.invoke(o)).clear();
                 }
             }
-        } catch (Throwable t)
-        {
+        } catch (Throwable t) {
             t.printStackTrace();
         }
     }

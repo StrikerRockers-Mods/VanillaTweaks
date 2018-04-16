@@ -18,10 +18,8 @@ import static io.github.strikerrocker.vt.handlers.VTConfigHandler.craftingPad;
 public class VTJeiPlugin implements IModPlugin
 {
     @Override
-    public void register(IModRegistry registry)
-    {
-        if (craftingPad)
-        {
+    public void register(IModRegistry registry) {
+        if (craftingPad) {
             registry.addRecipeCatalyst(new ItemStack(VTItems.pad), VanillaRecipeCategoryUid.CRAFTING);
             IRecipeTransferRegistry transfer = registry.getRecipeTransferRegistry();
             transfer.addRecipeTransferHandler(ContainerCraftingPad.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);

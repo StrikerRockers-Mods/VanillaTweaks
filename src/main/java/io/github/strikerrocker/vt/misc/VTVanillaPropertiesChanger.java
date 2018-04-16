@@ -16,26 +16,22 @@ public class VTVanillaPropertiesChanger
     /**
      * Initializes the vanilla properties changer
      */
-    public static void init()
-    {
+    public static void init() {
         //Modifying block creative tabs
         if (VTConfigHandler.commandBlockInRedstoneTab)
             Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
         Blocks.DRAGON_EGG.setCreativeTab(CreativeTabs.DECORATIONS);
         //Modifying block names
-        if (VTConfigHandler.renameButtons)
-        {
+        if (VTConfigHandler.renameButtons) {
             Blocks.STONE_BUTTON.setUnlocalizedName("buttonStone");
             Blocks.WOODEN_BUTTON.setUnlocalizedName("buttonWood");
         }
         //Modifying End Portal Frame harvestability
-        if (endFrameBroken)
-        {
+        if (endFrameBroken) {
             Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 2);
             Blocks.END_PORTAL_FRAME.setHardness(5.0F);
         }
-        if (stackSize >= 2)
-        {
+        if (stackSize >= 2) {
             int myInt = (int) stackSize;
             Items.BED.setMaxStackSize(myInt);
             Items.TOTEM_OF_UNDYING.setMaxStackSize(myInt);

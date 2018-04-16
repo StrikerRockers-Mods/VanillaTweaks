@@ -14,31 +14,26 @@ import java.util.Set;
 public class VTGuiFactory implements IModGuiFactory
 {
     @Override
-    public void initialize(Minecraft minecraft)
-    {
+    public void initialize(Minecraft minecraft) {
     }
 
     @Override
-    public boolean hasConfigGui()
-    {
+    public boolean hasConfigGui() {
         return true;
     }
 
     @Override
-    public GuiScreen createConfigGui(GuiScreen parentScreen)
-    {
+    public GuiScreen createConfigGui(GuiScreen parentScreen) {
         return new GuiVTConfig(parentScreen);
     }
 
     @Override
-    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories()
-    {
+    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
         return null;
     }
 
 
-    public Class<? extends GuiScreen> mainConfigGuiClass()
-    {
+    public Class<? extends GuiScreen> mainConfigGuiClass() {
         return GuiVTConfig.class;
     }
 

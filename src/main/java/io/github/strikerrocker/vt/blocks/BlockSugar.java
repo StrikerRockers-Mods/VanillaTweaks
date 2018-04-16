@@ -7,8 +7,7 @@ import net.minecraft.block.material.Material;
 class BlockSugar extends BlockBase
 {
 
-    public BlockSugar(String name)
-    {
+    public BlockSugar(String name) {
         super(Material.SAND, name, MapColor.WHITE_STAINED_HARDENED_CLAY);
         this.setUnlocalizedName(name);
         this.setSoundType(SoundType.SAND);
