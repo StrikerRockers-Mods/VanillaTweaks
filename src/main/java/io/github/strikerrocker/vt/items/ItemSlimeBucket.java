@@ -9,11 +9,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import static io.github.strikerrocker.vt.events.VTEventHandler.isSlimeChunk;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.slimeChunkFinder;
+import static net.minecraft.util.text.TextFormatting.AQUA;
 
 public class ItemSlimeBucket extends ItemBase
 {
@@ -33,7 +33,7 @@ public class ItemSlimeBucket extends ItemBase
                 int y = MathHelper.floor(playerIn.posY);
                 boolean slime = isSlimeChunk(worldIn, x, y);
                 if (slime) {
-                    playerIn.sendStatusMessage(new TextComponentString("Slime Chunk" + TextFormatting.GOLD), true);
+                    playerIn.sendStatusMessage(new TextComponentString("Slime Chunk" + AQUA), true);
                 }
             }
         }

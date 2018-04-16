@@ -4,7 +4,6 @@ import io.github.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.items.VTItems;
-import io.github.strikerrocker.vt.misc.VTUtils;
 import io.github.strikerrocker.vt.vt;
 import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
@@ -33,7 +32,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.DyeUtils;
 
 import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
 
@@ -102,14 +100,15 @@ public class VTEventHandler
      */
     @SubscribeEvent
     public static void onAnvil(AnvilUpdateEvent event) {
-        if (DyeUtils.isDye(event.getRight())) {
-            event.setOutput(event.getLeft().setStackDisplayName(VTUtils.getColorTextFromStack(event.getLeft()) + event.getLeft().getDisplayName()));
+        //if (DyeUtils.isDye(event.getRight())) {
+        //   event.setOutput(event.getLeft().setStackDisplayName(VTUtils.getColorTextFromStack(event.getLeft()) + event.getLeft().getDisplayName()));
+        // event.setCost(0);
             //TODO make this work popularly
-        }
+        //}
     }
 
     @SubscribeEvent
-    public void addItemCaps(AttachCapabilitiesEvent<Entity> event) {
+    public static void addItemCaps(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityItem) {
             event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
         }
@@ -121,7 +120,7 @@ public class VTEventHandler
      * @param event The FOVUpdateEvent
      */
     @SubscribeEvent
-    public void onFOVUpdate(FOVUpdateEvent event) {
+    public static void onFOVUpdate(FOVUpdateEvent event) {
         if (event.getEntity() != null) {
             if (event.getEntity() instanceof EntityPlayer) {
                 ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
@@ -140,7 +139,7 @@ public class VTEventHandler
      */
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
+    public static void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
         event.setCanceled(true);
     }
 }
