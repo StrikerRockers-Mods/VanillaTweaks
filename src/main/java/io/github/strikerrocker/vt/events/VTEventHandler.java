@@ -101,10 +101,9 @@ public class VTEventHandler
     @SubscribeEvent
     public static void onAnvil(AnvilUpdateEvent event) {
         //if (DyeUtils.isDye(event.getRight())) {
-        //   event.setOutput(event.getLeft().setStackDisplayName(VTUtils.getColorTextFromStack(event.getLeft()) + event.getLeft().getDisplayName()));
-        // event.setCost(0);
-            //TODO make this work popularly
-        //}
+        //  event.setOutput(event.getLeft().setStackDisplayName(VTUtils.getFormatForStack(event.getLeft()) + event.getLeft().getDisplayName()));
+        //event.setCost(0);
+        //TODO make this work popularly
     }
 
     @SubscribeEvent

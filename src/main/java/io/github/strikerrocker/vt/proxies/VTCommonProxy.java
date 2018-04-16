@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt.proxies;
 
 import io.github.strikerrocker.vt.items.VTItems;
 import io.github.strikerrocker.vt.misc.BehaviorDispenseDynamite;
+import io.github.strikerrocker.vt.misc.NetherPortalFix;
 import io.github.strikerrocker.vt.misc.VTUtils;
 import io.github.strikerrocker.vt.worldgen.NetherPocketer;
 import net.minecraft.item.Item;
@@ -23,6 +24,7 @@ public class VTCommonProxy
 
     public void init(FMLInitializationEvent event) {
         MinecraftForge.TERRAIN_GEN_BUS.register(new NetherPocketer());
+        MinecraftForge.EVENT_BUS.register(new NetherPortalFix());
         VTUtils.registerDispenserBehavior(VTItems.dynamite, new BehaviorDispenseDynamite());
     }
 
