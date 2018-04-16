@@ -167,7 +167,6 @@ public class PlayerEvents
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         if (event.getTarget() instanceof EntityItemFrame && event.getEntityPlayer().isSneaking()) {
-            event.setCanceled(true);
             EntityItemFrame frame = (EntityItemFrame) event.getTarget();
             frame.setItemRotation(frame.getRotation() - 2);
         }
