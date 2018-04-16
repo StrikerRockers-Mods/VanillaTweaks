@@ -19,27 +19,23 @@ public class VTRegistrationHandler
 {
 
     @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event)
-    {
+    public static void registerItems(RegistryEvent.Register<Item> event) {
         VTItems.register(event.getRegistry());
         VTBlocks.registerItemBlocks(event.getRegistry());
     }
 
     @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event)
-    {
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
         VTBlocks.register(event.getRegistry());
     }
 
     @SubscribeEvent
-    public static void registerEnchantment(RegistryEvent.Register<Enchantment> event)
-    {
+    public static void registerEnchantment(RegistryEvent.Register<Enchantment> event) {
         VTEnchantments.init(event.getRegistry());
     }
 
     @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event)
-    {
+    public static void registerModels(ModelRegistryEvent event) {
         VTItems.registerModels();
         VTBlocks.registerModels();
         if (vt.baubles)

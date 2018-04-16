@@ -18,8 +18,7 @@ import static io.github.strikerrocker.vt.handlers.VTConfigHandler.slimeChunkFind
 public class ItemSlimeBucket extends ItemBase
 {
 
-    public ItemSlimeBucket(String name)
-    {
+    public ItemSlimeBucket(String name) {
         super(name);
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(1);
@@ -27,17 +26,13 @@ public class ItemSlimeBucket extends ItemBase
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
-    {
-        if (!worldIn.isRemote && slimeChunkFinder)
-        {
-            if (playerIn.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqual(new ItemStack(VTItems.slime)))
-            {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        if (!worldIn.isRemote && slimeChunkFinder) {
+            if (playerIn.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqual(new ItemStack(VTItems.slime))) {
                 int x = MathHelper.floor(playerIn.posX);
                 int y = MathHelper.floor(playerIn.posY);
                 boolean slime = isSlimeChunk(worldIn, x, y);
-                if (slime)
-                {
+                if (slime) {
                     playerIn.sendStatusMessage(new TextComponentString("Slime Chunk" + TextFormatting.GOLD), true);
                 }
             }

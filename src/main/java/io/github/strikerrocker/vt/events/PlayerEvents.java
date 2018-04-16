@@ -43,15 +43,13 @@ public class PlayerEvents
      * @param event EntityInteractSpecific
      */
     @SubscribeEvent
-    public static void onEntityInteractSpecific(EntityInteractSpecific event)
-    {
+    public static void onEntityInteractSpecific(EntityInteractSpecific event) {
         EntityPlayer player = event.getEntityPlayer();
 
         if (event.getTarget().world.isRemote || player.isSpectator() || player.isCreative() || !(event.getTarget() instanceof EntityArmorStand) || !armourStandSwapping)
             return;
 
-        if (player.isSneaking() && armourStandSwapping)
-        {
+        if (player.isSneaking() && armourStandSwapping) {
             event.setCanceled(true);
             EntityArmorStand armorStand = (EntityArmorStand) event.getTarget();
             swapSlot(player, armorStand, EntityEquipmentSlot.HEAD);
@@ -67,26 +65,21 @@ public class PlayerEvents
      * @param event The RightClickBlockEvent
      */
     @SubscribeEvent
-    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
-    {
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         boolean success = false;
         TileEntity te = event.getWorld().getTileEntity(event.getPos());
-        if (te instanceof TileEntitySign)
-        {
+        if (te instanceof TileEntitySign) {
             TileEntitySign sign = (TileEntitySign) te;
-            if (event.getEntityPlayer().isSneaking() && clearSigns)
-            {
+            if (event.getEntityPlayer().isSneaking() && clearSigns) {
                 ITextComponent[] text = new ITextComponent[]{new TextComponentString(""), new TextComponentString(""), new TextComponentString(""), new TextComponentString("")};
                 ObfuscationReflectionHelper.setPrivateValue(TileEntitySign.class, sign, text, "signText", "field_145915_a");
                 success = true;
-            } else if (editSigns)
-            {
+            } else if (editSigns) {
                 event.getEntityPlayer().openEditSign(sign);
                 success = true;
             }
         }
-        if (success)
-        {
+        if (success) {
             event.setCanceled(true);
             event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
         }
@@ -98,16 +91,13 @@ public class PlayerEvents
      * @param event The EntityInteractEvent
      */
     @SubscribeEvent
-    public static void entityRightClick(PlayerInteractEvent.EntityInteract event)
-    {
-        if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty())
-        {
+    public static void entityRightClick(PlayerInteractEvent.EntityInteract event) {
+        if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty()) {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack heldItem = player.getHeldItemMainhand();
             World world = player.world;
             Entity target = event.getTarget();
-            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote)
-            {
+            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
                 target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
                 target.entityDropItem(nameTag, 0);
@@ -115,14 +105,12 @@ public class PlayerEvents
                 heldItem.damageItem(1, player);
             }
         }
-        if (!event.getEntityPlayer().getHeldItemOffhand().isEmpty())
-        {
+        if (!event.getEntityPlayer().getHeldItemOffhand().isEmpty()) {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack heldItem = player.getHeldItemOffhand();
             World world = player.world;
             Entity target = event.getTarget();
-            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote)
-            {
+            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
                 target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
                 target.entityDropItem(nameTag, 0);
@@ -139,18 +127,15 @@ public class PlayerEvents
      */
 
     @SubscribeEvent
-    public static void onRightClick(PlayerInteractEvent.RightClickBlock event)
-    {
-        if (!event.getWorld().isRemote && stairSit)
-        {
+    public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
+        if (!event.getWorld().isRemote && stairSit) {
             World w = event.getWorld();
             BlockPos p = event.getPos();
             IBlockState s = w.getBlockState(p);
             Block b = w.getBlockState(p).getBlock();
             EntityPlayer e = event.getEntityPlayer();
 
-            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && e.getHeldItemMainhand() == ItemStack.EMPTY)
-            {
+            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && e.getHeldItemMainhand() == ItemStack.EMPTY) {
                 if (b instanceof BlockSlab && s.getValue(BlockSlab.HALF) != BlockSlab.EnumBlockHalf.BOTTOM)
                     return;
                 else if (b instanceof BlockStairs && s.getValue(BlockStairs.HALF) != BlockStairs.EnumHalf.BOTTOM)
@@ -170,8 +155,7 @@ public class PlayerEvents
      * @param event PlayerLoggedIn evemt
      */
     @SubscribeEvent
-    public static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
-    {
+    public static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         event.player.unlockRecipes(Lists.newArrayList(CraftingManager.REGISTRY));
     }
 
@@ -181,10 +165,8 @@ public class PlayerEvents
      * @param event EntityInteractSpecific event
      */
     @SubscribeEvent
-    public static void onEntityInteract(EntityInteractSpecific event)
-    {
-        if (event.getTarget() instanceof EntityItemFrame && event.getEntityPlayer().isSneaking())
-        {
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        if (event.getTarget() instanceof EntityItemFrame && event.getEntityPlayer().isSneaking()) {
             event.setCanceled(true);
             EntityItemFrame frame = (EntityItemFrame) event.getTarget();
             frame.setItemRotation(frame.getRotation() - 2);

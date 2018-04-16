@@ -19,14 +19,12 @@ public class VTClientProxy extends VTCommonProxy
 {
 
     @Override
-    public void registerItemRenderer(Item item, int meta, String id)
-    {
+    public void registerItemRenderer(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(vtModInfo.MOD_ID + ":" + id, "inventory"));
     }
 
     @Override
-    public void registerRenderer()
-    {
+    public void registerRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
     }
 

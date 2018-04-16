@@ -3,6 +3,7 @@ package io.github.strikerrocker.vt.misc;
 import io.github.strikerrocker.vt.vt;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -26,17 +27,15 @@ import java.util.List;
  * Contains some utility functions used by Vanilla Tweaks
  */
 @SuppressWarnings("unchecked")
-public final class VTUtils
+public class VTUtils
 {
     /**
      * Prevents VTUtils from being instantiated
      */
-    private VTUtils()
-    {
+    private VTUtils() {
     }
 
-    public static FakePlayer getFakePlayer(World world)
-    {
+    public static FakePlayer getFakePlayer(World world) {
         if (world instanceof WorldServer)
             return FakePlayerFactory.getMinecraft((WorldServer) world);
         return null;
@@ -51,17 +50,13 @@ public final class VTUtils
      * @param <T>            The data type of the object to return
      * @return An object of the specified type with the first possible of the passed names
      */
-    public static <T> T findObject(Object fieldContainer, String... fieldNames)
-    {
+    public static <T> T findObject(Object fieldContainer, String... fieldNames) {
         Class fieldClass = fieldContainer.getClass();
-        while (fieldClass != null)
-        {
-            try
-            {
+        while (fieldClass != null) {
+            try {
                 Field field = ReflectionHelper.findField(fieldContainer.getClass(), fieldNames);
                 return (T) field.get(fieldContainer);
-            } catch (Exception exception)
-            {
+            } catch (Exception exception) {
                 fieldClass = fieldClass.getSuperclass();
             }
         }
@@ -75,25 +70,19 @@ public final class VTUtils
      * @param <T>  The type of the list
      * @return A copy of the given list
      */
-    public static <T> List<T> copyList(List<T> list)
-    {
-        try
-        {
+    public static <T> List<T> copyList(List<T> list) {
+        try {
             Constructor constructor = list.getClass().getConstructor(Collection.class);
             return (List<T>) constructor.newInstance(list);
-        } catch (Exception exception)
-        {
+        } catch (Exception exception) {
             return new ArrayList<>(list);
         }
     }
 
-    public static MethodHandle findFieldGetter(Class c, String... names)
-    {
-        try
-        {
+    public static MethodHandle findFieldGetter(Class c, String... names) {
+        try {
             return MethodHandles.lookup().unreflectGetter(ReflectionHelper.findField(c, names));
-        } catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
             return null;
         }
@@ -105,8 +94,7 @@ public final class VTUtils
      * @param item              The item dispensed by the dispenser
      * @param dispenserBehavior The dispenser behavior carried out for the item
      */
-    public static void registerDispenserBehavior(Item item, BehaviorDefaultDispenseItem dispenserBehavior)
-    {
+    public static void registerDispenserBehavior(Item item, BehaviorDefaultDispenseItem dispenserBehavior) {
         String localizedName = I18n.translateToLocal(item.getUnlocalizedName() + ".name");
 
         if (dispenserBehavior.getClass() != BehaviorDefaultDispenseItem.class)
@@ -116,11 +104,56 @@ public final class VTUtils
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, dispenserBehavior);
     }
 
-    public static TextFormatting getColorTextFromStack(ItemStack stack)
-    {
-        if (DyeUtils.isDye(stack))
-        {
-            //TODO finish this
+    public static TextFormatting getColorTextFromStack(ItemStack stack) {
+        if (DyeUtils.isDye(stack)) {
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 0))) {
+                return TextFormatting.BLACK;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 1))) {
+                return TextFormatting.DARK_RED;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 2))) {
+                return TextFormatting.DARK_GREEN;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 3))) {
+                return TextFormatting.GOLD;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 4))) {
+                return TextFormatting.DARK_BLUE;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 5))) {
+                return TextFormatting.DARK_PURPLE;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 6))) {
+                return TextFormatting.DARK_AQUA;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 7))) {
+                return TextFormatting.GRAY;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 8))) {
+                return TextFormatting.DARK_GRAY;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 9))) {
+                return TextFormatting.LIGHT_PURPLE;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 10))) {
+                return TextFormatting.GREEN;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 11))) {
+                return TextFormatting.YELLOW;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 12))) {
+                return TextFormatting.BLUE;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 13))) {
+                return TextFormatting.AQUA;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 14))) {
+                return TextFormatting.GOLD;
+            }
+            if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 15))) {
+                return TextFormatting.WHITE;
+            }
         }
         return TextFormatting.WHITE;
     }

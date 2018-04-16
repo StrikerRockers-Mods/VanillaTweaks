@@ -15,16 +15,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 public class VTCommonProxy
 {
 
-    public void registerItemRenderer(Item item, int meta, String id)
-    {
+    public void registerItemRenderer(Item item, int meta, String id) {
     }
 
-    public void registerRenderer()
-    {
+    public void registerRenderer() {
     }
 
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
         MinecraftForge.TERRAIN_GEN_BUS.register(new NetherPocketer());
         VTUtils.registerDispenserBehavior(VTItems.dynamite, new BehaviorDispenseDynamite());
     }

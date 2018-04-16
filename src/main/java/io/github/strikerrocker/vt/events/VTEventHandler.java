@@ -4,6 +4,7 @@ import io.github.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.items.VTItems;
+import io.github.strikerrocker.vt.misc.VTUtils;
 import io.github.strikerrocker.vt.vt;
 import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
@@ -47,8 +48,7 @@ public class VTEventHandler
      *
      * @param world World,x int,z int
      */
-    public static boolean isSlimeChunk(World world, int x, int z)
-    {
+    public static boolean isSlimeChunk(World world, int x, int z) {
         Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
         return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
     }
@@ -59,8 +59,7 @@ public class VTEventHandler
      *
      * @param state IBlockState
      */
-    static boolean canHarvest(IBlockState state)
-    {
+    static boolean canHarvest(IBlockState state) {
         Block block = state.getBlock();
         return (block instanceof BlockBush && !(block instanceof BlockLilyPad)) || block instanceof BlockReed;
     }
@@ -72,55 +71,11 @@ public class VTEventHandler
      * @param armorStand the armour stand
      * @param slot       the slots
      */
-    static void swapSlot(EntityPlayer player, EntityArmorStand armorStand, EntityEquipmentSlot slot)
-    {
+    static void swapSlot(EntityPlayer player, EntityArmorStand armorStand, EntityEquipmentSlot slot) {
         ItemStack playerItem = player.getItemStackFromSlot(slot);
         ItemStack armorStandItem = armorStand.getItemStackFromSlot(slot);
         player.setItemStackToSlot(slot, armorStandItem);
         armorStand.setItemStackToSlot(slot, playerItem);
-    }
-
-    @SubscribeEvent
-    public void addItemCaps(AttachCapabilitiesEvent<Entity> event)
-    {
-        if (event.getObject() instanceof EntityItem)
-        {
-            event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
-        }
-    }
-
-    /**
-     * Enables binoculars functionality
-     *
-     * @param event The FOVUpdateEvent
-     */
-    @SubscribeEvent
-    public void onFOVUpdate(FOVUpdateEvent event)
-    {
-        if (event.getEntity() != null)
-        {
-            if (event.getEntity() instanceof EntityPlayer)
-            {
-                ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
-                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
-                if (vt.baubles) if (BaubleTools.hasProbeGoggle(event.getEntity()))
-                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
-            }
-        }
-    }
-
-
-    /**
-     * Prevents potion effects from shifting your inventory to the side.
-     *
-     * @param event The PotionShiftEvent
-     */
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event)
-    {
-        event.setCanceled(true);
     }
 
     /**
@@ -129,8 +84,7 @@ public class VTEventHandler
      * @param event FurnaceFuelBurnTimeEvent
      */
     @SubscribeEvent
-    public void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event)
-    {
+    public static void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event) {
         Item item = event.getItemStack().getItem();
         if (item == Item.getItemFromBlock(charcoal))
             event.setBurnTime(16000);
@@ -141,12 +95,52 @@ public class VTEventHandler
             event.setBurnTime(300);
     }
 
+    /**
+     * Makes the item's colourable
+     *
+     * @param event AnvilUpdateEvent
+     */
     @SubscribeEvent
-    public static void onAnvil(AnvilUpdateEvent event)
-    {
-        if (DyeUtils.isDye(event.getRight()))
-        {
-            event.setOutput(event.getLeft().setStackDisplayName(DyeUtils.colorFromStack(event.getLeft()) + event.getLeft().getDisplayName()));
+    public static void onAnvil(AnvilUpdateEvent event) {
+        if (DyeUtils.isDye(event.getRight())) {
+            event.setOutput(event.getLeft().setStackDisplayName(VTUtils.getColorTextFromStack(event.getLeft()) + event.getLeft().getDisplayName()));
+            //TODO make this work popularly
         }
+    }
+
+    @SubscribeEvent
+    public void addItemCaps(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject() instanceof EntityItem) {
+            event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
+        }
+    }
+
+    /**
+     * Enables binoculars functionality
+     *
+     * @param event The FOVUpdateEvent
+     */
+    @SubscribeEvent
+    public void onFOVUpdate(FOVUpdateEvent event) {
+        if (event.getEntity() != null) {
+            if (event.getEntity() instanceof EntityPlayer) {
+                ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+                if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
+                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+                if (vt.baubles) if (BaubleTools.hasProbeGoggle(event.getEntity()))
+                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+            }
+        }
+    }
+
+    /**
+     * Prevents potion effects from shifting your inventory to the side.
+     *
+     * @param event The PotionShiftEvent
+     */
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
+        event.setCanceled(true);
     }
 }

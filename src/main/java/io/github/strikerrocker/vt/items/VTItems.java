@@ -26,13 +26,11 @@ public class VTItems
     public static Item bb;
     private static final ItemBase lens = new ItemBase("lens");
 
-    public static void init()
-    {
+    public static void init() {
         if (vt.baubles) bb = BaubleTools.initBinocularBauble();
     }
 
-    public static void register(IForgeRegistry<Item> registry)
-    {
+    public static void register(IForgeRegistry<Item> registry) {
         registry.register(pad);
         registry.register(binocular);
         registry.register(fried_egg);
@@ -43,8 +41,7 @@ public class VTItems
             registry.register(bb);
     }
 
-    public static void registerModels()
-    {
+    public static void registerModels() {
         binocular.registerItemModel();
         pad.registerItemModel();
         fried_egg.registerItemModel();

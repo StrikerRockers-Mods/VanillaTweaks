@@ -21,8 +21,7 @@ public abstract class VTEnchantmentBase extends Enchantment
      */
     public static List<VTEnchantmentBase> vtEnchantments = Lists.newArrayList();
 
-    VTEnchantmentBase(String name, Enchantment.Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot... slots)
-    {
+    VTEnchantmentBase(String name, Enchantment.Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot... slots) {
         super(rarityIn, typeIn, slots);
         this.setName(name);
         vtEnchantments.add(this);
@@ -34,20 +33,17 @@ public abstract class VTEnchantmentBase extends Enchantment
      * @param itemstack The ItemStack to check
      * @return The enchantment level of this enchantment on the ItemStack
      */
-    int getEnchantmentLevel(ItemStack itemstack)
-    {
+    int getEnchantmentLevel(ItemStack itemstack) {
         return EnchantmentHelper.getEnchantmentLevel(this, itemstack);
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel)
-    {
+    public int getMinEnchantability(int enchantmentLevel) {
         return getMinimumEnchantability(enchantmentLevel);
     }
 
     @Override
-    public int getMaxEnchantability(int enchantmentLevel)
-    {
+    public int getMaxEnchantability(int enchantmentLevel) {
         return getMaximumEnchantability(enchantmentLevel);
     }
 

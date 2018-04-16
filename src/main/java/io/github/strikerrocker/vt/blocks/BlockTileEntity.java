@@ -13,22 +13,19 @@ import javax.annotation.Nullable;
 public abstract class BlockTileEntity<TE extends TileEntity> extends BlockBase
 {
 
-    protected BlockTileEntity(Material material, String name, MapColor mapColor)
-    {
+    protected BlockTileEntity(Material material, String name, MapColor mapColor) {
         super(material, name, mapColor);
     }
 
     public abstract Class<TE> getTileEntityClass();
 
     @SuppressWarnings("unchecked")
-    protected TE getTileEntity(IBlockAccess world, BlockPos pos)
-    {
+    protected TE getTileEntity(IBlockAccess world, BlockPos pos) {
         return (TE) world.getTileEntity(pos);
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state)
-    {
+    public boolean hasTileEntity(IBlockState state) {
         return true;
     }
 

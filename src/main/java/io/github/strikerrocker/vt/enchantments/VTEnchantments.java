@@ -27,8 +27,7 @@ public final class VTEnchantments
      * Registers the enchantments for VanillaTweaks
      */
 
-    public static void init(IForgeRegistry<Enchantment> registry)
-    {
+    public static void init(IForgeRegistry<Enchantment> registry) {
         if (vigor)
             registry.register(Vigor);
         if (nimble)
@@ -51,8 +50,7 @@ public final class VTEnchantments
      * @param enchantmentName The name of the enchantment
      * @return The enchantment with the specified name
      */
-    private static Optional<VTEnchantmentBase> getByName(String enchantmentName)
-    {
+    private static Optional<VTEnchantmentBase> getByName(String enchantmentName) {
         return VTEnchantmentBase.vtEnchantments.stream().filter(enchantment -> enchantment.getName().replaceFirst("enchantment\\.", "").equals(enchantmentName)).findFirst();
     }
 
@@ -63,8 +61,7 @@ public final class VTEnchantments
      * @param entity          The entity to go along with the enchantment
      * @param baseEvent       The event to go along with the enchantment
      */
-    public static void performAction(String enchantmentName, Entity entity, Event baseEvent)
-    {
+    public static void performAction(String enchantmentName, Entity entity, Event baseEvent) {
         Optional<VTEnchantmentBase> vtEnchantment = getByName(enchantmentName);
         vtEnchantment.ifPresent(vtEnchantmentBase -> vtEnchantmentBase.performAction(entity, baseEvent));
     }

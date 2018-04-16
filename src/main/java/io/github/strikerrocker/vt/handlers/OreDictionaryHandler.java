@@ -7,10 +7,8 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class OreDictionaryHandler
 {
-    public static void init()
-    {
-        for (int i = 0; i < 16; i++)
-        {
+    public static void init() {
+        for (int i = 0; i < 16; i++) {
             OreDictionary.registerOre("wool", new ItemStack(Blocks.WOOL, 1, i));
         }
         OreDictionary.registerOre("egg", VTItems.fried_egg);

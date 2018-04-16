@@ -32,36 +32,29 @@ public class EntityDynamite extends EntityThrowable
     private static final DataParameter<Integer> TICKSSINCEWET = EntityDataManager.createKey(EntityDynamite.class, DataSerializers.VARINT);
 
     @SuppressWarnings("unused")
-    public EntityDynamite(World world)
-    {
+    public EntityDynamite(World world) {
         super(world);
     }
 
-    public EntityDynamite(World world, double x, double y, double z)
-    {
+    public EntityDynamite(World world, double x, double y, double z) {
         super(world, x, y, z);
     }
 
-    public EntityDynamite(World world, EntityLivingBase entityLivingBase)
-    {
+    public EntityDynamite(World world, EntityLivingBase entityLivingBase) {
         super(world, entityLivingBase);
     }
 
     @Override
-    protected void entityInit()
-    {
+    protected void entityInit() {
         this.dataManager.register(TICKSWET, 0);
         this.dataManager.register(TICKSSINCEWET, WET_TICKS);
     }
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         super.onUpdate();
-        if (!this.world.isRemote)
-        {
-            if (this.isWet())
-            {
+        if (!this.world.isRemote) {
+            if (this.isWet()) {
                 this.setTicksWet(this.getTicksWet() + 1);
             } else
                 this.setTicksWet(0);
@@ -69,13 +62,11 @@ public class EntityDynamite extends EntityThrowable
                 this.setTicksSinceWet(this.getTicksSinceWet() + 1);
             else
                 this.setTicksSinceWet(0);
-        } else
-        {
+        } else {
             this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
         }
         if (this.getTicksSinceWet() < WET_TICKS && !this.isInWater())
-            for (int i = 0; i < 3; ++i)
-            {
+            for (int i = 0; i < 3; ++i) {
                 float xOffset = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
                 float zOffset = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
                 this.world.spawnParticle(EnumParticleTypes.DRIP_WATER, this.posX + xOffset, this.posY, this.posZ + zOffset, this.motionX, this.motionY, this.motionZ);
@@ -84,16 +75,13 @@ public class EntityDynamite extends EntityThrowable
     }
 
     @Override
-    protected void onImpact(RayTraceResult result)
-    {
+    protected void onImpact(RayTraceResult result) {
         World world = this.world;
         if (!world.isRemote)
-            if (this.getTicksSinceWet() < WET_TICKS)
-            {
+            if (this.getTicksSinceWet() < WET_TICKS) {
                 if (isNotCreativeThrower())
                     this.dropItem(VTItems.dynamite, 1);
-            } else
-            {
+            } else {
                 if (result.entityHit instanceof EntityDynamite)
                     return;
                 else
@@ -107,8 +95,7 @@ public class EntityDynamite extends EntityThrowable
      *
      * @return The number of ticks wet
      */
-    private int getTicksWet()
-    {
+    private int getTicksWet() {
         return this.dataManager.get(TICKSWET);
     }
 
@@ -117,8 +104,7 @@ public class EntityDynamite extends EntityThrowable
      *
      * @param ticksWet The number of ticks wet
      */
-    private void setTicksWet(int ticksWet)
-    {
+    private void setTicksWet(int ticksWet) {
         this.dataManager.set(TICKSWET, ticksWet);
     }
 
@@ -127,8 +113,7 @@ public class EntityDynamite extends EntityThrowable
      *
      * @return The number of ticks since wet
      */
-    private int getTicksSinceWet()
-    {
+    private int getTicksSinceWet() {
         return this.dataManager.get(TICKSSINCEWET);
     }
 
@@ -137,8 +122,7 @@ public class EntityDynamite extends EntityThrowable
      *
      * @param ticksSinceWet The number of ticks since wet
      */
-    private void setTicksSinceWet(int ticksSinceWet)
-    {
+    private void setTicksSinceWet(int ticksSinceWet) {
         this.dataManager.set(TICKSSINCEWET, ticksSinceWet);
     }
 
@@ -147,8 +131,7 @@ public class EntityDynamite extends EntityThrowable
      *
      * @return If this dynamite's thrower is in creative mode
      */
-    private boolean isNotCreativeThrower()
-    {
+    private boolean isNotCreativeThrower() {
         EntityLivingBase thrower = this.getThrower();
         return !(thrower instanceof EntityPlayer) || ((EntityPlayer) thrower).capabilities.isCreativeMode;
     }

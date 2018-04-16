@@ -9,8 +9,7 @@ import net.minecraft.world.World;
 public class BlockCharcoal extends BlockBase
 {
 
-    public BlockCharcoal(String name)
-    {
+    public BlockCharcoal(String name) {
         super(Material.ROCK, name, MapColor.BLACK);
         this.setUnlocalizedName(name);
         this.setHardness(1.0F);
@@ -18,8 +17,7 @@ public class BlockCharcoal extends BlockBase
     }
 
     @Override
-    public boolean isFireSource(World world, BlockPos pos, EnumFacing side)
-    {
+    public boolean isFireSource(World world, BlockPos pos, EnumFacing side) {
         return true;
     }
 
