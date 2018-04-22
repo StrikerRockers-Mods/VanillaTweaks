@@ -10,8 +10,7 @@ import net.minecraftforge.fml.client.config.GuiConfig;
 /**
  * The config GUI for Vanilla Tweaks
  */
-public class GuiVTConfig extends GuiConfig
-{
+public class GuiVTConfig extends GuiConfig {
     @SuppressWarnings("unused")
     public GuiVTConfig() {
         this(null);

@@ -15,12 +15,10 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 
 
-public class TileEntityPedestal extends TileEntity
-{
+public class TileEntityPedestal extends TileEntity {
 
     public long lastChangeTime;
-    public ItemStackHandler inventory = new ItemStackHandler(1)
-    {
+    public ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             if (!world.isRemote) {

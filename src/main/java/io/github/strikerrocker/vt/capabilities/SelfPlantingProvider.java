@@ -6,8 +6,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class SelfPlantingProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>
-{
+public class SelfPlantingProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound> {
     private final SelfPlantingHandler handler = new SelfPlantingHandler();
     private ISelfPlanting instance = CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING.getDefaultInstance();
 

@@ -5,8 +5,7 @@ import net.minecraft.item.ItemFood;
 
 import static io.github.strikerrocker.vt.vt.proxy;
 
-public class ItemFriedEgg extends ItemFood
-{
+public class ItemFriedEgg extends ItemFood {
     public ItemFriedEgg() {
         super(3, 0.6f, false);
         setUnlocalizedName("friedegg");

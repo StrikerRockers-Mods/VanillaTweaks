@@ -17,8 +17,7 @@ import static io.github.strikerrocker.vt.vt.logInfo;
  * The config handler for VanillaTweaks
  */
 @Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
-public class VTConfigHandler
-{
+public class VTConfigHandler {
     /**
      * The actual configuration containing the configuration file
      */

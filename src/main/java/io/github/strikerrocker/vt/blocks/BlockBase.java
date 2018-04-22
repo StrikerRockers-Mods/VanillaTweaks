@@ -8,8 +8,7 @@ import net.minecraft.item.ItemBlock;
 
 import static io.github.strikerrocker.vt.vt.proxy;
 
-class BlockBase extends Block
-{
+class BlockBase extends Block {
 
     String name;
 

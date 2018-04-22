@@ -10,8 +10,7 @@ import net.minecraftforge.common.crafting.JsonContext;
 
 import java.util.function.BooleanSupplier;
 
-public class VTConditionFactory implements IConditionFactory
-{
+public class VTConditionFactory implements IConditionFactory {
 
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {

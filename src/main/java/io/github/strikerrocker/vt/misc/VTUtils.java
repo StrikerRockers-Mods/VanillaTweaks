@@ -3,6 +3,7 @@ package io.github.strikerrocker.vt.misc;
 import io.github.strikerrocker.vt.vt;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -26,8 +27,7 @@ import java.util.List;
  * Contains some utility functions used by Vanilla Tweaks
  */
 @SuppressWarnings("unchecked")
-public class VTUtils
-{
+public class VTUtils {
     /**
      * Prevents VTUtils from being instantiated
      */
@@ -103,7 +103,44 @@ public class VTUtils
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, dispenserBehavior);
     }
 
-    public static TextFormatting getFormatForStack(ItemStack stack) {
-        return DyeUtils.colorFromStack(stack).map(dye -> TextFormatting.fromColorIndex(dye.getMetadata())).orElse(TextFormatting.RESET);
+    public static TextFormatting getColorTextFromStack(ItemStack stack) {
+        {
+            if (DyeUtils.isDye(stack)) {
+                if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 0))) {
+                    return TextFormatting.BLACK;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 1))) {
+                    return TextFormatting.DARK_RED;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 2))) {
+                    return TextFormatting.DARK_GREEN;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 3))) {
+                    return TextFormatting.GOLD;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 4))) {
+                    return TextFormatting.DARK_BLUE;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 5))) {
+                    return TextFormatting.DARK_PURPLE;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 6))) {
+                    return TextFormatting.DARK_AQUA;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 7))) {
+                    return TextFormatting.GRAY;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 8))) {
+                    return TextFormatting.DARK_GRAY;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 9))) {
+                    return TextFormatting.LIGHT_PURPLE;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 10))) {
+                    return TextFormatting.GREEN;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 11))) {
+                    return TextFormatting.YELLOW;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 12))) {
+                    return TextFormatting.BLUE;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 13))) {
+                    return TextFormatting.AQUA;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 14))) {
+                    return TextFormatting.GOLD;
+                } else if (stack.isItemEqual(new ItemStack(Items.DYE, 1, 15))) {
+                    return TextFormatting.WHITE;
+                }
+            }
+        }
+        return TextFormatting.WHITE;
     }
 }

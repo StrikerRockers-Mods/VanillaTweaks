@@ -9,8 +9,7 @@ import net.minecraft.world.World;
 /**
  * The container for the crafting pad
  */
-public class ContainerCraftingPad extends ContainerWorkbench
-{
+public class ContainerCraftingPad extends ContainerWorkbench {
     public ContainerCraftingPad(InventoryPlayer inventoryPlayer, World world) {
         super(inventoryPlayer, world, BlockPos.ORIGIN);
     }

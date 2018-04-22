@@ -8,8 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 
-public class BaubleTools
-{
+public class BaubleTools {
     public static boolean hasProbeGoggle(EntityPlayer player) {
         if (Loader.isModLoaded("baubles")) {
             IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);

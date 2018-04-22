@@ -11,8 +11,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 /**
  * Contains, initializes, and registers all of Craft++'s blocks
  */
-public class VTBlocks
-{
+public class VTBlocks {
 
     public static final BlockCharcoal charcoal = new BlockCharcoal("charcoalblock");
     public static final BlockPedestal pedestal = new BlockPedestal();

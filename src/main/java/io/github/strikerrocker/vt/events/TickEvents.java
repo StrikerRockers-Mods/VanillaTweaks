@@ -27,8 +27,7 @@ import java.util.Deque;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
-public class TickEvents
-{
+public class TickEvents {
 
     /**
      * Allows thrown seeds to plant themselves in farmland, and gives the Homing enchantment functionality

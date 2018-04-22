@@ -13,8 +13,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
  * The common (dual-side) proxy for Vanilla Tweaks
  */
 
-public class VTCommonProxy
-{
+public class VTCommonProxy {
 
     public void registerItemRenderer(Item item, int meta, String id) {
     }

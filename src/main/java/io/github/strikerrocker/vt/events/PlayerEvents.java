@@ -35,8 +35,7 @@ import static io.github.strikerrocker.vt.events.VTEventHandler.swapSlot;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
 
 @Mod.EventBusSubscriber
-public class PlayerEvents
-{
+public class PlayerEvents {
     /**
      * Swaps the players armour with armor stand's armour
      *
@@ -60,12 +59,13 @@ public class PlayerEvents
     }
 
     /**
-     * Allows the player to edit and clear signs
-     *
      * @param event The RightClickBlockEvent
      */
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        /*
+         *Allows the player to edit and clear signs
+         */
         boolean success = false;
         TileEntity te = event.getWorld().getTileEntity(event.getPos());
         if (te instanceof TileEntitySign) {
@@ -83,15 +83,45 @@ public class PlayerEvents
             event.setCanceled(true);
             event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
         }
+        /*
+         *Allows the sitting on slab's and stair's.
+         */
+        if (!event.getWorld().isRemote && stairSit) {
+            World w = event.getWorld();
+            BlockPos p = event.getPos();
+            IBlockState s = w.getBlockState(p);
+            Block b = w.getBlockState(p).getBlock();
+            EntityPlayer e = event.getEntityPlayer();
+
+            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && e.getHeldItemMainhand() == ItemStack.EMPTY) {
+                if (b instanceof BlockSlab && s.getValue(BlockSlab.HALF) != BlockSlab.EnumBlockHalf.BOTTOM)
+                    return;
+                else if (b instanceof BlockStairs && s.getValue(BlockStairs.HALF) != BlockStairs.EnumHalf.BOTTOM)
+                    return;
+
+                EntitySitting sit = new EntitySitting(w, p);
+
+                w.spawnEntity(sit);
+                e.startRiding(sit);
+            }
+        }
     }
 
     /**
-     * Allows a player to shear name tags off living entities
-     *
      * @param event The EntityInteractEvent
      */
     @SubscribeEvent
-    public static void entityRightClick(PlayerInteractEvent.EntityInteract event) {
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        /*
+          Makes is so that you shift click item frame to reverse it
+         */
+        if (event.getTarget() instanceof EntityItemFrame && event.getEntityPlayer().isSneaking()) {
+            EntityItemFrame frame = (EntityItemFrame) event.getTarget();
+            frame.setItemRotation(frame.getRotation() - 2);
+        }
+        /*
+          Allows a player to shear name tags off living entities
+         */
         if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty()) {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack heldItem = player.getHeldItemMainhand();
@@ -121,35 +151,6 @@ public class PlayerEvents
     }
 
     /**
-     * Allows the sitting functionality
-     *
-     * @param event The RightClickBlockEvent
-     */
-
-    @SubscribeEvent
-    public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
-        if (!event.getWorld().isRemote && stairSit) {
-            World w = event.getWorld();
-            BlockPos p = event.getPos();
-            IBlockState s = w.getBlockState(p);
-            Block b = w.getBlockState(p).getBlock();
-            EntityPlayer e = event.getEntityPlayer();
-
-            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && e.getHeldItemMainhand() == ItemStack.EMPTY) {
-                if (b instanceof BlockSlab && s.getValue(BlockSlab.HALF) != BlockSlab.EnumBlockHalf.BOTTOM)
-                    return;
-                else if (b instanceof BlockStairs && s.getValue(BlockStairs.HALF) != BlockStairs.EnumHalf.BOTTOM)
-                    return;
-
-                EntitySitting sit = new EntitySitting(w, p);
-
-                w.spawnEntity(sit);
-                e.startRiding(sit);
-            }
-        }
-    }
-
-    /**
      * Unlocks all the recipes
      *
      * @param event PlayerLoggedIn evemt
@@ -157,18 +158,5 @@ public class PlayerEvents
     @SubscribeEvent
     public static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         event.player.unlockRecipes(Lists.newArrayList(CraftingManager.REGISTRY));
-    }
-
-    /**
-     * Makes is so that you shift click item frame to reverse it
-     *
-     * @param event EntityInteractSpecific event
-     */
-    @SubscribeEvent
-    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (event.getTarget() instanceof EntityItemFrame && event.getEntityPlayer().isSneaking()) {
-            EntityItemFrame frame = (EntityItemFrame) event.getTarget();
-            frame.setItemRotation(frame.getRotation() - 2);
-        }
     }
 }

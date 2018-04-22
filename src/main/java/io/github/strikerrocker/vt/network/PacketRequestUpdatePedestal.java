@@ -9,8 +9,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketRequestUpdatePedestal implements IMessage
-{
+public class PacketRequestUpdatePedestal implements IMessage {
 
     private BlockPos pos;
     private int dimension;
@@ -39,8 +38,7 @@ public class PacketRequestUpdatePedestal implements IMessage
         dimension = buf.readInt();
     }
 
-    public static class Handler implements IMessageHandler<PacketRequestUpdatePedestal, PacketUpdatePedestal>
-    {
+    public static class Handler implements IMessageHandler<PacketRequestUpdatePedestal, PacketUpdatePedestal> {
 
         @Override
         public PacketUpdatePedestal onMessage(PacketRequestUpdatePedestal message, MessageContext ctx) {

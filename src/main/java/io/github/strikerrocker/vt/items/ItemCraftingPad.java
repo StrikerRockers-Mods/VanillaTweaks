@@ -16,8 +16,7 @@ import static io.github.strikerrocker.vt.vt.proxy;
 /**
  * A portable crafting pad that allows you to craft items on the go
  */
-public class ItemCraftingPad extends ItemBase
-{
+public class ItemCraftingPad extends ItemBase {
 
     private final String name;
 

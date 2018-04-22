@@ -15,8 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
-public class VTRegistrationHandler
-{
+public class VTRegistrationHandler {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {

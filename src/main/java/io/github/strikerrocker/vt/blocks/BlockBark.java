@@ -8,8 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockBark extends BlockBase
-{
+public class BlockBark extends BlockBase {
 
     public BlockBark(String name, MapColor mapColor) {
         super(Material.WOOD, name, mapColor);

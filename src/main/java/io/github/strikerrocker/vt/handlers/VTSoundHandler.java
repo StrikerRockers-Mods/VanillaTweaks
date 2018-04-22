@@ -9,8 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
-public class VTSoundHandler
-{
+public class VTSoundHandler {
     // LOWEST Priority so that everything else can do their thing if they need to first
     @SubscribeEvent(priority = EventPriority.LOWEST)
     @SideOnly(Side.CLIENT)

@@ -13,8 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 /**
  * Contains, initializes, and registers all of VanillaTweaks's items
  */
-public class VTItems
-{
+public class VTItems {
 
     private static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 

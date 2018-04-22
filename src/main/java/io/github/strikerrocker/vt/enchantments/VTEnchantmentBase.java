@@ -14,8 +14,7 @@ import java.util.List;
 /**
  * Base class for all of VanillaTweaks's enchantments
  */
-public abstract class VTEnchantmentBase extends Enchantment
-{
+public abstract class VTEnchantmentBase extends Enchantment {
     /**
      * A list of all of VanillaTweaks's enchantments
      */

@@ -10,8 +10,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public abstract class BlockTileEntity<TE extends TileEntity> extends BlockBase
-{
+public abstract class BlockTileEntity<TE extends TileEntity> extends BlockBase {
 
     protected BlockTileEntity(Material material, String name, MapColor mapColor) {
         super(material, name, mapColor);
