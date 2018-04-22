@@ -103,13 +103,20 @@ public class VTEventHandler {
      */
     @SubscribeEvent
     public static void onAnvil(AnvilUpdateEvent event) {
-        if (DyeUtils.isDye(event.getRight())) {
+        //TODO Fix this
+        if (DyeUtils.isDye(event.getRight()) && false) {
             ItemStack stack = event.getLeft().copy();
-            event.setOutput(stack.setStackDisplayName(VTUtils.getColorTextFromStack(event.getRight()) + stack.getDisplayName()));
-            event.setCost(0);
+            stack.setStackDisplayName(VTUtils.getColorTextFromStack(event.getRight()) + event.getLeft().getDisplayName());
+            event.setOutput(stack);
+            event.setMaterialCost(1);
         }
     }
 
+    /**
+     * Attach the self planting capability
+     *
+     * @param event AttachCapabilityEvent
+     */
     @SubscribeEvent
     public static void attachCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityItem) {
