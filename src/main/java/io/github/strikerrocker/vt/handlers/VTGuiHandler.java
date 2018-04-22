@@ -15,8 +15,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
  * The GUI handler for Vanilla Tweaks
  */
 
-public class VTGuiHandler implements IGuiHandler
-{
+public class VTGuiHandler implements IGuiHandler {
 
     public static final int PEDESTAL = 1;
     private static final int PAD = 0;

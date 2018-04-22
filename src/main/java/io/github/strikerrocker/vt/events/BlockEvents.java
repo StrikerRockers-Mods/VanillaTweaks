@@ -31,33 +31,16 @@ import static io.github.strikerrocker.vt.handlers.VTConfigHandler.hoeAsSickle;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.spongeDryInNether;
 
 @Mod.EventBusSubscriber
-public class BlockEvents
-{
+public class BlockEvents {
     /**
-     * Allows the End Portal Frame to be broken
-     *
-     * @param event The BreakEvent
-     */
-    @SubscribeEvent
-    public static void onPortalBreak(BlockEvent.BreakEvent event) {
-        World world = event.getWorld();
-        BlockPos blockPos = event.getPos();
-        if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME && VTConfigHandler.endFrameBroken) {
-            ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
-            EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);
-            portalEntityItem.setDefaultPickupDelay();
-            world.spawnEntity(portalEntityItem);
-        }
-    }
-
-    /**
-     * may return someday if Mojang adjusts for proper placing of spawners
-     * Enables mob spawners to drop themselves when harvested with silk touch
-     *
      * @param event The (Block) BreakEvent
      */
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        /*
+        may return someday if Mojang adjusts for proper placing of spawners
+        Enables mob spawners to drop themselves when harvested with silk touch
+         */
         EntityPlayer player = event.getPlayer();
         if (VTConfigHandler.mobSpawnerSilkTouchDrop && !player.capabilities.isCreativeMode && event.getState().getBlock() == Blocks.MOB_SPAWNER && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) != 0 && player.canHarvestBlock(Blocks.MOB_SPAWNER.getDefaultState())) {
             World world = event.getWorld();
@@ -77,20 +60,22 @@ public class BlockEvents
             world.spawnEntity(spawnerEntityItem);
             event.setExpToDrop(0);
         }
-    }
-
-    /**
-     * Makes Hoe act as Sickle
-     *
-     * @param event BreakEvent
-     */
-
-    @SubscribeEvent
-    public static void onBlockBroken(BlockEvent.BreakEvent event) {
+        /*
+        Allows the End Portal Frame to be broken
+         */
+        World world = event.getWorld();
+        BlockPos blockPos = event.getPos();
+        if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME && VTConfigHandler.endFrameBroken) {
+            ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
+            EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);
+            portalEntityItem.setDefaultPickupDelay();
+            world.spawnEntity(portalEntityItem);
+        }
+        /*
+        Makes Hoe act as Sickle
+         */
         ItemStack stack = event.getPlayer().getHeldItemMainhand();
         if (!stack.isEmpty() && stack.getItem() instanceof ItemHoe && canHarvest(event.getState()) && hoeAsSickle) {
-            World world = event.getWorld();
-            EntityPlayer player = event.getPlayer();
             BlockPos basePos = event.getPos();
 
             int range = 1;
@@ -115,15 +100,9 @@ public class BlockEvents
 
             stack.damageItem(1, player);
         }
-    }
-
-    /**
-     * Removes the siiting function
-     *
-     * @param event BreakEvent
-     */
-    @SubscribeEvent
-    public static void onBreak(BlockEvent.BreakEvent event) {
+        /*
+        Removes the siiting function
+         */
         if (EntitySitting.OCCUPIED.containsKey(event.getPos())) {
             EntitySitting.OCCUPIED.get(event.getPos()).setDead();
             EntitySitting.OCCUPIED.remove(event.getPos());

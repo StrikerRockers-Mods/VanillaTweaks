@@ -8,8 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.NETHER_LAVA;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.NETHER_LAVA2;
 
-public class NetherPocketer
-{
+public class NetherPocketer {
     @SubscribeEvent
     public void onPopulateChunk(PopulateChunkEvent.Populate event) {
         if ((VTConfigHandler.noMoreLavaPocketGen) && event.getType() == NETHER_LAVA) {

@@ -12,8 +12,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class EntityTntImproved extends EntityTNTPrimed
-{
+public class EntityTntImproved extends EntityTNTPrimed {
     @SuppressWarnings("unused")
     public EntityTntImproved(World worldIn) {
         super(worldIn);

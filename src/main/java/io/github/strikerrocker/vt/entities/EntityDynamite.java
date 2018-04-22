@@ -14,8 +14,7 @@ import net.minecraft.world.World;
 /**
  * Dynamite entity to go along-side dynamite item
  */
-public class EntityDynamite extends EntityThrowable
-{
+public class EntityDynamite extends EntityThrowable {
     /**
      * Number of ticks required for this dynamite to dry off
      */

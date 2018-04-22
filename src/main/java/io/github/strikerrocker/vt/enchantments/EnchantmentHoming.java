@@ -16,8 +16,7 @@ import java.util.List;
  * Makes arrows shot out of bows track down their targets
  */
 @EntityTickingEnchantment
-public class EnchantmentHoming extends VTEnchantmentBase
-{
+public class EnchantmentHoming extends VTEnchantmentBase {
     public EnchantmentHoming() {
         super("homing", Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.BOW, EntityEquipmentSlot.MAINHAND);
         this.setRegistryName("homing");

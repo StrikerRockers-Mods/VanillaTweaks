@@ -13,8 +13,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.Random;
 
-public class SelfPlantingHandler implements ISelfPlanting, INBTSerializable<NBTTagCompound>
-{
+public class SelfPlantingHandler implements ISelfPlanting, INBTSerializable<NBTTagCompound> {
     public static final String MINSTEADYTICKS_KEY = "MinSteadyTicks";
     public static final String STEADYTICKS_KEY = "SteadyTicks";
     private static Random random = new Random();

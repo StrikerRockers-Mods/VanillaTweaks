@@ -12,8 +12,7 @@ import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
 /**
  * Initializes VanillaTweaks's enchantments
  */
-public final class VTEnchantments
-{
+public final class VTEnchantments {
 
     public static final Enchantment Vigor = new EnchantmentVigor();
     public static final Enchantment Nimble = new EnchantmentNimble();

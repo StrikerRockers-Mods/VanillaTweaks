@@ -7,14 +7,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
-public class CapabilitySelfPlanting
-{
+public class CapabilitySelfPlanting {
     @CapabilityInject(ISelfPlanting.class)
     public static Capability<ISelfPlanting> CAPABILITY_SELF_PLANTING = null;
 
     public static void register() {
-        CapabilityManager.INSTANCE.register(ISelfPlanting.class, new Capability.IStorage<ISelfPlanting>()
-        {
+        CapabilityManager.INSTANCE.register(ISelfPlanting.class, new Capability.IStorage<ISelfPlanting>() {
             @Override
             public NBTBase writeNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, EnumFacing side) {
                 NBTTagCompound compound = new NBTTagCompound();

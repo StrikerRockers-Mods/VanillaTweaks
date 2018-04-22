@@ -8,8 +8,7 @@ import net.minecraft.item.ItemStack;
 
 import static io.github.strikerrocker.vt.vt.proxy;
 
-public class BinocularBauble extends Item implements IBauble
-{
+public class BinocularBauble extends Item implements IBauble {
     public BinocularBauble() {
         this.setUnlocalizedName("binocular_bauble");
         this.setRegistryName("binocular_bauble");

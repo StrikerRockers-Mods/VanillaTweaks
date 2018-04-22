@@ -11,8 +11,7 @@ import java.util.Set;
 
 @SuppressWarnings("unused")
 @SideOnly(Side.CLIENT)
-public class VTGuiFactory implements IModGuiFactory
-{
+public class VTGuiFactory implements IModGuiFactory {
     @Override
     public void initialize(Minecraft minecraft) {
     }

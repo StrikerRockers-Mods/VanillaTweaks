@@ -4,8 +4,7 @@ import net.minecraft.item.Item;
 
 import static io.github.strikerrocker.vt.vt.proxy;
 
-class ItemBase extends Item
-{
+class ItemBase extends Item {
 
     String name;
 

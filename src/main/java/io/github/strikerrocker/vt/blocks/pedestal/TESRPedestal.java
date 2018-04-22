@@ -11,8 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.opengl.GL11;
 
-public class TESRPedestal extends TileEntitySpecialRenderer<TileEntityPedestal>
-{
+public class TESRPedestal extends TileEntitySpecialRenderer<TileEntityPedestal> {
 
     @Override
     public void render(TileEntityPedestal te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

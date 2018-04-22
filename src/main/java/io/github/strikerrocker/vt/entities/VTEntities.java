@@ -8,8 +8,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 /**
  * Registers Vanilla Tweaks's entities
  */
-public class VTEntities
-{
+public class VTEntities {
 
     public static void init() {
         EntityRegistry.registerModEntity(new ResourceLocation(vtModInfo.MOD_ID, "dynamite"), EntityDynamite.class, vtModInfo.MOD_ID + ".dynamite", 0, vt.instance, 64, 1, false);

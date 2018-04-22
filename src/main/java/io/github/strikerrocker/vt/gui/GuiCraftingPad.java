@@ -11,8 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class GuiCraftingPad extends GuiContainer
-{
+public class GuiCraftingPad extends GuiContainer {
     private static final ResourceLocation craftingTableGuiTexture = new ResourceLocation("textures/gui/container/crafting_table.png");
 
     public GuiCraftingPad(InventoryPlayer inventoryPlayer, World world) {

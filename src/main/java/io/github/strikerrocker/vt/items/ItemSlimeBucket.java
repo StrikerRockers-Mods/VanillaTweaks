@@ -15,8 +15,7 @@ import static io.github.strikerrocker.vt.events.VTEventHandler.isSlimeChunk;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.slimeChunkFinder;
 import static net.minecraft.util.text.TextFormatting.AQUA;
 
-public class ItemSlimeBucket extends ItemBase
-{
+public class ItemSlimeBucket extends ItemBase {
 
     public ItemSlimeBucket(String name) {
         super(name);

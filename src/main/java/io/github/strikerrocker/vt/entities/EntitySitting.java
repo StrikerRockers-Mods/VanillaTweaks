@@ -7,8 +7,7 @@ import net.minecraft.world.World;
 
 import java.util.HashMap;
 
-public class EntitySitting extends Entity
-{
+public class EntitySitting extends Entity {
     public static final HashMap<BlockPos, EntitySitting> OCCUPIED = new HashMap<>();
 
     @SuppressWarnings("unused")

@@ -12,8 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * Draws experience points and item entities toward the wearer
  */
 @EntityTickingEnchantment
-public class EnchantmentVeteran extends VTEnchantmentBase
-{
+public class EnchantmentVeteran extends VTEnchantmentBase {
     public EnchantmentVeteran() {
         super("veteran", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_HEAD, EntityEquipmentSlot.HEAD);
         this.setRegistryName("veteran");

@@ -15,8 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 
 @SideOnly(Side.CLIENT)
-public class VTClientProxy extends VTCommonProxy
-{
+public class VTClientProxy extends VTCommonProxy {
 
     @Override
     public void registerItemRenderer(Item item, int meta, String id) {

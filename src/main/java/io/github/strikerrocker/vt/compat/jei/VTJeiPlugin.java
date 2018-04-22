@@ -15,8 +15,7 @@ import java.util.Arrays;
 import static io.github.strikerrocker.vt.handlers.VTConfigHandler.craftingPad;
 
 @JEIPlugin
-public class VTJeiPlugin implements IModPlugin
-{
+public class VTJeiPlugin implements IModPlugin {
     @Override
     public void register(IModRegistry registry) {
         if (craftingPad) {

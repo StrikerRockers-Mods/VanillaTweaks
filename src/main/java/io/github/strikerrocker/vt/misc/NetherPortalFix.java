@@ -28,8 +28,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nullable;
 
-public class NetherPortalFix
-{
+public class NetherPortalFix {
     private static final int MAX_PORTAL_DISTANCE_SQ = 16;
     private static final String NETHER_PORTAL_FIX = "NetherPortalFix";
     private static final String SCHEDULED_TELEPORT = "NPFScheduledTeleport";

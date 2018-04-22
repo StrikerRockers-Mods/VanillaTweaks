@@ -3,8 +3,7 @@ package io.github.strikerrocker.vt;
 /**
  * The reference class for Vanilla Tweaks
  */
-public final class vtModInfo
-{
+public final class vtModInfo {
     /**
      * Vanilla Tweaks's mod ID
      */

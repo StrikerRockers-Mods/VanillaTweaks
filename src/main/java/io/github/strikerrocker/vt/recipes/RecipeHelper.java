@@ -10,8 +10,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.registries.GameData;
 
-class RecipeHelper
-{
+class RecipeHelper {
 
     /**
      * Adds a basic shaped recipe

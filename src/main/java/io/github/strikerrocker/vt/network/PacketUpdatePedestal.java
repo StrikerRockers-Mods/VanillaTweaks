@@ -10,8 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketUpdatePedestal implements IMessage
-{
+public class PacketUpdatePedestal implements IMessage {
     private BlockPos pos;
     private ItemStack stack;
     private long lastChangeTime;
@@ -43,8 +42,7 @@ public class PacketUpdatePedestal implements IMessage
         lastChangeTime = buf.readLong();
     }
 
-    public static class Handler implements IMessageHandler<PacketUpdatePedestal, IMessage>
-    {
+    public static class Handler implements IMessageHandler<PacketUpdatePedestal, IMessage> {
 
         @Override
         public IMessage onMessage(PacketUpdatePedestal message, MessageContext ctx) {

@@ -15,8 +15,7 @@ import net.minecraft.world.World;
 /**
  * Dynamite item to go along-side dynamite entity
  */
-public class ItemDynamite extends ItemBase
-{
+public class ItemDynamite extends ItemBase {
 
     public ItemDynamite(String name) {
         super(name);

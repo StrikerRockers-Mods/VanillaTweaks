@@ -5,8 +5,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import static io.github.strikerrocker.vt.vt.proxy;
 
 
-public class ItemArmor extends net.minecraft.item.ItemArmor
-{
+public class ItemArmor extends net.minecraft.item.ItemArmor {
 
 
     private final String name;
@@ -16,6 +15,7 @@ public class ItemArmor extends net.minecraft.item.ItemArmor
         setRegistryName(name);
         setUnlocalizedName(name);
         this.name = name;
+        setMaxStackSize(1);
     }
 
     public void registerItemModel() {

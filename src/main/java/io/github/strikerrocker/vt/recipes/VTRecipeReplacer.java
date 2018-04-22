@@ -19,8 +19,7 @@ import static io.github.strikerrocker.vt.recipes.RecipeHelper.replaceStairsRecip
 
 
 @Mod.EventBusSubscriber
-public class VTRecipeReplacer
-{
+public class VTRecipeReplacer {
 
     @SubscribeEvent
     public static void removeRecipes(RegistryEvent.Register<IRecipe> event) {

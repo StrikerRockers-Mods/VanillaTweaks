@@ -4,6 +4,7 @@ import io.github.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.items.VTItems;
+import io.github.strikerrocker.vt.misc.VTUtils;
 import io.github.strikerrocker.vt.vt;
 import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
@@ -18,6 +19,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSeedFood;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -32,6 +35,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.DyeUtils;
 
 import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
 
@@ -39,8 +43,7 @@ import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
  * The event handler for Vanilla Tweaks
  */
 @Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
-public class VTEventHandler
-{
+public class VTEventHandler {
     /**
      * Returns if the given chunk is an slime chunk or not
      *
@@ -100,16 +103,20 @@ public class VTEventHandler
      */
     @SubscribeEvent
     public static void onAnvil(AnvilUpdateEvent event) {
-        //if (DyeUtils.isDye(event.getRight())) {
-        //  event.setOutput(event.getLeft().setStackDisplayName(VTUtils.getFormatForStack(event.getLeft()) + event.getLeft().getDisplayName()));
-        //event.setCost(0);
-        //TODO make this work popularly
+        if (DyeUtils.isDye(event.getRight())) {
+            ItemStack stack = event.getLeft().copy();
+            event.setOutput(stack.setStackDisplayName(VTUtils.getColorTextFromStack(event.getRight()) + stack.getDisplayName()));
+            event.setCost(0);
+        }
     }
 
     @SubscribeEvent
-    public static void addItemCaps(AttachCapabilitiesEvent<Entity> event) {
+    public static void attachCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityItem) {
-            event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
+            Item item = ((EntityItem) event.getObject()).getItem().getItem();
+            if (item instanceof ItemSeeds || item instanceof ItemSeedFood) {
+                event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
+            }
         }
     }
 

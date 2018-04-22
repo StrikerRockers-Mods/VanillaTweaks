@@ -11,8 +11,7 @@ import static io.github.strikerrocker.vt.handlers.VTConfigHandler.stackSize;
 /**
  * The vanilla properties changer for Vanilla Tweaks
  */
-public class VTVanillaPropertiesChanger
-{
+public class VTVanillaPropertiesChanger {
     /**
      * Initializes the vanilla properties changer
      */
