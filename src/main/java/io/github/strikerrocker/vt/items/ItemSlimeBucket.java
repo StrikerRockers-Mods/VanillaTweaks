@@ -12,7 +12,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 import static io.github.strikerrocker.vt.events.VTEventHandler.isSlimeChunk;
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.slimeChunkFinder;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.VanillaTweaks.slimeChunkFinder;
 import static net.minecraft.util.text.TextFormatting.AQUA;
 
 public class ItemSlimeBucket extends ItemBase {

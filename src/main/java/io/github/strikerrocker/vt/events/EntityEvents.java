@@ -3,7 +3,6 @@ package io.github.strikerrocker.vt.events;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.entities.EntityTntImproved;
-import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.misc.VTUtils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -38,7 +37,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import static io.github.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.realisticRelationship;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.Drops.*;
 
 @Mod.EventBusSubscriber
 public class EntityEvents {
@@ -105,7 +104,7 @@ public class EntityEvents {
         Entity entity = event.getEntity();
         World world = entity.world;
         //New Drops
-        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot") && event.getSource().getTrueSource() instanceof EntityPlayer && VTConfigHandler.nameTag) {
+        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot") && event.getSource().getTrueSource() instanceof EntityPlayer && nameTag) {
             //Living entities drop their name tags
             String entityNameTag = entity.getCustomNameTag();
             if (!entityNameTag.equals("")) {
@@ -114,10 +113,10 @@ public class EntityEvents {
                 entity.entityDropItem(nameTag, 0);
                 entity.setCustomNameTag("");
             }
-            if (entity instanceof EntityBat && VTConfigHandler.batLeatherDropChance > Math.random())
+            if (entity instanceof EntityBat && (batLeatherDropChance / 10) > Math.random())
                 entity.dropItem(Items.LEATHER, 1);
             else if (entity instanceof EntityCreeper) {
-                if (event.getSource().damageType != null && VTConfigHandler.creeperDropTntChance > Math.random()) {
+                if (event.getSource().damageType != null && (creeperDropTntChance / 10) > Math.random()) {
                     event.getDrops().clear();
                     entity.dropItem(Item.getItemFromBlock(Blocks.TNT), 1);
                 }
@@ -152,7 +151,7 @@ public class EntityEvents {
         EntityLivingBase livingEntity = event.getEntityLiving();
         if (!livingEntity.world.isRemote) {
             World world = livingEntity.world;
-            if (((livingEntity instanceof EntityCreeper && VTConfigHandler.creeperBurnInDaylight) || (livingEntity instanceof EntityZombie && livingEntity.isChild() && VTConfigHandler.babyZombieBurnInDaylight)) && world.isDaytime()) {
+            if (((livingEntity instanceof EntityCreeper && creeperBurnInDaylight) || (livingEntity instanceof EntityZombie && livingEntity.isChild() && babyZombieBurnInDaylight)) && world.isDaytime()) {
                 float f = livingEntity.getBrightness();
                 Random random = world.rand;
                 BlockPos blockPos = new BlockPos(livingEntity.posX, Math.round(livingEntity.posY), livingEntity.posZ);

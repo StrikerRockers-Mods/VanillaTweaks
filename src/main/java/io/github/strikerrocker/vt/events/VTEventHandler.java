@@ -4,7 +4,6 @@ import io.github.strikerrocker.vt.VT;
 import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
-import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.items.VTItems;
 import io.github.strikerrocker.vt.misc.VTUtils;
 import net.minecraft.block.Block;
@@ -28,9 +27,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,6 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.DyeUtils;
 
 import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.VanillaTweaks.binocularZoomAmount;
 
 /**
  * The event handler for Vanilla Tweaks
@@ -138,9 +141,9 @@ public class VTEventHandler {
             if (event.getEntity() instanceof EntityPlayer) {
                 ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
-                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+                    event.setNewfov(event.getFov() / binocularZoomAmount);
                 if (VT.baubles) if (BaubleTools.hasProbeGoggle(event.getEntity()))
-                    event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
+                    event.setNewfov(event.getFov() / binocularZoomAmount);
             }
         }
     }
@@ -154,5 +157,12 @@ public class VTEventHandler {
     @SideOnly(Side.CLIENT)
     public static void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
         event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if (VTModInfo.MOD_ID.equals(event.getModID())) {
+            ConfigManager.sync(VTModInfo.MOD_ID, Config.Type.INSTANCE);
+        }
     }
 }

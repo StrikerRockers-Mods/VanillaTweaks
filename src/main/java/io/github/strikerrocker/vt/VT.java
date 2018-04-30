@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import io.github.strikerrocker.vt.handlers.OreDictionaryHandler;
-import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.handlers.VTGuiHandler;
 import io.github.strikerrocker.vt.items.VTItems;
 import io.github.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
@@ -42,7 +41,6 @@ public class VT {
         logger = event.getModLog();
         baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
         if (baubles) logInfo("Baubles Support Enabled");
-        VTConfigHandler.init(event.getSuggestedConfigurationFile());
         VTItems.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         proxy.registerRenderer();
