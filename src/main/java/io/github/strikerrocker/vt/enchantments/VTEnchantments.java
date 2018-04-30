@@ -7,7 +7,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Optional;
 
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.Enchantments.*;
 
 /**
  * Initializes VanillaTweaks's enchantments

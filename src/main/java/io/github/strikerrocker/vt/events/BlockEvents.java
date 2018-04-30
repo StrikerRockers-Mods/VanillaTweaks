@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
-import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSponge;
 import net.minecraft.block.state.IBlockState;
@@ -27,8 +26,8 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static io.github.strikerrocker.vt.events.VTEventHandler.canHarvest;
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.hoeAsSickle;
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.spongeDryInNether;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.Drops.*;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious.endFrameBroken;
 
 @Mod.EventBusSubscriber
 public class BlockEvents {
@@ -42,7 +41,7 @@ public class BlockEvents {
         Enables mob spawners to drop themselves when harvested with silk touch
          */
         EntityPlayer player = event.getPlayer();
-        if (VTConfigHandler.mobSpawnerSilkTouchDrop && !player.capabilities.isCreativeMode && event.getState().getBlock() == Blocks.MOB_SPAWNER && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) != 0 && player.canHarvestBlock(Blocks.MOB_SPAWNER.getDefaultState())) {
+        if (mobSpawnerSilkTouchDrop && !player.capabilities.isCreativeMode && event.getState().getBlock() == Blocks.MOB_SPAWNER && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) != 0 && player.canHarvestBlock(Blocks.MOB_SPAWNER.getDefaultState())) {
             World world = event.getWorld();
             BlockPos blockPos = event.getPos();
             TileEntityMobSpawner spawnerTileEntity = (TileEntityMobSpawner) world.getTileEntity(blockPos);
@@ -64,7 +63,7 @@ public class BlockEvents {
          */
         World world = event.getWorld();
         BlockPos blockPos = event.getPos();
-        if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME && VTConfigHandler.endFrameBroken) {
+        if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME && endFrameBroken) {
             ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
             EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);
             portalEntityItem.setDefaultPickupDelay();

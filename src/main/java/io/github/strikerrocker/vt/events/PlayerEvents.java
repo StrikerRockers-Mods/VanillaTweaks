@@ -32,7 +32,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import static io.github.strikerrocker.vt.events.VTEventHandler.swapSlot;
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.*;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious.*;
 
 @Mod.EventBusSubscriber
 public class PlayerEvents {

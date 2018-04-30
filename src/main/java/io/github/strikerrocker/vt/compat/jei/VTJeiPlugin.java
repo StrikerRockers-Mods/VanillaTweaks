@@ -12,7 +12,8 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Arrays;
 
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.craftingPad;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious_Restart.barks;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.VanillaTweaks.craftingPad;
 
 @JEIPlugin
 public class VTJeiPlugin implements IModPlugin {
@@ -23,17 +24,19 @@ public class VTJeiPlugin implements IModPlugin {
             IRecipeTransferRegistry transfer = registry.getRecipeTransferRegistry();
             transfer.addRecipeTransferHandler(ContainerCraftingPad.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
         }
-        registry.addIngredientInfo(Arrays.asList(
+        if (barks) {
+            registry.addIngredientInfo(Arrays.asList(
 
-                new ItemStack(VTBlocks.acaciabark),
-                new ItemStack(VTBlocks.junglebark),
-                new ItemStack(VTBlocks.sprucebark),
-                new ItemStack(VTBlocks.oakbark),
-                new ItemStack(VTBlocks.darkoakbark),
-                new ItemStack(VTBlocks.birchbark)
-                ),
-                ItemStack.class,
-                "Barks carved out of logs for your blocks"
-        );
+                    new ItemStack(VTBlocks.acaciabark),
+                    new ItemStack(VTBlocks.junglebark),
+                    new ItemStack(VTBlocks.sprucebark),
+                    new ItemStack(VTBlocks.oakbark),
+                    new ItemStack(VTBlocks.darkoakbark),
+                    new ItemStack(VTBlocks.birchbark)
+                    ),
+                    ItemStack.class,
+                    "Barks carved out of logs for your blocks"
+            );
+        }
     }
 }

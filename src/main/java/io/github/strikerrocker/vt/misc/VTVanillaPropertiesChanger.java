@@ -1,12 +1,12 @@
 package io.github.strikerrocker.vt.misc;
 
-import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.endFrameBroken;
-import static io.github.strikerrocker.vt.handlers.VTConfigHandler.stackSize;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious.endFrameBroken;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious_Restart.*;
+
 
 /**
  * The vanilla properties changer for Vanilla Tweaks
@@ -17,11 +17,11 @@ public class VTVanillaPropertiesChanger {
      */
     public static void init() {
         //Modifying block creative tabs
-        if (VTConfigHandler.commandBlockInRedstoneTab)
+        if (commandBlockInRedstoneTab)
             Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
         Blocks.DRAGON_EGG.setCreativeTab(CreativeTabs.DECORATIONS);
         //Modifying block names
-        if (VTConfigHandler.renameButtons) {
+        if (renameButtons) {
             Blocks.STONE_BUTTON.setUnlocalizedName("buttonStone");
             Blocks.WOODEN_BUTTON.setUnlocalizedName("buttonWood");
         }
