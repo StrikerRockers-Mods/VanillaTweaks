@@ -62,9 +62,9 @@ public class EntityTntImproved extends EntityTNTPrimed {
                     int i = EnchantmentHelper.getKnockbackModifier((EntityLivingBase) entity) * 2 + (entity.isSprinting() ? 1 : 0);
                     d1 = (double) MathHelper.sin(entity.rotationYaw * 0.017453292F);
                     d0 = (double) (-MathHelper.cos(entity.rotationYaw * 0.017453292F));
-                    this.knockBack(entity, i * 0.033F + 0.1F, d1, d0);
+                    this.knockBack(i * 0.033F + 0.1F, d1, d0);
                 } else {
-                    this.knockBack(entity, 0.4F, d1, d0);
+                    this.knockBack(0.4F, d1, d0);
                 }
 
                 this.markVelocityChanged();
@@ -74,7 +74,7 @@ public class EntityTntImproved extends EntityTNTPrimed {
         }
     }
 
-    public void knockBack(Entity entityIn, float strength, double xRatio, double zRatio) {
+    private void knockBack(float strength, double xRatio, double zRatio) {
         this.isAirBorne = true;
         float f = MathHelper.sqrt(xRatio * xRatio + zRatio * zRatio);
         this.motionX /= 2.0D;

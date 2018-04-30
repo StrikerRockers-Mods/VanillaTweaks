@@ -6,7 +6,7 @@ import static io.github.strikerrocker.vt.vt.proxy;
 
 class ItemBase extends Item {
 
-    String name;
+    private String name;
 
     ItemBase(String name) {
         this.name = name;
