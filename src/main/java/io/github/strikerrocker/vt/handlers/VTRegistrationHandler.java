@@ -3,7 +3,11 @@ package io.github.strikerrocker.vt.handlers;
 import io.github.strikerrocker.vt.blocks.VTBlocks;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
+import io.github.strikerrocker.vt.entities.EntityDynamite;
+import io.github.strikerrocker.vt.entities.EntitySitting;
+import io.github.strikerrocker.vt.entities.EntityTntImproved;
 import io.github.strikerrocker.vt.items.VTItems;
+import io.github.strikerrocker.vt.misc.VTUtils;
 import io.github.strikerrocker.vt.vt;
 import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
@@ -13,6 +17,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 
 @Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
 public class VTRegistrationHandler {
@@ -41,5 +46,10 @@ public class VTRegistrationHandler {
             BaubleTools.initModel(VTItems.bb);
     }
 
-
+    @SubscribeEvent
+    public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+        event.getRegistry().register(VTUtils.createEntityEntry("dynamite", EntityDynamite.class, 64, 1, false));
+        event.getRegistry().register(VTUtils.createEntityEntry("entity_sit", EntitySitting.class, 256, 20, false));
+        event.getRegistry().register(VTUtils.createEntityEntry("tnt", EntityTntImproved.class, 64, 1, true));
+    }
 }

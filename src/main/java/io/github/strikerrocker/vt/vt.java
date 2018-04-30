@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
-import io.github.strikerrocker.vt.entities.VTEntities;
 import io.github.strikerrocker.vt.handlers.OreDictionaryHandler;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.handlers.VTGuiHandler;
@@ -50,7 +49,6 @@ public class vt {
         network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
-        VTEntities.init();
         logInfo("Pre-Initialization Complete");
     }
 

@@ -1,17 +1,21 @@
 package io.github.strikerrocker.vt.misc;
 
 import io.github.strikerrocker.vt.vt;
+import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.oredict.DyeUtils;
 
@@ -142,5 +146,12 @@ public class VTUtils {
             }
         }
         return TextFormatting.WHITE;
+    }
+
+    private static int ind = 0;
+
+    public static EntityEntry createEntityEntry(String name, Class clazz, int range, int update, boolean VelocityUpdate) {
+        return EntityEntryBuilder.create().entity(clazz).id(new ResourceLocation(vtModInfo.MOD_ID, name), ind++)
+                .name(name).tracker(60, 3, false).build();
     }
 }
