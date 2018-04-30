@@ -4,8 +4,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious.endFrameBroken;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious_Restart.*;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.miscellanious;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.miscellanious_restart;
 
 
 /**
@@ -17,21 +17,21 @@ public class VTVanillaPropertiesChanger {
      */
     public static void init() {
         //Modifying block creative tabs
-        if (commandBlockInRedstoneTab)
+        if (miscellanious_restart.commandBlockInRedstoneTab)
             Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
         Blocks.DRAGON_EGG.setCreativeTab(CreativeTabs.DECORATIONS);
         //Modifying block names
-        if (renameButtons) {
+        if (miscellanious_restart.renameButtons) {
             Blocks.STONE_BUTTON.setUnlocalizedName("buttonStone");
             Blocks.WOODEN_BUTTON.setUnlocalizedName("buttonWood");
         }
         //Modifying End Portal Frame harvestability
-        if (endFrameBroken) {
+        if (miscellanious.endFrameBroken) {
             Blocks.END_PORTAL_FRAME.setHarvestLevel("pickaxe", 2);
             Blocks.END_PORTAL_FRAME.setHardness(5.0F);
         }
-        if (stackSize >= 2) {
-            int myInt = (int) stackSize;
+        if (miscellanious_restart.stackSize >= 2) {
+            int myInt = (int) miscellanious_restart.stackSize;
             Items.BED.setMaxStackSize(myInt);
             Items.TOTEM_OF_UNDYING.setMaxStackSize(myInt);
             Items.BOAT.setMaxStackSize(myInt);

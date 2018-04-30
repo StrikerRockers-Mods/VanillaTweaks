@@ -32,7 +32,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import static io.github.strikerrocker.vt.events.VTEventHandler.swapSlot;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious.*;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.miscellanious;
 
 @Mod.EventBusSubscriber
 public class PlayerEvents {
@@ -45,10 +45,10 @@ public class PlayerEvents {
     public static void onEntityInteractSpecific(EntityInteractSpecific event) {
         EntityPlayer player = event.getEntityPlayer();
 
-        if (event.getTarget().world.isRemote || player.isSpectator() || player.isCreative() || !(event.getTarget() instanceof EntityArmorStand) || !armourStandSwapping)
+        if (event.getTarget().world.isRemote || player.isSpectator() || player.isCreative() || !(event.getTarget() instanceof EntityArmorStand) || !miscellanious.armourStandSwapping)
             return;
 
-        if (player.isSneaking() && armourStandSwapping) {
+        if (player.isSneaking() && miscellanious.armourStandSwapping) {
             event.setCanceled(true);
             EntityArmorStand armorStand = (EntityArmorStand) event.getTarget();
             swapSlot(player, armorStand, EntityEquipmentSlot.HEAD);
@@ -70,11 +70,11 @@ public class PlayerEvents {
         TileEntity te = event.getWorld().getTileEntity(event.getPos());
         if (te instanceof TileEntitySign) {
             TileEntitySign sign = (TileEntitySign) te;
-            if (event.getEntityPlayer().isSneaking() && clearSigns) {
+            if (event.getEntityPlayer().isSneaking() && miscellanious.clearSigns) {
                 ITextComponent[] text = new ITextComponent[]{new TextComponentString(""), new TextComponentString(""), new TextComponentString(""), new TextComponentString("")};
                 ObfuscationReflectionHelper.setPrivateValue(TileEntitySign.class, sign, text, "signText", "field_145915_a");
                 success = true;
-            } else if (editSigns) {
+            } else if (miscellanious.editSigns) {
                 event.getEntityPlayer().openEditSign(sign);
                 success = true;
             }
@@ -86,7 +86,7 @@ public class PlayerEvents {
         /*
          *Allows the sitting on slab's and stair's.
          */
-        if (!event.getWorld().isRemote && stairSit) {
+        if (!event.getWorld().isRemote && miscellanious.stairSit) {
             World w = event.getWorld();
             BlockPos p = event.getPos();
             IBlockState s = w.getBlockState(p);
