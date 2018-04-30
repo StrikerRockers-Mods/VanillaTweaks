@@ -25,7 +25,7 @@ import java.lang.invoke.MethodHandle;
 import java.util.Deque;
 import java.util.List;
 
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious.autoSeedPlanting;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.miscellanious;
 
 @Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
 public class TickEvents {
@@ -37,7 +37,7 @@ public class TickEvents {
      */
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (autoSeedPlanting && !event.world.isRemote) {
+        if (miscellanious.autoSeedPlanting && !event.world.isRemote) {
             World world = event.world;
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
             entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null).handlePlantingLogic(entityItem));

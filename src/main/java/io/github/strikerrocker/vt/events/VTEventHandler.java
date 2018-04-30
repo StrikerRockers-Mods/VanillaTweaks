@@ -40,7 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.DyeUtils;
 
 import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.VanillaTweaks.binocularZoomAmount;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.vanilla_tweaks;
 
 /**
  * The event handler for Vanilla Tweaks
@@ -141,9 +141,9 @@ public class VTEventHandler {
             if (event.getEntity() instanceof EntityPlayer) {
                 ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
-                    event.setNewfov(event.getFov() / binocularZoomAmount);
+                    event.setNewfov(event.getFov() / vanilla_tweaks.binocularZoomAmount);
                 if (VT.baubles) if (BaubleTools.hasProbeGoggle(event.getEntity()))
-                    event.setNewfov(event.getFov() / binocularZoomAmount);
+                    event.setNewfov(event.getFov() / vanilla_tweaks.binocularZoomAmount);
             }
         }
     }

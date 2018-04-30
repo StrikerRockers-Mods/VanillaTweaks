@@ -13,8 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Recipes.useBetterStairsRecipes;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Recipes.useBetterStoneToolRecipes;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.recipes;
 import static io.github.strikerrocker.vt.recipes.RecipeHelper.addShapedRecipe;
 import static io.github.strikerrocker.vt.recipes.RecipeHelper.replaceStairsRecipe;
 
@@ -45,7 +44,7 @@ public class VTRecipeReplacer {
         ResourceLocation sspade = new ResourceLocation("minecraft:stone_shovel");
         ResourceLocation shoe = new ResourceLocation("minecraft:stone_hoe");
 
-        if (useBetterStairsRecipes) {
+        if (recipes.useBetterStairsRecipes) {
             modRegistry.remove(oak);
             modRegistry.remove(darkoak);
             modRegistry.remove(acacia);
@@ -75,7 +74,7 @@ public class VTRecipeReplacer {
             replaceStairsRecipe(Blocks.QUARTZ_STAIRS, new ItemStack(Blocks.QUARTZ_BLOCK, 1, OreDictionary.WILDCARD_VALUE));
         }
 
-        if (useBetterStoneToolRecipes) {
+        if (recipes.useBetterStoneToolRecipes) {
             modRegistry.remove(spick);
             modRegistry.remove(saxe);
             modRegistry.remove(shoe);

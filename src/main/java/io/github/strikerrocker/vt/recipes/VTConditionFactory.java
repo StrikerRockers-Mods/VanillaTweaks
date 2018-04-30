@@ -9,10 +9,7 @@ import net.minecraftforge.common.crafting.JsonContext;
 
 import java.util.function.BooleanSupplier;
 
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious_Restart.barks;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Recipes.leather;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Recipes.useBetterChestRecipe;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.VanillaTweaks.*;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.*;
 
 public class VTConditionFactory implements IConditionFactory {
 
@@ -21,25 +18,25 @@ public class VTConditionFactory implements IConditionFactory {
         boolean value = JsonUtils.getBoolean(json, "value", true);
         String key = JsonUtils.getString(json, "type");
         if (key.equals(VTModInfo.MOD_ID + ":storage_blocks")) {
-            return () -> storageBlocks == value;
+            return () -> vanilla_tweaks.storageBlocks == value;
         }
         if (key.equals(VTModInfo.MOD_ID + ":pedestal")) {
-            return () -> pedestal == value;
+            return () -> vanilla_tweaks.pedestal == value;
         }
         if (key.equals(VTModInfo.MOD_ID + ":pad")) {
-            return () -> craftingPad == value;
+            return () -> vanilla_tweaks.craftingPad == value;
         }
         if (key.equals(VTModInfo.MOD_ID + ":slime")) {
-            return () -> slimeChunkFinder == value;
+            return () -> vanilla_tweaks.slimeChunkFinder == value;
         }
         if (key.equals(VTModInfo.MOD_ID + ":barks")) {
-            return () -> barks == value;
+            return () -> miscellanious_restart.barks == value;
         }
         if (key.equals(VTModInfo.MOD_ID + ":chest")) {
-            return () -> useBetterChestRecipe == value;
+            return () -> recipes.useBetterChestRecipe == value;
         }
         if (key.equals(VTModInfo.MOD_ID + ":leather")) {
-            return () -> leather == value;
+            return () -> recipes.leather == value;
         }
         if (key.equals(VTModInfo.MOD_ID + ":bauble")) {
             return () -> VT.baubles == value;

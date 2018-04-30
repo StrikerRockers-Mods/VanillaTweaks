@@ -12,19 +12,19 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Arrays;
 
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.Miscellanious_Restart.barks;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.VanillaTweaks.craftingPad;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.miscellanious_restart;
+import static io.github.strikerrocker.vt.handlers.ConfigHandler.vanilla_tweaks;
 
 @JEIPlugin
 public class VTJeiPlugin implements IModPlugin {
     @Override
     public void register(IModRegistry registry) {
-        if (craftingPad) {
+        if (vanilla_tweaks.craftingPad) {
             registry.addRecipeCatalyst(new ItemStack(VTItems.pad), VanillaRecipeCategoryUid.CRAFTING);
             IRecipeTransferRegistry transfer = registry.getRecipeTransferRegistry();
             transfer.addRecipeTransferHandler(ContainerCraftingPad.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
         }
-        if (barks) {
+        if (miscellanious_restart.barks) {
             registry.addIngredientInfo(Arrays.asList(
 
                     new ItemStack(VTBlocks.acaciabark),

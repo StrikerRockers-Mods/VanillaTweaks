@@ -9,112 +9,113 @@ import net.minecraftforge.common.config.Config;
 @Config(modid = VTModInfo.MOD_ID, name = VTModInfo.NAME, category = "")
 public class ConfigHandler {
 
-    public static final Drops drops = new Drops();
+    public static Drops drops = new Drops();
     @Config.RequiresMcRestart
-    public static final Recipes recipes = new Recipes();
+    public static Recipes recipes = new Recipes();
     @Config.RequiresMcRestart
-    public static final Enchantments enchantments = new Enchantments();
+    public static Enchantments enchantments = new Enchantments();
     @Config.RequiresMcRestart
-    public static final VanillaTweaks vanilla_tweaks = new VanillaTweaks();
-    public static final Miscellanious miscellanius = new Miscellanious();
+    public static VanillaTweaks vanilla_tweaks = new VanillaTweaks();
+    public static Miscellanious miscellanious = new Miscellanious();
+    public static Miscellanious_Restart miscellanious_restart = new Miscellanious_Restart();
 
     public static class Drops {
         @Config.Comment({"The chance of creepers dropping TNT, out of 10."})
         @Config.RangeDouble(min = 0, max = 10)
-        public static double creeperDropTntChance = 1D;
+        public double creeperDropTntChance = 1D;
         @Config.Comment({"The chance of bats dropping leather, out of 10."})
         @Config.RangeDouble(max = 10, min = 0)
-        public static double batLeatherDropChance = 10D;
+        public double batLeatherDropChance = 10D;
         @Config.Comment({"Do creepers burn in daylight?"})
-        public static boolean creeperBurnInDaylight = true;
+        public boolean creeperBurnInDaylight = true;
         @Config.Comment({"Do baby zombie burn in daylight?"})
-        public static boolean babyZombieBurnInDaylight = true;
+        public boolean babyZombieBurnInDaylight = true;
         @Config.Comment({"Do mob spawners drop themselves when harvested with silk touch?"})
-        public static boolean mobSpawnerSilkTouchDrop = true;
+        public boolean mobSpawnerSilkTouchDrop = true;
         @Config.Comment({"So sponges dry in nether ?"})
-        public static boolean spongeDryInNether = true;
+        public boolean spongeDryInNether = true;
         @Config.Comment({"Does Hoe acts as a sickle?"})
-        public static boolean hoeAsSickle = true;
+        public boolean hoeAsSickle = true;
         @Config.Comment({"Is realistic predator/prey relationships activated?"})
-        public static boolean realisticRelationship = true;
+        public boolean realisticRelationship = true;
         @Config.Comment({"Does nametag drop when named mob is killed?"})
-        public static boolean nameTag = true;
+        public boolean nameTag = true;
     }
 
     public static class Recipes {
         @Config.Comment({"Are stone tools crafted out of stone?"})
-        public static boolean useBetterStoneToolRecipes = true;
+        public boolean useBetterStoneToolRecipes = true;
         @Config.Comment({"Is the better stairs recipe enabled?"})
-        public static boolean useBetterStairsRecipes = true;
+        public boolean useBetterStairsRecipes = true;
         @Config.Comment({"Is the better chest recipe enabled?"})
-        public static boolean useBetterChestRecipe = true;
+        public boolean useBetterChestRecipe = true;
         @Config.Comment({"Is rotten flesh to leathEnables the Slime Chunk Finderer recipe enabled?"})
-        public static boolean leather = true;
+        public boolean leather = true;
     }
 
-    public static final class Enchantments {
+    public static class Enchantments {
         @Config.Comment({"Enables Vigor Enchantment"})
-        public static boolean vigor = true;
+        public boolean vigor = true;
         @Config.Comment({"Enables Nimble Enchantment"})
-        public static boolean nimble = true;
+        public boolean nimble = true;
         @Config.Comment({"Enables Hops Enchantment"})
-        public static boolean hops = true;
+        public boolean hops = true;
         @Config.Comment({"Enables Veteran Enchantment"})
-        public static boolean veteran = true;
+        public boolean veteran = true;
         @Config.Comment({"Enables Siphon Enchantment"})
-        public static boolean siphon = true;
+        public boolean siphon = true;
         @Config.Comment({"Enables Homing Enchantment"})
-        public static boolean homing = true;
+        public boolean homing = true;
         @Config.Comment({"Enables Blazing Enchantment"})
-        public static boolean blazing = true;
+        public boolean blazing = true;
     }
 
     public static class VanillaTweaks {
         @Config.RangeDouble(min = 1)
         @Config.Comment({"By how much do binoculars divide your FOV?"})
-        public static float binocularZoomAmount = 4;
+        public float binocularZoomAmount = 4;
         @Config.Comment({"Enables the Storage Blocks"})
-        public static boolean storageBlocks = true;
+        public boolean storageBlocks = true;
         @Config.Comment({"Is there an way to create a portable crafting device?"})
-        public static boolean craftingPad = true;
+        public boolean craftingPad = true;
         @Config.Comment({"Enabling the pedestal"})
-        public static boolean pedestal = true;
+        public boolean pedestal = true;
         @Config.Comment({"Enables the Slime Chunk Finder"})
         public static boolean slimeChunkFinder = true;
     }
 
     public static class Miscellanious {
         @Config.Comment({"Right-click to edit signs"})
-        public static boolean editSigns = true;
+        public boolean editSigns = true;
         @Config.Comment({"Shift+right-click to clear signs"})
-        public static boolean clearSigns = true;
+        public boolean clearSigns = true;
         @Config.Comment({"Allows the player to sit on slabs & stairs"})
-        public static boolean stairSit = true;
+        public boolean stairSit = true;
         @Config.Comment({"Silence the Brodcast of wither sound"})
-        public static boolean silenceWither = true;
+        public boolean silenceWither = true;
         @Config.Comment({"Silence the Brodcast of ender dragon sound"})
-        public static boolean silenceDragon = true;
+        public boolean silenceDragon = true;
         @Config.Comment({"Silence the sound of lightning"})
-        public static boolean silenceLightning = true;
+        public boolean silenceLightning = true;
         @Config.Comment({"Makes the Nether Less Dangerous by preventing lava pockets to spawn."})
-        public static boolean noMoreLavaPocketGen = true;
+        public boolean noMoreLavaPocketGen = true;
         @Config.Comment({"Makes the End Portal Frame to be broken"})
-        public static boolean endFrameBroken = false;
+        public boolean endFrameBroken = false;
         @Config.Comment({"Shift click armour stand swap armor with your own"})
-        public static boolean armourStandSwapping = true;
+        public boolean armourStandSwapping = true;
         @Config.Comment({"Do dropped seeds plant themselves?"})
-        public static boolean autoSeedPlanting = true;
+        public boolean autoSeedPlanting = true;
     }
 
     public static class Miscellanious_Restart {
         @Config.Comment({"Command Block can be found in redstone creative tab"})
-        public static boolean commandBlockInRedstoneTab = true;
+        public boolean commandBlockInRedstoneTab = true;
         @Config.Comment({"Do buttons get renamed based on their material?"})
-        public static boolean renameButtons = true;
+        public boolean renameButtons = true;
         @Config.RangeInt(min = 3, max = 16)
         @Config.Comment({"changes stack sizes for various item's"})
-        public static double stackSize = 4;
+        public int stackSize = 4;
         @Config.Comment({"Enables 1.13 bark blocks"})
-        public static boolean barks = true;
+        public boolean barks = true;
     }
 }
