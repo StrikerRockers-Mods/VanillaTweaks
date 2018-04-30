@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
-import static io.github.strikerrocker.vt.vt.proxy;
+import static io.github.strikerrocker.vt.VT.proxy;
 
 class BlockBase extends Block {
 

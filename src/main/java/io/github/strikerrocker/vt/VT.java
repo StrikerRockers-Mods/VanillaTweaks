@@ -21,14 +21,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod(modid = vtModInfo.MOD_ID, name = vtModInfo.NAME, version = vtModInfo.VERSION, guiFactory = vtModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
-public class vt {
+@Mod(modid = VTModInfo.MOD_ID, name = VTModInfo.NAME, version = VTModInfo.VERSION, guiFactory = VTModInfo.PACKAGE_LOCATION + ".gui.config.VTGuiFactory")
+public class VT {
 
-    @SidedProxy(modId = vtModInfo.MOD_ID, clientSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = vtModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")
+    @SidedProxy(modId = VTModInfo.MOD_ID, clientSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")
     public static VTCommonProxy proxy;
 
-    @Mod.Instance(vtModInfo.MOD_ID)
-    public static vt instance;
+    @Mod.Instance(VTModInfo.MOD_ID)
+    public static VT instance;
     public static boolean baubles = false;
     public static SimpleNetworkWrapper network;
     private static Logger logger;
@@ -46,7 +46,7 @@ public class vt {
         VTItems.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         proxy.registerRenderer();
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(vtModInfo.MOD_ID);
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(VTModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
         logInfo("Pre-Initialization Complete");

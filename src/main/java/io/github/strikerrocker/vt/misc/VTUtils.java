@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.misc;
 
-import io.github.strikerrocker.vt.vt;
-import io.github.strikerrocker.vt.vtModInfo;
+import io.github.strikerrocker.vt.VT;
+import io.github.strikerrocker.vt.VTModInfo;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.init.Items;
@@ -101,9 +101,9 @@ public class VTUtils {
         String localizedName = I18n.translateToLocal(item.getUnlocalizedName() + ".name");
 
         if (dispenserBehavior.getClass() != BehaviorDefaultDispenseItem.class)
-            vt.logInfo("Registering dispenser behavior for " + localizedName);
+            VT.logInfo("Registering dispenser behavior for " + localizedName);
         else
-            vt.logInfo("Registering default dispenser behavior for " + localizedName);
+            VT.logInfo("Registering default dispenser behavior for " + localizedName);
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, dispenserBehavior);
     }
 
@@ -151,7 +151,7 @@ public class VTUtils {
     private static int ind = 0;
 
     public static EntityEntry createEntityEntry(String name, Class clazz, int range, int update, boolean VelocityUpdate) {
-        return EntityEntryBuilder.create().entity(clazz).id(new ResourceLocation(vtModInfo.MOD_ID, name), ind++)
+        return EntityEntryBuilder.create().entity(clazz).id(new ResourceLocation(VTModInfo.MOD_ID, name), ind++)
                 .name(name).tracker(range, update, VelocityUpdate).build();
     }
 }

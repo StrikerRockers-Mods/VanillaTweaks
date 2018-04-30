@@ -1,12 +1,12 @@
 package io.github.strikerrocker.vt.events;
 
+import io.github.strikerrocker.vt.VT;
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.items.VTItems;
 import io.github.strikerrocker.vt.misc.VTUtils;
-import io.github.strikerrocker.vt.vt;
-import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLilyPad;
@@ -42,7 +42,7 @@ import static io.github.strikerrocker.vt.blocks.VTBlocks.*;
 /**
  * The event handler for Vanilla Tweaks
  */
-@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
+@Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
 public class VTEventHandler {
     /**
      * Returns if the given chunk is an slime chunk or not
@@ -122,7 +122,7 @@ public class VTEventHandler {
         if (event.getObject() instanceof EntityItem) {
             Item item = ((EntityItem) event.getObject()).getItem().getItem();
             if (item instanceof ItemSeeds || item instanceof ItemSeedFood) {
-                event.addCapability(new ResourceLocation(vtModInfo.MOD_ID), new SelfPlantingProvider());
+                event.addCapability(new ResourceLocation(VTModInfo.MOD_ID), new SelfPlantingProvider());
             }
         }
     }
@@ -139,7 +139,7 @@ public class VTEventHandler {
                 ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (!helmet.isEmpty() && helmet.getItem() == VTItems.binocular)
                     event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
-                if (vt.baubles) if (BaubleTools.hasProbeGoggle(event.getEntity()))
+                if (VT.baubles) if (BaubleTools.hasProbeGoggle(event.getEntity()))
                     event.setNewfov(event.getFov() / VTConfigHandler.binocularZoomAmount);
             }
         }

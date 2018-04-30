@@ -3,7 +3,7 @@ package io.github.strikerrocker.vt.items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemFood;
 
-import static io.github.strikerrocker.vt.vt.proxy;
+import static io.github.strikerrocker.vt.VT.proxy;
 
 public class ItemFriedEgg extends ItemFood {
     public ItemFriedEgg() {

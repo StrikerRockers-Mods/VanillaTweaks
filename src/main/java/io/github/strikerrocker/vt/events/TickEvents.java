@@ -1,12 +1,12 @@
 package io.github.strikerrocker.vt.events;
 
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import io.github.strikerrocker.vt.enchantments.EntityTickingEnchantment;
 import io.github.strikerrocker.vt.enchantments.VTEnchantmentBase;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
 import io.github.strikerrocker.vt.misc.VTUtils;
-import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.toasts.GuiToast;
 import net.minecraft.client.gui.toasts.RecipeToast;
@@ -26,7 +26,7 @@ import java.lang.invoke.MethodHandle;
 import java.util.Deque;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
+@Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
 public class TickEvents {
 
     /**

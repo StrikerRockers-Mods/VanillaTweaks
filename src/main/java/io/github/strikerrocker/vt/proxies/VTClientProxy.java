@@ -1,8 +1,8 @@
 package io.github.strikerrocker.vt.proxies;
 
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.blocks.pedestal.TESRPedestal;
 import io.github.strikerrocker.vt.blocks.pedestal.TileEntityPedestal;
-import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -19,7 +19,7 @@ public class VTClientProxy extends VTCommonProxy {
 
     @Override
     public void registerItemRenderer(Item item, int meta, String id) {
-        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(vtModInfo.MOD_ID + ":" + id, "inventory"));
+        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(VTModInfo.MOD_ID + ":" + id, "inventory"));
     }
 
     @Override

@@ -6,7 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import static io.github.strikerrocker.vt.vt.proxy;
+import static io.github.strikerrocker.vt.VT.proxy;
 
 public class BinocularBauble extends Item implements IBauble {
     public BinocularBauble() {
