@@ -84,7 +84,7 @@ public class EntityDynamite extends EntityThrowable {
                 if (result.entityHit instanceof EntityDynamite)
                     return;
                 else
-                    world.createExplosion(this, this.posX, this.posY, this.posZ, 2F, true);
+                    world.createExplosion(this, this.posX, this.posY, this.posZ, 3F, true);
             }
         this.setDead();
     }
