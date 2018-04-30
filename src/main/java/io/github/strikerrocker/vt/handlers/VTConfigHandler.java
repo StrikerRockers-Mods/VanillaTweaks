@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.handlers;
 
-import io.github.strikerrocker.vt.vtModInfo;
+import io.github.strikerrocker.vt.VTModInfo;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.config.GuiConfigEntries.NumberSliderEntry;
@@ -11,12 +11,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
-import static io.github.strikerrocker.vt.vt.logInfo;
+import static io.github.strikerrocker.vt.VT.logInfo;
 
 /**
  * The config handler for VanillaTweaks
  */
-@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
+@Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
 public class VTConfigHandler {
     /**
      * The actual configuration containing the configuration file
@@ -86,7 +86,7 @@ public class VTConfigHandler {
      */
     @SubscribeEvent
     public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equals(vtModInfo.MOD_ID))
+        if (event.getModID().equals(VTModInfo.MOD_ID))
             VTConfigHandler.syncConfig();
     }
 

@@ -2,7 +2,7 @@ package io.github.strikerrocker.vt.items;
 
 import net.minecraft.inventory.EntityEquipmentSlot;
 
-import static io.github.strikerrocker.vt.vt.proxy;
+import static io.github.strikerrocker.vt.VT.proxy;
 
 
 public class ItemArmor extends net.minecraft.item.ItemArmor {

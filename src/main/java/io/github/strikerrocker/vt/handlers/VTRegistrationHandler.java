@@ -1,5 +1,7 @@
 package io.github.strikerrocker.vt.handlers;
 
+import io.github.strikerrocker.vt.VT;
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.blocks.VTBlocks;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
@@ -8,8 +10,6 @@ import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.entities.EntityTntImproved;
 import io.github.strikerrocker.vt.items.VTItems;
 import io.github.strikerrocker.vt.misc.VTUtils;
-import io.github.strikerrocker.vt.vt;
-import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
-@Mod.EventBusSubscriber(modid = vtModInfo.MOD_ID)
+@Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
 public class VTRegistrationHandler {
 
     @SubscribeEvent
@@ -45,7 +45,7 @@ public class VTRegistrationHandler {
         VTItems.registerModels();
         VTBlocks.registerModels();
         //TODO fix this crashing later RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class,new RenderSnowball<>(minecraft.getRenderManager(),VTItems.dynamite,minecraft.getRenderItem()));
-        if (vt.baubles)
+        if (VT.baubles)
             BaubleTools.initModel(VTItems.bb);
     }
 

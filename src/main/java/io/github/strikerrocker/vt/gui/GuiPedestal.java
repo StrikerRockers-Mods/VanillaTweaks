@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.gui;
 
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.blocks.VTBlocks;
-import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiPedestal extends GuiContainer {
 
-    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(vtModInfo.MOD_ID, "textures/gui/pedestal.png");
+    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(VTModInfo.MOD_ID, "textures/gui/pedestal.png");
 
     private final InventoryPlayer playerInv;
 

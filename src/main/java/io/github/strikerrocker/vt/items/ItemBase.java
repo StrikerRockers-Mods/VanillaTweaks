@@ -2,7 +2,7 @@ package io.github.strikerrocker.vt.items;
 
 import net.minecraft.item.Item;
 
-import static io.github.strikerrocker.vt.vt.proxy;
+import static io.github.strikerrocker.vt.VT.proxy;
 
 class ItemBase extends Item {
 

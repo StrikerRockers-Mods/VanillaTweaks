@@ -1,9 +1,9 @@
 package io.github.strikerrocker.vt.blocks.pedestal;
 
+import io.github.strikerrocker.vt.VT;
 import io.github.strikerrocker.vt.blocks.BlockTileEntity;
 import io.github.strikerrocker.vt.blocks.VTBlocks;
 import io.github.strikerrocker.vt.handlers.VTGuiHandler;
-import io.github.strikerrocker.vt.vt;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -53,7 +53,7 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
                 }
                 tile.markDirty();
             } else {
-                player.openGui(vt.instance, VTGuiHandler.PEDESTAL, world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(VT.instance, VTGuiHandler.PEDESTAL, world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

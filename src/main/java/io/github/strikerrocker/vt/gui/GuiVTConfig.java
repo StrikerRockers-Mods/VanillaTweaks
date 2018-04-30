@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.gui;
 
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.handlers.VTConfigHandler;
-import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
@@ -17,6 +17,6 @@ public class GuiVTConfig extends GuiConfig {
     }
 
     public GuiVTConfig(GuiScreen parent) {
-        super(parent, new ConfigElement(VTConfigHandler.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), vtModInfo.MOD_ID, false, false, GuiConfig.getAbridgedConfigPath(VTConfigHandler.config.toString()));
+        super(parent, new ConfigElement(VTConfigHandler.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), VTModInfo.MOD_ID, false, false, GuiConfig.getAbridgedConfigPath(VTConfigHandler.config.toString()));
     }
 }

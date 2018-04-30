@@ -1,9 +1,9 @@
 package io.github.strikerrocker.vt.items;
 
 
+import io.github.strikerrocker.vt.VT;
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
-import io.github.strikerrocker.vt.vt;
-import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -15,7 +15,7 @@ import net.minecraftforge.registries.IForgeRegistry;
  */
 public class VTItems {
 
-    private static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", vtModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
+    private static final ItemArmor.ArmorMaterial binoculars = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 
     public static final ItemArmor binocular = new ItemArmor(binoculars, EntityEquipmentSlot.HEAD, "binoculars");
     public static final ItemCraftingPad pad = new ItemCraftingPad("pad");
@@ -26,7 +26,7 @@ public class VTItems {
     private static final ItemBase lens = new ItemBase("lens");
 
     public static void init() {
-        if (vt.baubles) bb = BaubleTools.initBinocularBauble();
+        if (VT.baubles) bb = BaubleTools.initBinocularBauble();
     }
 
     public static void register(IForgeRegistry<Item> registry) {
@@ -36,7 +36,7 @@ public class VTItems {
         registry.register(dynamite);
         registry.register(lens);
         registry.register(slime);
-        if (vt.baubles)
+        if (VT.baubles)
             registry.register(bb);
     }
 
