@@ -11,6 +11,7 @@ import io.github.strikerrocker.vt.misc.VTUtils;
 import io.github.strikerrocker.vt.vt;
 import io.github.strikerrocker.vt.vtModInfo;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -40,8 +41,10 @@ public class VTRegistrationHandler {
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
+        Minecraft minecraft = Minecraft.getMinecraft();
         VTItems.registerModels();
         VTBlocks.registerModels();
+        //TODO fix this crashing later RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class,new RenderSnowball<>(minecraft.getRenderManager(),VTItems.dynamite,minecraft.getRenderItem()));
         if (vt.baubles)
             BaubleTools.initModel(VTItems.bb);
     }
