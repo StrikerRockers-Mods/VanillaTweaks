@@ -49,7 +49,6 @@ public class BlockEvents {
             NBTTagCompound spawnerTagCompound = new NBTTagCompound();
             if (spawnerTileEntity != null) {
                 spawnerTileEntity.getSpawnerBaseLogic().writeToNBT(spawnerTagCompound);
-                System.out.println("SWAG");
             }
             NBTTagCompound stackTagCompound = new NBTTagCompound();
             stackTagCompound.setTag("BlockEntityTag", spawnerTagCompound);
