@@ -32,6 +32,8 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public class VTUtils {
+    private static int ind = 0;
+
     /**
      * Prevents VTUtils from being instantiated
      */
@@ -43,7 +45,6 @@ public class VTUtils {
             return FakePlayerFactory.getMinecraft((WorldServer) world);
         return null;
     }
-
 
     /**
      * Finds an object by the specified name(s) in the specified object, and returns it
@@ -147,8 +148,6 @@ public class VTUtils {
         }
         return TextFormatting.WHITE;
     }
-
-    private static int ind = 0;
 
     public static EntityEntry createEntityEntry(String name, Class clazz, int range, int update, boolean VelocityUpdate) {
         return EntityEntryBuilder.create().entity(clazz).id(new ResourceLocation(VTModInfo.MOD_ID, name), ind++)

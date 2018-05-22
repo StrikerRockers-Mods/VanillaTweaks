@@ -159,4 +159,5 @@ public class PlayerEvents {
     public static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         event.player.unlockRecipes(Lists.newArrayList(CraftingManager.REGISTRY));
     }
+
 }
