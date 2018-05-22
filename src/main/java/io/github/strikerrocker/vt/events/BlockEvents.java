@@ -41,9 +41,9 @@ public class BlockEvents {
         Enables mob spawners to drop themselves when harvested with silk touch
          */
         EntityPlayer player = event.getPlayer();
-        if (drops.mobSpawnerSilkTouchDrop && !player.capabilities.isCreativeMode && event.getState().getBlock() == Blocks.MOB_SPAWNER && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) != 0 && player.canHarvestBlock(Blocks.MOB_SPAWNER.getDefaultState())) {
-            World world = event.getWorld();
-            BlockPos blockPos = event.getPos();
+        World world = event.getWorld();
+        BlockPos blockPos = event.getPos();
+        if (false && !player.capabilities.isCreativeMode && event.getState().getBlock() == Blocks.MOB_SPAWNER && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) != 0 && player.canHarvestBlock(Blocks.MOB_SPAWNER.getDefaultState())) {
             TileEntityMobSpawner spawnerTileEntity = (TileEntityMobSpawner) world.getTileEntity(blockPos);
             NBTTagCompound spawnerTagCompound = new NBTTagCompound();
             if (spawnerTileEntity != null) {
@@ -58,11 +58,10 @@ public class BlockEvents {
             world.spawnEntity(spawnerEntityItem);
             event.setExpToDrop(0);
         }
+
         /*
         Allows the End Portal Frame to be broken
          */
-        World world = event.getWorld();
-        BlockPos blockPos = event.getPos();
         if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME && miscellanious.endFrameBroken) {
             ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
             EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);

@@ -30,8 +30,8 @@ public class ConfigHandler {
         public boolean creeperBurnInDaylight = true;
         @Config.Comment({"Do baby zombie burn in daylight?"})
         public boolean babyZombieBurnInDaylight = true;
-        @Config.Comment({"Do mob spawners drop themselves when harvested with silk touch?"})
-        public boolean mobSpawnerSilkTouchDrop = true;
+        //@Config.Comment({"Do mob spawners drop themselves when harvested with silk touch?"})
+        //public boolean mobSpawnerSilkTouchDrop = true;
         @Config.Comment({"So sponges dry in nether ?"})
         public boolean spongeDryInNether = true;
         @Config.Comment({"Does Hoe acts as a sickle?"})
@@ -71,6 +71,8 @@ public class ConfigHandler {
     }
 
     public static class VanillaTweaks {
+        @Config.Comment({"Enables the Slime Chunk Finder"})
+        public static boolean slimeChunkFinder = true;
         @Config.RangeDouble(min = 1)
         @Config.Comment({"By how much do binoculars divide your FOV?"})
         public float binocularZoomAmount = 4;
@@ -80,8 +82,6 @@ public class ConfigHandler {
         public boolean craftingPad = true;
         @Config.Comment({"Enabling the pedestal"})
         public boolean pedestal = true;
-        @Config.Comment({"Enables the Slime Chunk Finder"})
-        public static boolean slimeChunkFinder = true;
     }
 
     public static class Miscellanious {
