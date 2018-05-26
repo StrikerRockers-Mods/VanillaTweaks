@@ -40,10 +40,10 @@ public class EnchantmentBlazing extends VTEnchantmentBase {
                     ItemStack smeltingResult = FurnaceRecipes.instance().getSmeltingResult(drop);
                     if (!smeltingResult.isEmpty()) {
                         smeltingResult = smeltingResult.copy();
-                        smeltingResult.stackSize *= drop.stackSize;
+                        smeltingResult.setCount(smeltingResult.getCount() * drop.getCount());
                         int fortuneLevel = event.getFortuneLevel();
                         if (!(smeltingResult.getItem() instanceof ItemBlock))
-                            smeltingResult.stackSize *= random.nextInt(fortuneLevel + 1) + 1;
+                            smeltingResult.setCount(smeltingResult.getCount() * (random.nextInt(fortuneLevel + 1) + 1));
                         drops.add(smeltingResult);
                     } else
                         drops.add(drop);
