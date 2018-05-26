@@ -49,7 +49,7 @@ public class ConfigHandler {
         public boolean useBetterStairsRecipes = true;
         @Config.Comment({"Is the better chest recipe enabled?"})
         public boolean useBetterChestRecipe = true;
-        @Config.Comment({"Is rotten flesh to leathEnables the Slime Chunk Finderer recipe enabled?"})
+        @Config.Comment({"Is rotten flesh to leather recipe enabled?"})
         public boolean leather = true;
     }
 
