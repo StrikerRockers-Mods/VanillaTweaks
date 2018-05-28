@@ -12,13 +12,19 @@ import io.github.strikerrocker.vt.items.VTItems;
 import io.github.strikerrocker.vt.misc.VTUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
 public class VTRegistrationHandler {
@@ -40,11 +46,12 @@ public class VTRegistrationHandler {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void registerModels(ModelRegistryEvent event) {
         Minecraft minecraft = Minecraft.getMinecraft();
         VTItems.registerModels();
         VTBlocks.registerModels();
-        //TODO fix this crashing later RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class,new RenderSnowball<>(minecraft.getRenderManager(),VTItems.dynamite,minecraft.getRenderItem()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, createRenderFactoryForSnowball(VTItems.dynamite));
         if (VT.baubles)
             BaubleTools.initModel(VTItems.bb);
     }
@@ -54,5 +61,10 @@ public class VTRegistrationHandler {
         event.getRegistry().register(VTUtils.createEntityEntry("dynamite", EntityDynamite.class, 64, 1, false));
         event.getRegistry().register(VTUtils.createEntityEntry("entity_sit", EntitySitting.class, 256, 20, false));
         event.getRegistry().register(VTUtils.createEntityEntry("tnt", EntityTntImproved.class, 64, 1, true));
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static <T extends Entity> IRenderFactory<T> createRenderFactoryForSnowball(final Item itemToRender) {
+        return manager -> new RenderSnowball<>(manager, itemToRender, Minecraft.getMinecraft().getRenderItem());
     }
 }
