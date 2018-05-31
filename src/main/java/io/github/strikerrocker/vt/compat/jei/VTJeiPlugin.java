@@ -35,7 +35,7 @@ public class VTJeiPlugin implements IModPlugin {
                     new ItemStack(VTBlocks.birchbark)
                     ),
                     ItemStack.class,
-                    "Barks carved out of logs for your blocks"
+                    "Barks carved out of logs for your crafty needs."
             );
         }
     }
