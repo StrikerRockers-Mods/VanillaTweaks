@@ -16,7 +16,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class VTClientProxy extends VTCommonProxy {
-
     @Override
     public void registerItemRenderer(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(VTModInfo.MOD_ID + ":" + id, "inventory"));
@@ -26,6 +25,4 @@ public class VTClientProxy extends VTCommonProxy {
     public void registerRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
     }
-
 }
-
