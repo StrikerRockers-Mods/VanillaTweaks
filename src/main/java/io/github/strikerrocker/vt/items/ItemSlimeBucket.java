@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.items;
 
+import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -12,7 +13,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 import static io.github.strikerrocker.vt.events.VTEventHandler.isSlimeChunk;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.VanillaTweaks.slimeChunkFinder;
 import static net.minecraft.util.text.TextFormatting.AQUA;
 
 public class ItemSlimeBucket extends ItemBase {
@@ -26,7 +26,7 @@ public class ItemSlimeBucket extends ItemBase {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        if (!worldIn.isRemote && slimeChunkFinder) {
+        if (!worldIn.isRemote && ConfigHandler.vanilla_tweaks.slimeChunkFinder) {
             if (playerIn.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqual(new ItemStack(VTItems.slime))) {
                 int x = MathHelper.floor(playerIn.posX);
                 int y = MathHelper.floor(playerIn.posY);

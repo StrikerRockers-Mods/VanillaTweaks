@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.miscellanious;
 
 @Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
 public class VTSoundHandler {
@@ -18,16 +17,16 @@ public class VTSoundHandler {
     public void onEvent(PlaySoundEvent event) {
 
 
-        if ((event.getName().equals("entity.wither.spawn")) && miscellanious.silenceWither) {
+        if ((event.getName().equals("entity.wither.spawn")) && ConfigHandler.miscellanious.silenceWither) {
             event.setResultSound(null);
         }
 
 
-        if ((event.getName().equals("entity.enderdragon.death")) && miscellanious.silenceDragon) {
+        if ((event.getName().equals("entity.enderdragon.death")) && ConfigHandler.miscellanious.silenceDragon) {
             event.setResultSound(null);
         }
 
-        if ((event.getName().equals("entity.lightning.thunder")) && miscellanious.silenceLightning) {
+        if ((event.getName().equals("entity.lightning.thunder")) && ConfigHandler.miscellanious.silenceLightning) {
 
             event.setResultSound(null);
         }

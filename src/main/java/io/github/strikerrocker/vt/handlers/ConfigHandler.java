@@ -18,6 +18,7 @@ public class ConfigHandler {
     public static VanillaTweaks vanilla_tweaks = new VanillaTweaks();
     public static Miscellanious miscellanious = new Miscellanious();
     public static Miscellanious_Restart miscellanious_restart = new Miscellanious_Restart();
+    public static StackSize stackSize = new StackSize();
 
     public static class Drops {
         @Config.Comment({"The chance of creepers dropping TNT, out of 10."})
@@ -112,10 +113,30 @@ public class ConfigHandler {
         public boolean commandBlockInRedstoneTab = true;
         @Config.Comment({"Do buttons get renamed based on their material?"})
         public boolean renameButtons = true;
-        @Config.RangeInt(min = 3, max = 16)
-        @Config.Comment({"changes stack sizes for various item's"})
-        public int stackSize = 4;
         @Config.Comment({"Enables 1.13 bark blocks"})
         public boolean barks = true;
+    }
+
+    public static class StackSize {
+        @Config.RangeInt(min = 1)
+        @Config.Comment({"Stack size for beds"})
+        @Config.Name("Bed stack size")
+        public int bed_stackSize = 4;
+        @Config.Comment({"Stack size for Totem of undying"})
+        @Config.Name("Totem of undying stack size")
+        @Config.RangeInt(min = 1)
+        public int totem_of_undying_stackSize = 4;
+        @Config.Comment({"Stack size for boat"})
+        @Config.Name("boat stack size")
+        @Config.RangeInt(min = 1)
+        public int boat_stackSize = 4;
+        @Config.RangeInt(min = 1)
+        @Config.Comment({"Stack size for cake"})
+        @Config.Name("cake stack size")
+        public int cake_stackSize = 4;
+        @Config.RangeInt(min = 1)
+        @Config.Comment({"Stack size for ender pearl"})
+        @Config.Name("ender pearl stack size")
+        public int ender_pearl_stackSize = 64;
     }
 }
