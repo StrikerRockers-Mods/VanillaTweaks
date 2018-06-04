@@ -63,7 +63,7 @@ public class VTEventHandler {
      *
      * @param state IBlockState
      */
-    static boolean canHarvest(IBlockState state) {
+    public static boolean canHarvest(IBlockState state) {
         Block block = state.getBlock();
         return (block instanceof BlockBush && !(block instanceof BlockLilyPad)) || block instanceof BlockReed;
     }

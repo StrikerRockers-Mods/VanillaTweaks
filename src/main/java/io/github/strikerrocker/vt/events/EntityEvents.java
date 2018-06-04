@@ -38,7 +38,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import static io.github.strikerrocker.vt.enchantments.VTEnchantments.Vigor;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.drops;
 
 @Mod.EventBusSubscriber
 public class EntityEvents {
@@ -105,7 +104,7 @@ public class EntityEvents {
         Entity entity = event.getEntity();
         World world = entity.world;
         //New Drops
-        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot") && event.getSource().getTrueSource() instanceof EntityPlayer && drops.nameTag) {
+        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot") && event.getSource().getTrueSource() instanceof EntityPlayer && ConfigHandler.drops.nameTag) {
             //Living entities drop their name tags
             String entityNameTag = entity.getCustomNameTag();
             if (!entityNameTag.equals("")) {
@@ -114,10 +113,10 @@ public class EntityEvents {
                 entity.entityDropItem(nameTag, 0);
                 entity.setCustomNameTag("");
             }
-            if (entity instanceof EntityBat && (drops.batLeatherDropChance / 10) > Math.random())
+            if (entity instanceof EntityBat && (ConfigHandler.drops.batLeatherDropChance / 10) > Math.random())
                 entity.dropItem(Items.LEATHER, 1);
             else if (entity instanceof EntityCreeper) {
-                if (event.getSource().damageType != null && (drops.creeperDropTntChance / 10) > Math.random()) {
+                if (event.getSource().damageType != null && (ConfigHandler.drops.creeperDropTntChance / 10) > Math.random()) {
                     event.getDrops().clear();
                     entity.dropItem(Item.getItemFromBlock(Blocks.TNT), 1);
                 }
@@ -154,7 +153,8 @@ public class EntityEvents {
         EntityLivingBase livingEntity = event.getEntityLiving();
         if (!livingEntity.world.isRemote) {
             World world = livingEntity.world;
-            if (((livingEntity instanceof EntityCreeper && drops.creeperBurnInDaylight) || (livingEntity instanceof EntityZombie && livingEntity.isChild() && drops.babyZombieBurnInDaylight)) && world.isDaytime()) {
+            if (((livingEntity instanceof EntityCreeper && ConfigHandler.drops.creeperBurnInDaylight) || (livingEntity instanceof EntityZombie && livingEntity.isChild() &&
+                    ConfigHandler.drops.babyZombieBurnInDaylight)) && world.isDaytime()) {
                 float f = livingEntity.getBrightness();
                 Random random = world.rand;
                 BlockPos blockPos = new BlockPos(livingEntity.posX, Math.round(livingEntity.posY), livingEntity.posZ);

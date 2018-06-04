@@ -1,6 +1,7 @@
 package io.github.strikerrocker.vt.recipes;
 
 import com.google.common.collect.Lists;
+import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import io.github.strikerrocker.vt.items.VTItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -16,7 +17,6 @@ import net.minecraftforge.registries.ForgeRegistry;
 
 import java.util.ArrayList;
 
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.recipes;
 import static io.github.strikerrocker.vt.recipes.RecipeHelper.addShapedRecipe;
 import static io.github.strikerrocker.vt.recipes.RecipeHelper.replaceStairsRecipe;
 
@@ -29,7 +29,7 @@ public class VTRecipeReplacer {
         ArrayList<IRecipe> recipies = Lists.newArrayList(recipeRegistry.getValuesCollection());
         for (IRecipe r : recipies) {
             ItemStack output = r.getRecipeOutput();
-            if (recipes.useBetterStairsRecipes) {
+            if (ConfigHandler.recipes.useBetterStairsRecipes) {
                 if (output.getItem() == Item.getItemFromBlock(Blocks.ACACIA_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.OAK_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.DARK_OAK_STAIRS)
                         || output.getItem() == Item.getItemFromBlock(Blocks.BIRCH_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.STONE_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.STONE_BRICK_STAIRS)
                         || output.getItem() == Item.getItemFromBlock(Blocks.NETHER_BRICK_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.BRICK_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.SANDSTONE_STAIRS)
@@ -51,7 +51,7 @@ public class VTRecipeReplacer {
                     replaceStairsRecipe(Blocks.RED_SANDSTONE_STAIRS, new ItemStack(Blocks.RED_SANDSTONE, 1, 0));
                     replaceStairsRecipe(Blocks.QUARTZ_STAIRS, new ItemStack(Blocks.QUARTZ_BLOCK, 1, 0));
                 }
-            } else if (recipes.useBetterStoneToolRecipes) {
+            } else if (ConfigHandler.recipes.useBetterStoneToolRecipes) {
                 if (output.getItem() == Items.STONE_AXE || output.getItem() == Items.STONE_HOE || output.getItem() == Items.STONE_PICKAXE || output.getItem() == Items.STONE_SHOVEL ||
                         output.getItem() == Items.STONE_SWORD) {
                     recipeRegistry.remove(r.getRegistryName());

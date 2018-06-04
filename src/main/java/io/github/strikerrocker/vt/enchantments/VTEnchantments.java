@@ -1,13 +1,12 @@
 package io.github.strikerrocker.vt.enchantments;
 
+import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Optional;
-
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.enchantments;
 
 /**
  * Initializes VanillaTweaks's enchantments
@@ -27,19 +26,19 @@ public final class VTEnchantments {
      */
 
     public static void init(IForgeRegistry<Enchantment> registry) {
-        if (enchantments.vigor)
+        if (ConfigHandler.enchantments.vigor)
             registry.register(Vigor);
-        if (enchantments.nimble)
+        if (ConfigHandler.enchantments.nimble)
             registry.register(Nimble);
-        if (enchantments.hops)
+        if (ConfigHandler.enchantments.hops)
             registry.register(Hops);
-        if (enchantments.veteran)
+        if (ConfigHandler.enchantments.veteran)
             registry.register(Veteran);
-        if (enchantments.siphon)
+        if (ConfigHandler.enchantments.siphon)
             registry.register(Siphon);
-        if (enchantments.homing)
+        if (ConfigHandler.enchantments.homing)
             registry.register(Homing);
-        if (enchantments.blazing)
+        if (ConfigHandler.enchantments.blazing)
             registry.register(Blazing);
     }
 

@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
+import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSponge;
 import net.minecraft.block.state.IBlockState;
@@ -26,8 +27,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static io.github.strikerrocker.vt.events.VTEventHandler.canHarvest;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.drops;
-import static io.github.strikerrocker.vt.handlers.ConfigHandler.miscellanious;
+
 
 @Mod.EventBusSubscriber
 public class BlockEvents {
@@ -62,7 +62,7 @@ public class BlockEvents {
         /*
         Allows the End Portal Frame to be broken
          */
-        if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME && miscellanious.endFrameBroken) {
+        if (event.getState().getBlock() == Blocks.END_PORTAL_FRAME && ConfigHandler.miscellanious.endFrameBroken) {
             ItemStack portalStack = new ItemStack(Blocks.END_PORTAL_FRAME);
             EntityItem portalEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, portalStack);
             portalEntityItem.setDefaultPickupDelay();
@@ -72,7 +72,7 @@ public class BlockEvents {
         Makes Hoe act as Sickle
          */
         ItemStack stack = event.getPlayer().getHeldItemMainhand();
-        if (!stack.isEmpty() && stack.getItem() instanceof ItemHoe && canHarvest(event.getState()) && drops.hoeAsSickle) {
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemHoe && canHarvest(event.getState()) && ConfigHandler.drops.hoeAsSickle) {
             BlockPos basePos = event.getPos();
 
             int range = 1;
@@ -114,7 +114,7 @@ public class BlockEvents {
     @SubscribeEvent
     public static void onBlockPlaced(BlockEvent.PlaceEvent event) {
         if (event.getPlacedBlock().equals(Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) &&
-                BiomeDictionary.getTypes(event.getWorld().getBiome(event.getPos())).contains(BiomeDictionary.Type.NETHER) && drops.spongeDryInNether) {
+                BiomeDictionary.getTypes(event.getWorld().getBiome(event.getPos())).contains(BiomeDictionary.Type.NETHER) && ConfigHandler.drops.spongeDryInNether) {
             World world = event.getWorld();
             world.playSound(null, event.getPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 2.4F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.9F);
             world.setBlockState(event.getPos(), Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, false));
