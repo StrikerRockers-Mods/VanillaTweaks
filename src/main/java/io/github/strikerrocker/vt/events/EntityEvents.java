@@ -95,7 +95,7 @@ public class EntityEvents {
             event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
         }
         if (event.getEntityLiving().world.getBlockState(event.getEntityLiving().getPosition().down()) == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) {
-            if (!event.getEntityLiving().world.isRemote) {
+            if (!event.getEntityLiving().world.isRemote && event.getDistance() > 3) {
                 World world = event.getEntityLiving().world;
                 Random random = new Random();
                 BlockPos pos = event.getEntityLiving().getPosition().down();
