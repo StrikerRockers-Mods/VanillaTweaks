@@ -165,4 +165,13 @@ public class VTEventHandler {
             ConfigManager.sync(VTModInfo.MOD_ID, Config.Type.INSTANCE);
         }
     }
+
+    public static void turnIntoWater(World worldIn, BlockPos pos) {
+        if (worldIn.provider.doesWaterVaporize()) {
+            worldIn.setBlockToAir(pos);
+        } else {
+            worldIn.setBlockState(pos, Blocks.WATER.getDefaultState());
+            worldIn.neighborChanged(pos, Blocks.WATER, pos);
+        }
+    }
 }
