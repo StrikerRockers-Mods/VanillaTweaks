@@ -5,6 +5,7 @@ import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.entities.EntityTntImproved;
 import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import io.github.strikerrocker.vt.misc.VTUtils;
+import net.minecraft.block.BlockSponge;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -89,9 +90,33 @@ public class EntityEvents {
      * @param event The LivingFallEvent
      */
     @SubscribeEvent
-    public void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0)
+    public static void onLivingFall(LivingFallEvent event) {
+        if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
             event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
+        }
+        if (event.getEntityLiving().world.getBlockState(event.getEntityLiving().getPosition().down()) == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) {
+            if (!event.getEntityLiving().world.isRemote) {
+                World world = event.getEntityLiving().world;
+                Random random = new Random();
+                BlockPos pos = event.getEntityLiving().getPosition().down();
+                int i = random.nextInt(4);
+                switch (i) {
+                    case 1:
+                        VTEventHandler.turnIntoWater(world, pos.east());
+                        break;
+                    case 2:
+                        VTEventHandler.turnIntoWater(world, pos.west());
+                        break;
+                    case 3:
+                        VTEventHandler.turnIntoWater(world, pos.north());
+                        break;
+                    case 4:
+                        VTEventHandler.turnIntoWater(world, pos.south());
+                        break;
+                }
+                world.setBlockState(pos, Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, false));
+            }
+        }
     }
 
     /**
@@ -100,7 +125,7 @@ public class EntityEvents {
      * @param event The LivingDropsEvent
      */
     @SubscribeEvent
-    public void onLivingDrops(LivingDropsEvent event) {
+    public static void onLivingDrops(LivingDropsEvent event) {
         Entity entity = event.getEntity();
         World world = entity.world;
         //New Drops
@@ -149,7 +174,7 @@ public class EntityEvents {
      * @param event The LivingUpdateEvent
      */
     @SubscribeEvent
-    public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
+    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         EntityLivingBase livingEntity = event.getEntityLiving();
         if (!livingEntity.world.isRemote) {
             World world = livingEntity.world;
@@ -185,7 +210,7 @@ public class EntityEvents {
      * @param event EntityJoinWorldEvent
      */
     @SubscribeEvent
-    public void onEntitySpawn(EntityJoinWorldEvent event) {
+    public static void onEntitySpawn(EntityJoinWorldEvent event) {
         if (event.getEntity().getClass() == EntityTNTPrimed.class) {
             event.setCanceled(true);
             EntityTntImproved tnt = new EntityTntImproved(event.getWorld(), event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ,
@@ -201,7 +226,7 @@ public class EntityEvents {
      * @param event The EntityMountEvent
      */
     @SubscribeEvent
-    public void onEntityMount(EntityMountEvent event) {
+    public static void onEntityMount(EntityMountEvent event) {
         if (event.isDismounting()) {
             Entity e = event.getEntityBeingMounted();
             if (e instanceof EntitySitting) {
