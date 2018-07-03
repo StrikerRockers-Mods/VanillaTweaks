@@ -86,6 +86,7 @@ public class EntityEvents {
 
     /**
      * Prevents taking extra fall damage from the Hops enchantment
+     * Landing on sponges eliminates fall damage and squishes water out of it
      *
      * @param event The LivingFallEvent
      */
@@ -115,6 +116,7 @@ public class EntityEvents {
                         break;
                 }
                 world.setBlockState(pos, Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, false));
+                event.setDamageMultiplier(0);
             }
         }
     }

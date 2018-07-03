@@ -159,6 +159,11 @@ public class VTEventHandler {
         event.setCanceled(true);
     }
 
+    /**
+     * Makes config values to be written
+     *
+     * @param event
+     */
     @SubscribeEvent
     public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (VTModInfo.MOD_ID.equals(event.getModID())) {
@@ -166,6 +171,12 @@ public class VTEventHandler {
         }
     }
 
+    /**
+     * Turns the the blocks into water with certain extra calls to make it work
+     *
+     * @param worldIn
+     * @param pos
+     */
     public static void turnIntoWater(World worldIn, BlockPos pos) {
         if (worldIn.provider.doesWaterVaporize()) {
             worldIn.setBlockToAir(pos);
