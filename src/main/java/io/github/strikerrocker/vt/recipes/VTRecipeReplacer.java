@@ -30,28 +30,48 @@ public class VTRecipeReplacer {
         for (IRecipe r : recipies) {
             ItemStack output = r.getRecipeOutput();
             if (ConfigHandler.recipes.useBetterStairsRecipes) {
-                if (output.getItem() == Item.getItemFromBlock(Blocks.ACACIA_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.OAK_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.DARK_OAK_STAIRS)
-                        || output.getItem() == Item.getItemFromBlock(Blocks.BIRCH_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.STONE_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.STONE_BRICK_STAIRS)
-                        || output.getItem() == Item.getItemFromBlock(Blocks.NETHER_BRICK_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.BRICK_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.SANDSTONE_STAIRS)
-                        || output.getItem() == Item.getItemFromBlock(Blocks.JUNGLE_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.QUARTZ_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.RED_SANDSTONE_STAIRS)
-                        || output.getItem() == Item.getItemFromBlock(Blocks.PURPUR_STAIRS) || output.getItem() == Item.getItemFromBlock(Blocks.SPRUCE_STAIRS)) {
-                    recipeRegistry.remove(r.getRegistryName());
-                    recipeRegistry.register(DummyRecipe.from(r));
+                if (output.getItem() == Item.getItemFromBlock(Blocks.OAK_STAIRS)) {
                     replaceStairsRecipe(Blocks.OAK_STAIRS, new ItemStack(Blocks.PLANKS));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.SPRUCE_STAIRS)) {
                     replaceStairsRecipe(Blocks.SPRUCE_STAIRS, new ItemStack(Blocks.PLANKS, 1, 1));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.BIRCH_STAIRS)) {
                     replaceStairsRecipe(Blocks.BIRCH_STAIRS, new ItemStack(Blocks.PLANKS, 1, 2));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.JUNGLE_STAIRS)) {
                     replaceStairsRecipe(Blocks.JUNGLE_STAIRS, new ItemStack(Blocks.PLANKS, 1, 3));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.ACACIA_STAIRS)) {
                     replaceStairsRecipe(Blocks.ACACIA_STAIRS, new ItemStack(Blocks.PLANKS, 1, 4));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.DARK_OAK_STAIRS)) {
                     replaceStairsRecipe(Blocks.DARK_OAK_STAIRS, new ItemStack(Blocks.PLANKS, 1, 5));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.STONE_STAIRS)) {
                     replaceStairsRecipe(Blocks.STONE_STAIRS, new ItemStack(Blocks.COBBLESTONE));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.BRICK_STAIRS)) {
                     replaceStairsRecipe(Blocks.BRICK_STAIRS, new ItemStack(Blocks.BRICK_BLOCK));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.STONE_BRICK_STAIRS)) {
                     replaceStairsRecipe(Blocks.STONE_BRICK_STAIRS, new ItemStack(Blocks.STONEBRICK, 1, 0));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.NETHER_BRICK_STAIRS)) {
                     replaceStairsRecipe(Blocks.NETHER_BRICK_FENCE, new ItemStack(Blocks.NETHER_BRICK));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.SANDSTONE_STAIRS)) {
                     replaceStairsRecipe(Blocks.SANDSTONE_STAIRS, new ItemStack(Blocks.SANDSTONE, 1, 0));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.RED_SANDSTONE_STAIRS)) {
                     replaceStairsRecipe(Blocks.RED_SANDSTONE_STAIRS, new ItemStack(Blocks.RED_SANDSTONE, 1, 0));
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Item.getItemFromBlock(Blocks.QUARTZ_STAIRS)) {
                     replaceStairsRecipe(Blocks.QUARTZ_STAIRS, new ItemStack(Blocks.QUARTZ_BLOCK, 1, 0));
+                    removeRecipe(recipeRegistry, r);
                 }
-            } else if (ConfigHandler.recipes.useBetterStoneToolRecipes) {
+            }
+            if (ConfigHandler.recipes.useBetterStoneToolRecipes) {
                 if (output.getItem() == Items.STONE_AXE || output.getItem() == Items.STONE_HOE || output.getItem() == Items.STONE_PICKAXE || output.getItem() == Items.STONE_SHOVEL ||
                         output.getItem() == Items.STONE_SWORD) {
                     recipeRegistry.remove(r.getRegistryName());
@@ -62,9 +82,6 @@ public class VTRecipeReplacer {
                     addShapedRecipe(new ItemStack(Items.STONE_AXE), "SS", "ST", " T", 'S', "stone", 'T', "stickWood");
                     addShapedRecipe(new ItemStack(Items.STONE_HOE), "SS", " T", " T", 'S', "stone", 'T', "stickWood");
                 }
-                GameRegistry.addSmelting(Items.EGG, new
-
-                        ItemStack(VTItems.fried_egg), 0.35F);
             }
         }
     }
@@ -72,5 +89,11 @@ public class VTRecipeReplacer {
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         replaceRecipes();
+        GameRegistry.addSmelting(Items.EGG, new ItemStack(VTItems.fried_egg), 0.35F);
+    }
+
+    public static void removeRecipe(ForgeRegistry<IRecipe> recipeRegistry, IRecipe r) {
+        recipeRegistry.remove(r.getRegistryName());
+        recipeRegistry.register(DummyRecipe.from(r));
     }
 }
