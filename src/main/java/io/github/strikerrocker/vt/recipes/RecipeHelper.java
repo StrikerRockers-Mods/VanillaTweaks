@@ -44,7 +44,7 @@ class RecipeHelper {
     }
 
     public static void replaceStairsRecipe(Block stairs, ItemStack material) {
-        ItemStack stairsStack = new ItemStack(stairs, 4);
-        addShapedRecipe(stairsStack, " S", "SS", 'S', material);
+        ItemStack stairsStack = new ItemStack(stairs, 8);
+        addShapedRecipe(stairsStack, "S  ", "SS ","SSS",'S', material);
     }
 }
