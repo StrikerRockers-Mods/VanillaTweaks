@@ -44,7 +44,6 @@ public class TickEvents {
             for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
                 VTEnchantmentBase.vtEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
         }
-
     }
 
     /**
