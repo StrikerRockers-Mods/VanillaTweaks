@@ -24,9 +24,12 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -234,6 +237,19 @@ public class EntityEvents {
             if (e instanceof EntitySitting) {
                 e.setDead();
                 EntitySitting.OCCUPIED.remove(e.getPosition());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
+        if (event.getArrow().isBurning()) {
+            Vec3d vec3d1 = new Vec3d(event.getArrow().posX, event.getArrow().posY, event.getArrow().posZ);
+            Vec3d vec3d = new Vec3d(event.getArrow().posX + event.getArrow().motionX, event.getArrow().posY + event.getArrow().motionY, event.getArrow().posZ + event.getArrow().motionZ);
+            RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
+            if (raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK) {
+                event.getArrow().world.setBlockState(raytraceresult.getBlockPos().up(), Blocks.FIRE.getDefaultState(), 11);
+
             }
         }
     }
