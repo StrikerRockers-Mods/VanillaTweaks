@@ -241,16 +241,15 @@ public class EntityEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
-        if (event.getArrow().isBurning()) {
-            Vec3d vec3d1 = new Vec3d(event.getArrow().posX, event.getArrow().posY, event.getArrow().posZ);
-            Vec3d vec3d = new Vec3d(event.getArrow().posX + event.getArrow().motionX, event.getArrow().posY + event.getArrow().motionY, event.getArrow().posZ + event.getArrow().motionZ);
-            RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
-            if (raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK) {
-                event.getArrow().world.setBlockState(raytraceresult.getBlockPos().up(), Blocks.FIRE.getDefaultState(), 11);
-
+        @SubscribeEvent
+        public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
+            if (event.getArrow().isBurning()) {
+                Vec3d vec3d1 = new Vec3d(event.getArrow().posX, event.getArrow().posY, event.getArrow().posZ);
+                Vec3d vec3d = new Vec3d(event.getArrow().posX + event.getArrow().motionX, event.getArrow().posY + event.getArrow().motionY, event.getArrow().posZ + event.getArrow().motionZ);
+                RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
+                if (raytraceresult != null && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK ) {
+                    event.getArrow().world.setBlockState(raytraceresult.getBlockPos().up(), Blocks.FIRE.getDefaultState(), 11);
+                }
             }
         }
-    }
 }
