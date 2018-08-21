@@ -27,7 +27,7 @@ public final class VTModInfo {
     /**
      * Vanilla Tweaks's update json location
      */
-    public static final String UPDATE = "io.github.strikerrocker.vt";
+    public static final String UPDATE = "https://raw.githubusercontent.com/strikerrocker/VanillaTweaks/1.12/version.java";
 
     /**
      * Prevents VTModInfo from being instantianted
