@@ -25,6 +25,11 @@ public final class VTModInfo {
     public static final String PACKAGE_LOCATION = "io.github.strikerrocker.vt";
 
     /**
+     * Vanilla Tweaks's update json location
+     */
+    public static final String UPDATE = "io.github.strikerrocker.vt";
+
+    /**
      * Prevents VTModInfo from being instantianted
      */
     private VTModInfo() {
