@@ -3,7 +3,7 @@
         "promos":{
         "1.12.2-latest":"1.3.6"
         },
-        "1.12":{
+        "1.12.2":{
         "1.3.6":"* Arrows which hit ground and are on fire sets the ground to fire\n* TNT placed adjacent to lava and magma block ignites itself"
 
         }
