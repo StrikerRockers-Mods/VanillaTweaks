@@ -4,7 +4,10 @@ import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockMagma;
 import net.minecraft.block.BlockSponge;
+import net.minecraft.block.BlockTNT;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -17,6 +20,7 @@ import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -27,6 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static io.github.strikerrocker.vt.events.VTEventHandler.canHarvest;
+import static net.minecraft.block.BlockTNT.EXPLODE;
 
 
 @Mod.EventBusSubscriber
@@ -113,11 +118,21 @@ public class BlockEvents {
      */
     @SubscribeEvent
     public static void onBlockPlaced(BlockEvent.PlaceEvent event) {
-        if (event.getPlacedBlock().equals(Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) &&
-                BiomeDictionary.getTypes(event.getWorld().getBiome(event.getPos())).contains(BiomeDictionary.Type.NETHER) && ConfigHandler.drops.spongeDryInNether) {
-            World world = event.getWorld();
+        IBlockState blockState = event.getPlacedBlock();
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        if (blockState == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true) &&
+                BiomeDictionary.getTypes(world.getBiome(pos)).contains(BiomeDictionary.Type.NETHER) && ConfigHandler.drops.spongeDryInNether) {
             world.playSound(null, event.getPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 2.4F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.9F);
             world.setBlockState(event.getPos(), Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, false));
+        }
+        if (blockState.getBlock() instanceof BlockTNT) {
+            for (EnumFacing f : EnumFacing.values())
+                if (world.getBlockState(pos.offset(f, 1)).getBlock() instanceof BlockMagma || world.getBlockState(pos.offset(f, 1)).getMaterial() == Material.LAVA) {
+                    BlockTNT blockTNT = (BlockTNT) blockState.getBlock();
+                    blockTNT.explode(world, pos, blockState.withProperty(EXPLODE, true), event.getPlayer());
+                    world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
+                }
         }
     }
 
