@@ -21,7 +21,7 @@ compileJava {
 minecraft {
     version = "1.12.2-14.23.3.2698"
     runDir = "run"
-    mappings = "snapshot_20180519"
+    mappings = "stable_39"
 }
 
 repositories {
@@ -58,5 +58,9 @@ processResources {
 jar {
     manifest {
         attributes 'FMLAT': 'vt_at.cfg'
+        attributes([
+                'Maven-Artifact': "${project.group}:${archivesBaseName}:${project.version}",
+                'Timestamp'     : System.currentTimeMillis()
+        ])
     }
 }
