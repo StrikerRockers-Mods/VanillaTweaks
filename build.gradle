@@ -30,7 +30,10 @@ repositories {
         name = "Progwml6 maven"
         url = "http://dvs1.progwml6.com/files/maven"
     }
-    maven { url 'https://jitpack.io' }
+    maven {
+        name = "jitpack"
+        url = "https://jitpack.io"
+    }
 }
 
 
