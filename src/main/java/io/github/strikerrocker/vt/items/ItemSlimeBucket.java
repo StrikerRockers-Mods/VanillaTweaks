@@ -21,7 +21,7 @@ public class ItemSlimeBucket extends ItemBase {
         super(name);
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(1);
-        setUnlocalizedName(name);
+        setTranslationKey(name);
     }
 
     @Override

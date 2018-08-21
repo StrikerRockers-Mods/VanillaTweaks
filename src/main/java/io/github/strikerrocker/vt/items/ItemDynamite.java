@@ -21,7 +21,7 @@ public class ItemDynamite extends ItemBase {
         super(name);
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(16);
-        setUnlocalizedName(name);
+        setTranslationKey(name);
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

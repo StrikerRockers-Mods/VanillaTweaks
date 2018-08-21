@@ -12,7 +12,7 @@ public class BlockBark extends BlockBase {
 
     public BlockBark(String name, MapColor mapColor) {
         super(Material.WOOD, name, mapColor);
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
         this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
         this.setHardness(2.0F);
         this.setSoundType(SoundType.WOOD);

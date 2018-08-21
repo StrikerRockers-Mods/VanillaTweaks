@@ -10,7 +10,7 @@ class ItemBase extends Item {
 
     ItemBase(String name) {
         this.name = name;
-        setUnlocalizedName(name);
+        setTranslationKey(name);
         setRegistryName(name);
     }
 

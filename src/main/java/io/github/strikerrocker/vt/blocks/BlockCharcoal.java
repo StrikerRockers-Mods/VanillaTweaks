@@ -10,7 +10,7 @@ public class BlockCharcoal extends BlockBase {
 
     public BlockCharcoal(String name) {
         super(Material.ROCK, name, MapColor.BLACK);
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
         this.setHardness(1.0F);
         this.name = name;
     }

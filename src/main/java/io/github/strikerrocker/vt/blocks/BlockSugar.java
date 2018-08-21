@@ -8,7 +8,7 @@ class BlockSugar extends BlockBase {
 
     public BlockSugar(String name) {
         super(Material.SAND, name, MapColor.WHITE_STAINED_HARDENED_CLAY);
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
         this.setSoundType(SoundType.SAND);
         this.setHardness(0.5F);
         this.name = name;

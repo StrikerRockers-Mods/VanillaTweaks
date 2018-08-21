@@ -20,7 +20,7 @@ public class GuiCraftingPad extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String name = I18n.format(VTItems.pad.getUnlocalizedName() + ".name");
+        String name = I18n.format(VTItems.pad.getTranslationKey() + ".name");
         fontRenderer.drawString(name, xSize / 2 - fontRenderer.getStringWidth(name) / 2, 6, 0x404040);
     }
 

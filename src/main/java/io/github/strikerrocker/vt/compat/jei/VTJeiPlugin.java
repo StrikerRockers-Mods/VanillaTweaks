@@ -7,6 +7,7 @@ import io.github.strikerrocker.vt.items.VTItems;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import net.minecraft.item.ItemStack;
@@ -33,9 +34,8 @@ public class VTJeiPlugin implements IModPlugin {
                     new ItemStack(VTBlocks.darkoakbark),
                     new ItemStack(VTBlocks.birchbark)
                     ),
-                    ItemStack.class,
-                    "Barks carved out of logs for your crafty needs."
-            );
+                    VanillaTypes.ITEM,
+                    "Barks carved out of logs for your crafty needs.");
         }
     }
 }

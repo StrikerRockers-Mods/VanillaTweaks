@@ -8,7 +8,7 @@ import static io.github.strikerrocker.vt.VT.proxy;
 public class ItemFriedEgg extends ItemFood {
     public ItemFriedEgg() {
         super(3, 0.6f, false);
-        setUnlocalizedName("friedegg");
+        setTranslationKey("friedegg");
         setRegistryName("friedegg");
         setCreativeTab(CreativeTabs.FOOD);
     }

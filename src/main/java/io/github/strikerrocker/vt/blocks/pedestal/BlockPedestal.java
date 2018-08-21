@@ -24,7 +24,7 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
     public BlockPedestal() {
         super(Material.ROCK, "pedestal", MapColor.GRAY_STAINED_HARDENED_CLAY);
         String name = "pedestal";
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
     }
 
 
