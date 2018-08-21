@@ -10,7 +10,7 @@ import static io.github.strikerrocker.vt.VT.proxy;
 
 public class BinocularBauble extends Item implements IBauble {
     public BinocularBauble() {
-        this.setUnlocalizedName("binocular_bauble");
+        this.setTranslationKey("binocular_bauble");
         this.setRegistryName("binocular_bauble");
         this.setMaxStackSize(1);
     }

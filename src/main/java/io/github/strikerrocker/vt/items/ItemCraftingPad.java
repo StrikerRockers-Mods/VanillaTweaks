@@ -20,7 +20,7 @@ public class ItemCraftingPad extends ItemBase {
     public ItemCraftingPad(String name) {
         super(name);
         this.name = name;
-        setUnlocalizedName(name);
+        setTranslationKey(name);
         this.setCreativeTab(CreativeTabs.TOOLS);
     }
 

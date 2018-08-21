@@ -16,7 +16,7 @@ class BlockBase extends Block {
         super(material, mapColor);
 
         this.name = name;
-        setUnlocalizedName(name);
+        setTranslationKey(name);
         setRegistryName(name);
     }
 

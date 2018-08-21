@@ -7,7 +7,7 @@ class BlockFlint extends BlockBase {
 
     public BlockFlint(String name) {
         super(Material.SAND, name, MapColor.BROWN);
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
         this.setHardness(1.0F);
         this.name = name;
     }

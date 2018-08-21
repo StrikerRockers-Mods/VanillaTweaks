@@ -19,8 +19,8 @@ public class VTVanillaPropertiesChanger {
         Blocks.DRAGON_EGG.setCreativeTab(CreativeTabs.DECORATIONS);
         //Modifying block names
         if (ConfigHandler.miscellanious_restart.renameButtons) {
-            Blocks.STONE_BUTTON.setUnlocalizedName("buttonStone");
-            Blocks.WOODEN_BUTTON.setUnlocalizedName("buttonWood");
+            Blocks.STONE_BUTTON.setTranslationKey("buttonStone");
+            Blocks.WOODEN_BUTTON.setTranslationKey("buttonWood");
         }
         //Modifying End Portal Frame harvestability
         if (ConfigHandler.miscellanious.endFrameBroken) {
