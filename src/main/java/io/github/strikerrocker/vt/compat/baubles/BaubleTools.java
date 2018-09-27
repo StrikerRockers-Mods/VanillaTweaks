@@ -25,8 +25,4 @@ public class BaubleTools {
     public static Item initBinocularBauble() {
         return new BinocularBauble();
     }
-
-    public static void initModel(Item binocularBauble) {
-        ((BinocularBauble) binocularBauble).registerItemModel();
-    }
 }
