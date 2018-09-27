@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
-import io.github.strikerrocker.vt.entities.EntityTntImproved;
 import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import io.github.strikerrocker.vt.misc.VTUtils;
 import net.minecraft.block.BlockSponge;
@@ -13,7 +12,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.*;
@@ -27,7 +25,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -206,22 +203,6 @@ public class EntityEvents {
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Replaces Minecraft TNT with ImprovedTNT
-     *
-     * @param event EntityJoinWorldEvent
-     */
-    @SubscribeEvent
-    public static void onEntitySpawn(EntityJoinWorldEvent event) {
-        if (event.getEntity().getClass() == EntityTNTPrimed.class) {
-            event.setCanceled(true);
-            EntityTntImproved tnt = new EntityTntImproved(event.getWorld(), event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ,
-                    ((EntityTNTPrimed) event.getEntity()).getTntPlacedBy());
-            tnt.setFuse(((EntityTNTPrimed) event.getEntity()).getFuse());
-            event.getWorld().spawnEntity(tnt);
         }
     }
 

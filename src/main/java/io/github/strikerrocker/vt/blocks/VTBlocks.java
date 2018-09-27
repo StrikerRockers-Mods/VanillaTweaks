@@ -1,18 +1,25 @@
 package io.github.strikerrocker.vt.blocks;
 
 import io.github.strikerrocker.vt.blocks.pedestal.BlockPedestal;
+import io.github.strikerrocker.vt.items.VTItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.ArrayList;
 
 /**
  * Contains, initializes, and registers all of Craft++'s blocks
  */
 public class VTBlocks {
 
+    private static final BlockSugar sugar = new BlockSugar("sugarblock");
+    private static final Block flint = new Block(Material.SAND, MapColor.BROWN).setHardness(1.0f).setTranslationKey("flintblock").setRegistryName("flintblock");
     public static final BlockCharcoal charcoal = new BlockCharcoal("charcoalblock");
     public static final BlockPedestal pedestal = new BlockPedestal();
     public static final BlockBark acaciabark = new BlockBark("acaciabark", MapColor.STONE);
@@ -21,38 +28,36 @@ public class VTBlocks {
     public static final BlockBark sprucebark = new BlockBark("sprucebark", BlockPlanks.EnumType.DARK_OAK.getMapColor());
     public static final BlockBark junglebark = new BlockBark("junglebark", BlockPlanks.EnumType.SPRUCE.getMapColor());
     public static final BlockBark birchbark = new BlockBark("birchbark", MapColor.QUARTZ);
-    private static final BlockSugar sugar = new BlockSugar("sugarblock");
-    private static final BlockFlint flint = new BlockFlint("flintblock");
+    public static ArrayList<Block> blocks = new ArrayList();
 
 
     public static void register(IForgeRegistry<Block> registry) {
-        registry.registerAll(
-                sugar, flint, charcoal, pedestal, acaciabark, darkoakbark, oakbark, sprucebark, junglebark, birchbark
-        );
-
+        blocks.add(sugar);
+        blocks.add(flint);
+        blocks.add(charcoal);
+        blocks.add(pedestal);
+        blocks.add(acaciabark);
+        blocks.add(darkoakbark);
+        blocks.add(oakbark);
+        blocks.add(sprucebark);
+        blocks.add(junglebark);
+        blocks.add(birchbark);
+        for (Block block : blocks) {
+            registry.register(block);
+        }
         GameRegistry.registerTileEntity(pedestal.getTileEntityClass(), pedestal.getRegistryName().toString());
     }
 
 
     public static void registerItemBlocks(IForgeRegistry<Item> registry) {
-        registry.registerAll(
-                pedestal.createItemBlock(), sugar.createItemBlock(), flint.createItemBlock(),
-                charcoal.createItemBlock(), acaciabark.createItemBlock(), birchbark.createItemBlock(),
-                oakbark.createItemBlock(), darkoakbark.createItemBlock(), sprucebark.createItemBlock(),
-                junglebark.createItemBlock()
-        );
+        for (Block block : blocks) {
+            Item itemBlock = createItemBlock(block);
+            VTItems.items.add(itemBlock);
+            registry.register(itemBlock);
+        }
     }
 
-    public static void registerModels() {
-        sugar.registerItemModel(Item.getItemFromBlock(sugar));
-        charcoal.registerItemModel(Item.getItemFromBlock(charcoal));
-        flint.registerItemModel(Item.getItemFromBlock(flint));
-        pedestal.registerItemModel(Item.getItemFromBlock(pedestal));
-        acaciabark.registerItemModel(Item.getItemFromBlock(acaciabark));
-        birchbark.registerItemModel(Item.getItemFromBlock(birchbark));
-        darkoakbark.registerItemModel(Item.getItemFromBlock(darkoakbark));
-        oakbark.registerItemModel(Item.getItemFromBlock(oakbark));
-        sprucebark.registerItemModel(Item.getItemFromBlock(sprucebark));
-        junglebark.registerItemModel(Item.getItemFromBlock(junglebark));
+    public static Item createItemBlock(Block block) {
+        return new ItemBlock(block).setRegistryName(block.getRegistryName());
     }
 }
