@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
@@ -30,7 +31,7 @@ public class VT {
     public static VT instance;
     public static boolean baubles = false;
     public static SimpleNetworkWrapper network;
-    private static Logger logger;
+    private static Logger logger = LogManager.getLogger(VTModInfo.MOD_ID);
 
     public static void logInfo(String message) {
         logger.info("VanillaTweaks : " + message);
@@ -38,7 +39,6 @@ public class VT {
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        logger = event.getModLog();
         baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
         if (baubles) logInfo("Baubles Support Enabled");
         VTItems.init();
