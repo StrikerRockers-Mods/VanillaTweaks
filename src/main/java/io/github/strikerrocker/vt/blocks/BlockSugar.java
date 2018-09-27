@@ -9,6 +9,7 @@ class BlockSugar extends Block {
     public BlockSugar(String name) {
         super(Material.SAND, MapColor.WHITE_STAINED_HARDENED_CLAY);
         this.setTranslationKey(name);
+        this.setRegistryName(name);
         this.setSoundType(SoundType.SAND);
         this.setHardness(0.5F);
     }
