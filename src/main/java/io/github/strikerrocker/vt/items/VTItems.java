@@ -7,6 +7,7 @@ import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -19,11 +20,11 @@ public class VTItems {
 
     public static final ItemCraftingPad pad = new ItemCraftingPad("pad");
     public static final ItemDynamite dynamite = new ItemDynamite("dynamite");
-    public static final ItemFriedEgg fried_egg = new ItemFriedEgg();
+    public static final Item fried_egg = new ItemFood(3, 0.6f, false).setRegistryName("friedegg").setTranslationKey("friedegg");
     public static final ItemSlimeBucket slime = new ItemSlimeBucket("slime");
     private static final ItemArmor.ArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
     public static final ItemArmor binocular = new ItemArmor(binocular_material, EntityEquipmentSlot.HEAD, "binoculars");
-    private static final ItemBase lens = new ItemBase("lens");
+    private static final Item lens = new Item().setTranslationKey("lens").setRegistryName("lens");
     public static Item bb;
     public static ArrayList<Item> items = new ArrayList<>();
 
@@ -45,14 +46,5 @@ public class VTItems {
         for (Item item : items) {
             registry.register(item);
         }
-    }
-
-    public static void registerModels() {
-        binocular.registerItemModel();
-        pad.registerItemModel();
-        fried_egg.registerItemModel();
-        dynamite.registerItemModel();
-        lens.registerItemModel();
-        slime.registerItemModel();
     }
 }
