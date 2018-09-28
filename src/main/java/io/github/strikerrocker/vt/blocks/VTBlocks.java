@@ -57,7 +57,7 @@ public class VTBlocks {
         }
     }
 
-    public static Item createItemBlock(Block block) {
+    private static Item createItemBlock(Block block) {
         return new ItemBlock(block).setRegistryName(block.getRegistryName());
     }
 }
