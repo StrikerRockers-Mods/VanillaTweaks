@@ -4,6 +4,7 @@ import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -15,13 +16,13 @@ import net.minecraft.world.World;
 import static io.github.strikerrocker.vt.events.VTEventHandler.isSlimeChunk;
 import static net.minecraft.util.text.TextFormatting.AQUA;
 
-public class ItemSlimeBucket extends ItemBase {
+public class ItemSlimeBucket extends Item {
 
     public ItemSlimeBucket(String name) {
-        super(name);
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(1);
-        setTranslationKey(name);
+        this.setTranslationKey(name);
+        this.setRegistryName(name);
     }
 
     @Override

@@ -4,6 +4,7 @@ import io.github.strikerrocker.vt.entities.EntityDynamite;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
@@ -15,13 +16,13 @@ import net.minecraft.world.World;
 /**
  * Dynamite item to go along-side dynamite entity
  */
-public class ItemDynamite extends ItemBase {
+public class ItemDynamite extends Item {
 
     public ItemDynamite(String name) {
-        super(name);
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(16);
         setTranslationKey(name);
+        setRegistryName(name);
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

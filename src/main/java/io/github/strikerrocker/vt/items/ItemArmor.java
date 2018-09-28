@@ -2,8 +2,6 @@ package io.github.strikerrocker.vt.items;
 
 import net.minecraft.inventory.EntityEquipmentSlot;
 
-import static io.github.strikerrocker.vt.VT.proxy;
-
 
 public class ItemArmor extends net.minecraft.item.ItemArmor {
 
@@ -17,9 +15,4 @@ public class ItemArmor extends net.minecraft.item.ItemArmor {
         this.name = name;
         setMaxStackSize(1);
     }
-
-    public void registerItemModel() {
-        proxy.registerItemRenderer(this, 0, name);
-    }
-
 }

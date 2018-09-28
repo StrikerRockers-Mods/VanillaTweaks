@@ -518,3 +518,4 @@ potion.potency.252=CCLIII
 potion.potency.253=CCLIV
 potion.potency.254=CCLV
 potion.potency.255=CCLVI
+tooltip.entity=Spawns: %s
