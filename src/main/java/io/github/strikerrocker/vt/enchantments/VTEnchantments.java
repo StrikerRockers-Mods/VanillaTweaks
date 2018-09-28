@@ -45,22 +45,22 @@ public final class VTEnchantments {
     /**
      * Gets an enchantment by name
      *
-     * @param enchantmentName The name of the enchantment
+     * @param name The name of the enchantment
      * @return The enchantment with the specified name
      */
-    private static Optional<VTEnchantmentBase> getByName(String enchantmentName) {
-        return VTEnchantmentBase.vtEnchantments.stream().filter(enchantment -> enchantment.getName().replaceFirst("enchantment\\.", "").equals(enchantmentName)).findFirst();
+    private static Optional<VTEnchantmentBase> getByName(String name) {
+        return VTEnchantmentBase.vtEnchantments.stream().filter(enchantment -> enchantment.getName().replaceFirst("enchantment\\.", "").equals(name)).findFirst();
     }
 
     /**
      * Performs the action of the enchantment with the specified name
      *
-     * @param enchantmentName The name of the enchantment
-     * @param entity          The entity to go along with the enchantment
-     * @param baseEvent       The event to go along with the enchantment
+     * @param name   The name of the enchantment
+     * @param entity The entity to go along with the enchantment
+     * @param event  The event to go along with the enchantment
      */
-    public static void performAction(String enchantmentName, Entity entity, Event baseEvent) {
-        Optional<VTEnchantmentBase> vtEnchantment = getByName(enchantmentName);
-        vtEnchantment.ifPresent(vtEnchantmentBase -> vtEnchantmentBase.performAction(entity, baseEvent));
+    public static void performAction(String name, Entity entity, Event event) {
+        Optional<VTEnchantmentBase> vtEnchantment = getByName(name);
+        vtEnchantment.ifPresent(vtEnchantmentBase -> vtEnchantmentBase.performAction(entity, event));
     }
 }
