@@ -31,8 +31,8 @@ public class ConfigHandler {
         public boolean creeperBurnInDaylight = true;
         @Config.Comment({"Do baby zombie burn in daylight?"})
         public boolean babyZombieBurnInDaylight = true;
-        //@Config.Comment({"Do mob spawners drop themselves when harvested with silk touch?"})
-        //public boolean mobSpawnerSilkTouchDrop = true;
+        @Config.Comment({"Do mob spawners drop themselves when harvested with silk touch?"})
+        public boolean mobSpawnerSilkTouchDrop = true;
         @Config.Comment({"So sponges dry in nether ?"})
         public boolean spongeDryInNether = true;
         @Config.Comment({"Does Hoe acts as a sickle?"})

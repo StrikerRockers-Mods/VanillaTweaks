@@ -63,16 +63,14 @@ public class EntityEvents {
         if (event.getEntity() instanceof EntityLivingBase) {
             UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
             int lvl = EnchantmentHelper.getEnchantmentLevel(Vigor, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST));
+            IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
+            AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) lvl / 10, 1);
             if (lvl > 0) {
-                IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
                 if (vigorAttribute.getModifier(vigorUUID) == null) {
-                    AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) lvl / 10, 1);
                     vigorAttribute.applyModifier(vigorModifier);
                 }
             } else {
-                IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
                 if (vigorAttribute.getModifier(vigorUUID) != null) {
-                    AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "Vigor", (float) lvl / 10, 1);
                     vigorAttribute.removeModifier(vigorModifier);
                     if (event.getEntityLiving().getHealth() > event.getEntityLiving().getMaxHealth())
                         event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
@@ -92,10 +90,11 @@ public class EntityEvents {
      */
     @SubscribeEvent
     public static void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
-            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
+        EntityLivingBase entityLiving = event.getEntityLiving();
+        if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, entityLiving.getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
+            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, entityLiving.getItemStackFromSlot(EntityEquipmentSlot.FEET)));
         }
-        if (event.getEntityLiving().world.getBlockState(event.getEntityLiving().getPosition().down()) == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) {
+        if (entityLiving.world.getBlockState(entityLiving.getPosition().down()) == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) {
             if (!event.getEntityLiving().world.isRemote && event.getDistance() > 3) {
                 World world = event.getEntityLiving().world;
                 Random random = new Random();
@@ -214,23 +213,23 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onEntityMount(EntityMountEvent event) {
         if (event.isDismounting()) {
-            Entity e = event.getEntityBeingMounted();
-            if (e instanceof EntitySitting) {
-                e.setDead();
-                EntitySitting.OCCUPIED.remove(e.getPosition());
+            Entity entity = event.getEntityBeingMounted();
+            if (entity instanceof EntitySitting) {
+                entity.setDead();
+                EntitySitting.OCCUPIED.remove(entity.getPosition());
             }
         }
     }
 
-        @SubscribeEvent
-        public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
-            if (event.getArrow().isBurning()) {
-                Vec3d vec3d1 = new Vec3d(event.getArrow().posX, event.getArrow().posY, event.getArrow().posZ);
-                Vec3d vec3d = new Vec3d(event.getArrow().posX + event.getArrow().motionX, event.getArrow().posY + event.getArrow().motionY, event.getArrow().posZ + event.getArrow().motionZ);
-                RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
-                if (raytraceresult != null && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK ) {
-                    event.getArrow().world.setBlockState(raytraceresult.getBlockPos().up(), Blocks.FIRE.getDefaultState(), 11);
-                }
+    @SubscribeEvent
+    public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
+        if (event.getArrow().isBurning()) {
+            Vec3d vec3d1 = new Vec3d(event.getArrow().posX, event.getArrow().posY, event.getArrow().posZ);
+            Vec3d vec3d = new Vec3d(event.getArrow().posX + event.getArrow().motionX, event.getArrow().posY + event.getArrow().motionY, event.getArrow().posZ + event.getArrow().motionZ);
+            RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
+            if (raytraceresult != null && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK) {
+                event.getArrow().world.setBlockState(raytraceresult.getBlockPos().up(), Blocks.FIRE.getDefaultState(), 11);
             }
         }
+    }
 }

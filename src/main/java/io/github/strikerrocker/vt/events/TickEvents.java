@@ -31,7 +31,7 @@ import java.util.List;
 public class TickEvents {
 
     /**
-     * Allows thrown seeds to plant themselves in farmland, and gives the Homing enchantment functionality
+     * Allows thrown seeds to plant themselves in farmland, and ticks enchantments with annotation present
      *
      * @param event The WorldTickEvent
      */

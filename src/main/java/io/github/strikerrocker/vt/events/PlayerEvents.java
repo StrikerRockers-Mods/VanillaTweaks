@@ -44,13 +44,12 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void onEntityInteractSpecific(EntityInteractSpecific event) {
         EntityPlayer player = event.getEntityPlayer();
-
-        if (event.getTarget().world.isRemote || player.isSpectator() || player.isCreative() || !(event.getTarget() instanceof EntityArmorStand) || !miscellanious.armourStandSwapping)
-            return;
-
+        Entity target = event.getTarget();
         if (player.isSneaking() && miscellanious.armourStandSwapping) {
+            if (target.world.isRemote || player.isSpectator() || player.isCreative() || !(target instanceof EntityArmorStand) || !miscellanious.armourStandSwapping)
+                return;
             event.setCanceled(true);
-            EntityArmorStand armorStand = (EntityArmorStand) event.getTarget();
+            EntityArmorStand armorStand = (EntityArmorStand) target;
             swapSlot(player, armorStand, EntityEquipmentSlot.HEAD);
             swapSlot(player, armorStand, EntityEquipmentSlot.CHEST);
             swapSlot(player, armorStand, EntityEquipmentSlot.LEGS);
@@ -63,19 +62,21 @@ public class PlayerEvents {
      */
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        World world = event.getWorld();
+        EntityPlayer player = event.getEntityPlayer();
         /*
          *Allows the player to edit and clear signs
          */
         boolean success = false;
-        TileEntity te = event.getWorld().getTileEntity(event.getPos());
+        TileEntity te = world.getTileEntity(event.getPos());
         if (te instanceof TileEntitySign) {
             TileEntitySign sign = (TileEntitySign) te;
-            if (event.getEntityPlayer().isSneaking() && miscellanious.clearSigns) {
+            if (player.isSneaking() && miscellanious.clearSigns) {
                 ITextComponent[] text = new ITextComponent[]{new TextComponentString(""), new TextComponentString(""), new TextComponentString(""), new TextComponentString("")};
                 ObfuscationReflectionHelper.setPrivateValue(TileEntitySign.class, sign, text, "signText", "field_145915_a");
                 success = true;
             } else if (miscellanious.editSigns) {
-                event.getEntityPlayer().openEditSign(sign);
+                player.openEditSign(sign);
                 success = true;
             }
         }
@@ -86,23 +87,21 @@ public class PlayerEvents {
         /*
          *Allows the sitting on slab's and stair's.
          */
-        if (!event.getWorld().isRemote && miscellanious.stairSit) {
-            World w = event.getWorld();
+        if (!world.isRemote && miscellanious.stairSit) {
             BlockPos p = event.getPos();
-            IBlockState s = w.getBlockState(p);
-            Block b = w.getBlockState(p).getBlock();
-            EntityPlayer e = event.getEntityPlayer();
+            IBlockState s = world.getBlockState(p);
+            Block b = world.getBlockState(p).getBlock();
 
-            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && e.getHeldItemMainhand() == ItemStack.EMPTY) {
+            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySitting.OCCUPIED.containsKey(p) && player.getHeldItemMainhand() == ItemStack.EMPTY) {
                 if (b instanceof BlockSlab && s.getValue(BlockSlab.HALF) != BlockSlab.EnumBlockHalf.BOTTOM)
                     return;
                 else if (b instanceof BlockStairs && s.getValue(BlockStairs.HALF) != BlockStairs.EnumHalf.BOTTOM)
                     return;
 
-                EntitySitting sit = new EntitySitting(w, p);
+                EntitySitting sit = new EntitySitting(world, p);
 
-                w.spawnEntity(sit);
-                e.startRiding(sit);
+                world.spawnEntity(sit);
+                player.startRiding(sit);
             }
         }
     }
@@ -112,6 +111,9 @@ public class PlayerEvents {
      */
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        EntityPlayer player = event.getEntityPlayer();
+        Entity target = event.getTarget();
+        ItemStack heldItem = !player.getHeldItemMainhand().isEmpty() ? player.getHeldItemMainhand() : !player.getHeldItemOffhand().isEmpty() ? player.getHeldItemOffhand() : ItemStack.EMPTY;
         /*
           Makes is so that you shift click item frame to reverse it
          */
@@ -122,25 +124,9 @@ public class PlayerEvents {
         /*
           Allows a player to shear name tags off living entities
          */
-        if (!event.getEntityPlayer().getHeldItemMainhand().isEmpty()) {
-            EntityPlayer player = event.getEntityPlayer();
-            ItemStack heldItem = player.getHeldItemMainhand();
+        if (!heldItem.isEmpty()) {
             World world = player.world;
-            Entity target = event.getTarget();
-            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
-                target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
-                ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
-                target.entityDropItem(nameTag, 0);
-                target.setCustomNameTag("");
-                heldItem.damageItem(1, player);
-            }
-        }
-        if (!event.getEntityPlayer().getHeldItemOffhand().isEmpty()) {
-            EntityPlayer player = event.getEntityPlayer();
-            ItemStack heldItem = player.getHeldItemOffhand();
-            World world = player.world;
-            Entity target = event.getTarget();
-            if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
+            if (heldItem.getItem() instanceof ItemShears && target instanceof EntityLivingBase && target.hasCustomName() && !world.isRemote) {
                 target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setStackDisplayName(target.getCustomNameTag());
                 target.entityDropItem(nameTag, 0);
