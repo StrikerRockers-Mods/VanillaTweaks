@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
-import io.github.strikerrocker.vt.handlers.OreDictionaryHandler;
 import io.github.strikerrocker.vt.handlers.VTGuiHandler;
 import io.github.strikerrocker.vt.items.VTItems;
 import io.github.strikerrocker.vt.misc.VTVanillaPropertiesChanger;
@@ -43,7 +42,6 @@ public class VT {
         if (baubles) logInfo("Baubles Support Enabled");
         VTItems.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
-        proxy.registerRenderer();
         network = NetworkRegistry.INSTANCE.newSimpleChannel(VTModInfo.MOD_ID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
@@ -53,7 +51,6 @@ public class VT {
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
-        OreDictionaryHandler.init();
         VTVanillaPropertiesChanger.init();
         CapabilitySelfPlanting.register();
         proxy.init(event);

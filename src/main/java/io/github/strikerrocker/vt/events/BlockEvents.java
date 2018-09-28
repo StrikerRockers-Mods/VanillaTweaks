@@ -3,10 +3,7 @@ package io.github.strikerrocker.vt.events;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.handlers.ConfigHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockMagma;
-import net.minecraft.block.BlockSponge;
-import net.minecraft.block.BlockTNT;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,9 +13,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -36,34 +35,17 @@ import static net.minecraft.block.BlockTNT.EXPLODE;
 
 @Mod.EventBusSubscriber
 public class BlockEvents {
+
+    public static Item mobSpawnerItem = Item.getItemFromBlock(Blocks.MOB_SPAWNER);
+
     /**
      * @param event The (Block) BreakEvent
      */
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
-        /*
-        may return someday if Mojang adjusts for proper placing of spawners
-        Enables mob spawners to drop themselves when harvested with silk touch
-         */
         EntityPlayer player = event.getPlayer();
         World world = event.getWorld();
         BlockPos blockPos = event.getPos();
-        if (false && !player.capabilities.isCreativeMode && event.getState().getBlock() == Blocks.MOB_SPAWNER && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) != 0 && player.canHarvestBlock(Blocks.MOB_SPAWNER.getDefaultState())) {
-            TileEntityMobSpawner spawnerTileEntity = (TileEntityMobSpawner) world.getTileEntity(blockPos);
-            NBTTagCompound spawnerTagCompound = new NBTTagCompound();
-            if (spawnerTileEntity != null) {
-                spawnerTileEntity.getSpawnerBaseLogic().writeToNBT(spawnerTagCompound);
-            }
-            NBTTagCompound stackTagCompound = new NBTTagCompound();
-            stackTagCompound.setTag("BlockEntityTag", spawnerTagCompound);
-            ItemStack spawnerStack = new ItemStack(Blocks.MOB_SPAWNER);
-            spawnerStack.setTagCompound(stackTagCompound);
-            EntityItem spawnerEntityItem = new EntityItem(world, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, spawnerStack);
-            spawnerEntityItem.setDefaultPickupDelay();
-            world.spawnEntity(spawnerEntityItem);
-            event.setExpToDrop(0);
-        }
-
         /*
         Allows the End Portal Frame to be broken
          */
@@ -76,7 +58,7 @@ public class BlockEvents {
         /*
         Makes Hoe act as Sickle
          */
-        ItemStack stack = event.getPlayer().getHeldItemMainhand();
+        ItemStack stack = player.getHeldItemMainhand();
         if (!stack.isEmpty() && stack.getItem() instanceof ItemHoe && canHarvest(event.getState()) && ConfigHandler.drops.hoeAsSickle) {
             BlockPos basePos = event.getPos();
 
@@ -121,6 +103,7 @@ public class BlockEvents {
         IBlockState blockState = event.getPlacedBlock();
         World world = event.getWorld();
         BlockPos pos = event.getPos();
+        ItemStack stack = event.getPlayer().getHeldItem(event.getPlayer().getActiveHand());
         if (blockState == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true) &&
                 BiomeDictionary.getTypes(world.getBiome(pos)).contains(BiomeDictionary.Type.NETHER) && ConfigHandler.drops.spongeDryInNether) {
             world.playSound(null, event.getPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 2.4F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.9F);
@@ -133,6 +116,18 @@ public class BlockEvents {
                     blockTNT.explode(world, pos, blockState.withProperty(EXPLODE, true), event.getPlayer());
                     world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
                 }
+        }
+        //Handles mob spawner placement logic
+        if (stack.getItem() == mobSpawnerItem && stack.hasTagCompound()) {
+            NBTTagCompound stackTag = stack.getTagCompound();
+            assert stackTag != null;
+            NBTTagCompound spawnerDataNBT = stackTag.getCompoundTag("SilkSpawnerData");
+            if (!spawnerDataNBT.isEmpty()) {
+                TileEntity tile = event.getWorld().getTileEntity(event.getPos());
+                if (tile instanceof TileEntityMobSpawner) {
+                    ((TileEntityMobSpawner) tile).getSpawnerBaseLogic().readFromNBT(spawnerDataNBT);
+                }
+            }
         }
     }
 
@@ -147,5 +142,38 @@ public class BlockEvents {
         EntityPlayer harvester = event.getHarvester();
         VTEnchantments.performAction("blazing", harvester, event);
         VTEnchantments.performAction("siphon", harvester, event);
+    }
+
+    /**
+     * Handles mod spawner breaking
+     *
+     * @param event
+     */
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void onBreak(BlockEvent.BreakEvent event) {
+        IBlockState state = event.getState();
+        World world = event.getWorld();
+        TileEntity tile = world.getTileEntity(event.getPos());
+        EntityPlayer player = event.getPlayer();
+        if ((!(state == null) || state.getBlock() instanceof BlockMobSpawner) && !world.isRemote && tile instanceof TileEntityMobSpawner && !(player == null) && ConfigHandler.drops.mobSpawnerSilkTouchDrop) {
+
+            if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItem(player.getActiveHand())) >= 1) {
+                event.setExpToDrop(0);
+
+                ItemStack drop = new ItemStack(Blocks.MOB_SPAWNER);
+
+                NBTTagCompound spawnerData = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic().writeToNBT(new NBTTagCompound());
+                spawnerData.removeTag("Delay");
+                NBTTagCompound stackTag = new NBTTagCompound();
+                stackTag.setTag("SilkSpawnerData", spawnerData);
+                drop.setTagCompound(stackTag);
+
+                Block.spawnAsEntity(world, event.getPos(), drop);
+                //TODO: does this cause problems w/ block protection?
+                world.destroyBlock(event.getPos(), false);
+                world.removeTileEntity(event.getPos());
+                event.setCanceled(true);
+            }
+        }
     }
 }
