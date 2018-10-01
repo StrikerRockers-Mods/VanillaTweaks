@@ -1,6 +1,7 @@
 package io.github.strikerrocker.vt.events;
 
 import com.google.common.collect.Lists;
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.entities.EntitySitting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -34,7 +35,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import static io.github.strikerrocker.vt.events.VTEventHandler.swapSlot;
 import static io.github.strikerrocker.vt.handlers.ConfigHandler.miscellanious;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public class PlayerEvents {
     /**
      * Swaps the players armour with armor stand's armour

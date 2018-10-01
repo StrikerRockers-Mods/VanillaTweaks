@@ -1,6 +1,7 @@
 package io.github.strikerrocker.vt.recipes;
 
 import com.google.common.collect.Lists;
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import io.github.strikerrocker.vt.items.VTItems;
 import net.minecraft.init.Blocks;
@@ -21,7 +22,7 @@ import static io.github.strikerrocker.vt.recipes.RecipeHelper.addShapedRecipe;
 import static io.github.strikerrocker.vt.recipes.RecipeHelper.replaceStairsRecipe;
 
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public class VTRecipeReplacer {
 
     public static void replaceRecipes() {

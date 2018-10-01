@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.events;
 
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
 import io.github.strikerrocker.vt.entities.EntitySitting;
 import io.github.strikerrocker.vt.handlers.ConfigHandler;
@@ -33,7 +34,7 @@ import static io.github.strikerrocker.vt.events.VTEventHandler.canHarvest;
 import static net.minecraft.block.BlockTNT.EXPLODE;
 
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public class BlockEvents {
 
     public static Item mobSpawnerItem = Item.getItemFromBlock(Blocks.MOB_SPAWNER);

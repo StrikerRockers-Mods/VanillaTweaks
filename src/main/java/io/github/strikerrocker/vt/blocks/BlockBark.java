@@ -21,11 +21,6 @@ public class BlockBark extends Block {
     }
 
     @Override
-    public boolean isWood(IBlockAccess world, BlockPos pos) {
-        return true;
-    }
-
-    @Override
     public boolean canSustainLeaves(IBlockState state, IBlockAccess world, BlockPos pos) {
         return true;
     }
