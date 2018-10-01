@@ -128,7 +128,7 @@ public class VTUtils {
     }
 
     public static EntityEntry createEntityEntry(String name, Class clazz, int range, int update, boolean VelocityUpdate) {
-        return EntityEntryBuilder.create().entity(clazz).id(new ResourceLocation(VTModInfo.MOD_ID, name), ind++)
+        return EntityEntryBuilder.create().entity(clazz).id(new ResourceLocation(VTModInfo.MODID, name), ind++)
                 .name(name).tracker(range, update, VelocityUpdate).build();
     }
 }

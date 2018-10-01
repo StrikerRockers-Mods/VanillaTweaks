@@ -51,7 +51,7 @@ import static io.github.strikerrocker.vt.handlers.ConfigHandler.vanilla_tweaks;
 /**
  * The event handler for Vanilla Tweaks
  */
-@Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
+@Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public class VTEventHandler {
     /**
      * Returns if the given chunk is an slime chunk or not
@@ -130,7 +130,7 @@ public class VTEventHandler {
         if (event.getObject() instanceof EntityItem) {
             Item item = ((EntityItem) event.getObject()).getItem().getItem();
             if (item instanceof ItemSeeds || item instanceof ItemSeedFood) {
-                event.addCapability(new ResourceLocation(VTModInfo.MOD_ID), new SelfPlantingProvider());
+                event.addCapability(new ResourceLocation(VTModInfo.MODID), new SelfPlantingProvider());
             }
         }
     }
@@ -169,8 +169,8 @@ public class VTEventHandler {
      */
     @SubscribeEvent
     public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (VTModInfo.MOD_ID.equals(event.getModID())) {
-            ConfigManager.sync(VTModInfo.MOD_ID, Config.Type.INSTANCE);
+        if (VTModInfo.MODID.equals(event.getModID())) {
+            ConfigManager.sync(VTModInfo.MODID, Config.Type.INSTANCE);
         }
     }
 

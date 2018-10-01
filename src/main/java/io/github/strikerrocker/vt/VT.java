@@ -20,17 +20,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod(modid = VTModInfo.MOD_ID, name = VTModInfo.NAME, version = VTModInfo.VERSION, dependencies = "required-after:forge@[14.23.3.2698,)  ;", updateJSON = VTModInfo.UPDATE)
+@Mod(modid = VTModInfo.MODID, name = VTModInfo.NAME, version = VTModInfo.VERSION, dependencies = "required-after:forge@[14.23.3.2698,)  ;", updateJSON = VTModInfo.UPDATE)
 public class VT {
 
-    @SidedProxy(modId = VTModInfo.MOD_ID, clientSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")
+    @SidedProxy(modId = VTModInfo.MODID, clientSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")
     public static VTCommonProxy proxy;
 
-    @Mod.Instance(VTModInfo.MOD_ID)
+    @Mod.Instance(VTModInfo.MODID)
     public static VT instance;
     public static boolean baubles = false;
     public static SimpleNetworkWrapper network;
-    private static Logger logger = LogManager.getLogger(VTModInfo.MOD_ID);
+    private static Logger logger = LogManager.getLogger(VTModInfo.MODID);
 
     public static void logInfo(String message) {
         logger.info("VanillaTweaks : " + message);
@@ -42,7 +42,7 @@ public class VT {
         if (baubles) logInfo("Baubles Support Enabled");
         VTItems.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(VTModInfo.MOD_ID);
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(VTModInfo.MODID);
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
         network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
         logInfo("Pre-Initialization Complete");

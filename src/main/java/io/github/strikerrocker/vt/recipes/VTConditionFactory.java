@@ -17,28 +17,28 @@ public class VTConditionFactory implements IConditionFactory {
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
         boolean value = JsonUtils.getBoolean(json, "value", true);
         String key = JsonUtils.getString(json, "type");
-        if (key.equals(VTModInfo.MOD_ID + ":storage_blocks")) {
+        if (key.equals(VTModInfo.MODID + ":storage_blocks")) {
             return () -> ConfigHandler.vanilla_tweaks.storageBlocks == value;
         }
-        if (key.equals(VTModInfo.MOD_ID + ":pedestal")) {
+        if (key.equals(VTModInfo.MODID + ":pedestal")) {
             return () -> ConfigHandler.vanilla_tweaks.pedestal == value;
         }
-        if (key.equals(VTModInfo.MOD_ID + ":pad")) {
+        if (key.equals(VTModInfo.MODID + ":pad")) {
             return () -> ConfigHandler.vanilla_tweaks.craftingPad == value;
         }
-        if (key.equals(VTModInfo.MOD_ID + ":slime")) {
+        if (key.equals(VTModInfo.MODID + ":slime")) {
             return () -> ConfigHandler.vanilla_tweaks.slimeChunkFinder == value;
         }
-        if (key.equals(VTModInfo.MOD_ID + ":barks")) {
+        if (key.equals(VTModInfo.MODID + ":barks")) {
             return () -> ConfigHandler.miscellanious_restart.barks == value;
         }
-        if (key.equals(VTModInfo.MOD_ID + ":chest")) {
+        if (key.equals(VTModInfo.MODID + ":chest")) {
             return () -> ConfigHandler.recipes.useBetterChestRecipe == value;
         }
-        if (key.equals(VTModInfo.MOD_ID + ":leather")) {
+        if (key.equals(VTModInfo.MODID + ":leather")) {
             return () -> ConfigHandler.recipes.leather == value;
         }
-        if (key.equals(VTModInfo.MOD_ID + ":bauble")) {
+        if (key.equals(VTModInfo.MODID + ":bauble")) {
             return () -> VT.baubles == value;
         }
         return null;

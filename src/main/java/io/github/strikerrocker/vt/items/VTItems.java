@@ -22,7 +22,7 @@ public class VTItems {
     public static final ItemDynamite dynamite = new ItemDynamite("dynamite");
     public static final Item fried_egg = new ItemFood(3, 0.6f, false).setRegistryName("friedegg").setTranslationKey("friedegg");
     public static final ItemSlimeBucket slime = new ItemSlimeBucket("slime");
-    private static final ItemArmor.ArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MOD_ID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
+    private static final ItemArmor.ArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
     public static final ItemArmor binocular = new ItemArmor(binocular_material, EntityEquipmentSlot.HEAD, "binoculars");
     private static final Item lens = new Item().setTranslationKey("lens").setRegistryName("lens");
     public static Item bb;

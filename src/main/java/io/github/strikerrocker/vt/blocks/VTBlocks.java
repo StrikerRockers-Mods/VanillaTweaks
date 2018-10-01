@@ -45,7 +45,7 @@ public class VTBlocks {
         for (Block block : blocks) {
             registry.register(block);
         }
-        GameRegistry.registerTileEntity(pedestal.getTileEntityClass(), pedestal.getRegistryName().toString());
+        GameRegistry.registerTileEntity(pedestal.getTileEntityClass(), pedestal.getRegistryName());
     }
 
 
