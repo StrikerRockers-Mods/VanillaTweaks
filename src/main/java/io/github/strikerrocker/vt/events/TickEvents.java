@@ -27,7 +27,7 @@ import java.util.Deque;
 import java.util.List;
 
 
-@Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
+@Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public class TickEvents {
 
     /**
@@ -37,13 +37,13 @@ public class TickEvents {
      */
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (ConfigHandler.miscellanious.autoSeedPlanting && !event.world.isRemote) {
-            World world = event.world;
+        World world = event.world;
+        if (ConfigHandler.miscellanious.autoSeedPlanting && !world.isRemote) {
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
-            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null).handlePlantingLogic(entityItem));
-            for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
-                VTEnchantmentBase.vtEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
+            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> (entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).handlePlantingLogic(entityItem));
         }
+        for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
+            VTEnchantmentBase.vtEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
     }
 
     /**

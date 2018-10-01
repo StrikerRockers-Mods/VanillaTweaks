@@ -25,17 +25,11 @@ public class ItemDynamite extends Item {
         setRegistryName(name);
     }
 
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-
         ItemStack itemstack = playerIn.getHeldItem(handIn);
-
-        if (!playerIn.isCreative()) {
-            itemstack.shrink(1);
-        }
-
+        if (!playerIn.isCreative()) itemstack.shrink(1);
         worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-
-
         if (!worldIn.isRemote) {
             EntityDynamite dynamite = new EntityDynamite(worldIn, playerIn);
             playerIn.getCooldownTracker().setCooldown(this, 20);

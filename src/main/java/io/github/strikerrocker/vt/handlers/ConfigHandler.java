@@ -6,7 +6,7 @@ import net.minecraftforge.common.config.Config;
 /**
  * Created by StrikerRocker on 30/4/18.
  */
-@Config(modid = VTModInfo.MOD_ID, name = VTModInfo.NAME, category = "")
+@Config(modid = VTModInfo.MODID, name = VTModInfo.NAME, category = "")
 public class ConfigHandler {
 
     public static Drops drops = new Drops();

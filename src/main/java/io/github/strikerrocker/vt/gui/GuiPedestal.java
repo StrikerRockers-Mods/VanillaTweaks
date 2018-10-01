@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiPedestal extends GuiContainer {
 
-    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(VTModInfo.MOD_ID, "textures/gui/pedestal.png");
+    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(VTModInfo.MODID, "textures/gui/pedestal.png");
 
     private final InventoryPlayer playerInv;
 

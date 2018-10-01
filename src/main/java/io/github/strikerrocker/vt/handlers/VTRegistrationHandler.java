@@ -31,7 +31,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import static io.github.strikerrocker.vt.VT.proxy;
 
-@Mod.EventBusSubscriber(modid = VTModInfo.MOD_ID)
+@Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public class VTRegistrationHandler {
 
     @SubscribeEvent

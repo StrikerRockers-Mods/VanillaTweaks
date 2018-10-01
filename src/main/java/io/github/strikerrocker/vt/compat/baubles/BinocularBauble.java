@@ -6,17 +6,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import static io.github.strikerrocker.vt.VT.proxy;
-
 public class BinocularBauble extends Item implements IBauble {
     public BinocularBauble() {
         this.setTranslationKey("binocular_bauble");
         this.setRegistryName("binocular_bauble");
         this.setMaxStackSize(1);
-    }
-
-    public void registerItemModel() {
-        proxy.registerItemRenderer(this, 0, "binocular_bauble");
     }
 
     @Override
@@ -26,7 +20,6 @@ public class BinocularBauble extends Item implements IBauble {
 
     @Override
     public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
-
     }
 
     @Override
@@ -35,7 +28,6 @@ public class BinocularBauble extends Item implements IBauble {
 
     @Override
     public void onUnequipped(ItemStack itemstack, EntityLivingBase player) {
-
     }
 
     @Override
