@@ -25,14 +25,14 @@ item.binocular_bauble.name=Binoklis (Baubles)
 #advancement
 advancements.vt.storage=Glabāšanas Bloki
 advancements.vt.zoom=Pievilkšana
-advancements.vt.friedegg=Fried Egg!!
+advancements.vt.friedegg=Cepta Ola!!
 
 #advancement desc
-advancements.vt.storage.desc=Craft the storage block
-advancements.vt.pad.desc=Craft an Crafting Pad
-advancements.vt.zoom.desc=Craft an Binoculars
-advancements.vt.boom.desc=Craft an Dynamite
-advancements.vt.friedegg.desc=Smelt an Egg
+advancements.vt.storage.desc=Izveido glabāšanas bloku
+advancements.vt.pad.desc=Izveido Darba Palikni
+advancements.vt.zoom.desc=Izveido Binokli
+advancements.vt.boom.desc=Izveido Dinamītu
+advancements.vt.friedegg.desc=Izcep Olu
 
 #enchantments
 enchantment.nimble=Veikls
