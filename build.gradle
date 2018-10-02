@@ -7,6 +7,9 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
+plugins{
+    id "thefireplace.en2ud" version "0.9"
+}
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "1.3.7"
@@ -35,7 +38,6 @@ repositories {
         url = "https://jitpack.io"
     }
 }
-
 
 dependencies {
     deobfCompile "mezz.jei:jei_${jei_mcversion}:${jei_version}:api"
@@ -66,4 +68,8 @@ jar {
                 'Timestamp'     : System.currentTimeMillis()
         ])
     }
+}
+
+en2ud {
+    modid = "vt"
 }

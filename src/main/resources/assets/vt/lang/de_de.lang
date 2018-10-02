@@ -13,6 +13,7 @@ tile.buttonWood.name=Holzknopf
 tile.sand.name=Sand/Roter Sand
 tile.pedestal.name=Podest
 
+#items
 item.dynamite.name=Dynamit
 item.friedegg.name=Spiegelei
 item.pad.name=Werkbankunterlage
@@ -21,20 +22,21 @@ item.binoculars.name=Fernglas
 item.slime.name=Schleimfinder
 item.binocular_bauble.name=Fernglas (Baubles)
 
-key.potionDisplay=Trankeffekt-Anzeige
-
+#advancement
 advancements.vt.pad=Vanilla Tweaks
 advancements.vt.storage=Komprimierte Blöcke
 advancements.vt.zoom=Zoom
 advancements.vt.boom=Bumm!!
 advancements.vt.friedegg=Spiegelei!!
 
+#advancement desc
 advancements.vt.storage.desc=Stelle einen komprimierten Block her
 advancements.vt.pad.desc=Stelle eine Werkbankunterlage her
 advancements.vt.zoom.desc=Stelle ein Fernglas her
 advancements.vt.boom.desc=Stelle Dynamit her
 advancements.vt.friedegg.desc=Brate ein Ei
 
+#enchantments
 enchantment.nimble=Flink
 enchantment.hops=Hops
 enchantment.vigor=Lebenskraft
@@ -43,10 +45,14 @@ enchantment.blazing=Lodernd
 enchantment.siphon=Siphon
 enchantment.homing=Zielsuchend
 
-key.category.vt:general=VanillaTweaks
-key.vt:zoom=Zoom-Taste
+#keybinds
+key.category.vt=VanillaTweaks
+key.vt:zoom=Zoom Key
 
+#misc
 vt:portal_destroyed=§cDein Rückkehrportal wurde zerstört.
+entity.dynamite.name=Dynamite
+tooltip.entity=Spawns: %s
 
 enchantment.level.11=XI
 enchantment.level.12=XII
@@ -546,5 +552,3 @@ potion.potency.252=CCLIII
 potion.potency.253=CCLIV
 potion.potency.254=CCLV
 potion.potency.255=CCLVI
-
-tooltip.entity=Spawns: %s

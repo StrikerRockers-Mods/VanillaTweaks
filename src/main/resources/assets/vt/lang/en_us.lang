@@ -49,8 +49,10 @@ enchantment.homing=Homing
 key.category.vt=VanillaTweaks
 key.vt:zoom=Zoom Key
 
+#misc
 vt:portal_destroyed=§cYour return portal has been destroyed.
 entity.dynamite.name=Dynamite
+tooltip.entity=Spawns: %s
 
 enchantment.level.11=XI
 enchantment.level.12=XII
@@ -104,7 +106,7 @@ enchantment.level.59=LIX
 enchantment.level.60=LX
 enchantment.level.61=LXI
 enchantment.level.62=LXII
-enchantment.level.63=LXIII
+enchantment.level.63=LXIII77
 enchantment.level.64=LXIV
 enchantment.level.65=LXV
 enchantment.level.66=LXVI
@@ -550,4 +552,3 @@ potion.potency.252=CCLIII
 potion.potency.253=CCLIV
 potion.potency.254=CCLV
 potion.potency.255=CCLVI
-tooltip.entity=Spawns: %s
