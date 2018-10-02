@@ -1,7 +1,7 @@
 #blocks
-tile.flintBlock.name=Block o' Flint
-tile.sugarBlock.name=Block o' Sugar
-tile.charcoalBlock.name=Block o' Charcoal
+tile.flintblock.name=Block o' Flint
+tile.sugarblock.name=Block o' Sugar
+tile.charcoalblock.name=Block o' Charcoal
 tile.buttonStone.name=Stone Buttono
 tile.buttonWood.name=Wooden Buttono
 tile.sand.name=Sand/Red Sand
@@ -12,6 +12,21 @@ item.pad.name=Craftin' Pad
 item.lens.name=Binocular Lens
 item.binoculars.name=Binoculars
 
+#advancement
+advancements.vt.pad=Vanilla Tweaks
+advancements.vt.storage=Storage Blocks
+advancements.vt.zoom=Zoom
+advancements.vt.boom=Boom!!
+advancements.vt.friedegg=Fried Egg!!
+
+#advancement desc
+advancements.vt.storage.desc=Craft the storage block
+advancements.vt.pad.desc=Craft an Crafting Pad
+advancements.vt.zoom.desc=Craft an Binoculars
+advancements.vt.boom.desc=Craft an Dynamite
+advancements.vt.friedegg.desc=Smelt an Egg
+
+#enchantments
 enchantment.nimble=Nimble
 enchantment.hops=Hops
 enchantment.vigor=Vigor
@@ -19,6 +34,14 @@ enchantment.veteran=Veteran
 enchantment.blazing=Blazin'
 enchantment.siphon=Siphon
 enchantment.homing=Homin'
+
+#keybinds
+key.category.vt=VanillaTweaks
+key.vt:zoom=Zoom Key
+
+vt:portal_destroyed=§cYour return portal has been destroyed.
+entity.dynamite.name=Dynamite
+tooltip.entity=Spawns: %s
 
 enchantment.level.11=XI
 enchantment.level.12=XII
@@ -518,4 +541,3 @@ potion.potency.252=CCLIII
 potion.potency.253=CCLIV
 potion.potency.254=CCLV
 potion.potency.255=CCLVI
-tooltip.entity=Spawns: %s

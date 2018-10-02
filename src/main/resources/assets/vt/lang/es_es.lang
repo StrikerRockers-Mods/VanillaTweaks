@@ -5,15 +5,24 @@ tile.charcoalblock.name=Bloque de Carb�n
 tile.buttonStone.name=Bot�n de Piedra
 tile.buttonWood.name=Bot�n de Madera
 tile.sand.name=Arena/Arena Roja
+tile.acaciabark.name=Acacia Bark
+tile.birchbark.name=Birch Bark
+tile.darkoakbark.name=Dark Oak Bark
+tile.oakbark.name=Oak Bark
+tile.sprucebark.name=Spruce Bark
+tile.junglebark.name=Jungle Bark
+tile.pedestal.name=Pedestal
 
+#items
 item.dynamite.name=Dinamita
 item.friedegg.name=Huevo Frito
 item.pad.name=Almohadilla Artesan�a
 item.lens.name=Binocular Lente
 item.binoculars.name=Prism�ticos
+item.slime.name=Slime Finder
+item.binocular_bauble.name=Binocular Lente(Baubles)
 
-key.potionDisplay=Efecto Poci�n Display
-
+#enchantments
 enchantment.nimble=�gil
 enchantment.hops=L�pulo
 enchantment.vigor=Vigor
@@ -21,6 +30,30 @@ enchantment.veteran=Veterano
 enchantment.blazing=Flameante
 enchantment.siphon=Sif�n
 enchantment.homing=Buscador de Blancos
+
+
+#advancement
+advancements.vt.pad=Vanilla Tweaks
+advancements.vt.storage=Storage Blocks
+advancements.vt.zoom=Zoom
+advancements.vt.boom=Boom!!
+advancements.vt.friedegg=Fried Egg!!
+
+#advancement desc
+advancements.vt.storage.desc=Craft the storage block
+advancements.vt.pad.desc=Craft an Crafting Pad
+advancements.vt.zoom.desc=Craft an Binoculars
+advancements.vt.boom.desc=Craft an Dynamite
+advancements.vt.friedegg.desc=Smelt an Egg
+
+#keybinds
+key.category.vt=VanillaTweaks
+key.vt:zoom=Zoom Key
+
+#miscs
+vt:portal_destroyed=§cYour return portal has been destroyed.
+entity.dynamite.name=Dynamite
+tooltip.entity=Spawns: %s
 
 enchantment.level.11=XI
 enchantment.level.12=XII
@@ -520,4 +553,3 @@ potion.potency.252=CCLIII
 potion.potency.253=CCLIV
 potion.potency.254=CCLV
 potion.potency.255=CCLVI
-tooltip.entity=Spawns: %s
