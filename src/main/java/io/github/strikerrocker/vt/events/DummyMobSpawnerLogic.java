@@ -6,11 +6,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class DummyMobSpawnerLogic extends MobSpawnerBaseLogic {
-    public static final DummyMobSpawnerLogic SHARED_INST = new DummyMobSpawnerLogic();
+    static final DummyMobSpawnerLogic SHARED_INST = new DummyMobSpawnerLogic();
 
     @Override
     public void broadcastEvent(int id) {
-
     }
 
     @Override
