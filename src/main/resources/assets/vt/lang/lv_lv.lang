@@ -1,0 +1,52 @@
+#blocks
+tile.flintblock.name=Krama Bloks
+tile.sugarblock.name=Cukura Bloks
+tile.charcoalblock.name=Kokogles Bloks
+tile.acaciabark.name=Akācijas Miza
+tile.birchbark.name=Bērza Miza
+tile.darkoakbark.name=Tumšā Ozola Miza
+tile.oakbark.name=Ozola Miza
+tile.sprucebark.name=Egles Miza
+tile.junglebark.name=Džungļu Koka Miza
+tile.buttonStone.name=Akmens Poga
+tile.buttonWood.name=Koka Poga
+tile.sand.name=Smiltis/Sarkanās Smiltis
+tile.pedestal.name=Pedestālis
+
+#Items
+item.dynamite.name=Dinamīts
+item.friedegg.name=Cepta Ola
+item.pad.name=Darba Paliknis
+item.lens.name=Binokļa Lēcas
+item.binoculars.name=Binoklis
+item.slime.name=Gļotu Meklētājs
+item.binocular_bauble.name=Binoklis (Baubles)
+
+#advancement
+advancements.vt.storage=Glabāšanas Bloki
+advancements.vt.zoom=Pievilkšana
+advancements.vt.friedegg=Cepta Ola!!
+
+#advancement desc
+advancements.vt.storage.desc=Izveido glabāšanas bloku
+advancements.vt.pad.desc=Izveido Darba Palikni
+advancements.vt.zoom.desc=Izveido Binokli
+advancements.vt.boom.desc=Izveido Dinamītu
+advancements.vt.friedegg.desc=Izcep Olu
+
+#enchantments
+enchantment.nimble=Veikls
+enchantment.hops=Lecošs
+enchantment.vigor=Sparīgs
+enchantment.veteran=Veterāns
+enchantment.blazing=Liesmojošs
+enchantment.siphon=Sifons
+enchantment.homing=Sekojošs
+
+#keybinds
+key.vt:zoom=Pievilkšanas Taustiņš
+
+#misc
+vt:portal_destroyed=§cTavs atgriešanās portāls ir iznīcināts.
+entity.dynamite.name=Dinamīts
+tooltip.entity=Rodas: %s
