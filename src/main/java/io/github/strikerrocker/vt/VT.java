@@ -20,7 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod(modid = VTModInfo.MODID, name = VTModInfo.NAME, version = VTModInfo.VERSION, dependencies = "required-after:forge@[14.23.3.2698,)  ;", updateJSON = VTModInfo.UPDATE)
+@Mod(modid = VTModInfo.MODID, useMetadata = true)
 public class VT {
 
     @SidedProxy(modId = VTModInfo.MODID, clientSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTClientProxy", serverSide = VTModInfo.PACKAGE_LOCATION + ".proxies.VTCommonProxy")

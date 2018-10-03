@@ -5,14 +5,21 @@
     "description": "",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://strikerrocker.github.io/VanillaTweaks",
-    "updateUrl": "",
+    "url": "http://github.com/strikerrocker/VanillaTweaks",
+    "updateUrl": "https://raw.githubusercontent.com/strikerrocker/VanillaTweaks/1.12/version.java",
     "authorList": [
       "StrikerRocker"
     ],
     "credits": "Thanks to Anon10w1z for creating the mod , Subaraki for the textures and KaptainWutax for testing many things",
     "logoFile": "assets/vt/textures/logos/logo.png",
     "screenshots": [],
-    "dependencies": []
+    "dependencies": [
+      "forge",
+      "jei",
+      "baubles"
+    ],
+    "requiredMods": [
+      "forge@[14.23.3.2698,)"
+    ]
   }
 ]
