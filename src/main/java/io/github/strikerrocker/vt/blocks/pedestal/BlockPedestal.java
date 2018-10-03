@@ -1,9 +1,9 @@
 package io.github.strikerrocker.vt.blocks.pedestal;
 
 import io.github.strikerrocker.vt.VT;
-import io.github.strikerrocker.vt.blocks.BlockTileEntity;
 import io.github.strikerrocker.vt.blocks.VTBlocks;
 import io.github.strikerrocker.vt.handlers.VTGuiHandler;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,20 +13,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
-public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
+public class BlockPedestal extends Block {
 
     public BlockPedestal() {
-        super(Material.ROCK, "pedestal", MapColor.GRAY_STAINED_HARDENED_CLAY);
-        String name = "pedestal";
-        this.setTranslationKey(name);
+        super(Material.ROCK, MapColor.GRAY_STAINED_HARDENED_CLAY);
+        this.setTranslationKey("pedestal");
+        this.setRegistryName("pedestal");
     }
-
 
     @Override
     @Deprecated
@@ -67,16 +67,11 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
         ItemStack ped = new ItemStack(VTBlocks.pedestal);
         if (!stack.isEmpty()) {
             EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-            EntityItem pedestal = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), ped);
             world.spawnEntity(item);
-            world.spawnEntity(pedestal);
         }
+        EntityItem pedestal = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), ped);
+        world.spawnEntity(pedestal);
         super.breakBlock(world, pos, state);
-    }
-
-    @Override
-    public Class<TileEntityPedestal> getTileEntityClass() {
-        return TileEntityPedestal.class;
     }
 
     @Override
@@ -88,6 +83,14 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
     @Override
     public TileEntityPedestal createTileEntity(World world, IBlockState state) {
         return new TileEntityPedestal();
+    }
+
+    private TileEntityPedestal getTileEntity(IBlockAccess world, BlockPos pos) {
+        return (TileEntityPedestal) world.getTileEntity(pos);
+    }
+
+    public Class<TileEntityPedestal> getTileEntityClass() {
+        return TileEntityPedestal.class;
     }
 
 }
