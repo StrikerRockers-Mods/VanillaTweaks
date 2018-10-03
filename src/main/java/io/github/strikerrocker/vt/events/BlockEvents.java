@@ -37,7 +37,7 @@ import static net.minecraft.block.BlockTNT.EXPLODE;
 @Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public class BlockEvents {
 
-    public static Item mobSpawnerItem = Item.getItemFromBlock(Blocks.MOB_SPAWNER);
+    private static Item mobSpawnerItem = Item.getItemFromBlock(Blocks.MOB_SPAWNER);
 
     /**
      * @param event The (Block) BreakEvent
@@ -148,7 +148,7 @@ public class BlockEvents {
     /**
      * Handles mod spawner breaking
      *
-     * @param event
+     * @param event The BreakEvent
      */
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onBreak(BlockEvent.BreakEvent event) {

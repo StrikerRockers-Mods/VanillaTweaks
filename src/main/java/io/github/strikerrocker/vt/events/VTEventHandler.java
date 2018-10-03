@@ -109,10 +109,10 @@ public class VTEventHandler {
      *
      * @param event AnvilUpdateEvent
      */
-    @SubscribeEvent
+    //@SubscribeEvent
     public static void onAnvil(AnvilUpdateEvent event) {
         //TODO Fix this
-        if (DyeUtils.isDye(event.getRight()) && false) {
+        if (DyeUtils.isDye(event.getRight())) {
             ItemStack stack = event.getLeft().copy();
             stack.setStackDisplayName(VTUtils.getColorTextFromStack(event.getRight()) + event.getLeft().getDisplayName());
             event.setOutput(stack);
