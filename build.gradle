@@ -22,7 +22,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.3.2698"
+    version = "1.12.2-14.23.4.2740"
     runDir = "run"
     mappings = "stable_39"
 }
@@ -50,8 +50,7 @@ processResources {
     inputs.property "mcversion", project.minecraft.version
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-
-        // replace version and mcversion
+        // replace version and mcversion in mcmodinfo file
         expand 'version': project.version, 'mcversion': project.minecraft.version
     }
     from(sourceSets.main.resources.srcDirs) {
