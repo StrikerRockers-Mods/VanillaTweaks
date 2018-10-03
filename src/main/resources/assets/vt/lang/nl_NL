@@ -1,0 +1,55 @@
+#blocks
+tile.flintblock.name=Blok van Vuursteen
+tile.sugarblock.name=Blok van Suiker
+tile.charcoalblock.name=Blok van Houtskool
+tile.acaciabark.name=Acacia Bast
+tile.birchbark.name=Berken Bast
+tile.darkoakbark.name=Dokere Eiken Bast
+tile.oakbark.name=Eiken Bast
+tile.sprucebark.name=Dennen Bast
+tile.junglebark.name=Jungel Bast
+tile.buttonStone.name=Stenen Knop
+tile.buttonWood.name=Houten Knop
+tile.sand.name=Zand/Rood Zand
+tile.pedestal.name=Voetstuk
+
+#Items
+item.dynamite.name=Dynamiet
+item.friedegg.name=Gebakken Ei
+item.pad.name=Bouw Onderlegger
+item.lens.name=Verrekijker lens
+item.binoculars.name=Verrekijker
+item.slime.name=Slijm Vinder
+item.binocular_bauble.name=Verrekijker(Baubles)
+
+#advancement
+advancements.vt.pad=Vanille Aanpassingen
+advancements.vt.storage=Opslag Blokken
+advancements.vt.zoom=Inzoemen
+advancements.vt.boom=Boem!!
+advancements.vt.friedegg=Gebakken Eieren!!
+
+#advancement desc
+advancements.vt.storage.desc=Maak het Opslag Blok
+advancements.vt.pad.desc=Maak een Bouw Onderlegger
+advancements.vt.zoom.desc=Maak een Verrekijker
+advancements.vt.boom.desc=Maak een Dynamiet
+advancements.vt.friedegg.desc=Bak een Ei
+
+#enchantments
+enchantment.nimble=Wendbaar
+enchantment.hops=Huppelen
+enchantment.vigor=Vitaliteit
+enchantment.veteran=Veteraan
+enchantment.blazing=Vlammend
+enchantment.siphon=Hevel
+enchantment.homing=Doelzoekend
+
+#keybinds
+key.category.vt=VanilleAanpassingen
+key.vt:zoom=Inzoem Toets
+
+#misc
+vt:portal_destroyed=§cJe terugkeerportaal is vernietiged.
+entity.dynamite.name=Dynamiet
+tooltip.entity=Brengt voort: %s
