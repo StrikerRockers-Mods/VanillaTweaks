@@ -1,33 +1,21 @@
 **Vanilla Tweaks Version**:
 
- 
-
 **MinecraftForge Version**:
-
- 
 
 **Minecraft Version**:
 
- 
-
 **(Optional) Just Enough Items (JEI) Version**:
 
- 
+**(Optional) Baubles Version**: 
 
 **Client or Server?**:
 - [ ] Client
 - [ ] Server
 
-**Crash Report (via. [Pastebin](http://pastebin.com/))**:
-
- 
+**Crash Report (via. [Hastebin](http://hastebin.com/))**:
 
 **What happens / happened?**:
 
- 
+**How can the issue be reproduced?**:
 
-**How can I reproduce it?**:
-
- 
-
-**(Optional) Mod List**:
+** Mod List**:
