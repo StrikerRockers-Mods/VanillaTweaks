@@ -15,10 +15,12 @@ import java.util.stream.Collectors;
  * Gives you the drops directly when harvesting blocks
  */
 public class EnchantmentSiphon extends VTEnchantmentBase {
-    public EnchantmentSiphon() {
-        super("siphon", Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);
-        this.setName("siphon");
-        this.setRegistryName("siphon");
+    private static String name = "siphon";
+
+    EnchantmentSiphon() {
+        super(name, Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);
+        this.setName(name);
+        this.setRegistryName(name);
     }
 
     @Override

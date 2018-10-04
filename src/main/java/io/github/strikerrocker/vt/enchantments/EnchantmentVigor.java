@@ -18,11 +18,11 @@ import java.util.UUID;
 @EntityTickingEnchantment
 public class EnchantmentVigor extends VTEnchantmentBase {
     private static final UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
-
+    private static String name = "vigor";
     public EnchantmentVigor() {
-        super("vigor", Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, EntityEquipmentSlot.CHEST);
-        this.setRegistryName("vigor");
-        this.setName("vigor");
+        super(name, Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, EntityEquipmentSlot.CHEST);
+        this.setRegistryName(name);
+        this.setName(name);
     }
 
     @Override

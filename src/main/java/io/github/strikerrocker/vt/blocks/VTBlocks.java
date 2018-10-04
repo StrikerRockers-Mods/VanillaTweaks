@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains, initializes, and registers all of Craft++'s blocks
@@ -28,7 +29,7 @@ public class VTBlocks {
     public static final BlockBark sprucebark = new BlockBark("sprucebark", BlockPlanks.EnumType.DARK_OAK.getMapColor());
     public static final BlockBark junglebark = new BlockBark("junglebark", BlockPlanks.EnumType.SPRUCE.getMapColor());
     public static final BlockBark birchbark = new BlockBark("birchbark", MapColor.QUARTZ);
-    public static ArrayList<Block> blocks = new ArrayList();
+    public static List<Block> blocks = new ArrayList();
 
 
     public static void register(IForgeRegistry<Block> registry) {
