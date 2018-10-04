@@ -73,15 +73,21 @@ public class VTRecipeReplacer {
                 }
             }
             if (ConfigHandler.recipes.useBetterStoneToolRecipes) {
-                if (output.getItem() == Items.STONE_AXE || output.getItem() == Items.STONE_HOE || output.getItem() == Items.STONE_PICKAXE || output.getItem() == Items.STONE_SHOVEL ||
-                        output.getItem() == Items.STONE_SWORD) {
-                    recipeRegistry.remove(r.getRegistryName());
-                    recipeRegistry.register(DummyRecipe.from(r));
-                    addShapedRecipe(new ItemStack(Items.STONE_SWORD), "S", "S", "T", 'S', "stone", 'T', "stickWood");
-                    addShapedRecipe(new ItemStack(Items.STONE_SHOVEL), "S", "T", "T", 'S', "stone", 'T', "stickWood");
-                    addShapedRecipe(new ItemStack(Items.STONE_PICKAXE), "SSS", " T ", " T ", 'S', "stone", 'T', "stickWood");
+                if (output.getItem() == Items.STONE_AXE) {
                     addShapedRecipe(new ItemStack(Items.STONE_AXE), "SS", "ST", " T", 'S', "stone", 'T', "stickWood");
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Items.STONE_HOE) {
                     addShapedRecipe(new ItemStack(Items.STONE_HOE), "SS", " T", " T", 'S', "stone", 'T', "stickWood");
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Items.STONE_SWORD) {
+                    addShapedRecipe(new ItemStack(Items.STONE_SWORD), "S", "S", "T", 'S', "stone", 'T', "stickWood");
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Items.STONE_SHOVEL) {
+                    addShapedRecipe(new ItemStack(Items.STONE_SHOVEL), "S", "T", "T", 'S', "stone", 'T', "stickWood");
+                    removeRecipe(recipeRegistry, r);
+                } else if (output.getItem() == Items.STONE_PICKAXE) {
+                    addShapedRecipe(new ItemStack(Items.STONE_PICKAXE), "SSS", " T ", " T ", 'S', "stone", 'T', "stickWood");
+                    removeRecipe(recipeRegistry, r);
                 }
             }
         }

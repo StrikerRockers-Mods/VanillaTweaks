@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.events;
 
+import io.github.strikerrocker.vt.VT;
 import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import io.github.strikerrocker.vt.enchantments.EntityTickingEnchantment;
@@ -40,7 +41,7 @@ public class TickEvents {
         World world = event.world;
         if (ConfigHandler.miscellanious.autoSeedPlanting && !world.isRemote) {
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
-            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).forEach(entityItem -> (entityItem.getCapability(CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING, null)).handlePlantingLogic(entityItem));
+            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.PLANTING, null)).forEach(entityItem -> (entityItem.getCapability(CapabilitySelfPlanting.PLANTING, null)).handlePlantingLogic(entityItem));
         }
         for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
             VTEnchantmentBase.vtEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
@@ -79,7 +80,7 @@ public class TickEvents {
                 }
             }
         } catch (Throwable t) {
-            t.printStackTrace();
+            VT.logger.catching(t);
         }
     }
 }

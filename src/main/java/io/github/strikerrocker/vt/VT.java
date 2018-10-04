@@ -30,8 +30,7 @@ public class VT {
     public static VT instance;
     public static boolean baubles = false;
     public static SimpleNetworkWrapper network;
-    private static Logger logger = LogManager.getLogger(VTModInfo.MODID);
-
+    public static Logger logger = LogManager.getLogger(VTModInfo.MODID);
     public static void logInfo(String message) {
         logger.info("VanillaTweaks : " + message);
     }
@@ -53,7 +52,7 @@ public class VT {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new VTGuiHandler());
         VTVanillaPropertiesChanger.init();
         CapabilitySelfPlanting.register();
-        proxy.init(event);
+        proxy.init();
         logInfo("Initialization Complete");
     }
 

@@ -17,10 +17,11 @@ import java.util.List;
  */
 @EntityTickingEnchantment
 public class EnchantmentHoming extends VTEnchantmentBase {
+    private static String name = "homing";
     public EnchantmentHoming() {
-        super("homing", Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.BOW, EntityEquipmentSlot.MAINHAND);
-        this.setRegistryName("homing");
-        this.setName("homing");
+        super(name, Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.BOW, EntityEquipmentSlot.MAINHAND);
+        this.setRegistryName(name);
+        this.setName(name);
     }
 
     @Override

@@ -6,9 +6,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class EntitySitting extends Entity {
-    public static final HashMap<BlockPos, EntitySitting> OCCUPIED = new HashMap<>();
+    public static final Map<BlockPos, EntitySitting> OCCUPIED = new HashMap<>();
 
     @SuppressWarnings("unused")
     public EntitySitting(World world) {

@@ -91,32 +91,30 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onLivingFall(LivingFallEvent event) {
         EntityLivingBase entityLiving = event.getEntityLiving();
+        World world = event.getEntityLiving().world;
         if (EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, entityLiving.getItemStackFromSlot(EntityEquipmentSlot.FEET)) > 0) {
             event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(VTEnchantments.Hops, entityLiving.getItemStackFromSlot(EntityEquipmentSlot.FEET)));
         }
-        if (entityLiving.world.getBlockState(entityLiving.getPosition().down()) == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true)) {
-            if (!event.getEntityLiving().world.isRemote && event.getDistance() > 3) {
-                World world = event.getEntityLiving().world;
-                Random random = new Random();
-                BlockPos pos = event.getEntityLiving().getPosition().down();
-                int i = random.nextInt(4);
-                switch (i) {
-                    case 1:
-                        VTEventHandler.turnIntoWater(world, pos.east());
-                        break;
-                    case 2:
-                        VTEventHandler.turnIntoWater(world, pos.west());
-                        break;
-                    case 3:
-                        VTEventHandler.turnIntoWater(world, pos.north());
-                        break;
-                    case 4:
-                        VTEventHandler.turnIntoWater(world, pos.south());
-                        break;
-                }
-                world.setBlockState(pos, Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, false));
-                event.setDamageMultiplier(0);
+        if (world.getBlockState(entityLiving.getPosition().down()) == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true) && !world.isRemote && event.getDistance() > 3) {
+            Random random = new Random();
+            BlockPos pos = event.getEntityLiving().getPosition().down();
+            int i = random.nextInt(4);
+            switch (i) {
+                case 1:
+                    VTEventHandler.turnIntoWater(world, pos.east());
+                    break;
+                case 2:
+                    VTEventHandler.turnIntoWater(world, pos.west());
+                    break;
+                case 3:
+                    VTEventHandler.turnIntoWater(world, pos.north());
+                    break;
+                case 4:
+                    VTEventHandler.turnIntoWater(world, pos.south());
+                    break;
             }
+            world.setBlockState(pos, Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, false));
+            event.setDamageMultiplier(0);
         }
     }
 
@@ -141,11 +139,9 @@ public class EntityEvents {
             }
             if (entity instanceof EntityBat && (ConfigHandler.drops.batLeatherDropChance / 10) > Math.random())
                 entity.dropItem(Items.LEATHER, 1);
-            else if (entity instanceof EntityCreeper) {
-                if (event.getSource().damageType != null && (ConfigHandler.drops.creeperDropTntChance / 10) > Math.random()) {
-                    event.getDrops().clear();
-                    entity.dropItem(Item.getItemFromBlock(Blocks.TNT), 1);
-                }
+            else if (entity instanceof EntityCreeper && event.getSource().damageType != null && (ConfigHandler.drops.creeperDropTntChance / 10) > Math.random()) {
+                event.getDrops().clear();
+                entity.dropItem(Item.getItemFromBlock(Blocks.TNT), 1);
             }
         }
         List<EntityItem> drops = event.getDrops();
@@ -156,12 +152,10 @@ public class EntityEvents {
                 Item drop = dropItem.getItem();
                 Entity source = event.getSource().getImmediateSource();
                 if (ConfigHandler.drops.realisticRelationship) {
-                    if (source instanceof EntityWolf && entity instanceof EntitySheep) {
-                        if ((drop == Items.MUTTON || drop == Items.COOKED_MUTTON))
-                            drops.remove(dropEntity);
-                    } else if (source instanceof EntityOcelot && entity instanceof EntityChicken) {
-                        if ((drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN))
-                            drops.remove(dropEntity);
+                    if (source instanceof EntityWolf && entity instanceof EntitySheep && (drop == Items.MUTTON || drop == Items.COOKED_MUTTON)) {
+                        drops.remove(dropEntity);
+                    } else if (source instanceof EntityOcelot && entity instanceof EntityChicken && (drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN)) {
+                        drops.remove(dropEntity);
                     }
                 }
             }
@@ -186,18 +180,18 @@ public class EntityEvents {
                 BlockPos blockPos = new BlockPos(livingEntity.posX, Math.round(livingEntity.posY), livingEntity.posZ);
                 if (f > 0.5 && random.nextFloat() * 30 < (f - 0.4) * 2 && world.canSeeSky(blockPos)) {
                     ItemStack itemstack = livingEntity.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                    boolean doSetFire = true;
+                    boolean setFire = true;
                     if (!itemstack.isEmpty()) {
-                        doSetFire = true;
+                        setFire = true;
                         if (itemstack.isItemStackDamageable()) {
                             itemstack.setItemDamage(itemstack.getItemDamage() + random.nextInt(2));
                             if (itemstack.getItemDamage() >= itemstack.getMaxDamage()) {
                                 livingEntity.renderBrokenItemStack(itemstack);
-                                livingEntity.setItemStackToSlot(EntityEquipmentSlot.HEAD, null);
+                                livingEntity.setItemStackToSlot(EntityEquipmentSlot.HEAD, ItemStack.EMPTY);
                             }
                         }
                     }
-                    if (doSetFire) {
+                    if (setFire) {
                         livingEntity.setFire(10);
                     }
                 }

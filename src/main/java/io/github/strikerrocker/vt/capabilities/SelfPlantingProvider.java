@@ -8,17 +8,17 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class SelfPlantingProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound> {
     private final SelfPlantingHandler handler = new SelfPlantingHandler();
-    private ISelfPlanting instance = CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING.getDefaultInstance();
+    private ISelfPlanting instance = CapabilitySelfPlanting.PLANTING.getDefaultInstance();
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        return capability == CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING;
+        return capability == CapabilitySelfPlanting.PLANTING;
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if (capability == CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING) {
-            return CapabilitySelfPlanting.CAPABILITY_SELF_PLANTING.cast(instance);
+        if (capability == CapabilitySelfPlanting.PLANTING) {
+            return CapabilitySelfPlanting.PLANTING.cast(instance);
         }
         return null;
     }

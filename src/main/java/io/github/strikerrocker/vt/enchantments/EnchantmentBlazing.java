@@ -21,11 +21,12 @@ import java.util.Random;
  */
 public class EnchantmentBlazing extends VTEnchantmentBase {
     private static Random random = new Random();
+    private static String name = "blazing";
 
-    public EnchantmentBlazing() {
-        super("blazing", Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);
-        this.setRegistryName("blazing");
-        this.setName("blazing");
+    EnchantmentBlazing() {
+        super(name, Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, EntityEquipmentSlot.MAINHAND);
+        this.setRegistryName(name);
+        this.setName(name);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class EnchantmentBlazing extends VTEnchantmentBase {
             List<ItemStack> dropsCopy = VTUtils.copyList(drops);
             drops.clear();
             for (ItemStack drop : dropsCopy)
-                if (drop != null) {
+                if (!drop.isEmpty()) {
                     ItemStack smeltingResult = FurnaceRecipes.instance().getSmeltingResult(drop);
                     if (!smeltingResult.isEmpty()) {
                         smeltingResult = smeltingResult.copy();

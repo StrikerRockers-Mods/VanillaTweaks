@@ -132,7 +132,6 @@ public class BlockEvents {
         }
     }
 
-
     /**
      * Enables the Siphon enchantment functionality
      *
@@ -150,31 +149,27 @@ public class BlockEvents {
      *
      * @param event The BreakEvent
      */
-    @SubscribeEvent(priority = EventPriority.HIGH)
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onBreak(BlockEvent.BreakEvent event) {
         IBlockState state = event.getState();
         World world = event.getWorld();
         TileEntity tile = world.getTileEntity(event.getPos());
         EntityPlayer player = event.getPlayer();
-        if ((!(state == null) || state.getBlock() instanceof BlockMobSpawner) && !world.isRemote && tile instanceof TileEntityMobSpawner && !(player == null) && ConfigHandler.drops.mobSpawnerSilkTouchDrop) {
+        int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItem(player.getActiveHand()));
+        if (state.getBlock() instanceof BlockMobSpawner && !world.isRemote && tile instanceof TileEntityMobSpawner && ConfigHandler.drops.mobSpawnerSilkTouchDrop && lvl >= 1) {
+            event.setExpToDrop(0);
+            ItemStack drop = new ItemStack(Blocks.MOB_SPAWNER);
+            NBTTagCompound spawnerData = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic().writeToNBT(new NBTTagCompound());
+            NBTTagCompound stackTag = new NBTTagCompound();
+            spawnerData.removeTag("Delay");
+            stackTag.setTag("SilkSpawnerData", spawnerData);
+            drop.setTagCompound(stackTag);
 
-            if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItem(player.getActiveHand())) >= 1) {
-                event.setExpToDrop(0);
-
-                ItemStack drop = new ItemStack(Blocks.MOB_SPAWNER);
-
-                NBTTagCompound spawnerData = ((TileEntityMobSpawner) tile).getSpawnerBaseLogic().writeToNBT(new NBTTagCompound());
-                spawnerData.removeTag("Delay");
-                NBTTagCompound stackTag = new NBTTagCompound();
-                stackTag.setTag("SilkSpawnerData", spawnerData);
-                drop.setTagCompound(stackTag);
-
-                Block.spawnAsEntity(world, event.getPos(), drop);
-                //TODO: does this cause problems w/ block protection?
-                world.destroyBlock(event.getPos(), false);
-                world.removeTileEntity(event.getPos());
-                event.setCanceled(true);
-            }
+            Block.spawnAsEntity(world, event.getPos(), drop);
+            //TODO: does this cause problems w/ block protection?
+            world.destroyBlock(event.getPos(), false);
+            world.removeTileEntity(event.getPos());
+            event.setCanceled(true);
         }
     }
 }

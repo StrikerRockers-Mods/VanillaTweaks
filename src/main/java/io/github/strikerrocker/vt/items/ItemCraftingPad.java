@@ -16,12 +16,13 @@ import net.minecraft.world.World;
  */
 public class ItemCraftingPad extends Item {
 
-    public ItemCraftingPad(String name) {
+    ItemCraftingPad(String name) {
         this.setRegistryName(name);
         setTranslationKey(name);
         this.setCreativeTab(CreativeTabs.TOOLS);
     }
 
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         playerIn.openGui(VT.instance, 0, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
         return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));

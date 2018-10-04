@@ -12,10 +12,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * Gives the wearer jump boost
  */
 public class EnchantmentHops extends VTEnchantmentBase {
-    public EnchantmentHops() {
-        super("hops", Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, EntityEquipmentSlot.FEET);
-        this.setRegistryName("hops");
-        this.setName("hops");
+    private static String name = "hops";
+
+    EnchantmentHops() {
+        super(name, Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, EntityEquipmentSlot.FEET);
+        this.setRegistryName(name);
+        this.setName(name);
     }
 
     @Override

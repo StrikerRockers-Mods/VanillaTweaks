@@ -13,10 +13,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  */
 @EntityTickingEnchantment
 public class EnchantmentVeteran extends VTEnchantmentBase {
-    public EnchantmentVeteran() {
-        super("veteran", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_HEAD, EntityEquipmentSlot.HEAD);
-        this.setRegistryName("veteran");
-        this.setName("veteran");
+    private static String name = "veteran";
+
+    EnchantmentVeteran() {
+        super(name, Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_HEAD, EntityEquipmentSlot.HEAD);
+        this.setRegistryName(name);
+        this.setName(name);
     }
 
     @Override

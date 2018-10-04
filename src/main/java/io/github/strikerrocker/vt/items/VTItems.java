@@ -7,11 +7,13 @@ import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemFood;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains, initializes, and registers all of VanillaTweaks's items
@@ -23,10 +25,10 @@ public class VTItems {
     public static final Item fried_egg = new ItemFood(3, 0.6f, false).setRegistryName("friedegg").setTranslationKey("friedegg");
     public static final ItemSlimeBucket slime = new ItemSlimeBucket("slime");
     private static final ItemArmor.ArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
-    public static final ItemArmor binocular = new ItemArmor(binocular_material, EntityEquipmentSlot.HEAD, "binoculars");
+    public static final Item binocular = new ItemArmor(binocular_material, 0, EntityEquipmentSlot.HEAD).setMaxStackSize(1).setRegistryName("binoculars").setTranslationKey("binoculars");
     private static final Item lens = new Item().setTranslationKey("lens").setRegistryName("lens");
     public static Item bb;
-    public static ArrayList<Item> items = new ArrayList<>();
+    public static List<Item> items = new ArrayList<>();
 
 
     public static void init() {
