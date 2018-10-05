@@ -53,6 +53,7 @@ key.vt:zoom=Zoom Key
 vt:portal_destroyed=§cYour return portal has been destroyed.
 entity.dynamite.name=Dynamite
 tooltip.entity=Spawns: %s
+slime.chunk=§bSlime Chunk
 
 enchantment.level.11=XI
 enchantment.level.12=XII

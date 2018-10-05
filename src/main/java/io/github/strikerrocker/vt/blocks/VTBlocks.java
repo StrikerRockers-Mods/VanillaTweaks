@@ -25,10 +25,10 @@ public class VTBlocks {
     public static final BlockPedestal pedestal = new BlockPedestal();
     public static final BlockBark acaciabark = new BlockBark("acaciabark", MapColor.STONE);
     public static final BlockBark darkoakbark = new BlockBark("darkoakbark", BlockPlanks.EnumType.DARK_OAK.getMapColor());
-    public static final BlockBark oakbark = new BlockBark("oakbark", BlockPlanks.EnumType.SPRUCE.getMapColor());
-    public static final BlockBark sprucebark = new BlockBark("sprucebark", BlockPlanks.EnumType.DARK_OAK.getMapColor());
-    public static final BlockBark junglebark = new BlockBark("junglebark", BlockPlanks.EnumType.SPRUCE.getMapColor());
-    public static final BlockBark birchbark = new BlockBark("birchbark", MapColor.QUARTZ);
+    public static final BlockBark oakbark = new BlockBark("oakbark", BlockPlanks.EnumType.OAK.getMapColor());
+    public static final BlockBark sprucebark = new BlockBark("sprucebark", BlockPlanks.EnumType.SPRUCE.getMapColor());
+    public static final BlockBark junglebark = new BlockBark("junglebark", BlockPlanks.EnumType.JUNGLE.getMapColor());
+    public static final BlockBark birchbark = new BlockBark("birchbark", BlockPlanks.EnumType.BIRCH.getMapColor());
     public static List<Block> blocks = new ArrayList();
 
 
