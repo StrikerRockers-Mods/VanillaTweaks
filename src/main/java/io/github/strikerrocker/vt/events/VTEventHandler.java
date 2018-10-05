@@ -201,11 +201,13 @@ public class VTEventHandler {
      * @param pos     position
      */
     static void turnIntoWater(World worldIn, BlockPos pos) {
-        if (worldIn.provider.doesWaterVaporize()) {
-            worldIn.setBlockToAir(pos);
-        } else {
-            worldIn.setBlockState(pos, Blocks.WATER.getDefaultState());
-            worldIn.neighborChanged(pos, Blocks.WATER, pos);
+        if (worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos)) {
+            if (worldIn.provider.doesWaterVaporize()) {
+                worldIn.setBlockToAir(pos);
+            } else {
+                worldIn.setBlockState(pos, Blocks.WATER.getDefaultState());
+                worldIn.neighborChanged(pos, Blocks.WATER, pos);
+            }
         }
     }
 
