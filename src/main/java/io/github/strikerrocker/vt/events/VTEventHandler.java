@@ -180,6 +180,7 @@ public class VTEventHandler {
      * @param event The tooltip event
      */
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void onToolTipEvent(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         if (stack.hasTagCompound()) {
