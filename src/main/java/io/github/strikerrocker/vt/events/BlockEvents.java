@@ -104,7 +104,7 @@ public class BlockEvents {
         IBlockState blockState = event.getPlacedBlock();
         World world = event.getWorld();
         BlockPos pos = event.getPos();
-        ItemStack stack = event.getPlayer().getHeldItem(event.getPlayer().getActiveHand());
+        ItemStack stack = event.getPlayer().getHeldItem(event.getHand());
         if (blockState == Blocks.SPONGE.getDefaultState().withProperty(BlockSponge.WET, true) &&
                 BiomeDictionary.getTypes(world.getBiome(pos)).contains(BiomeDictionary.Type.NETHER) && ConfigHandler.drops.spongeDryInNether) {
             world.playSound(null, event.getPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 2.4F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.9F);
