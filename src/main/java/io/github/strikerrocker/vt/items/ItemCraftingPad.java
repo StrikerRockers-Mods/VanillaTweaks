@@ -18,7 +18,7 @@ public class ItemCraftingPad extends Item {
 
     ItemCraftingPad(String name) {
         this.setRegistryName(name);
-        setTranslationKey(name);
+        this.setTranslationKey(name);
         this.setCreativeTab(CreativeTabs.TOOLS);
     }
 
