@@ -21,8 +21,8 @@ public class ItemDynamite extends Item {
     public ItemDynamite(String name) {
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(16);
-        setTranslationKey(name);
-        setRegistryName(name);
+        this.setTranslationKey(name);
+        this.setRegistryName(name);
     }
 
     @Override
