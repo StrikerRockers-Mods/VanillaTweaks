@@ -39,6 +39,14 @@ enchantment.veteran=uɐɹǝʇǝᴧ
 enchantment.blazing=ᵷuᴉzɐꞁᗺ
 enchantment.siphon=uoɥdᴉS
 enchantment.homing=ᵷuᴉɯoH
+enchantment.vt.nimble.desc= ˙pǝǝds ʇuǝɯǝʌoɯ ɹnoʎ oʇ ʇᴉq ɐ sppɐ ꞁǝʌǝꞁ ɥɔɐƎ
+enchantment.vt.hops.desc= ˙ʇɥᵷᴉǝɥ dɯnɾ ɹnoʎ oʇ ʇᴉq ɐ sppɐ ꞁǝʌǝꞁ ɥɔɐƎ
+enchantment.vt.vigor.desc=˙ꞁǝʌǝꞁ ɹǝd ǝsɐǝɹɔuᴉ ɥʇꞁɐǝɥ xɐɯ ʇɹɐǝɥ ǝuo ɐ ɹǝɹɐǝʍ ǝɥʇ sʇuɐɹ⅁
+enchantment.vt.veteran.desc=˙noʎ spɹɐʍoʇ snᴉpɐɹ ʞɔoꞁq-ᘔƐ ɐ uᴉ sqɹo ǝɔuǝᴉɹǝdxǝ ꞁꞁɐ ʇɔɐɹʇʇⱯ
+enchantment.vt.blazing.desc=˙sdoɹp ʞɔoꞁq ǝɥʇ ᵷuᴉɥʇʎɹǝʌǝ sʇꞁǝɯs ʎꞁꞁɐɔᴉʇɐɯoʇnⱯ
+enchantment.vt.siphon.desc=˙ʎɹoʇuǝʌuᴉ ɹnoʎ oʇuᴉ oᵷ ʎꞁʇuɐʇsuᴉ sdoɹp ʞɔoꞁq pǝuᴉɯ ꞁꞁⱯ
+enchantment.vt.homing.desc=˙ʇǝᵷɹɐʇ ɹnoʎ ʇɐ ʇɥᵷᴉɹ ɯᴉɐ ꞁꞁᴉʍ sʍoɹɹɐ ɹno⅄
+
 
 key.category.vt=sʞɐǝʍ⟘ɐꞁꞁᴉuɐᴧ
 key.vt:zoom=ʎǝʞ ɯooZ
@@ -46,6 +54,7 @@ key.vt:zoom=ʎǝʞ ɯooZ
 vt:portal_destroyed=§c˙pǝʎoɹʇsǝp uǝǝq sɐɥ ꞁɐʇɹod uɹnʇǝɹ ɹno⅄§f
 entity.dynamite.name=ǝʇᴉɯɐuʎᗡ
 tooltip.entity=%s :suʍɐdS
+slime.chunk=§bʞunɥƆ ǝɯᴉꞁS§f
 
 enchantment.level.11=IX
 enchantment.level.12=IIX
@@ -545,4 +554,3 @@ potion.potency.252=IIIꞀƆƆ
 potion.potency.253=ᴧIꞀƆƆ
 potion.potency.254=ᴧꞀƆƆ
 potion.potency.255=IᴧꞀƆƆ
-slime.chunk=Slime Chunk
