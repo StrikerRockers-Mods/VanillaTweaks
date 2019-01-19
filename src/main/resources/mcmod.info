@@ -6,7 +6,7 @@
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "http://github.com/strikerrocker/VanillaTweaks",
-    "updateUrl": "https://raw.githubusercontent.com/strikerrocker/VanillaTweaks/1.12/version.java",
+    "updateUrl": "https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.12/version.json",
     "authorList": [
       "StrikerRocker"
     ],
