@@ -155,7 +155,7 @@ public class BlockEvents {
         World world = event.getWorld();
         TileEntity tile = world.getTileEntity(event.getPos());
         EntityPlayer player = event.getPlayer();
-        int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItem(player.getActiveHand()));
+        int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand());
         if (state.getBlock() instanceof BlockMobSpawner && !world.isRemote && tile instanceof TileEntityMobSpawner && ConfigHandler.drops.mobSpawnerSilkTouchDrop && lvl >= 1) {
             event.setExpToDrop(0);
             ItemStack drop = new ItemStack(Blocks.MOB_SPAWNER);
