@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -18,7 +19,8 @@ import java.util.List;
 @EntityTickingEnchantment
 public class EnchantmentHoming extends VTEnchantmentBase {
     private static String name = "homing";
-    public EnchantmentHoming() {
+
+    EnchantmentHoming() {
         super(name, Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.BOW, EntityEquipmentSlot.MAINHAND);
         this.setRegistryName(name);
         this.setName(name);
@@ -33,7 +35,6 @@ public class EnchantmentHoming extends VTEnchantmentBase {
                 int homingLevel = this.getEnchantmentLevel(shooter.getHeldItemMainhand());
                 double distance = Math.pow(2, homingLevel - 1) * 32;
                 World world = arrow.world;
-                @SuppressWarnings("unchecked")
                 List<EntityLivingBase> livingEntities = world.getEntities(EntityLivingBase.class, EntitySelectors.NOT_SPECTATING);
                 EntityLivingBase target = null;
                 for (EntityLivingBase livingEntity : livingEntities) {
@@ -47,7 +48,7 @@ public class EnchantmentHoming extends VTEnchantmentBase {
                     double x = target.posX - arrow.posX;
                     double y = target.getEntityBoundingBox().minY + target.height / 2 - (arrow.posY + arrow.height / 2);
                     double z = target.posZ - arrow.posZ;
-                    arrow.shoot(x, y, z, 1F, 0);
+                    arrow.shoot(x, y, z, MathHelper.sqrt(arrow.motionX * arrow.motionX + arrow.motionY * arrow.motionY + arrow.motionZ * arrow.motionZ), 0);
                 }
             }
         }
