@@ -130,7 +130,7 @@ public class VTEventHandler {
         if (event.getObject() instanceof EntityItem) {
             Item item = ((EntityItem) event.getObject()).getItem().getItem();
             if (item instanceof ItemSeeds || item instanceof ItemSeedFood) {
-                event.addCapability(new ResourceLocation(VTModInfo.MODID), new SelfPlantingProvider());
+                event.addCapability(new ResourceLocation(VTModInfo.MODID, "planting"), new SelfPlantingProvider());
             }
         }
     }

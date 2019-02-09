@@ -1,13 +1,10 @@
 package io.github.strikerrocker.vt.capabilities;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.INBTSerializable;
 
-public class SelfPlantingProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound> {
-    private final SelfPlantingHandler handler = new SelfPlantingHandler();
+public class SelfPlantingProvider implements ICapabilityProvider {
     private ISelfPlanting instance = CapabilitySelfPlanting.PLANTING.getDefaultInstance();
 
     @Override
@@ -17,19 +14,6 @@ public class SelfPlantingProvider implements ICapabilityProvider, INBTSerializab
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if (capability == CapabilitySelfPlanting.PLANTING) {
-            return CapabilitySelfPlanting.PLANTING.cast(instance);
-        }
-        return null;
-    }
-
-    @Override
-    public NBTTagCompound serializeNBT() {
-        return handler.serializeNBT();
-    }
-
-    @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-        handler.deserializeNBT(nbt);
+        return capability == CapabilitySelfPlanting.PLANTING ? CapabilitySelfPlanting.PLANTING.cast(this.instance) : null;
     }
 }

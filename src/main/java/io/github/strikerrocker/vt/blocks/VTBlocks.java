@@ -19,8 +19,6 @@ import java.util.List;
  */
 public class VTBlocks {
 
-    private static final BlockSugar sugar = new BlockSugar("sugarblock");
-    private static final Block flint = new Block(Material.SAND, MapColor.BROWN).setHardness(1.0f).setTranslationKey("flintblock").setRegistryName("flintblock");
     public static final BlockCharcoal charcoal = new BlockCharcoal("charcoalblock");
     public static final BlockPedestal pedestal = new BlockPedestal();
     public static final BlockBark acaciabark = new BlockBark("acaciabark", MapColor.STONE);
@@ -29,6 +27,8 @@ public class VTBlocks {
     public static final BlockBark sprucebark = new BlockBark("sprucebark", BlockPlanks.EnumType.SPRUCE.getMapColor());
     public static final BlockBark junglebark = new BlockBark("junglebark", BlockPlanks.EnumType.JUNGLE.getMapColor());
     public static final BlockBark birchbark = new BlockBark("birchbark", BlockPlanks.EnumType.BIRCH.getMapColor());
+    private static final BlockSugar sugar = new BlockSugar("sugarblock");
+    private static final Block flint = new Block(Material.SAND, MapColor.BROWN).setHardness(1.0f).setTranslationKey("flintblock").setRegistryName("flintblock");
     public static List<Block> blocks = new ArrayList();
 
 
