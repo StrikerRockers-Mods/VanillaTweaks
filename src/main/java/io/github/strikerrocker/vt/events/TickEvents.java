@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.lang.invoke.MethodHandle;
 import java.util.Deque;
 import java.util.List;
+import java.util.Objects;
 
 
 @Mod.EventBusSubscriber(modid = VTModInfo.MODID)
@@ -41,10 +42,10 @@ public class TickEvents {
         World world = event.world;
         if (ConfigHandler.miscellanious.autoSeedPlanting && !world.isRemote) {
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
-            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.PLANTING, null)).forEach(entityItem -> (entityItem.getCapability(CapabilitySelfPlanting.PLANTING, null)).handlePlantingLogic(entityItem));
+            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.PLANTING, null)).forEach(entityItem -> (Objects.requireNonNull(entityItem.getCapability(CapabilitySelfPlanting.PLANTING, null))).handlePlantingLogic(entityItem));
         }
         for (Entity entity : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
-            VTEnchantmentBase.vtEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction(entity, null));
+            VTEnchantmentBase.vtEnchantments.stream().filter(enchantment -> enchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(enchantment -> enchantment.performAction(entity, null));
     }
 
     /**

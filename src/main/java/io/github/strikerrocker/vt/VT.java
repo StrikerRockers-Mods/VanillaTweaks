@@ -31,6 +31,7 @@ public class VT {
     public static boolean baubles = false;
     public static SimpleNetworkWrapper network;
     public static Logger logger = LogManager.getLogger(VTModInfo.MODID);
+
     public static void logInfo(String message) {
         logger.info("VanillaTweaks : " + message);
     }

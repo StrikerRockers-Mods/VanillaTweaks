@@ -5,33 +5,18 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemSeeds;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.Random;
 
-public class SelfPlantingHandler implements ISelfPlanting, INBTSerializable<NBTTagCompound> {
-    public static final String MINSTEADYTICKS_KEY = "MinSteadyTicks";
-    public static final String STEADYTICKS_KEY = "SteadyTicks";
+public class SelfPlantingHandler implements ISelfPlanting {
+    static final String MIN_STEADY_TICKS_KEY = "MinSteadyTicks";
+    static final String STEADY_TICKS_KEY = "SteadyTicks";
     private static Random random = new Random();
-    private int minSteadyTicks, steadyTicks;
-
-    @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger(MINSTEADYTICKS_KEY, minSteadyTicks);
-        compound.setInteger(STEADYTICKS_KEY, steadyTicks);
-        return compound;
-    }
-
-    @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-        minSteadyTicks = nbt.getInteger(MINSTEADYTICKS_KEY);
-        steadyTicks = nbt.getInteger(STEADYTICKS_KEY);
-    }
+    private int minSteadyTicks = 0;
+    private int steadyTicks = 0;
 
     @Override
     public int getMinSteadyTicks() {
@@ -64,8 +49,10 @@ public class SelfPlantingHandler implements ISelfPlanting, INBTSerializable<NBTT
             BlockPos lastTickEntityPos = new BlockPos(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ);
             if (entityPos.compareTo(lastTickEntityPos) != 0)
                 this.steadyTicks = 0;
+            //System.out.println(steadyTicks);
+            //System.out.println(minSteadyTicks);
             if (this.steadyTicks >= this.minSteadyTicks) {
-                entity.getItem().getItem().onItemUse(VTUtils.getFakePlayer(entity.world), entity.world, entityPos, EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0);
+                entity.getItem().getItem().onItemUse(VTUtils.getFakePlayer(entity.world), entity.world, entityPos.down(1), EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0);
                 entity.getItem().shrink(1);
             }
         }
