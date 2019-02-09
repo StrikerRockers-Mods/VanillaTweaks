@@ -43,8 +43,8 @@ public class TickEvents {
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
             entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.PLANTING, null)).forEach(entityItem -> (entityItem.getCapability(CapabilitySelfPlanting.PLANTING, null)).handlePlantingLogic(entityItem));
         }
-        for (Object entityObject : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
-            VTEnchantmentBase.vtEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction((Entity) entityObject, null));
+        for (Entity entity : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
+            VTEnchantmentBase.vtEnchantments.stream().filter(cppEnchantment -> cppEnchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(cppEnchantment -> cppEnchantment.performAction(entity, null));
     }
 
     /**
