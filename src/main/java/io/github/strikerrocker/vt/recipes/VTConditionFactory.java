@@ -27,7 +27,7 @@ public class VTConditionFactory implements IConditionFactory {
             return () -> ConfigHandler.vanilla_tweaks.craftingPad == value;
         }
         if (key.equals(VTModInfo.MODID + ":slime")) {
-            return () -> ConfigHandler.VanillaTweaks.slimeChunkFinder == value;
+            return () -> ConfigHandler.vanilla_tweaks.slimeChunkFinder == value;
         }
         if (key.equals(VTModInfo.MODID + ":barks")) {
             return () -> ConfigHandler.miscellanious_restart.barks == value;

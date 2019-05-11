@@ -1,9 +1,14 @@
 package io.github.strikerrocker.vt.enchantments;
 
+import io.github.strikerrocker.vt.VT;
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Optional;
@@ -11,6 +16,7 @@ import java.util.Optional;
 /**
  * Initializes VanillaTweaks's enchantments
  */
+@Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public final class VTEnchantments {
 
     public static final Enchantment Vigor = new EnchantmentVigor();
@@ -24,8 +30,10 @@ public final class VTEnchantments {
     /**
      * Registers the enchantments for VanillaTweaks
      */
-
-    public static void init(IForgeRegistry<Enchantment> registry) {
+    @SubscribeEvent
+    public static void registerEnchantment(RegistryEvent.Register<Enchantment> event) {
+        VT.logInfo("Registering Enchantments");
+        IForgeRegistry<Enchantment> registry = event.getRegistry();
         if (ConfigHandler.enchantments.vigor)
             registry.register(Vigor);
         if (ConfigHandler.enchantments.nimble)
