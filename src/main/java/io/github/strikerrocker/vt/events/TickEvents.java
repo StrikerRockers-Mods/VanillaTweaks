@@ -42,7 +42,7 @@ public class TickEvents {
         World world = event.world;
         if (ConfigHandler.miscellanious.autoSeedPlanting && !world.isRemote) {
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
-            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.PLANTING, null)).forEach(entityItem -> (Objects.requireNonNull(entityItem.getCapability(CapabilitySelfPlanting.PLANTING, null))).handlePlantingLogic(entityItem));
+            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.PLANTING, null)).forEach(entityItem -> Objects.requireNonNull(entityItem.getCapability(CapabilitySelfPlanting.PLANTING, null)).handlePlantingLogic(entityItem));
         }
         for (Entity entity : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
             VTEnchantmentBase.vtEnchantments.stream().filter(enchantment -> enchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(enchantment -> enchantment.performAction(entity, null));

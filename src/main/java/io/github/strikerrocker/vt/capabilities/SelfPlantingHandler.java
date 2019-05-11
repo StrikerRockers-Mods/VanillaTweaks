@@ -5,6 +5,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemSeeds;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -49,11 +50,10 @@ public class SelfPlantingHandler implements ISelfPlanting {
             BlockPos lastTickEntityPos = new BlockPos(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ);
             if (entityPos.compareTo(lastTickEntityPos) != 0)
                 this.steadyTicks = 0;
-            //System.out.println(steadyTicks);
-            //System.out.println(minSteadyTicks);
             if (this.steadyTicks >= this.minSteadyTicks) {
-                entity.getItem().getItem().onItemUse(VTUtils.getFakePlayer(entity.world), entity.world, entityPos.down(1), EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0);
-                entity.getItem().shrink(1);
+                if (entity.getItem().getItem().onItemUse(VTUtils.getFakePlayer(entity.world), entity.world, entityPos, EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0) == EnumActionResult.SUCCESS) {
+                    entity.getItem().shrink(1);
+                }
             }
         }
     }

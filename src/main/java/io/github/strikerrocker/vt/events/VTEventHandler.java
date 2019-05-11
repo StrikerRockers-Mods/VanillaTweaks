@@ -19,8 +19,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSeedFood;
-import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -128,10 +126,7 @@ public class VTEventHandler {
     @SubscribeEvent
     public static void attachCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityItem) {
-            Item item = ((EntityItem) event.getObject()).getItem().getItem();
-            if (item instanceof ItemSeeds || item instanceof ItemSeedFood) {
-                event.addCapability(new ResourceLocation(VTModInfo.MODID, "planting"), new SelfPlantingProvider());
-            }
+            event.addCapability(new ResourceLocation(VTModInfo.MODID, "planting"), new SelfPlantingProvider());
         }
     }
 

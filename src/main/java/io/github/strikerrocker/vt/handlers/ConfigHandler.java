@@ -73,7 +73,7 @@ public class ConfigHandler {
 
     public static class VanillaTweaks {
         @Config.Comment({"Enables the Slime Chunk Finder"})
-        public static boolean slimeChunkFinder = true;
+        public boolean slimeChunkFinder = true;
         @Config.RangeDouble(min = 1)
         @Config.Comment({"By how much do binoculars divide your FOV?"})
         public float binocularZoomAmount = 4;
