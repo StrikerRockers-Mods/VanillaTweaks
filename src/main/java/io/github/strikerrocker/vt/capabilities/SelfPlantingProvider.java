@@ -5,15 +5,15 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 public class SelfPlantingProvider implements ICapabilityProvider {
-    private ISelfPlanting instance = CapabilitySelfPlanting.PLANTING.getDefaultInstance();
+    private ISelfPlanting instance = CapabilitySelfPlanting.CAPABILITY_PLANTING.getDefaultInstance();
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        return capability == CapabilitySelfPlanting.PLANTING;
+        return capability == CapabilitySelfPlanting.CAPABILITY_PLANTING;
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        return capability == CapabilitySelfPlanting.PLANTING ? CapabilitySelfPlanting.PLANTING.cast(this.instance) : null;
+        return hasCapability(capability, facing) ? CapabilitySelfPlanting.CAPABILITY_PLANTING.cast(instance) : null;
     }
 }

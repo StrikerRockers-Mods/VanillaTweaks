@@ -9,7 +9,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class CapabilitySelfPlanting {
     @CapabilityInject(ISelfPlanting.class)
-    public static Capability<ISelfPlanting> PLANTING = null;
+    public static Capability<ISelfPlanting> CAPABILITY_PLANTING = null;
 
     public static void register() {
         CapabilityManager.INSTANCE.register(ISelfPlanting.class, new Capability.IStorage<ISelfPlanting>() {
