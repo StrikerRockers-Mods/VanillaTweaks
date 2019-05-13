@@ -8,12 +8,12 @@ buildscript {
     }
 }
 plugins{
-    //id "thefireplace.en2ud" version "0.9"
-    //id "org.sonarqube" version "2.6"
+    /*id "thefireplace.en2ud" version "0.9"
+    id "org.sonarqube" version "2.6"*/
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.4.7"
+version = vt_version
 group = "com.strikerrocker.vt"
 archivesBaseName = "VanillaTweaks"
 
@@ -30,7 +30,6 @@ minecraft {
 
 repositories {
     maven {
-        // location of the maven that hosts JEI files
         name = "Progwml6 maven"
         url = "http://dvs1.progwml6.com/files/maven"
     }
@@ -51,7 +50,6 @@ processResources {
     inputs.property "mcversion", project.minecraft.version
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        // replace version and mcversion in mcmodinfo file
         expand 'version': project.version, 'mcversion': project.minecraft.version
     }
     from(sourceSets.main.resources.srcDirs) {
@@ -69,6 +67,7 @@ jar {
         ])
     }
 }
+
 //en2ud {
 //   modid = "vt"
 //}

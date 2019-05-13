@@ -10,12 +10,10 @@ import io.github.strikerrocker.vt.items.VTItems;
 import io.github.strikerrocker.vt.misc.VTUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderSnowball;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,7 +33,7 @@ public class VTRegistrationHandler {
         for (Item item : VTItems.items) {
             proxy.registerItemRenderer(item, 0, item.getRegistryName().getPath());
         }
-        RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, createRenderFactoryForItem(VTItems.dynamite));
+        RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, manager -> new RenderSnowball<>(manager, VTItems.dynamite, Minecraft.getMinecraft().getRenderItem()));
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
     }
 
@@ -44,10 +42,5 @@ public class VTRegistrationHandler {
         VT.logInfo("Registering Entities");
         event.getRegistry().register(VTUtils.createEntityEntry("dynamite", EntityDynamite.class, 64, 1, false));
         event.getRegistry().register(VTUtils.createEntityEntry("entity_sit", EntitySitting.class, 256, 1, false));
-    }
-
-    @SideOnly(Side.CLIENT)
-    private static <T extends Entity> IRenderFactory<T> createRenderFactoryForItem(Item item) {
-        return manager -> new RenderSnowball<>(manager, item, Minecraft.getMinecraft().getRenderItem());
     }
 }

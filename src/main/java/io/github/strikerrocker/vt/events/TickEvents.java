@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.VT;
 import io.github.strikerrocker.vt.VTModInfo;
-import io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting;
 import io.github.strikerrocker.vt.enchantments.EntityTickingEnchantment;
 import io.github.strikerrocker.vt.enchantments.VTEnchantmentBase;
 import io.github.strikerrocker.vt.enchantments.VTEnchantments;
@@ -28,6 +27,8 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Objects;
 
+import static io.github.strikerrocker.vt.capabilities.CapabilitySelfPlanting.CAPABILITY_PLANTING;
+
 
 @Mod.EventBusSubscriber(modid = VTModInfo.MODID)
 public class TickEvents {
@@ -42,7 +43,7 @@ public class TickEvents {
         World world = event.world;
         if (ConfigHandler.miscellanious.autoSeedPlanting && !world.isRemote) {
             List<EntityItem> entityItems = world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE);
-            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CapabilitySelfPlanting.PLANTING, null)).forEach(entityItem -> Objects.requireNonNull(entityItem.getCapability(CapabilitySelfPlanting.PLANTING, null)).handlePlantingLogic(entityItem));
+            entityItems.stream().filter(entityItem -> entityItem.hasCapability(CAPABILITY_PLANTING, null)).forEach(entityItem -> Objects.requireNonNull(entityItem.getCapability(CAPABILITY_PLANTING, null)).handlePlantingLogic(entityItem));
         }
         for (Entity entity : world.getEntities(Entity.class, EntitySelectors.IS_ALIVE))
             VTEnchantmentBase.vtEnchantments.stream().filter(enchantment -> enchantment.getClass().isAnnotationPresent(EntityTickingEnchantment.class)).forEach(enchantment -> enchantment.performAction(entity, null));
