@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.events;
 
 import io.github.strikerrocker.vt.VT;
 import io.github.strikerrocker.vt.VTModInfo;
-import io.github.strikerrocker.vt.capabilities.SelfPlantingProvider;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.handlers.ConfigHandler;
 import io.github.strikerrocker.vt.items.VTItems;
@@ -14,14 +13,12 @@ import net.minecraft.block.BlockReed;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
@@ -32,7 +29,6 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -115,18 +111,6 @@ public class VTEventHandler {
             stack.setStackDisplayName(VTUtils.getColorTextFromStack(event.getRight()) + event.getLeft().getDisplayName());
             event.setOutput(stack);
             event.setMaterialCost(1);
-        }
-    }
-
-    /**
-     * Attach the self planting capability
-     *
-     * @param event AttachCapabilityEvent
-     */
-    @SubscribeEvent
-    public static void attachCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof EntityItem) {
-            event.addCapability(new ResourceLocation(VTModInfo.MODID, "planting"), new SelfPlantingProvider());
         }
     }
 
