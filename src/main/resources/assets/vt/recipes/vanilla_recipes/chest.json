@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "vt:chest"
+    }
+  ],
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "OOO",
+    "O O",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "ore": "logWood",
+      "type": "forge:ore_dict"
+    }
+  },
+  "result": {
+    "item": "minecraft:chest",
+    "count": 8
+  }
+}

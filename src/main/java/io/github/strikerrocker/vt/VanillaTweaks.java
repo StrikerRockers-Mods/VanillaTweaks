@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.Module;
 import io.github.strikerrocker.vt.loot.Loot;
+import io.github.strikerrocker.vt.recipes.Recipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -35,6 +36,7 @@ public class VanillaTweaks {
 
     private void registerModules() {
         modules.add(new Loot());
+        modules.add(new Recipe());
     }
 
     @Mod.EventHandler
@@ -65,6 +67,7 @@ public class VanillaTweaks {
         modules.forEach(module -> module.syncConfig(config));
         if (config.hasChanged())
             config.save();
+        logInfo("Syncing config");
     }
 
     @SubscribeEvent

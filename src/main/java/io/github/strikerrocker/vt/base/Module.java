@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Module {
-    private static List<Feature> features = new ArrayList<>();
+    private List<Feature> features = new ArrayList<>();
     private String name;
     private boolean requiresRestart;
     private String comments;
