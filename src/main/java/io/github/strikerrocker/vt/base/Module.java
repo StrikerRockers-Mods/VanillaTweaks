@@ -6,7 +6,7 @@ import net.minecraftforge.common.config.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Module {
+public abstract class Module {
     private List<Feature> features = new ArrayList<>();
     private String name;
     private boolean requiresRestart;
@@ -19,9 +19,7 @@ public class Module {
         addFeatures();
     }
 
-    public void addFeatures() {
-
-    }
+    public abstract void addFeatures();
 
     public void preInit() {
         features.stream().filter(Feature::usesEvents).forEach(MinecraftForge.EVENT_BUS::register);

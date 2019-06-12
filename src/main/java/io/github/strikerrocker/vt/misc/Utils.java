@@ -15,8 +15,4 @@ public class Utils {
             return property.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class);
         return property;
     }
-
-    public static boolean get(Configuration config, String category, String key, boolean defaultValue, String comment) {
-        return config.get(category, key, defaultValue, comment).getBoolean();
-    }
 }

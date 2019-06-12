@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.loot;
 
 import io.github.strikerrocker.vt.base.Feature;
 import io.github.strikerrocker.vt.base.Module;
-import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -20,7 +19,7 @@ public class MobNametag extends Feature {
 
     @Override
     public void syncConfig(Configuration config, String module) {
-        namedMobsDropNameTag = Utils.get(config, module, "namedMobsDropNameTag", true, "Does a nametag drop when named mob dies?");
+        namedMobsDropNameTag = config.get(module, "namedMobsDropNameTag", true, "Does a nametag drop when named mob dies?").getBoolean();
     }
 
     @Override

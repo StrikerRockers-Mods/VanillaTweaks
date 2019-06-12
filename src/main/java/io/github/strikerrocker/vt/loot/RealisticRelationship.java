@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.loot;
 
 import io.github.strikerrocker.vt.base.Feature;
 import io.github.strikerrocker.vt.base.Module;
-import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
@@ -33,7 +32,7 @@ public class RealisticRelationship extends Feature {
 
     @Override
     public void syncConfig(Configuration config, String module) {
-        realisticRelationship = Utils.get(config, module, "realisticRelationship", true, "Is realistic predator/prey relationships activated?");
+        realisticRelationship = config.get(module, "realisticRelationship", true, "Is realistic predator/prey relationships activated?").getBoolean();
     }
 
     @SubscribeEvent

@@ -1,8 +1,9 @@
 package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.Module;
-import io.github.strikerrocker.vt.loot.Loot;
-import io.github.strikerrocker.vt.recipes.Recipe;
+import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
+import io.github.strikerrocker.vt.loot.LootModule;
+import io.github.strikerrocker.vt.recipes.RecipeModule;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -35,8 +36,9 @@ public class VanillaTweaks {
     }
 
     private void registerModules() {
-        modules.add(new Loot());
-        modules.add(new Recipe());
+        modules.add(new LootModule());
+        modules.add(new RecipeModule());
+        modules.add(new EnchantmentModule());
     }
 
     @Mod.EventHandler
