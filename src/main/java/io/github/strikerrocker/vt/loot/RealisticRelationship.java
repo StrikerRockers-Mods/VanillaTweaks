@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.loot;
 
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.base.Module;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
@@ -20,10 +19,6 @@ import java.util.List;
 
 public class RealisticRelationship extends Feature {
     private boolean realisticRelationship;
-
-    RealisticRelationship(Module module) {
-        super(module);
-    }
 
     @Override
     public boolean usesEvents() {

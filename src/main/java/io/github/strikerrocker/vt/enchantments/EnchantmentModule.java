@@ -9,6 +9,6 @@ public class EnchantmentModule extends Module {
 
     @Override
     public void addFeatures() {
-        registerFeature(new EnchantmentFeature(this));
+        registerFeature(new EnchantmentFeature());
     }
 }

@@ -10,6 +10,6 @@ public class RecipeModule extends Module {
 
     @Override
     public void addFeatures() {
-        registerFeature(new BetterRecipes(this));
+        registerFeature(new BetterRecipes());
     }
 }

@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.loot;
 
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.base.Module;
 import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -15,10 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CreeperTNT extends Feature {
     private double creeperDropTntChance;
-
-    CreeperTNT(Module module) {
-        super(module);
-    }
 
     @Override
     public boolean usesEvents() {

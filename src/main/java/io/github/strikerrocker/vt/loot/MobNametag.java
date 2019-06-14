@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.loot;
 
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.base.Module;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -12,10 +11,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class MobNametag extends Feature {
     private boolean namedMobsDropNameTag;
-
-    MobNametag(Module module) {
-        super(module);
-    }
 
     @Override
     public void syncConfig(Configuration config, String module) {

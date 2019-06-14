@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.recipes.betterrecipes;
 
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.base.Module;
 import net.minecraftforge.common.config.Configuration;
 
 public class BetterRecipes extends Feature {
@@ -9,10 +8,6 @@ public class BetterRecipes extends Feature {
     static boolean nametag;
     static boolean packedIce;
     static boolean string;
-
-    public BetterRecipes(Module module) {
-        super(module);
-    }
 
     @Override
     public void syncConfig(Configuration config, String module) {
