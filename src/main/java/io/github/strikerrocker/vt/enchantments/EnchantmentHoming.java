@@ -46,7 +46,7 @@ public class EnchantmentHoming extends Enchantment {
                 double x = target.posX - arrow.posX;
                 double y = target.getEntityBoundingBox().minY + target.height / 2 - (arrow.posY + arrow.height / 2);
                 double z = target.posZ - arrow.posZ;
-                arrow.shoot(x, y, z, 1.25f, 0);
+                arrow.shoot(x, y, z, (float) Math.sqrt(Math.pow(2, arrow.motionX) + Math.pow(2, arrow.motionY) + Math.pow(2, arrow.motionZ)), 0);
             }
         }
     }
