@@ -12,6 +12,5 @@ public class LootModule extends Module {
         registerFeature(new CreeperTNT());
         registerFeature(new BatLeather());
         registerFeature(new MobNametag());
-        registerFeature(new RealisticRelationship());
     }
 }

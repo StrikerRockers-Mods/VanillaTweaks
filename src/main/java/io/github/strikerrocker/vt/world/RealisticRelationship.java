@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.loot;
+package io.github.strikerrocker.vt.world;
 
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.entity.Entity;

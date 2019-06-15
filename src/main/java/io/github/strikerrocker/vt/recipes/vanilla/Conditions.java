@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.recipes.betterrecipes;
+package io.github.strikerrocker.vt.recipes.vanilla;
 
 import com.google.gson.JsonObject;
 import io.github.strikerrocker.vt.VTModInfo;
@@ -13,10 +13,10 @@ public class Conditions implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
         String key = JsonUtils.getString(json, "type");
-        if (key.equals(VTModInfo.MODID + ":chest")) return () -> BetterRecipes.betterChest;
-        if (key.equals(VTModInfo.MODID + ":nametag")) return () -> BetterRecipes.nametag;
-        if (key.equals(VTModInfo.MODID + ":packed_ice")) return () -> BetterRecipes.packedIce;
-        if (key.equals(VTModInfo.MODID + ":string")) return () -> BetterRecipes.string;
+        if (key.equals(VTModInfo.MODID + ":chest")) return () -> VanillaRecipes.betterChest;
+        if (key.equals(VTModInfo.MODID + ":nametag")) return () -> VanillaRecipes.nametag;
+        if (key.equals(VTModInfo.MODID + ":packed_ice")) return () -> VanillaRecipes.packedIce;
+        if (key.equals(VTModInfo.MODID + ":string")) return () -> VanillaRecipes.string;
         return null;
     }
 }

@@ -1,9 +1,9 @@
-package io.github.strikerrocker.vt.recipes.betterrecipes;
+package io.github.strikerrocker.vt.recipes.vanilla;
 
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraftforge.common.config.Configuration;
 
-public class BetterRecipes extends Feature {
+public class VanillaRecipes extends Feature {
     static boolean betterChest;
     static boolean nametag;
     static boolean packedIce;

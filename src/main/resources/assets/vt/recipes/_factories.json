@@ -1,8 +1,8 @@
 {
   "conditions": {
-    "chest": "io.github.strikerrocker.vt.recipes.betterrecipes.Conditions",
-    "nametag": "io.github.strikerrocker.vt.recipes.betterrecipes.Conditions",
-    "packed_ice": "io.github.strikerrocker.vt.recipes.betterrecipes.Conditions",
-    "string": "io.github.strikerrocker.vt.recipes.betterrecipes.Conditions"
+    "chest": "io.github.strikerrocker.vt.recipes.vanilla.Conditions",
+    "nametag": "io.github.strikerrocker.vt.recipes.vanilla.Conditions",
+    "packed_ice": "io.github.strikerrocker.vt.recipes.vanilla.Conditions",
+    "string": "io.github.strikerrocker.vt.recipes.vanilla.Conditions"
   }
 }

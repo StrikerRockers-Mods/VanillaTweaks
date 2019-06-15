@@ -1,7 +1,8 @@
 package io.github.strikerrocker.vt.recipes;
 
 import io.github.strikerrocker.vt.base.Module;
-import io.github.strikerrocker.vt.recipes.betterrecipes.BetterRecipes;
+import io.github.strikerrocker.vt.recipes.better.BetterRecipes;
+import io.github.strikerrocker.vt.recipes.vanilla.VanillaRecipes;
 
 public class RecipeModule extends Module {
     public RecipeModule() {
@@ -10,6 +11,7 @@ public class RecipeModule extends Module {
 
     @Override
     public void addFeatures() {
+        registerFeature(new VanillaRecipes());
         registerFeature(new BetterRecipes());
     }
 }
