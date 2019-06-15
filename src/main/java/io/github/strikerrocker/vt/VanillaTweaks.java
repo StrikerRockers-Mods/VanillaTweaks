@@ -1,8 +1,10 @@
 package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.Module;
+import io.github.strikerrocker.vt.content.ContentModule;
 import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
 import io.github.strikerrocker.vt.loot.LootModule;
+import io.github.strikerrocker.vt.misc.GuiHandler;
 import io.github.strikerrocker.vt.recipes.RecipeModule;
 import io.github.strikerrocker.vt.world.WorldModule;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,13 +44,15 @@ public class VanillaTweaks {
         modules.add(new RecipeModule());
         modules.add(new EnchantmentModule());
         modules.add(new WorldModule());
+        modules.add(new ContentModule());
     }
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        //TODO change the config path when available for alpha
+        //TODO change the config path when ready for curseforge release.
         registerModules();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         config = new Configuration(new File(event.getModConfigurationDirectory().toString() + "/VanillaTweaks2.cfg"));
         config.load();
         syncConfig();
