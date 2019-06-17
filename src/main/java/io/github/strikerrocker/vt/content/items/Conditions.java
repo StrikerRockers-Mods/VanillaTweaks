@@ -14,6 +14,7 @@ public class Conditions implements IConditionFactory {
         String key = JsonUtils.getString(json, "type");
         if (key.equals(VTModInfo.MODID + ":crafting_pad")) return () -> Items.enablePad;
         if (key.equals(VTModInfo.MODID + ":slime_bucket")) return () -> Items.enableSlimeBucket;
+        if (key.equals(VTModInfo.MODID + ":dynamite")) return () -> Items.enableDynamite;
         return null;
     }
 }

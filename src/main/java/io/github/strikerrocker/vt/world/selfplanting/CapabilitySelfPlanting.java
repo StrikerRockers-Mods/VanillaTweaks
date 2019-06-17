@@ -28,7 +28,7 @@ public class CapabilitySelfPlanting extends Feature {
 
     @Override
     public void syncConfig(Configuration config, String module) {
-        selfPlanting = config.get(module, "selfPlanting", true, "Dropped seeds/crops now plant themselves").getBoolean();
+        selfPlanting = config.get(module, "selfPlanting", true, "Dropped seeds/crops now plant themselves").setRequiresMcRestart(true).getBoolean();
     }
 
     @Override

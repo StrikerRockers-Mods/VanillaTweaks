@@ -1,8 +1,7 @@
 {
   "conditions": [
     {
-      "type": "vt:slime_bucket",
-      "value": true
+      "type": "vt:slime_bucket"
     }
   ],
   "type": "minecraft:crafting_shaped",

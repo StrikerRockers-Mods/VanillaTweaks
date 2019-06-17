@@ -27,7 +27,7 @@ import java.util.List;
 public class VanillaTweaks {
     @Mod.Instance(VTModInfo.MODID)
     public static VanillaTweaks instance;
-    private static Logger logger = LogManager.getLogger(VTModInfo.MODID);
+    public static Logger logger = LogManager.getLogger(VTModInfo.MODID);
     private static List<Module> modules = new ArrayList<>();
     private Configuration config;
 

@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.base;
 
+import io.github.strikerrocker.vt.VanillaTweaks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
@@ -9,12 +10,12 @@ import java.util.List;
 public abstract class Module {
     private List<Feature> features = new ArrayList<>();
     private String name;
-    private boolean requiresRestart;
+    private boolean requiresMCRestart;
     private String comments;
 
-    public Module(String name, String comments, boolean requiresRestart) {
+    public Module(String name, String comments, boolean requiresMCRestart) {
         this.name = name;
-        this.requiresRestart = requiresRestart;
+        this.requiresMCRestart = requiresMCRestart;
         this.comments = comments;
         addFeatures();
     }
@@ -23,6 +24,7 @@ public abstract class Module {
 
     public void preInit() {
         features.stream().filter(Feature::usesEvents).forEach(MinecraftForge.EVENT_BUS::register);
+        features.stream().filter(Feature::usesEvents).forEach(feature -> VanillaTweaks.logger.debug("Registered Event Handler class" + feature.getClass().getName()));
         features.forEach(Feature::preInit);
     }
 
@@ -38,7 +40,7 @@ public abstract class Module {
         String module = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + name;
         features.forEach(feature -> feature.syncConfig(config, module));
         config.setCategoryComment(module, comments);
-        config.setCategoryRequiresMcRestart(module, requiresRestart);
+        config.setCategoryRequiresMcRestart(module, requiresMCRestart);
     }
 
     protected void registerFeature(Feature feature) {

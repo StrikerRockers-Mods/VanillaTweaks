@@ -1,8 +1,7 @@
 {
   "conditions": [
     {
-      "type": "vt:crafting_pad",
-      "value": true
+      "type": "vt:crafting_pad"
     }
   ],
   "type": "minecraft:crafting_shaped",

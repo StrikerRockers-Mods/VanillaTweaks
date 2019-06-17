@@ -23,9 +23,12 @@ public class NoMoreLavaGen extends Feature {
     }
 
     @SubscribeEvent
-    public void onChunkPopulate(PopulateChunkEvent.Populate event) {
-        if (noMoreLavaPocketGen && (event.getType() == NETHER_LAVA || event.getType() == NETHER_LAVA2)) {
-            event.setResult(Event.Result.DENY);
+    public void onPopulateChunk(PopulateChunkEvent.Populate event) {
+        //TODO Fix this
+        if (noMoreLavaPocketGen) {
+            if (event.getType() == NETHER_LAVA || event.getType() == NETHER_LAVA2) {
+                event.setResult(Event.Result.DENY);
+            }
         }
     }
 }

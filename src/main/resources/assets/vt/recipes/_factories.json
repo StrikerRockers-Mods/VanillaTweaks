@@ -5,6 +5,7 @@
     "packed_ice": "io.github.strikerrocker.vt.recipes.vanilla.Conditions",
     "string": "io.github.strikerrocker.vt.recipes.vanilla.Conditions",
     "crafting_pad": "io.github.strikerrocker.vt.content.items.Conditions",
-    "slime_bucket": "io.github.strikerrocker.vt.content.items.Conditions"
+    "slime_bucket": "io.github.strikerrocker.vt.content.items.Conditions",
+    "dynamite": "io.github.strikerrocker.vt.content.items.Conditions"
   }
 }
