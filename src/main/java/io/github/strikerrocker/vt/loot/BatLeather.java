@@ -15,8 +15,8 @@ public class BatLeather extends Feature {
     private double batLeatherDropChance;
 
     @Override
-    public void syncConfig(Configuration config, String module) {
-        batLeatherDropChance = Utils.get(config, module, "batLeatherDropChance", 1D, "The chance of bats dropping leather, out of 10.", true).setMaxValue(10).setMinValue(0).getDouble();
+    public void syncConfig(Configuration config, String category) {
+        batLeatherDropChance = Utils.get(config, category, "batLeatherDropChance", 1D, "The chance of bats dropping leather, out of 10.", true).setMaxValue(10).setMinValue(0).getDouble();
     }
 
     @Override

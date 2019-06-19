@@ -52,9 +52,9 @@ public class BetterRecipes extends Feature {
     }
 
     @Override
-    public void syncConfig(Configuration config, String module) {
-        betterStairs = config.get(module, "betterStairs", true, "Want 8 stairs rather than 4 in stairs recipe?").getBoolean();
-        betterStoneTools = config.get(module, "betterStoneTools", true, "Cobblestone used in stone tools doesn't make sense?").getBoolean();
+    public void syncConfig(Configuration config, String category) {
+        betterStairs = config.get(category, "betterStairs", true, "Want 8 stairs rather than 4 in stairs recipe?").getBoolean();
+        betterStoneTools = config.get(category, "betterStoneTools", true, "Cobblestone used in stone tools doesn't make sense?").getBoolean();
     }
 
     @Override

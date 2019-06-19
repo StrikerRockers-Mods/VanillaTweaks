@@ -15,6 +15,7 @@ public class Conditions implements IConditionFactory {
         if (key.equals(VTModInfo.MODID + ":crafting_pad")) return () -> Items.enablePad;
         if (key.equals(VTModInfo.MODID + ":slime_bucket")) return () -> Items.enableSlimeBucket;
         if (key.equals(VTModInfo.MODID + ":dynamite")) return () -> Items.enableDynamite;
+        if (key.equals(VTModInfo.MODID + ":binoculars")) return () -> Items.binocularZoomAmount != 0;
         return null;
     }
 }

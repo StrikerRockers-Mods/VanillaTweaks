@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +29,7 @@ public class VanillaTweaks {
     @Mod.Instance(VTModInfo.MODID)
     public static VanillaTweaks instance;
     public static Logger logger = LogManager.getLogger(VTModInfo.MODID);
+    public static SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(VTModInfo.MODID);
     private static List<Module> modules = new ArrayList<>();
     private Configuration config;
 
@@ -56,6 +58,7 @@ public class VanillaTweaks {
         config = new Configuration(new File(event.getModConfigurationDirectory().toString() + "/VanillaTweaks2.cfg"));
         config.load();
         syncConfig();
+        modules.forEach(module -> module.registerPacket(network));
         modules.forEach(Module::preInit);
         logInfo("Pre-Initialization Complete");
     }

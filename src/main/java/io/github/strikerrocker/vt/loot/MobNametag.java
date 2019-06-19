@@ -13,8 +13,8 @@ public class MobNametag extends Feature {
     private boolean namedMobsDropNameTag;
 
     @Override
-    public void syncConfig(Configuration config, String module) {
-        namedMobsDropNameTag = config.get(module, "namedMobsDropNameTag", true, "Does a nametag drop when named mob dies?").getBoolean();
+    public void syncConfig(Configuration config, String category) {
+        namedMobsDropNameTag = config.get(category, "namedMobsDropNameTag", true, "Does a nametag drop when named mob dies?").getBoolean();
     }
 
     @Override

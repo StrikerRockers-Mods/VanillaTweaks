@@ -21,8 +21,8 @@ public class CreeperTNT extends Feature {
     }
 
     @Override
-    public void syncConfig(Configuration config, String module) {
-        creeperDropTntChance = Utils.get(config, module, "creeperDropTNTChance", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMaxValue(10).setMinValue(0).getDouble();
+    public void syncConfig(Configuration config, String category) {
+        creeperDropTntChance = Utils.get(config, category, "creeperDropTNTChance", 1D, "The chance of creepers dropping TNT, out of 10.", true).setMaxValue(10).setMinValue(0).getDouble();
     }
 
     @SubscribeEvent

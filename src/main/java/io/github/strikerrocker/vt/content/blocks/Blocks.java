@@ -1,6 +1,10 @@
 package io.github.strikerrocker.vt.content.blocks;
 
 import io.github.strikerrocker.vt.base.Feature;
+import io.github.strikerrocker.vt.content.blocks.pedestal.BlockPedestal;
+import io.github.strikerrocker.vt.content.blocks.pedestal.PacketUpdatePedestal;
+import io.github.strikerrocker.vt.content.blocks.pedestal.TESRPedestal;
+import io.github.strikerrocker.vt.content.blocks.pedestal.TileEntityPedestal;
 import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
@@ -12,7 +16,10 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Arrays;
 
@@ -27,16 +34,17 @@ public class Blocks extends Feature {
     private static final BlockBark birchBark = new BlockBark("birchbark", BlockPlanks.EnumType.BIRCH.getMapColor());
     private static final Block sugar = new BlockSugar("sugarblock");
     private static final Block flint = new Block(Material.SAND, MapColor.BROWN).setHardness(1.0f).setResistance(10.0f).setTranslationKey("flintblock").setRegistryName("flintblock").setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+    public static final Block pedestal = new BlockPedestal();
     static boolean enableBarkBlocks;
     static boolean enableStorageBlocks;
     static boolean enablePedestal;
-    private static Block[] blocks = new Block[]{acaciaBark, darkOakBark, oakBark, spruceBark, jungleBark, birchBark, charcoal, sugar, flint};
+    private static Block[] blocks = new Block[]{acaciaBark, darkOakBark, oakBark, spruceBark, jungleBark, birchBark, charcoal, sugar, flint, pedestal};
 
     @Override
-    public void syncConfig(Configuration config, String module) {
-        enableBarkBlocks = config.get(module, "enableBarkBlocks", true, "Want a block which has bark texture of logs in all sides?").getBoolean();
-        enableStorageBlocks = config.get(module, "enableStorageBlocks", true, "Want block forms of flint, charcoal and sugar?").getBoolean();
-        enablePedestal = config.get(module, "enablePedestal", true, "Want to showcase your treasure but item frame doesn't satisfy you?").getBoolean();
+    public void syncConfig(Configuration config, String category) {
+        enableBarkBlocks = config.get(category, "enableBarkBlocks", true, "Want a block which has bark texture of logs in all sides?").getBoolean();
+        enableStorageBlocks = config.get(category, "enableStorageBlocks", true, "Want block forms of flint, charcoal and sugar?").getBoolean();
+        enablePedestal = config.get(category, "enablePedestal", true, "Want to showcase your treasure but item frame doesn't satisfy you?").getBoolean();
     }
 
     @Override
@@ -57,5 +65,11 @@ public class Blocks extends Feature {
     @SubscribeEvent
     public void onModelRegister(ModelRegistryEvent event) {
         Arrays.stream(blocks).map(Item::getItemFromBlock).forEach(item -> Utils.registerItemRenderer(item, 0));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
+    }
+
+    @Override
+    public void registerPacket(SimpleNetworkWrapper network) {
+        network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
     }
 }

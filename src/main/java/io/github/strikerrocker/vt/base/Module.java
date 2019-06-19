@@ -3,6 +3,7 @@ package io.github.strikerrocker.vt.base;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,5 +46,9 @@ public abstract class Module {
 
     protected void registerFeature(Feature feature) {
         features.add(feature);
+    }
+
+    public void registerPacket(SimpleNetworkWrapper network) {
+        features.forEach(feature -> feature.registerPacket(network));
     }
 }

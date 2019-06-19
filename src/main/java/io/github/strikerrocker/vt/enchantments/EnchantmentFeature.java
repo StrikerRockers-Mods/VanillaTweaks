@@ -28,8 +28,8 @@ public class EnchantmentFeature extends Feature {
     }
 
     @Override
-    public void syncConfig(Configuration config, String module) {
-        enchantments.forEach((enchantment, tuple) -> enchantmentsToEnable.put(enchantment, config.get(module, tuple.getFirst(), true, tuple.getSecond()).setRequiresMcRestart(true).getBoolean()));
+    public void syncConfig(Configuration config, String category) {
+        enchantments.forEach((enchantment, tuple) -> enchantmentsToEnable.put(enchantment, config.get(category, tuple.getFirst(), true, tuple.getSecond()).setRequiresMcRestart(true).getBoolean()));
     }
 
     @Override

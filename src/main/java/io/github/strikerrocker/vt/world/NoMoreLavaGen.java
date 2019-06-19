@@ -13,8 +13,8 @@ public class NoMoreLavaGen extends Feature {
     private boolean noMoreLavaPocketGen;
 
     @Override
-    public void syncConfig(Configuration config, String module) {
-        noMoreLavaPocketGen = config.get(module, "noMoreLavaPocketGen", true, "Annoyed of the pesky lava pockets in nether").getBoolean();
+    public void syncConfig(Configuration config, String category) {
+        noMoreLavaPocketGen = config.get(category, "noMoreLavaPocketGen", true, "Annoyed of the pesky lava pockets in nether").getBoolean();
     }
 
     @Override

@@ -26,8 +26,8 @@ public class RealisticRelationship extends Feature {
     }
 
     @Override
-    public void syncConfig(Configuration config, String module) {
-        realisticRelationship = config.get(module, "realisticRelationship", true, "Is realistic predator/prey relationships activated?").getBoolean();
+    public void syncConfig(Configuration config, String category) {
+        realisticRelationship = config.get(category, "realisticRelationship", true, "Is realistic predator/prey relationships activated?").getBoolean();
     }
 
     @SubscribeEvent
