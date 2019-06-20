@@ -6,6 +6,7 @@ import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
 import io.github.strikerrocker.vt.loot.LootModule;
 import io.github.strikerrocker.vt.misc.GuiHandler;
 import io.github.strikerrocker.vt.recipes.RecipeModule;
+import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.WorldModule;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -47,6 +48,7 @@ public class VanillaTweaks {
         modules.add(new EnchantmentModule());
         modules.add(new WorldModule());
         modules.add(new ContentModule());
+        modules.add(new TweaksModule());
     }
 
     @Mod.EventHandler
