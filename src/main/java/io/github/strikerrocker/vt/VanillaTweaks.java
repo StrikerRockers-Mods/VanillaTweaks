@@ -54,10 +54,9 @@ public class VanillaTweaks {
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        //TODO change the config path when ready for curseforge release.
         registerModules();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-        config = new Configuration(new File(event.getModConfigurationDirectory().toString() + "/VanillaTweaks2.cfg"));
+        config = new Configuration(new File(event.getModConfigurationDirectory().toString() + "/VanillaTweaks.cfg"));
         config.load();
         syncConfig();
         modules.forEach(module -> module.registerPacket(network));
