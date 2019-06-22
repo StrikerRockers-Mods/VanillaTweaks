@@ -16,6 +16,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -71,5 +72,17 @@ public class Blocks extends Feature {
     @Override
     public void registerPacket(SimpleNetworkWrapper network) {
         network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
+    }
+
+    @SubscribeEvent
+    public void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event) {
+        Item item = event.getItemStack().getItem();
+        if (item == Item.getItemFromBlock(charcoal))
+            event.setBurnTime(16000);
+        if (item == Item.getItemFromBlock(net.minecraft.init.Blocks.TORCH))
+            event.setBurnTime(400);
+        if (item == Item.getItemFromBlock(acaciaBark) || item == Item.getItemFromBlock(birchBark) || item == Item.getItemFromBlock(darkOakBark)
+                || item == Item.getItemFromBlock(jungleBark) || item == Item.getItemFromBlock(oakBark) || item == Item.getItemFromBlock(spruceBark))
+            event.setBurnTime(300);
     }
 }

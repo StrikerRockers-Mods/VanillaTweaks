@@ -4,6 +4,7 @@
       "type": "vt:bark_blocks"
     }
   ],
+  "group": "bark_blocks",
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "FF",
