@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "vt:slime_bucket"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BSB",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:slime"
+    }
+  },
+  "result": {
+    "item": "vt:slime"
+  }
+}

@@ -10,17 +10,12 @@ public final class VTModInfo {
     public static final String MODID = "vt";
 
     /**
-     * Vanilla Tweaks's name
-     */
-    public static final String NAME = "VanillaTweaks";
-
-    /**
      * Vanilla Tweaks's package location
      */
-    public static final String PACKAGE_LOCATION = "io.github.strikerrocker.vt";
+    static final String PACKAGE_LOCATION = "io.github.strikerrocker.vt";
 
     /**
-     * Prevents VTModInfo from being instantianted
+     * Prevents VTModInfo from being instantiated
      */
     private VTModInfo() {
 
