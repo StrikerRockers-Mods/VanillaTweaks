@@ -3,6 +3,7 @@ package io.github.strikerrocker.vt.content.items;
 import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
+import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.content.items.craftingpad.ItemCraftingPad;
 import io.github.strikerrocker.vt.content.items.dynamite.EntityDynamite;
 import io.github.strikerrocker.vt.content.items.dynamite.ItemDynamite;
@@ -28,6 +29,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
@@ -35,7 +37,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Items extends Feature {
     private static final ItemArmor.ArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
-    //TODO add bauble version
     private static final Item binocular = new ItemArmor(binocular_material, 0, EntityEquipmentSlot.HEAD).setMaxStackSize(1).setRegistryName("binoculars").setTranslationKey("binoculars");
     private static final Item lens = new Item().setTranslationKey("lens").setRegistryName("lens");
     private static final Item friedEgg = new ItemFood(3, 0.6f, false).setRegistryName("friedegg").setTranslationKey("friedegg");
@@ -46,6 +47,7 @@ public class Items extends Feature {
     static boolean enableSlimeBucket;
     static float binocularZoomAmount;
     private static Item slimeBucket = new ItemSlimeBucket("slime");
+    private static Item baubleBino;
 
     @SubscribeEvent
     public void registerEntities(RegistryEvent.Register<EntityEntry> event) {
@@ -57,8 +59,13 @@ public class Items extends Feature {
     public void onFOVChange(FOVUpdateEvent event) {
         if (event.getEntity() != null && binocularZoomAmount != 0) {
             ItemStack helmet = event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            if (!helmet.isEmpty() && helmet.getItem() == binocular)
+            if ((!helmet.isEmpty() && helmet.getItem() == binocular))
                 event.setNewfov(event.getFov() / binocularZoomAmount);
+            else if (Loader.isModLoaded("baubles")) {
+                if (BaubleTools.hasProbeGoggle(event.getEntity())) {
+                    event.setNewfov(event.getFov() / binocularZoomAmount);
+                }
+            }
         }
     }
 
@@ -79,6 +86,10 @@ public class Items extends Feature {
     public void onRegisterItems(RegistryEvent.Register<Item> event) {
         VanillaTweaks.logInfo("Registering Items");
         event.getRegistry().registerAll(craftingPad, slimeBucket, dynamite, binocular, lens, friedEgg);
+        if (Loader.isModLoaded("baubles")) {
+            baubleBino = BaubleTools.initBinocularBauble();
+            event.getRegistry().register(baubleBino);
+        }
     }
 
     @SubscribeEvent

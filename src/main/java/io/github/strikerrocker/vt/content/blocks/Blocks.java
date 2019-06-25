@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import java.util.Arrays;
 
 public class Blocks extends Feature {
+    public static final Block pedestal = new BlockPedestal();
     private static final BlockCharcoal charcoal = new BlockCharcoal("charcoalblock");
     //Remove bark blocks in 1.13 and above.
     private static final BlockBark acaciaBark = new BlockBark("acaciabark", BlockPlanks.EnumType.ACACIA.getMapColor());
@@ -35,7 +36,6 @@ public class Blocks extends Feature {
     private static final BlockBark birchBark = new BlockBark("birchbark", BlockPlanks.EnumType.BIRCH.getMapColor());
     private static final Block sugar = new BlockSugar("sugarblock");
     private static final Block flint = new Block(Material.SAND, MapColor.BROWN).setHardness(1.0f).setResistance(10.0f).setTranslationKey("flintblock").setRegistryName("flintblock").setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-    public static final Block pedestal = new BlockPedestal();
     static boolean enableBarkBlocks;
     static boolean enableStorageBlocks;
     static boolean enablePedestal;

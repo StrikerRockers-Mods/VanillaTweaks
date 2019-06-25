@@ -24,5 +24,6 @@ public class TweaksModule extends Module {
         registerFeature(new ShearNameTag());
         registerFeature(new MobsBurnInDaylight());
         registerFeature(new ItemFrameReverse());
+        registerFeature(new StackSizes());
     }
 }

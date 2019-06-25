@@ -9,7 +9,6 @@ import io.github.strikerrocker.vt.recipes.RecipeModule;
 import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.WorldModule;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -21,7 +20,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,15 +29,10 @@ public class VanillaTweaks {
     public static VanillaTweaks instance;
     public static Logger logger = LogManager.getLogger(VTModInfo.MODID);
     public static SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(VTModInfo.MODID);
-    private static List<Module> modules = new ArrayList<>();
-    private Configuration config;
+    public static List<Module> modules = new ArrayList<>();
 
     public static void logInfo(String message) {
         logger.info("VanillaTweaks : " + message);
-    }
-
-    public Configuration getConfig() {
-        return config;
     }
 
     private void registerModules() {
@@ -56,8 +49,7 @@ public class VanillaTweaks {
         MinecraftForge.EVENT_BUS.register(this);
         registerModules();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-        config = new Configuration(new File(event.getModConfigurationDirectory().toString() + "/VanillaTweaks.cfg"));
-        config.load();
+        modules.forEach(module -> module.setupConfig(event));
         syncConfig();
         modules.forEach(module -> module.registerPacket(network));
         modules.forEach(Module::preInit);
@@ -77,9 +69,7 @@ public class VanillaTweaks {
     }
 
     private void syncConfig() {
-        modules.forEach(module -> module.syncConfig(config));
-        if (config.hasChanged())
-            config.save();
+        modules.forEach(Module::syncConfig);
         logInfo("Syncing config");
     }
 

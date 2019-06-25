@@ -1,0 +1,37 @@
+{
+  "conditions": [
+    {
+      "type": "forge:and",
+      "values": [
+        {
+          "type": "vt:binoculars"
+        },
+        {
+          "type": "forge:mod_loaded",
+          "modid": "baubles"
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "LIL",
+    "DDD"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:dye",
+      "data": 0
+    },
+    "L": {
+      "item": "vt:lens"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "vt:binoculars"
+  }
+}
