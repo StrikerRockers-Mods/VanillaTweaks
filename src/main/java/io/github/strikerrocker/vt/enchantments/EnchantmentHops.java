@@ -1,48 +1,50 @@
 package io.github.strikerrocker.vt.enchantments;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/**
- * Gives the wearer jump boost
- */
-public class EnchantmentHops extends VTEnchantmentBase {
-    private static String name = "hops";
+public class EnchantmentHops extends Enchantment {
 
-    EnchantmentHops() {
-        super(name, Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, EntityEquipmentSlot.FEET);
+    EnchantmentHops(String name) {
+        super(Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{EntityEquipmentSlot.FEET});
         this.setRegistryName(name);
         this.setName(name);
     }
 
-    @Override
-    public void performAction(Entity entity, Event baseEvent) {
-        float enchantmentLevel = this.getEnchantmentLevel(((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.FEET));
-        if (baseEvent instanceof LivingJumpEvent)
-            entity.motionY += enchantmentLevel / 10;
-        else if (baseEvent instanceof LivingFallEvent) {
-            LivingFallEvent fallEvent = (LivingFallEvent) baseEvent;
-            fallEvent.setDistance(fallEvent.getDistance() - enchantmentLevel);
-        }
+    @SubscribeEvent
+    public void onLivingJump(LivingEvent.LivingJumpEvent event) {
+        event.getEntityLiving().motionY += ((double) EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)) / 10);
+    }
+
+    @SubscribeEvent
+    public void onLivingFall(LivingFallEvent event) {
+        event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.FEET)));
     }
 
     @Override
-    public int getMinimumEnchantability(int enchantmentLevel) {
+    public int getMinEnchantability(int enchantmentLevel) {
         return 5 + (enchantmentLevel - 1) * 8;
     }
 
     @Override
-    public int getMaximumEnchantability(int enchantmentLevel) {
+    public int getMaxEnchantability(int enchantmentLevel) {
         return enchantmentLevel * 10 + 51;
     }
 
     @Override
     public int getMaxLevel() {
         return 3;
+    }
+
+    @Override
+    public boolean canApply(ItemStack stack) {
+        return stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).getEquipmentSlot().equals(EntityEquipmentSlot.FEET);
     }
 }
