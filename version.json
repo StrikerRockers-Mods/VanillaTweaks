@@ -8,6 +8,8 @@
     "1.4.5": "* Fix fire arrows being able to replace blocks above on hit\n* Added support for enchantment description mod",
     "1.4.6": "*Fix a crash with chest transporter",
     "1.4.8": "*Fix a crash with iron chest and ZAWA.",
-    "1.5": "Rewrote the entire mod and it adds config option for everything."
+    "1.12.2-1.5": "Rewrote the entire mod and it adds config option for everything.",
+    "1.12.2-1.5.1": "Added recipe book support and fixed better chest recipe",
+    "1.12.2-1.5.2": "Fixed server crash.\nFixed pedestal not having a recipe.\nFixed pedestal TileEntity not registering."
   }
 }

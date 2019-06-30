@@ -9,6 +9,7 @@
     "dynamite": "io.github.strikerrocker.vt.content.items.Conditions",
     "binoculars": "io.github.strikerrocker.vt.content.items.Conditions",
     "bark_blocks": "io.github.strikerrocker.vt.content.blocks.Conditions",
-    "storage_blocks": "io.github.strikerrocker.vt.content.blocks.Conditions"
+    "storage_blocks": "io.github.strikerrocker.vt.content.blocks.Conditions",
+    "pedestal": "io.github.strikerrocker.vt.content.blocks.Conditions"
   }
 }

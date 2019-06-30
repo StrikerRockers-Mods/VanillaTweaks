@@ -34,6 +34,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class Items extends Feature {
     private static final ItemArmor.ArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
@@ -93,6 +95,7 @@ public class Items extends Feature {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onModelRegister(ModelRegistryEvent event) {
         Utils.registerItemRenderer(craftingPad, 0);
         Utils.registerItemRenderer(slimeBucket, 0);
