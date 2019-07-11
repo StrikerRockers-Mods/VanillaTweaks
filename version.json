@@ -1,7 +1,7 @@
 {
-  "homepage": "https://minecraft.curseforge.com/projects/292852",
+  "homepage": "https://www.curseforge.com/minecraft/mc-mods/vanillatweaks",
   "promos": {
-    "1.12.2-latest": "1.12.2-1.5.2"
+    "1.12.2-latest": "1.12.2-1.5.3"
   },
   "1.12.2": {
     "1.3.6": "* Arrows which hit ground and are on fire sets the ground to fire\n* TNT placed adjacent to lava and magma block ignites itself",
@@ -10,6 +10,7 @@
     "1.4.8": "*Fix a crash with iron chest and ZAWA.",
     "1.12.2-1.5": "Rewrote the entire mod and it adds config option for everything.",
     "1.12.2-1.5.1": "Added recipe book support and fixed better chest recipe",
-    "1.12.2-1.5.2": "Fixed server crash.\nFixed pedestal not having a recipe.\nFixed pedestal TileEntity not registering."
+    "1.12.2-1.5.2": "Fixed server crash.\nFixed pedestal not having a recipe.\nFixed pedestal TileEntity not registering.",
+    "1.12.2-1.5.3": "Fixed lava pockets spawning."
   }
 }
