@@ -58,6 +58,6 @@ public class EnchantmentVigor extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).getEquipmentSlot().equals(EntityEquipmentSlot.CHEST);
+        return stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).armorType.equals(EntityEquipmentSlot.CHEST);
     }
 }

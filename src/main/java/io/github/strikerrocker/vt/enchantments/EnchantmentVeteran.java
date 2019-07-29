@@ -70,6 +70,6 @@ public class EnchantmentVeteran extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).getEquipmentSlot().equals(EntityEquipmentSlot.HEAD);
+        return stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).armorType.equals(EntityEquipmentSlot.HEAD);
     }
 }
