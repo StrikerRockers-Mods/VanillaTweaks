@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "vt:bark_blocks"
+    }
+  ],
+  "group": "bark_blocks",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FF",
+    "FF"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:log",
+      "data": 2
+    }
+  },
+  "result": {
+    "item": "vt:birchbark",
+    "count": 4
+  }
+}

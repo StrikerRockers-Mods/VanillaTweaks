@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "vt:pedestal"
+    },
+    "inventory": {
+      "model": "vt:pedestal",
+      "transform": "forge:default-block"
+    }
+  }
+}
