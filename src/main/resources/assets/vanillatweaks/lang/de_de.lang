@@ -1,0 +1,56 @@
+#blocks
+tile.flintblock.name=Feuersteinblock
+tile.sugarblock.name=Zuckerblock
+tile.charcoalblock.name=Holzkohleblock
+tile.acaciabark.name=Akazienrindenholz
+tile.birchbark.name=Birkenrindenholz
+tile.darkoakbark.name=Schwarzeichenrindenholz
+tile.oakbark.name=Eichenrindenholz
+tile.sprucebark.name=Fichtenrindenholz
+tile.junglebark.name=Tropenrindenholz
+tile.buttonStone.name=Steinknopf
+tile.buttonWood.name=Holzknopf
+tile.sand.name=Sand/Roter Sand
+tile.pedestal.name=Podest
+
+#items
+item.dynamite.name=Dynamit
+item.friedegg.name=Spiegelei
+item.pad.name=Werkbankunterlage
+item.lens.name=Fernglaslinse
+item.binoculars.name=Fernglas
+item.slime.name=Schleimfinder
+item.binocular_bauble.name=Fernglas (Baubles)
+
+#advancement
+advancements.vt.pad=Vanilla Tweaks
+advancements.vt.storage=Komprimierte Blöcke
+advancements.vt.zoom=Zoom
+advancements.vt.boom=Bumm!!
+advancements.vt.friedegg=Spiegelei!!
+
+#advancement desc
+advancements.vt.storage.desc=Stelle einen komprimierten Block her
+advancements.vt.pad.desc=Stelle eine Werkbankunterlage her
+advancements.vt.zoom.desc=Stelle ein Fernglas her
+advancements.vt.boom.desc=Stelle Dynamit her
+advancements.vt.friedegg.desc=Brate ein Ei
+
+#enchantments
+enchantment.nimble=Flink
+enchantment.hops=Hops
+enchantment.vigor=Lebenskraft
+enchantment.veteran=Veteran
+enchantment.blazing=Lodernd
+enchantment.siphon=Siphon
+enchantment.homing=Zielsuchend
+
+#keybinds
+key.category.vt=VanillaTweaks
+key.vt:zoom=Zoom Key
+
+#misc
+vt:portal_destroyed=§cDein Rückkehrportal wurde zerstört.
+entity.dynamite.name=Dynamite
+tooltip.entity=Spawns: %s
+slime.chunk=Slime Chunk

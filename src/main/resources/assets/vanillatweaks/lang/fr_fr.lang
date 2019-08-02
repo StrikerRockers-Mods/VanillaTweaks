@@ -1,0 +1,56 @@
+# blocks
+tile.flintblock.name=Bloc de Flint
+tile.sugarblock.name=Bloc de Sucre
+tile.charcoalblock.name=Bloc de Charbon
+tile.acaciabark.name=Acacia Bark
+tile.birchbark.name=Birch Bark
+tile.darkoakbark.name=Dark Oak Bark
+tile.oakbark.name=Oak Bark
+tile.sprucebark.name=Spruce Bark
+tile.junglebark.name=Jungle Bark
+tile.buttonStone.name=Bouton Pierre
+tile.buttonWood.name=Bouton en Bois
+tile.sand.name=Sable/Sable Rouge
+tile.pedestal.name=Pedestal
+
+# blocks
+item.dynamite.name=Dynamiter
+item.friedegg.name=Oeuf Frit
+item.pad.name=Pad D'artisanat
+item.lens.name=Objectif Binoculaire
+item.binoculars.name=Jumelles
+item.slime.name=Slime Finder
+item.binocular_bauble.name=Binoculars(Baubles)
+
+# advancement
+advancements.vt.pad=Vanilla Tweaks
+advancements.vt.storage=Storage Blocks
+advancements.vt.zoom=Zoom
+advancements.vt.boom=Boom!!
+advancements.vt.friedegg=Fried Egg!!
+
+# advancement desc
+advancements.vt.storage.desc=Craft the storage block
+advancements.vt.pad.desc=Craft an Crafting Pad
+advancements.vt.zoom.desc=Craft an Binoculars
+advancements.vt.boom.desc=Craft an Dynamite
+advancements.vt.friedegg.desc=Smelt an Egg
+
+# enchantments
+enchantment.nimble=Agile
+enchantment.hops=Houblon
+enchantment.vigor=Vigueur
+enchantment.veteran=Ancien Combattant
+enchantment.blazing=Br�lant
+enchantment.siphon=Siphon
+enchantment.homing=La Prise D'origine
+
+# keybinds
+key.category.vt=VanillaTweaks
+key.vt:zoom=Zoom Key
+
+# misc
+vt:portal_destroyed=§cYour return portal has been destroyed.
+entity.dynamite.name=Dynamite
+tooltip.entity=Spawns: %s
+slime.chunk=Slime Chunk

@@ -1,0 +1,55 @@
+#blocks
+tile.flintblock.name=火打石ブロック
+tile.sugarblock.name=砂糖ブロック
+tile.charcoalblock.name=木炭ブロック
+tile.buttonStone.name=石ボタン
+tile.buttonWood.name=木材ボタン
+tile.sand.name=砂・赤砂
+tile.pedestal.name=台座
+tile.acaciabark.name=Acacia Bark
+tile.birchbark.name=Birch Bark
+tile.darkoakbark.name=Dark Oak Bark
+tile.oakbark.name=Oak Bark
+tile.sprucebark.name=Spruce Bark
+tile.junglebark.name=Jungle Bark
+
+#items
+item.dynamite.name=ダイナマイト
+item.friedegg.name=フライドエッグ
+item.pad.name=作業パッド
+item.lens.name=双眼鏡のレンズ
+item.binoculars.name=双眼鏡
+item.slime.name=Slime Finder
+item.binocular_bauble.name=Binoculars(Baubles)
+#advancement
+advancements.vt.pad=Vanilla Tweaks
+advancements.vt.storage=Storage Blocks
+advancements.vt.zoom=Zoom
+advancements.vt.boom=Boom!!
+advancements.vt.friedegg=Fried Egg!!
+
+#advancement desc
+advancements.vt.storage.desc=Craft the storage block
+advancements.vt.pad.desc=Craft an Crafting Pad
+advancements.vt.zoom.desc=Craft an Binoculars
+advancements.vt.boom.desc=Craft an Dynamite
+advancements.vt.friedegg.desc=Smelt an Egg
+
+#enchantments
+enchantment.nimble=素早い
+enchantment.hops=ホップ
+enchantment.vigor=剛健
+enchantment.veteran=古豪
+enchantment.blazing=炎々
+enchantment.siphon=サイフォン
+enchantment.homing=ホーミング
+
+#keybinds
+key.category.vt=VanillaTweaks
+key.vt:zoom=Zoom Key
+
+#misc
+vt:portal_destroyed=§cYour return portal has been destroyed.
+entity.dynamite.name=Dynamite
+tooltip.entity=Spawns: %s
+slime.chunk=Slime Chunk
