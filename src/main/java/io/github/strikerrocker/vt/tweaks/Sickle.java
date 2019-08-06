@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLilyPad;
 import net.minecraft.block.BlockReed;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class Sickle extends Feature {
     private boolean hoeActsAsSickle;
 
-    private static boolean canHarvest(IBlockState state) {
+    private static boolean canHarvest(BlockState state) {
         Block block = state.getBlock();
         return (block instanceof BlockBush && !(block instanceof BlockLilyPad)) || block instanceof BlockReed;
     }
@@ -51,7 +52,7 @@ public class Sickle extends Feature {
                         continue;
 
                     BlockPos pos = event.getPos().add(i, 0, k);
-                    IBlockState state = world.getBlockState(pos);
+                    BlockState state = world.getBlockState(pos);
                     if (canHarvest(state)) {
                         Block block = state.getBlock();
                         if (block.canHarvestBlock(world, pos, player))
