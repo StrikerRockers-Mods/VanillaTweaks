@@ -1,43 +1,43 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.block.BlockMagma;
-import net.minecraft.block.BlockTNT;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MagmaBlock;
+import net.minecraft.block.TNTBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraft.world.IWorld;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import static net.minecraft.block.BlockTNT.EXPLODE;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class TNTIgnition extends Feature {
-    private boolean tntIgnition;
+    private ForgeConfigSpec.BooleanValue tntIgnition;
 
     @SubscribeEvent
-    public void onBlockPlaced(BlockEvent.PlaceEvent event) {
-        IBlockState blockState = event.getPlacedBlock();
-        World world = event.getWorld();
+    public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
+        BlockState blockState = event.getPlacedBlock();
+        IWorld world = event.getWorld();
         BlockPos pos = event.getPos();
-        if (!world.isRemote && blockState.getBlock() instanceof BlockTNT && tntIgnition) {
-            for (EnumFacing f : EnumFacing.values())
-                if (world.getBlockState(pos.offset(f, 1)).getBlock() instanceof BlockMagma || world.getBlockState(pos.offset(f, 1)).getMaterial() == Material.LAVA) {
-                    BlockTNT blockTNT = (BlockTNT) blockState.getBlock();
-                    blockTNT.explode(world, pos, blockState.withProperty(EXPLODE, true), event.getPlayer());
+        if (!world.isRemote() && blockState.getBlock() instanceof TNTBlock && tntIgnition.get()) {
+            for (Direction f : Direction.values())
+                if (world.getBlockState(pos.offset(f, 1)).getBlock() instanceof MagmaBlock || world.getBlockState(pos.offset(f, 1)).getMaterial() == Material.LAVA) {
+                    TNTBlock blockTNT = (TNTBlock) blockState.getBlock();
+                    TNTBlock.explode(event.getEntity().getEntityWorld(), pos);
                     world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
                 }
         }
     }
 
     @Override
-    public void syncConfig(Configuration config, String category) {
-        tntIgnition = config.get(category, "tntIgnition", true, "Want TNT to ignite when next to lava or magma block").getBoolean();
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
+        tntIgnition = builder
+                .translation("config.vanillatweaks:tntIgnition")
+                .comment("Want TNT to ignite when next to lava or magma block?")
+                .define("tntIgnition", true);
     }
-
 
     @Override
     public boolean usesEvents() {

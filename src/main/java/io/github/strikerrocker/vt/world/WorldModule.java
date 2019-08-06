@@ -2,17 +2,18 @@ package io.github.strikerrocker.vt.world;
 
 import io.github.strikerrocker.vt.base.Module;
 import io.github.strikerrocker.vt.world.selfplanting.CapabilitySelfPlanting;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public class WorldModule extends Module {
 
-    public WorldModule() {
-        super("world", "Dynamic changes in the world", false);
+    public WorldModule(ForgeConfigSpec.Builder builder) {
+        super("world", "Dynamic changes in the world", false, builder);
     }
 
     @Override
     public void addFeatures() {
         registerFeature(new RealisticRelationship());
-        registerFeature(new NoMoreLavaGen());
+        //registerFeature(new NoMoreLavaGen());
         registerFeature(new CapabilitySelfPlanting());
     }
 }

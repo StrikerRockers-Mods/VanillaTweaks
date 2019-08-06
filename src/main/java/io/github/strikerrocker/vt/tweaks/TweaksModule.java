@@ -3,10 +3,11 @@ package io.github.strikerrocker.vt.tweaks;
 import io.github.strikerrocker.vt.base.Module;
 import io.github.strikerrocker.vt.tweaks.silkspawner.SilkSpawner;
 import io.github.strikerrocker.vt.tweaks.sit.Sit;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public class TweaksModule extends Module {
-    public TweaksModule() {
-        super("Tweaks", "Tweaks", false);
+    public TweaksModule(ForgeConfigSpec.Builder builder) {
+        super("Tweaks", "Tweaks", false, builder);
     }
 
     @Override
@@ -20,7 +21,6 @@ public class TweaksModule extends Module {
         registerFeature(new ModifiedCreativeTab());
         registerFeature(new SilkSpawner());
         registerFeature(new ArmorStandSwap());
-        registerFeature(new UnlockAllRecipes());
         registerFeature(new ShearNameTag());
         registerFeature(new MobsBurnInDaylight());
         registerFeature(new ItemFrameReverse());
