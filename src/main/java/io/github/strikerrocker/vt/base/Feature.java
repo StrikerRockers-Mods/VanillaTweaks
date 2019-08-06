@@ -1,12 +1,14 @@
 package io.github.strikerrocker.vt.base;
 
+import net.minecraftforge.common.ForgeConfigSpec;
+
 public abstract class Feature {
 
     public void setup() {
 
     }
 
-    public void postInit() {
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
 
     }
 
