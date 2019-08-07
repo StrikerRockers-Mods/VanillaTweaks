@@ -1,19 +1,24 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ArrowSetFire extends Feature {
-    private boolean arrowsSetBlockOnFire;
+    private ForgeConfigSpec.BooleanValue arrowsSetBlockOnFire;
 
     @Override
-    public void syncConfig(Configuration config, String category) {
-        arrowsSetBlockOnFire = config.get(category, "arrowsSetBlockOnFire", true, "Want the fire arrows to set fire on block it landed?").getBoolean();
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
+        arrowsSetBlockOnFire = builder
+                .translation("config.vanillatweaks:arrowsSetBlockOnFire")
+                .comment("Want the fire arrows to set fire on block it landed?")
+                .define("arrowsSetBlockOnFire", true);
     }
 
     @Override
@@ -23,12 +28,13 @@ public class ArrowSetFire extends Feature {
 
     @SubscribeEvent
     public void onArrowImpact(ProjectileImpactEvent.Arrow event) {
-        if (!event.getArrow().world.isRemote && event.getArrow().isBurning() && arrowsSetBlockOnFire) {
+        if (!event.getArrow().world.isRemote && event.getArrow().isBurning() && arrowsSetBlockOnFire.get()) {
             Vec3d vec3d1 = new Vec3d(event.getArrow().posX, event.getArrow().posY, event.getArrow().posZ);
-            Vec3d vec3d = new Vec3d(event.getArrow().posX + event.getArrow().motionX, event.getArrow().posY + event.getArrow().motionY, event.getArrow().posZ + event.getArrow().motionZ);
-            RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
-            if (raytraceresult != null && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK && event.getArrow().world.isAirBlock(raytraceresult.getBlockPos().up())) {
-                event.getArrow().world.setBlockState(raytraceresult.getBlockPos().up(), Blocks.FIRE.getDefaultState(), 11);
+            Vec3d vec3d = new Vec3d(event.getArrow().posX + event.getArrow().getMotion().x, event.getArrow().posY + event.getArrow().getMotion().y, event.getArrow().posZ + event.getArrow().getMotion().z);
+            RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(new RayTraceContext(vec3d1, vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, event.getArrow()));
+            BlockPos hitBlock = new BlockPos(raytraceresult.getHitVec()).up();
+            if (raytraceresult.getType() == RayTraceResult.Type.BLOCK && event.getArrow().world.isAirBlock(hitBlock)) {
+                event.getArrow().world.setBlockState(hitBlock, Blocks.FIRE.getDefaultState(), 11);
             }
         }
     }
