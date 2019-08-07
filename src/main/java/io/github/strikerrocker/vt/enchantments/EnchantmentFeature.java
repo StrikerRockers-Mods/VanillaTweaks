@@ -14,10 +14,10 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EnchantmentFeature extends Feature {
-    private Map<Enchantment, Tuple<String, String>> enchantments = Maps.newHashMap();
-    private Object2BooleanOpenHashMap<Enchantment> enchantmentsToEnable = new Object2BooleanOpenHashMap<>();
+    public static Object2BooleanOpenHashMap<Enchantment> enchantmentsToEnable = new Object2BooleanOpenHashMap<>();
+    private static Map<Enchantment, Tuple<String, String>> enchantments = Maps.newHashMap();
 
-    EnchantmentFeature() {
+    static {
         enchantments.put(new EnchantmentBlazing("blazing"), new Tuple<>("blazing", "Want to smelt things when you mine them?"));
         enchantments.put(new EnchantmentHops("hops"), new Tuple<>("hops", "Want to jump more than a block high with an enchantment?"));
         enchantments.put(new EnchantmentNimble("nimble"), new Tuple<>("nimble", "Want more speed with an enchantment?"));
@@ -28,10 +28,13 @@ public class EnchantmentFeature extends Feature {
         enchantments.forEach((enchantment, idDesc) -> MinecraftForge.EVENT_BUS.register(enchantment));
     }
 
-    @SubscribeEvent
-    public void registerEnchantments(RegistryEvent.Register<Enchantment> registryEvent) {
-        enchantmentsToEnable.forEach((enchantment, toEnable) -> {
-            if (toEnable) registryEvent.getRegistry().register(enchantment);
-        });
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents {
+        @SubscribeEvent
+        public void registerEnchantments(RegistryEvent.Register<Enchantment> registryEvent) {
+            enchantmentsToEnable.forEach((enchantment, toEnable) -> {
+                if (toEnable) registryEvent.getRegistry().register(enchantment);
+            });
+        }
     }
 }

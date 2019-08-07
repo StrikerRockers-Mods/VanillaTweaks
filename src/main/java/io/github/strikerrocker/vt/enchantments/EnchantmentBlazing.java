@@ -6,15 +6,19 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
+import net.minecraft.item.crafting.FurnaceRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.SplittableRandom;
 
 public class EnchantmentBlazing extends Enchantment {
@@ -56,15 +60,18 @@ public class EnchantmentBlazing extends Enchantment {
             event.getDrops().clear();
             for (ItemStack drop : dropsCopy) {
                 if (!drop.isEmpty()) {
-                    ItemStack smeltingResult = FurnaceRecipes.instance().getSmeltingResult(drop);
-                    if (!smeltingResult.isEmpty()) {
-                        smeltingResult = smeltingResult.copy();
-                        smeltingResult.setCount(smeltingResult.getCount() * drop.getCount());
-                        if (!(smeltingResult.getItem() instanceof BlockItem))
-                            smeltingResult.setCount(smeltingResult.getCount() * (new SplittableRandom().nextInt(event.getFortuneLevel() + 1) + 1));
-                        event.getDrops().add(smeltingResult);
-                    } else
-                        event.getDrops().add(drop);
+                    Optional<FurnaceRecipe> optional = player.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(drop), player.world);
+                    if (optional.isPresent()) {
+                        ItemStack smeltingResult = optional.get().getRecipeOutput();
+                        if (!smeltingResult.isEmpty()) {
+                            smeltingResult = smeltingResult.copy();
+                            smeltingResult.setCount(smeltingResult.getCount() * drop.getCount());
+                            if (!(smeltingResult.getItem() instanceof BlockItem))
+                                smeltingResult.setCount(smeltingResult.getCount() * (new SplittableRandom().nextInt(event.getFortuneLevel() + 1) + 1));
+                            event.getDrops().add(smeltingResult);
+                        } else
+                            event.getDrops().add(drop);
+                    }
                 }
             }
         }

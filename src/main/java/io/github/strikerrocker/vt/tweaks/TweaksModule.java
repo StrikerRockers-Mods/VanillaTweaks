@@ -18,7 +18,7 @@ public class TweaksModule extends Module {
         registerFeature(new ArrowSetFire());
         registerFeature(new TNTIgnition());
         registerFeature(new Sickle());
-        registerFeature(new ModifiedCreativeTab());
+        //TODO registerFeature(new ModifiedCreativeTab());
         registerFeature(new SilkSpawner());
         registerFeature(new ArmorStandSwap());
         registerFeature(new ShearNameTag());

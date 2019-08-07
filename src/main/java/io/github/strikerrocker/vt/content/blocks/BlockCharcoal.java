@@ -12,7 +12,6 @@ public class BlockCharcoal extends Block {
     BlockCharcoal(String name) {
         super(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(5.0f, 10.0f));
         setRegistryName(name);
-        //setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
 
     @Override

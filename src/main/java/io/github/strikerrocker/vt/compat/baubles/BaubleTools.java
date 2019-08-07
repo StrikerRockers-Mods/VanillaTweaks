@@ -2,17 +2,17 @@ package io.github.strikerrocker.vt.compat.baubles;
 
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.ModList;
 
 public class BaubleTools {
     private BaubleTools() {
     }
 
-    public static boolean hasProbeGoggle(EntityPlayer player) {
-        if (Loader.isModLoaded("baubles")) {
+    public static boolean hasProbeGoggle(PlayerEntity player) {
+        if (ModList.get().isLoaded("baubles")) {
             IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
             if (handler == null) {
                 return false;

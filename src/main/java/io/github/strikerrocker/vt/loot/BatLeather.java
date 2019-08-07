@@ -1,22 +1,25 @@
 package io.github.strikerrocker.vt.loot;
 
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityBat;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.entity.passive.BatEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BatLeather extends Feature {
-    private double batLeatherDropChance;
+    private ForgeConfigSpec.DoubleValue batLeatherDropChance;
 
     @Override
-    public void syncConfig(Configuration config, String category) {
-        batLeatherDropChance = Utils.get(config, category, "batLeatherDropChance", 1D, "The chance of bats dropping leather, out of 10.", true).setMaxValue(10).setMinValue(0).getDouble();
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
+        batLeatherDropChance = builder
+                .translation("config.vanillatweaks:batLeatherDropChance")
+                .comment()
+                .defineInRange("batLeatherDropChance", 1D, 0, 10);
     }
 
     @Override
@@ -28,8 +31,8 @@ public class BatLeather extends Feature {
     public void onLivingDrop(LivingDropsEvent event) {
         Entity entity = event.getEntity();
         World world = entity.world;
-        if (!world.isRemote && world.getGameRules().getBoolean("doMobLoot") && event.getSource().getTrueSource() instanceof EntityPlayer && entity instanceof EntityBat && event.getSource().damageType != null && (batLeatherDropChance / 10) > Math.random()) {
-            entity.dropItem(Items.LEATHER, 1);
+        if (!world.isRemote && world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && event.getSource().getTrueSource() instanceof PlayerEntity && entity instanceof BatEntity && event.getSource().damageType != null && (batLeatherDropChance.get() / 10) > Math.random()) {
+            entity.entityDropItem(Items.LEATHER);
         }
     }
 }

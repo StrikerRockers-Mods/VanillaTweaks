@@ -3,13 +3,13 @@ package io.github.strikerrocker.vt.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityPredicates;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.util.List;
 
 public class EnchantmentHoming extends Enchantment {
+    private AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+
     EnchantmentHoming(String name) {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentType.BOW, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
         this.setRegistryName(name);
@@ -25,7 +27,7 @@ public class EnchantmentHoming extends Enchantment {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.world != null) {
-            event.world.getEntities(ArrowEntity.class, EntityPredicates.IS_ALIVE).forEach(this::attemptToMove);
+            /*event.world.getEntitiesWithinAABB(ArrowEntity.class, EntityPredicates.IS_ALIVE).forEach(this::attemptToMove);*/
         }
     }
 
@@ -35,7 +37,7 @@ public class EnchantmentHoming extends Enchantment {
             int homingLevel = EnchantmentHelper.getEnchantmentLevel(this, shooter.getHeldItemMainhand());
             double distance = Math.pow(2, (double) homingLevel - 1) * 32;
             World world = arrow.world;
-            List<LivingEntity> livingEntities = world.getEntities(LivingEntity.class, EntityPredicates.NOT_SPECTATING);
+            List<LivingEntity> livingEntities = world.getEntitiesWithinAABB(LivingEntity.class, ZERO_AABB.grow(distance, distance, distance), EntityPredicates.NOT_SPECTATING);
             LivingEntity target = null;
             for (LivingEntity livingEntity : livingEntities) {
                 double distanceToArrow = livingEntity.getDistance(arrow);
