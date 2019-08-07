@@ -1,25 +1,29 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.entity.item.EntityItemFrame;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemFrameReverse extends Feature {
-    private boolean shiftItemFrameRotateBackwards;
+    private ForgeConfigSpec.BooleanValue itemFrameRotateBackwards;
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (shiftItemFrameRotateBackwards && event.getTarget() instanceof EntityItemFrame && event.getEntityPlayer().isSneaking()) {
-            EntityItemFrame frame = (EntityItemFrame) event.getTarget();
+        if (itemFrameRotateBackwards.get() && event.getTarget() instanceof ItemFrameEntity && event.getEntityPlayer().isSneaking()) {
+            ItemFrameEntity frame = (ItemFrameEntity) event.getTarget();
             frame.setItemRotation(frame.getRotation() - 2);
         }
     }
 
     @Override
-    public void syncConfig(Configuration config, String category) {
-        shiftItemFrameRotateBackwards = config.get(category, "shiftItemFrameRotateBackwards", true, "Want to shift click item frame to reverse rotate?").getBoolean();
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
+        itemFrameRotateBackwards = builder
+                .translation("config.vanillatweaks:itemFrameRotateBackwards")
+                .comment("Want to shift click item frame to rotate in the reverse direction?")
+                .define("itemFrameRotateBackwards", true);
+
     }
 
     @Override

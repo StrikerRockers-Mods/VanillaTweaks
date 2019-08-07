@@ -1,12 +1,12 @@
 package io.github.strikerrocker.vt.tweaks.silkspawner;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.spawner.AbstractSpawner;
 
-public class DummyMobSpawnerLogic extends MobSpawnerBaseLogic {
-    static final DummyMobSpawnerLogic DUMMY_MOB_SPAWNER_LOGIC = new DummyMobSpawnerLogic();
+public class DummySpawnerLogic extends AbstractSpawner {
+    static final DummySpawnerLogic DUMMY_SPAWNER_LOGIC = new DummySpawnerLogic();
 
     @Override
     public void broadcastEvent(int id) {
@@ -14,8 +14,8 @@ public class DummyMobSpawnerLogic extends MobSpawnerBaseLogic {
     }
 
     @Override
-    public World getSpawnerWorld() {
-        return Minecraft.getMinecraft().world;
+    public World getWorld() {
+        return Minecraft.getInstance().world;
     }
 
     @Override

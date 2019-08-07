@@ -2,16 +2,22 @@ package io.github.strikerrocker.vt.content.items.dynamite;
 
 import io.github.strikerrocker.vt.content.items.Items;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EntityDynamite extends EntityThrowable {
+public class EntityDynamite extends ThrowableEntity {
     /**
      * Number of ticks required for this dynamite to dry off
      */
@@ -36,8 +42,22 @@ public class EntityDynamite extends EntityThrowable {
         super(world, x, y, z);
     }
 
-    EntityDynamite(World world, EntityLivingBase entityLivingBase) {
-        super(world, entityLivingBase);
+    EntityDynamite(World world, LivingEntity entityLivingBase) {
+        super(world);
+    }
+
+    public EntityDynamite(EntityType<? extends EnderPearlEntity> p_i50153_1_, World p_i50153_2_) {
+        super(p_i50153_1_, p_i50153_2_);
+    }
+
+    public EntityDynamite(World worldIn, LivingEntity throwerIn) {
+        super(EntityType.ENDER_PEARL, throwerIn, worldIn);
+        this.perlThrower = throwerIn;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public EntityDynamite(World worldIn, double x, double y, double z) {
+        super(EntityType.ENDER_PEARL, x, y, z, worldIn);
     }
 
     @Override
@@ -81,6 +101,11 @@ public class EntityDynamite extends EntityThrowable {
                 else
                     world.createExplosion(this, this.posX, this.posY, this.posZ, 3F, true);
             }
-        this.setDead();
+        this.remove();
+    }
+
+    @Override
+    protected void registerData() {
+
     }
 }
