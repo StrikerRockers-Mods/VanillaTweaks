@@ -2,21 +2,18 @@ package io.github.strikerrocker.vt.recipes.vanilla;
 
 import com.google.gson.JsonObject;
 import io.github.strikerrocker.vt.VTModInfo;
-import net.minecraft.util.JsonUtils;
-import net.minecraftforge.common.crafting.IConditionFactory;
-import net.minecraftforge.common.crafting.JsonContext;
+import net.minecraftforge.common.crafting.IConditionSerializer;
 
 import java.util.function.BooleanSupplier;
 
-public class Conditions implements IConditionFactory {
+public class Conditions implements IConditionSerializer {
 
     @Override
-    public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        String key = JsonUtils.getString(json, "type");
-        if (key.equals(VTModInfo.MODID + ":chest")) return () -> VanillaRecipes.betterChest;
-        if (key.equals(VTModInfo.MODID + ":nametag")) return () -> VanillaRecipes.nametag;
-        if (key.equals(VTModInfo.MODID + ":packed_ice")) return () -> VanillaRecipes.packedIce;
-        if (key.equals(VTModInfo.MODID + ":string")) return () -> VanillaRecipes.string;
+    public BooleanSupplier parse(JsonObject json) {
+        String key = json.get("type").getAsString();
+        if (key.equals(VTModInfo.MODID + ":chest")) return () -> VanillaRecipes.betterChest.get();
+        if (key.equals(VTModInfo.MODID + ":nametag")) return () -> VanillaRecipes.nametag.get();
+        if (key.equals(VTModInfo.MODID + ":string")) return () -> VanillaRecipes.string.get();
         return null;
     }
 }

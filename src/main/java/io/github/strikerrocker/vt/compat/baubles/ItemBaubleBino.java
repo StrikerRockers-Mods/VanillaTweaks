@@ -1,18 +1,13 @@
 package io.github.strikerrocker.vt.compat.baubles;
 
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
-public class ItemBaubleBino extends Item implements IBauble {
+public class ItemBaubleBino extends Item /*implements IBauble */ {
     ItemBaubleBino() {
-        this.setTranslationKey("binocular_bauble");
+        super(new Item.Properties().maxStackSize(1));
         this.setRegistryName("binocular_bauble");
-        this.setMaxStackSize(1);
     }
-
+/*
     @Override
     public BaubleType getBaubleType(ItemStack itemstack) {
         return null;
@@ -46,5 +41,5 @@ public class ItemBaubleBino extends Item implements IBauble {
     @Override
     public boolean willAutoSync(ItemStack itemstack, EntityLivingBase player) {
         return false;
-    }
+    }*/
 }

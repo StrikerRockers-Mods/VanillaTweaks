@@ -7,16 +7,16 @@ import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
 import io.github.strikerrocker.vt.content.items.craftingpad.ItemCraftingPad;
 import io.github.strikerrocker.vt.content.items.dynamite.EntityDynamite;
 import io.github.strikerrocker.vt.content.items.dynamite.ItemDynamite;
-import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
@@ -29,9 +29,14 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ObjectHolder;
+
+import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
 public class Items extends Feature {
+    @ObjectHolder(MODID + ":dynamite")
+    public static final EntityType<EntityDynamite> DYNAMITE_TYPE = null;
     private static final IArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
     private static final Item binocular = new ArmorItem(binocular_material, EquipmentSlotType.HEAD, new Item.Properties().maxStackSize(1)).setRegistryName("binoculars");
     private static final Item lens = new Item(new Item.Properties()).setRegistryName("lens");
@@ -103,17 +108,25 @@ public class Items extends Feature {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void onModelRegister(ModelRegistryEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, manager -> new SpriteRenderer<>(manager, dynamite, Minecraft.getInstance().getItemRenderer()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
     }
 
     @Override
     public void setup() {
-        /*TODO DispenserBlock.registerDispenseBehavior(dynamite, new ProjectileDispenseBehavior() {
+        DispenserBlock.registerDispenseBehavior(dynamite, new ProjectileDispenseBehavior() {
             @Override
             protected IProjectile getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
                 return new EntityDynamite(worldIn, position.getX(), position.getY(), position.getZ());
             }
-        });*/
+        });
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents {
+        @SubscribeEvent
+        public void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
+            event.getRegistry().register(EntityType.Builder.<EntityDynamite>create(EntityDynamite::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "entity_sit")));
+        }
     }
 
     /*TODO ADD json @SubscribeEvent
