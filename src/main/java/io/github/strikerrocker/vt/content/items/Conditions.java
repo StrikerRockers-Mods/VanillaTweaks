@@ -2,20 +2,19 @@ package io.github.strikerrocker.vt.content.items;
 
 import com.google.gson.JsonObject;
 import io.github.strikerrocker.vt.VTModInfo;
-import net.minecraft.util.JsonUtils;
-import net.minecraftforge.common.crafting.IConditionFactory;
-import net.minecraftforge.common.crafting.JsonContext;
+import net.minecraftforge.common.crafting.IConditionSerializer;
 
 import java.util.function.BooleanSupplier;
 
-public class Conditions implements IConditionFactory {
+public class Conditions implements IConditionSerializer {
+
     @Override
-    public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        String key = JsonUtils.getString(json, "type");
-        if (key.equals(VTModInfo.MODID + ":crafting_pad")) return () -> Items.enablePad;
-        if (key.equals(VTModInfo.MODID + ":slime_bucket")) return () -> Items.enableSlimeBucket;
-        if (key.equals(VTModInfo.MODID + ":dynamite")) return () -> Items.enableDynamite;
-        if (key.equals(VTModInfo.MODID + ":binoculars")) return () -> Items.binocularZoomAmount != 0;
+    public BooleanSupplier parse(JsonObject json) {
+        String key = json.get("type").getAsString();
+        if (key.equals(VTModInfo.MODID + ":crafting_pad")) return () -> Items.enablePad.get();
+        if (key.equals(VTModInfo.MODID + ":slime_bucket")) return () -> Items.enableSlimeBucket.get();
+        if (key.equals(VTModInfo.MODID + ":dynamite")) return () -> Items.enableDynamite.get();
+        if (key.equals(VTModInfo.MODID + ":binoculars")) return () -> Items.binocularZoomAmount.get() != 0;
         return null;
     }
 }

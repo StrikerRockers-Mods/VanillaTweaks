@@ -3,8 +3,8 @@ package io.github.strikerrocker.vt.misc;
 import io.github.strikerrocker.vt.content.blocks.pedestal.ContainerPedestal;
 import io.github.strikerrocker.vt.content.blocks.pedestal.GuiPedestal;
 import io.github.strikerrocker.vt.content.blocks.pedestal.TileEntityPedestal;
-import io.github.strikerrocker.vt.content.items.craftingpad.ContainerCraftingPad;
-import io.github.strikerrocker.vt.content.items.craftingpad.GuiCraftingPad;
+import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
+import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +21,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
         if (ID == PAD) {
-            return new ContainerCraftingPad(player, world);
+            return new CraftingPadContainer(player, world);
         } else if (ID == PEDESTAL) {
             return new ContainerPedestal(player.inventory, (TileEntityPedestal) world.getTileEntity(new BlockPos(x, y, z)));
         }
@@ -32,7 +32,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
         if (ID == PAD) {
-            return new GuiCraftingPad(player.inventory, world);
+            return new CraftingPadScreen(player.inventory, world);
         } else if (ID == PEDESTAL) {
             return new GuiPedestal(player.inventory, (TileEntityPedestal) world.getTileEntity(new BlockPos(x, y, z)));
         }

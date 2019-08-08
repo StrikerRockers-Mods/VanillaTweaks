@@ -1,19 +1,26 @@
 package io.github.strikerrocker.vt.recipes.vanilla;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public class VanillaRecipes extends Feature {
-    static boolean betterChest;
-    static boolean nametag;
-    static boolean packedIce;
-    static boolean string;
+    static ForgeConfigSpec.BooleanValue betterChest;
+    static ForgeConfigSpec.BooleanValue nametag;
+    static ForgeConfigSpec.BooleanValue string;
 
     @Override
-    public void syncConfig(Configuration config, String category) {
-        betterChest = config.get(category, "betterChestRecipe", true, "Wanna craft multiple chests at one go?").getBoolean();
-        nametag = config.get(category, "nameTagRecipe", true, "Tired of not getting a nametag?").getBoolean();
-        packedIce = config.get(category, "packedIceRecipe", true, "Don't want to travel to find packed ice?").getBoolean();
-        string = config.get(category, "woolToStringRecipe", true, "Have wool but need string?").getBoolean();
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
+        betterChest = builder
+                .translation("config.vanillatweaks:betterChest")
+                .comment("Wanna craft multiple chests at one go?")
+                .define("betterChest", true);
+        nametag = builder
+                .translation("config.vanillatweaks:nametag")
+                .comment("Tired of not having a nametag?")
+                .define("nametag", true);
+        string = builder
+                .translation("config.vanillatweaks:string")
+                .comment("Have wool but need string?")
+                .define("string", true);
     }
 }
