@@ -2,15 +2,19 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.Module;
 import io.github.strikerrocker.vt.content.ContentModule;
+import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
 import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
 import io.github.strikerrocker.vt.loot.LootModule;
 import io.github.strikerrocker.vt.recipes.RecipeModule;
 import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.WorldModule;
 import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -28,17 +32,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-// The value here should match an entry in the META-INF/mods.toml file
-@Mod("examplemod")
+@Mod("vanillatweaks")
 public class VanillaTweaks {
-    // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
     public static List<Module> modules = new ArrayList<>();
 
     public VanillaTweaks() {
         registerModules();
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addGenericListener(ContainerType.class, this::registerContainers);
+        modEventBus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -72,5 +75,11 @@ public class VanillaTweaks {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
         }
+    }
+
+    public void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
+        event.getRegistry().registerAll(
+                IForgeContainerType.create(CraftingPadContainer::new).setRegistryName("crafting_pad")
+        );
     }
 }

@@ -1,25 +1,31 @@
 package io.github.strikerrocker.vt.compat;
 
 import io.github.strikerrocker.vt.content.items.Items;
-import io.github.strikerrocker.vt.content.items.craftingpad.ContainerCraftingPad;
+import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
 import mezz.jei.api.IModPlugin;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.JEIPlugin;
-import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
+import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
-@JEIPlugin
+import static io.github.strikerrocker.vt.VTModInfo.MODID;
+
+@mezz.jei.api.JeiPlugin
 public class JeiPlugin implements IModPlugin {
-    public JeiPlugin() {
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        if (Items.enablePad.get())
+            registration.addRecipeCatalyst(new ItemStack(Items.craftingPad), VanillaRecipeCategoryUid.CRAFTING);
     }
 
     @Override
-    public void register(IModRegistry registry) {
-        if (Items.enablePad) {
-            registry.addRecipeCatalyst(new ItemStack(Items.craftingPad), VanillaRecipeCategoryUid.CRAFTING);
-            IRecipeTransferRegistry transfer = registry.getRecipeTransferRegistry();
-            transfer.addRecipeTransferHandler(ContainerCraftingPad.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
-        }
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(CraftingPadContainer.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
+    }
+
+    @Override
+    public ResourceLocation getPluginUid() {
+        return new ResourceLocation(MODID, MODID);
     }
 }
