@@ -1,25 +1,30 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.registries.ObjectHolder;
 
-public class ContainerPedestal extends Container {
+public class PedestalContainer extends Container {
+    @ObjectHolder("vanillatweaks:pedestal")
+    public static ContainerType<PedestalContainer> TYPE;
 
-    public ContainerPedestal(PlayerEntity playerInv, final TileEntityPedestal pedestal) {
-        IItemHandler inventory = pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH);
-        addSlot(new SlotItemHandler(inventory, 0, 80, 35) {
+    public PedestalContainer(int id, PlayerInventory playerInv, BlockPos pos) {
+        super(TYPE, id);
+        PedestalTileEntity pedestal = (PedestalTileEntity) playerInv.player.world.getTileEntity(pos);
+        pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).ifPresent(inventory -> addSlot(new SlotItemHandler(inventory, 0, 80, 35) {
             @Override
             public void onSlotChanged() {
                 pedestal.markDirty();
             }
-        });
+        }));
         // Add player inv
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {

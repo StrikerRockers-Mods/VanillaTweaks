@@ -12,8 +12,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.stream.Collectors;
 
-public class EnchantmentSiphon extends Enchantment {
-    EnchantmentSiphon(String name) {
+public class SiphonEnchantment extends Enchantment {
+    SiphonEnchantment(String name) {
         super(Rarity.UNCOMMON, EnchantmentType.DIGGER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
         this.setRegistryName(name);
     }

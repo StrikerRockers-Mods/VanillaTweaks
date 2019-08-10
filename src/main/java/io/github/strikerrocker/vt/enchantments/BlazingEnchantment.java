@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.SplittableRandom;
 
-public class EnchantmentBlazing extends Enchantment {
-    EnchantmentBlazing(String name) {
+public class BlazingEnchantment extends Enchantment {
+    BlazingEnchantment(String name) {
         super(Rarity.VERY_RARE, EnchantmentType.DIGGER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
         this.setRegistryName(name);
     }

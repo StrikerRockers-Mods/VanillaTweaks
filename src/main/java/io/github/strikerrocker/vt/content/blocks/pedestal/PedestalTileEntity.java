@@ -1,30 +1,32 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import io.github.strikerrocker.vt.VanillaTweaks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 
-public class TileEntityPedestal extends TileEntity {
+public class PedestalTileEntity extends TileEntity {
     long lastChangeTime;
     public ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             if (!world.isRemote) {
-                lastChangeTime = world.getTotalWorldTime();
-                VanillaTweaks.network.sendToAllAround(new PacketUpdatePedestal(TileEntityPedestal.this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+                lastChangeTime = world.getGameTime();
+                //VanillaTweaks.network.sendToAllAround(new PacketUpdatePedestal(PedestalTileEntity.this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
             }
         }
     };
+
+    public PedestalTileEntity(TileEntityType<?> tileEntityTypeIn) {
+        super(tileEntityTypeIn);
+    }
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
@@ -32,33 +34,33 @@ public class TileEntityPedestal extends TileEntity {
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
+    public CompoundNBT getUpdateTag() {
+        return new CompoundNBT();
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
     }
 
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        read(pkt.getNbtCompound());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setTag("inventory", inventory.serializeNBT());
-        compound.setLong("lastChangeTime", lastChangeTime);
-        return super.writeToNBT(compound);
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.put("inventory", inventory.serializeNBT());
+        compound.putLong("lastChangeTime", lastChangeTime);
+        return super.write(compound);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+    public void read(CompoundNBT compound) {
+        inventory.deserializeNBT(compound.getCompound("inventory"));
         lastChangeTime = compound.getLong("lastChangeTime");
-        super.readFromNBT(compound);
+        super.read(compound);
     }
 
     @Override

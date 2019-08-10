@@ -14,10 +14,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.UUID;
 
-public class EnchantmentVigor extends Enchantment {
+public class VigorEnchantment extends Enchantment {
     private static final UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
 
-    EnchantmentVigor(String name) {
+    VigorEnchantment(String name) {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentType.ARMOR_CHEST, new EquipmentSlotType[]{EquipmentSlotType.CHEST});
         this.setRegistryName(name);
     }

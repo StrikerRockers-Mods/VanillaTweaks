@@ -5,17 +5,18 @@ import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.content.blocks.Blocks;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GuiPedestal extends ContainerScreen {
+public class PedestalScreen extends ContainerScreen<PedestalContainer> {
 
     private static final ResourceLocation BG_TEXTURE = new ResourceLocation(VTModInfo.MODID, "textures/gui/pedestal.png");
 
-    private final PlayerEntity playerInv;
+    private final PlayerInventory playerInv;
 
-    public GuiPedestal(PlayerEntity playerInv, TileEntityPedestal pedestal) {
-        super(new ContainerPedestal(playerInv, pedestal));
+    public PedestalScreen(PedestalContainer container, PlayerInventory playerInv, ITextComponent name) {
+        super(container, playerInv, name);
         this.playerInv = playerInv;
     }
 
@@ -23,7 +24,7 @@ public class GuiPedestal extends ContainerScreen {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String name = I18n.format(Blocks.pedestal.getTranslationKey() + ".name");
         font.drawString(name, xSize / 2 - font.getStringWidth(name) / 2, 6, 0x404040);
-        font.drawString(playerInv.getDisplayName().font(), 8, ySize - 94, 0x404040);
+        font.drawString(playerInv.getDisplayName().getFormattedText(), 8, ySize - 94, 0x404040);
     }
 
     @Override

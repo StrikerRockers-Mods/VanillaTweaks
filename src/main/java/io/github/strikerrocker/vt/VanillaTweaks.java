@@ -77,9 +77,5 @@ public class VanillaTweaks {
         }
     }
 
-    public void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
-        event.getRegistry().registerAll(
-                IForgeContainerType.create(CraftingPadContainer::new).setRegistryName("crafting_pad")
-        );
-    }
+
 }

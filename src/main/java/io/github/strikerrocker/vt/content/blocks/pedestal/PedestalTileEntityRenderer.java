@@ -11,10 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.opengl.GL11;
 
-public class TESRPedestal extends TileEntityRenderer<TileEntityPedestal> {
+public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTileEntity> {
 
     @Override
-    public void render(TileEntityPedestal tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render(PedestalTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
         ItemStack stack = tileEntityIn.inventory.getStackInSlot(0);
         if (!stack.isEmpty()) {
             GlStateManager.enableRescaleNormal();
