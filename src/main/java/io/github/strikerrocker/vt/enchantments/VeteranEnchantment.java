@@ -1,6 +1,5 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -12,32 +11,26 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-public class EnchantmentVeteran extends Enchantment {
-    EnchantmentVeteran(String name) {
+public class VeteranEnchantment extends Enchantment {
+    VeteranEnchantment(String name) {
         super(Rarity.VERY_RARE, EnchantmentType.ARMOR_HEAD, new EquipmentSlotType[]{EquipmentSlotType.HEAD});
         this.setRegistryName(name);
     }
 
     @SubscribeEvent
     public void onTick(TickEvent.WorldTickEvent event) {
-        event.world.getEntities(ExperienceOrbEntity.class, EntityPredicates.IS_ALIVE).forEach(this::attemptToMove);
+        for (PlayerEntity player : event.world.getPlayers()) {
+            for (ExperienceOrbEntity experienceOrbEntity : player.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, player.getBoundingBox().expand(32, 32, 32), EntityPredicates.IS_ALIVE)) {
+                attemptToMove(experienceOrbEntity,player);
+            }
+        }
     }
 
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (Minecraft.getInstance().world != null)
-            Minecraft.getInstance().world.getEntities(ExperienceOrbEntity.class, EntityPredicates.IS_ALIVE).forEach(this::attemptToMove);
-    }
-
-    private void attemptToMove(Entity entity) {
+    private void attemptToMove(Entity entity,PlayerEntity closestPlayer) {
         double range = 32;
-        PlayerEntity closestPlayer = entity.world.getClosestPlayer(entity, range);
         if (closestPlayer != null && EnchantmentHelper.getEnchantmentLevel(this, closestPlayer.getItemStackFromSlot(EquipmentSlotType.HEAD)) > 0) {
             double xDiff = (closestPlayer.posX - entity.posX) / range;
             double yDiff = (closestPlayer.posY + closestPlayer.getEyeHeight() - entity.posY) / range;

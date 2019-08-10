@@ -8,8 +8,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
-public class BlockCharcoal extends Block {
-    BlockCharcoal(String name) {
+public class CharcoalBlock extends Block {
+    CharcoalBlock(String name) {
         super(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(5.0f, 10.0f));
         setRegistryName(name);
     }

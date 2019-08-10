@@ -25,7 +25,7 @@ public class BlockPedestal extends Block {
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
             ItemStack heldItem = player.getHeldItem(handIn);
-            TileEntityPedestal tile = (TileEntityPedestal) worldIn.getTileEntity(pos);
+            PedestalTileEntity tile = (PedestalTileEntity) worldIn.getTileEntity(pos);
             /*IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, hit.getFace());
             if (!player.isSneaking()) {
                 if (heldItem.isEmpty()) {
@@ -59,6 +59,6 @@ public class BlockPedestal extends Block {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new TileEntityPedestal();
+        return new PedestalTileEntity();
     }
 }

@@ -1,13 +1,14 @@
 package io.github.strikerrocker.vt.world.selfplanting;
 
 import io.github.strikerrocker.vt.misc.Utils;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSeedFood;
-import net.minecraft.item.ItemSeeds;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Random;
@@ -40,9 +41,9 @@ public class SelfPlanting implements ISelfPlanting {
     }
 
     @Override
-    public void handlePlantingLogic(EntityItem entity) {
+    public void handlePlantingLogic(ItemEntity entity) {
         Item item = entity.getItem().getItem();
-        if (item instanceof ItemSeeds || item instanceof ItemSeedFood) {
+        if (item instanceof BlockItem && Block.getBlockFromItem(item) instanceof IGrowable) {
             if (this.minSteadyTicks == 0)
                 this.minSteadyTicks = random.nextInt(75) + 75;
             ++this.steadyTicks;
@@ -50,7 +51,7 @@ public class SelfPlanting implements ISelfPlanting {
             BlockPos lastTickEntityPos = new BlockPos(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ);
             if (entityPos.compareTo(lastTickEntityPos) != 0)
                 this.steadyTicks = 0;
-            if (this.steadyTicks >= this.minSteadyTicks && entity.getItem().getItem().onItemUse(Utils.getFakePlayer(entity.world), entity.world, entityPos, EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0) == EnumActionResult.SUCCESS) {
+            if (this.steadyTicks >= this.minSteadyTicks && entity.getItem().getItem().onItemUse(new ItemUseContext(Utils.getFakePlayer(entity.world), Hand.MAIN_HAND, null)) == ActionResultType.SUCCESS) {
                 entity.getItem().shrink(1);
             }
         }

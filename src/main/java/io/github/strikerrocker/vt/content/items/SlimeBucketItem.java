@@ -11,8 +11,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class ItemSlimeBucket extends Item {
-    ItemSlimeBucket() {
+public class SlimeBucketItem extends Item {
+    SlimeBucketItem() {
         super(new Item.Properties().group(ItemGroup.MISC).maxStackSize(1));
         this.setRegistryName("slime");
     }
