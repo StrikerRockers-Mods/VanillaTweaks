@@ -4,51 +4,55 @@ import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.Objects;
+import javax.annotation.Nullable;
 
 public class CapabilitySelfPlanting extends Feature {
     @CapabilityInject(ISelfPlanting.class)
     static Capability<ISelfPlanting> CAPABILITY_PLANTING = null;
-    private boolean selfPlanting;
+    private ForgeConfigSpec.BooleanValue selfPlanting;
 
     @Override
-    public void syncConfig(Configuration config, String category) {
-        selfPlanting = config.get(category, "selfPlanting", true, "Dropped seeds/crops now plant themselves").setRequiresMcRestart(true).getBoolean();
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
+        selfPlanting = builder
+                .translation("config.vanillatweaks:selfPlanting")
+                .comment("Want seeds to auto-plant themselves when broken?")
+                .define("selfPlanting", true);
     }
 
     @Override
     public void setup() {
-        if (selfPlanting) {
+        if (selfPlanting.get()) {
             VanillaTweaks.logInfo("Registering self planting capability");
             CapabilityManager.INSTANCE.register(ISelfPlanting.class, new Capability.IStorage<ISelfPlanting>() {
+                @Nullable
                 @Override
-                public NBTBase writeNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, EnumFacing side) {
-                    NBTTagCompound compound = new NBTTagCompound();
-                    compound.setInteger(SelfPlanting.MIN_STEADY_TICKS_KEY, instance.getMinSteadyTicks());
-                    compound.setInteger(SelfPlanting.STEADY_TICKS_KEY, instance.getSteadyTicks());
+                public INBT writeNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, Direction side) {
+                    CompoundNBT compound = new CompoundNBT();
+                    compound.putInt(SelfPlanting.MIN_STEADY_TICKS_KEY, instance.getMinSteadyTicks());
+                    compound.putInt(SelfPlanting.STEADY_TICKS_KEY, instance.getSteadyTicks());
                     return compound;
                 }
 
                 @Override
-                public void readNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, EnumFacing side, NBTBase nbt) {
-                    NBTTagCompound compound = (NBTTagCompound) nbt;
-                    instance.setMinSteadyTicks(compound.getInteger(SelfPlanting.MIN_STEADY_TICKS_KEY));
-                    instance.setSteadyTicks(compound.getInteger(SelfPlanting.STEADY_TICKS_KEY));
+                public void readNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, Direction side, INBT nbt) {
+                    CompoundNBT compound = (CompoundNBT) nbt;
+                    instance.setMinSteadyTicks(compound.getInt(SelfPlanting.MIN_STEADY_TICKS_KEY));
+                    instance.setSteadyTicks(compound.getInt(SelfPlanting.STEADY_TICKS_KEY));
                 }
             }, SelfPlanting::new);
         }
@@ -56,12 +60,12 @@ public class CapabilitySelfPlanting extends Feature {
 
     @Override
     public boolean usesEvents() {
-        return selfPlanting;
+        return selfPlanting.get();
     }
 
     @SubscribeEvent
     public void attachCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof EntityItem) {
+        if (event.getObject() instanceof ItemEntity) {
             event.addCapability(new ResourceLocation(VTModInfo.MODID, "planting"), new SelfPlantingProvider());
         }
     }
@@ -69,10 +73,10 @@ public class CapabilitySelfPlanting extends Feature {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         World world = event.world;
-        if (selfPlanting && !world.isRemote) {
-            for (EntityItem entityItem : world.getEntities(EntityItem.class, EntitySelectors.IS_ALIVE)) {
-                if (entityItem.hasCapability(CAPABILITY_PLANTING, null)) {
-                    Objects.requireNonNull(entityItem.getCapability(CAPABILITY_PLANTING, null)).handlePlantingLogic(entityItem);
+        if (selfPlanting.get() && !world.isRemote) {
+            for (ItemEntity entityItem : world.getEntities(ItemEntity.class, EntityPredicates.IS_ALIVE)) {
+                if (entityItem.getCapability(CAPABILITY_PLANTING).isPresent()) {
+                    entityItem.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic(entityItem));
                 }
             }
         }

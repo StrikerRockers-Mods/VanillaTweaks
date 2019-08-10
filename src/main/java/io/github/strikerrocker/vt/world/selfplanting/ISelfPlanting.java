@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.world.selfplanting;
 
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 
 public interface ISelfPlanting {
     int getMinSteadyTicks();
@@ -11,5 +11,5 @@ public interface ISelfPlanting {
 
     void setSteadyTicks(int steadyTicks);
 
-    void handlePlantingLogic(EntityItem stack);
+    void handlePlantingLogic(ItemEntity stack);
 }

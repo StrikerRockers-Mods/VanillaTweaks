@@ -15,11 +15,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.UUID;
 
-public class EnchantmentNimble extends Enchantment {
+public class NimbleEnchantment extends Enchantment {
 
     private static final UUID nimbleUUID = UUID.fromString("05b61a62-ae84-492e-8536-f365b7143296");
 
-    EnchantmentNimble(String name) {
+    NimbleEnchantment(String name) {
         super(Rarity.UNCOMMON, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{EquipmentSlotType.FEET});
         this.setRegistryName(name);
     }

@@ -8,8 +8,8 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 
-public class ItemDynamite extends Item {
-    public ItemDynamite(String name) {
+public class DynamiteItem extends Item {
+    public DynamiteItem(String name) {
         super(new Item.Properties().group(ItemGroup.MISC).maxStackSize(16));
         this.setRegistryName(name);
     }
@@ -20,7 +20,7 @@ public class ItemDynamite extends Item {
         if (!playerIn.isCreative()) itemstack.shrink(1);
         worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!worldIn.isRemote) {
-            /*TODO EntityDynamite dynamite = new EntityDynamite(worldIn, playerIn);
+            /*TODO DynamiteEntity dynamite = new DynamiteEntity(worldIn, playerIn);
             dynamite.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0, 1.5F, 0);
             playerIn.getEntityWorld().addEntity(dynamite);
             playerIn.getCooldownTracker().setCooldown(this, 20);*/

@@ -4,6 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
@@ -16,10 +17,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.List;
 
-public class EnchantmentHoming extends Enchantment {
+public class HomingEnchantment extends Enchantment {
     private AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
 
-    EnchantmentHoming(String name) {
+    HomingEnchantment(String name) {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentType.BOW, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
         this.setRegistryName(name);
     }
@@ -27,7 +28,11 @@ public class EnchantmentHoming extends Enchantment {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.world != null) {
-            /*event.world.getEntitiesWithinAABB(ArrowEntity.class, EntityPredicates.IS_ALIVE).forEach(this::attemptToMove);*/
+            for (PlayerEntity player : event.world.getPlayers()) {
+                for (ArrowEntity arrowEntity : event.world.getEntitiesWithinAABB(ArrowEntity.class, player.getBoundingBox().grow(128), EntityPredicates.IS_ALIVE)) {
+                    attemptToMove(arrowEntity);
+                }
+            }
         }
     }
 

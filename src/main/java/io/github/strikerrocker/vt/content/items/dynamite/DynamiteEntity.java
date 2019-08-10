@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -15,20 +14,20 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
-public class EntityDynamite extends ProjectileItemEntity {
+public class DynamiteEntity extends ProjectileItemEntity {
     private static final int WET_TICKS = 20;
-    private static final DataParameter<Integer> TICKSWET = EntityDataManager.createKey(EntityDynamite.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> TICKSSINCEWET = EntityDataManager.createKey(EntityDynamite.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> TICKSWET = EntityDataManager.createKey(DynamiteEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> TICKSSINCEWET = EntityDataManager.createKey(DynamiteEntity.class, DataSerializers.VARINT);
 
-    public EntityDynamite(EntityType type, World world) {
+    public DynamiteEntity(EntityType type, World world) {
         super(type, world);
     }
 
-    public EntityDynamite(World world, double x, double y, double z) {
+    public DynamiteEntity(World world, double x, double y, double z) {
         super(Items.DYNAMITE_TYPE, x, y, z, world);
     }
 
-    EntityDynamite(World world, LivingEntity entityLivingBase) {
+    DynamiteEntity(World world, LivingEntity entityLivingBase) {
         super(Items.DYNAMITE_TYPE, entityLivingBase, world);
     }
 
@@ -73,7 +72,7 @@ public class EntityDynamite extends ProjectileItemEntity {
                 if (!(getThrower() instanceof PlayerEntity) || ((PlayerEntity) getThrower()).abilities.isCreativeMode)
                     this.entityDropItem(Items.dynamite);
             } else {
-                if (result.entityHit instanceof EntityDynamite)
+                if (result.entityHit instanceof DynamiteEntity)
                     return;
                 else
                     world.createExplosion(this, posX, posY, posZ, 3F, Explosion.Mode.BREAK);

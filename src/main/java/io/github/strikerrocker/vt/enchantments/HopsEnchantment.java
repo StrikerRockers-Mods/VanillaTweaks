@@ -11,9 +11,9 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EnchantmentHops extends Enchantment {
+public class HopsEnchantment extends Enchantment {
 
-    EnchantmentHops(String name) {
+    HopsEnchantment(String name) {
         super(Rarity.UNCOMMON, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{EquipmentSlotType.FEET});
         this.setRegistryName(name);
     }

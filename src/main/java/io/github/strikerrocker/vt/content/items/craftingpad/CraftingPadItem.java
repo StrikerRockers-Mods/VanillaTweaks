@@ -13,8 +13,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ItemCraftingPad extends Item {
-    public ItemCraftingPad() {
+public class CraftingPadItem extends Item {
+    public CraftingPadItem() {
         super(new Item.Properties().group(ItemGroup.TOOLS));
         setRegistryName("pad");
     }
