@@ -1,56 +1,59 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketUpdatePedestal implements IMessage {
+import java.util.function.Supplier;
+
+public class PacketUpdatePedestal {
     private BlockPos pos;
     private ItemStack stack;
     private long lastChangeTime;
 
-    private PacketUpdatePedestal(BlockPos pos, ItemStack stack, long lastChangeTime) {
+    public PacketUpdatePedestal(BlockPos pos, ItemStack stack, long lastChangeTime) {
         this.pos = pos;
         this.stack = stack;
         this.lastChangeTime = lastChangeTime;
     }
 
-    PacketUpdatePedestal(PedestalTileEntity te) {
+    public PacketUpdatePedestal(PedestalTileEntity te) {
         this(te.getPos(), te.inventory.getStackInSlot(0), te.lastChangeTime);
     }
 
     public PacketUpdatePedestal() {
     }
 
-    @Override
-    public void toBytes(ByteBuf buf) {
+    public static void encode(PacketUpdatePedestal message, PacketBuffer packet) {
+        message.toBytes(packet);
+    }
+
+    public static PacketUpdatePedestal decode(PacketBuffer packet) {
+        PacketUpdatePedestal message = new PacketUpdatePedestal();
+        message.fromBytes(packet);
+        return message;
+    }
+
+    public static void onMessage(PacketUpdatePedestal message, Supplier<NetworkEvent.Context> ctx) {
+        Minecraft.getInstance().deferTask(() -> {
+            PedestalTileEntity te = (PedestalTileEntity) Minecraft.getInstance().world.getTileEntity(message.pos);
+            te.inventory.setStackInSlot(0, message.stack);
+            te.lastChangeTime = message.lastChangeTime;
+        });
+        ctx.get().setPacketHandled(true);
+    }
+
+    public void toBytes(PacketBuffer buf) {
         buf.writeLong(pos.toLong());
-        ByteBufUtils.writeItemStack(buf, stack);
+        buf.writeItemStack(stack);
         buf.writeLong(lastChangeTime);
     }
 
-    @Override
-    public void fromBytes(ByteBuf buf) {
+    public void fromBytes(PacketBuffer buf) {
         pos = BlockPos.fromLong(buf.readLong());
-        stack = ByteBufUtils.readItemStack(buf);
+        buf.readItemStack();
         lastChangeTime = buf.readLong();
-    }
-
-    public static class Handler implements IMessageHandler<PacketUpdatePedestal, IMessage> {
-        @Override
-        public IMessage onMessage(PacketUpdatePedestal message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() ->
-            {
-                PedestalTileEntity te = (PedestalTileEntity) Minecraft.getMinecraft().world.getTileEntity(message.pos);
-                te.inventory.setStackInSlot(0, message.stack);
-                te.lastChangeTime = message.lastChangeTime;
-            });
-            return null;
-        }
     }
 }

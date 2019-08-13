@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "vt:better_stone_tools"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "item": "minecraft:stone_pickaxe"
+  }
+}

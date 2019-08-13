@@ -1,0 +1,6 @@
+{
+  "conditions": {
+    "better_stairs": "io.github.strikerrocker.vt.recipes.better.Conditions",
+    "better_stone_tools": "io.github.strikerrocker.vt.recipes.better.Conditions"
+  }
+}

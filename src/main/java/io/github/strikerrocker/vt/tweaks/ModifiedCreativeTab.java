@@ -1,28 +1,33 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class ModifiedCreativeTab extends Feature {
-    /*private boolean commandBlockInRedstone;
-    private boolean dragonEggInDecorations;
-    private boolean renamedButtons;
+    private ForgeConfigSpec.BooleanValue commandBlockInRedstone;
+    private ForgeConfigSpec.BooleanValue dragonEggInDecorations;
 
     @Override
-    public void syncConfig(Configuration config, String category) {
-        commandBlockInRedstone = config.get(category, "commandBlockInRedstone", true, "Want command block to appear in redstone tab.").setRequiresMcRestart(true).getBoolean();
-        dragonEggInDecorations = config.get(category, "dragonEggInDecorations", true, "Want dragon egg to appear in decorations tab?").setRequiresMcRestart(true).getBoolean();
-        renamedButtons = config.get(category, "renamedButtons", true, "Want buttons to be renamed according to their material?").setRequiresMcRestart(true).getBoolean();
-    }*/
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
+        commandBlockInRedstone = builder
+                .translation("config.vanillatweaks:commandBlockInRedstone")
+                .comment("Want command block to appear in redstone tab?")
+                .define("commandBlockInRedstone", true);
+        dragonEggInDecorations = builder
+                .translation("config.vanillatweaks:dragonEggInDecorations")
+                .comment("Want dragon egg to appear in decorations tab?")
+                .define("dragonEggInDecorations", true);
+    }
 
     @Override
     public void setup() {
-        /*if (commandBlockInRedstone)
-            Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
-        if (dragonEggInDecorations)
-            Blocks.DRAGON_EGG.setCreativeTab(CreativeTabs.DECORATIONS);
-        if (renamedButtons) {
-            Blocks.STONE_BUTTON.setTranslationKey("buttonStone");
-            Blocks.WOODEN_BUTTON.setTranslationKey("buttonWood");
-        }*/
+        if (commandBlockInRedstone.get())
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
+        if (dragonEggInDecorations.get())
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "group");
     }
 }

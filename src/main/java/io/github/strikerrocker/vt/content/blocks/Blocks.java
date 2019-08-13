@@ -13,6 +13,8 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -23,14 +25,19 @@ import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Arrays;
+
+import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
 public class Blocks extends Feature {
     public static final Block pedestal = new BlockPedestal();
     private static final CharcoalBlock charcoal = new CharcoalBlock("charcoalblock");
     private static final Block sugar = new Block(Block.Properties.create(Material.SAND, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
     private static final Block flint = new Block(Block.Properties.create(Material.SAND, MaterialColor.BROWN).hardnessAndResistance(1.0f, 10.0f)).setRegistryName("flintblock");
+    @ObjectHolder(MODID + ":pedestal")
+    public static TileEntityType<PedestalTileEntity> PEDESTAL_TYPE;
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
     private static Block[] blocks = new Block[]{charcoal, sugar, flint, pedestal};
@@ -50,12 +57,6 @@ public class Blocks extends Feature {
     @Override
     public boolean usesEvents() {
         return true;
-    }
-
-    @SubscribeEvent
-    public void onRegisterBlocks(RegistryEvent.Register<Block> event) {
-        event.getRegistry().registerAll(blocks);
-        //TODO GameRegistry.registerTileEntity(PedestalTileEntity.class, pedestal.getRegistryName());
     }
 
     @SubscribeEvent
@@ -88,6 +89,16 @@ public class Blocks extends Feature {
         @SubscribeEvent
         public void onRegisterContainers(RegistryEvent.Register<ContainerType<?>> event) {
             event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))).setRegistryName("crafting_pad"));
+        }
+
+        @SubscribeEvent
+        public void onRegisterTEType(RegistryEvent.Register<TileEntityType<?>> event) {
+            event.getRegistry().register(TileEntityType.Builder.create(PedestalTileEntity::new, pedestal).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
+        }
+
+        @SubscribeEvent
+        public void onRegisterBlocks(RegistryEvent.Register<Block> event) {
+            event.getRegistry().registerAll(blocks);
         }
     }
 }

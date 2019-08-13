@@ -12,6 +12,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 
+import javax.annotation.Nonnull;
+
 public class PedestalContainer extends Container {
     @ObjectHolder("vanillatweaks:pedestal")
     public static ContainerType<PedestalContainer> TYPE;
@@ -19,12 +21,13 @@ public class PedestalContainer extends Container {
     public PedestalContainer(int id, PlayerInventory playerInv, BlockPos pos) {
         super(TYPE, id);
         PedestalTileEntity pedestal = (PedestalTileEntity) playerInv.player.world.getTileEntity(pos);
-        pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).ifPresent(inventory -> addSlot(new SlotItemHandler(inventory, 0, 80, 35) {
-            @Override
-            public void onSlotChanged() {
-                pedestal.markDirty();
-            }
-        }));
+        pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH)
+                .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 35) {
+                    @Override
+                    public void onSlotChange(@Nonnull ItemStack p_75220_1_, @Nonnull ItemStack p_75220_2_) {
+                        pedestal.markDirty();
+                    }
+                }));
         // Add player inv
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {

@@ -10,6 +10,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -72,7 +73,7 @@ public class DynamiteEntity extends ProjectileItemEntity {
                 if (!(getThrower() instanceof PlayerEntity) || ((PlayerEntity) getThrower()).abilities.isCreativeMode)
                     this.entityDropItem(Items.dynamite);
             } else {
-                if (result.entityHit instanceof DynamiteEntity)
+                if (((EntityRayTraceResult) result).getEntity() instanceof DynamiteEntity)
                     return;
                 else
                     world.createExplosion(this, posX, posY, posZ, 3F, Explosion.Mode.BREAK);
