@@ -8,17 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Module {
-    public ForgeConfigSpec configSpec;
     private ForgeConfigSpec.Builder configBuilder;
     private List<Feature> features = new ArrayList<>();
     private String name;
-    private boolean requiresMCRestart;
-    private String comments;
 
-    public Module(String name, String comments, boolean requiresMCRestart, ForgeConfigSpec.Builder builder) {
+    public Module(String name, String comments, boolean requiresMCRestart, ForgeConfigSpec.Builder configBuilder) {
         this.name = name;
-        this.requiresMCRestart = requiresMCRestart;
-        this.comments = comments;
+        this.configBuilder = configBuilder;
         addFeatures();
     }
 

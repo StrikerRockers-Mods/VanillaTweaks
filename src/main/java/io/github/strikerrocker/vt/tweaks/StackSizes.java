@@ -1,38 +1,37 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.init.Items;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class StackSizes extends Feature {
 
-    private int bedStackSize;
-    private int totemOfUndyingStackSize;
-    private int boatStackSize;
-    private int cakeStackSize;
-    private int enderPearlStackSize;
+    private ForgeConfigSpec.IntValue boatStackSize;
+    private ForgeConfigSpec.IntValue enderPearlStackSize;
 
     @Override
-    public void syncConfig(Configuration config, String category) {
-        String stackCategory = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Tweaks" + Configuration.CATEGORY_SPLITTER + "Stack Size";
-        bedStackSize = config.get(stackCategory, "bedStackSize", 4, "Stack size for bed", 1, Integer.MAX_VALUE).getInt();
-        totemOfUndyingStackSize = config.get(stackCategory, "totemOfUndyingStackSize", 4, "Stack size for Totem of Undying", 1, Integer.MAX_VALUE).getInt();
-        boatStackSize = config.get(stackCategory, "boatStackSize", 4, "Stack size for boat", 1, Integer.MAX_VALUE).getInt();
-        cakeStackSize = config.get(stackCategory, "cakeStackSize", 4, "Stack size for cake", 1, Integer.MAX_VALUE).getInt();
-        enderPearlStackSize = config.get(stackCategory, "enderPearlStackSize", 64, "Stack size for ender pearls", 1, Integer.MAX_VALUE).getInt();
+    public void setupConfig(ForgeConfigSpec.Builder builder) {
+        boatStackSize = builder
+                .translation("config.vanillatweaks:boatStackSize")
+                .comment("Stack size for boat")
+                .defineInRange("boatStackSize", 4, 1, 64);
+        enderPearlStackSize = builder
+                .translation("config.vanillatweaks:enderPearlStackSize")
+                .comment("Stack size for ender pearls")
+                .defineInRange("enderPearlStackSize", 64, 1, 64);
+
     }
 
     @Override
     public void setup() {
-        Items.BED.setMaxStackSize(bedStackSize);
-        Items.TOTEM_OF_UNDYING.setMaxStackSize(totemOfUndyingStackSize);
-        Items.BOAT.setMaxStackSize(boatStackSize);
-        Items.ACACIA_BOAT.setMaxStackSize(boatStackSize);
-        Items.BIRCH_BOAT.setMaxStackSize(boatStackSize);
-        Items.DARK_OAK_BOAT.setMaxStackSize(boatStackSize);
-        Items.JUNGLE_BOAT.setMaxStackSize(boatStackSize);
-        Items.SPRUCE_BOAT.setMaxStackSize(boatStackSize);
-        Items.CAKE.setMaxStackSize(cakeStackSize);
-        Items.ENDER_PEARL.setMaxStackSize(enderPearlStackSize);
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ACACIA_STAIRS, boatStackSize, "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.BIRCH_BOAT, boatStackSize, "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.OAK_BOAT, boatStackSize, "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DARK_OAK_BOAT, boatStackSize, "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.JUNGLE_BOAT, boatStackSize, "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPRUCE_BOAT, boatStackSize, "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ENDER_PEARL, enderPearlStackSize, "maxStackSize");
     }
 }

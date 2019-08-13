@@ -45,6 +45,6 @@ description='''
 [[dependencies.vanillatweaks]]
         modId="jei"
         mandatory=false
-        versionRange="[6.0.0.9)"
+        versionRange="[6,)"
         ordering="NONE"
         side="BOTH"

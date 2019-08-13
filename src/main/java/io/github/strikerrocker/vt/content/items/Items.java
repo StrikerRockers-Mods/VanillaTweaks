@@ -4,7 +4,6 @@ import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
-import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
 import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadItem;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteEntity;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteItem;
@@ -17,8 +16,8 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
@@ -27,7 +26,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -40,7 +38,7 @@ import static io.github.strikerrocker.vt.VTModInfo.MODID;
 public class Items extends Feature {
     @ObjectHolder(MODID + ":dynamite")
     public static final EntityType<DynamiteEntity> DYNAMITE_TYPE = null;
-    private static final IArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
+    private static final IArmorMaterial binocular_material = new BasicArmorMaterial(VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, () -> Ingredient.fromItems(net.minecraft.item.Items.IRON_INGOT));
     private static final Item binocular = new ArmorItem(binocular_material, EquipmentSlotType.HEAD, new Item.Properties().maxStackSize(1)).setRegistryName("binoculars");
     private static final Item lens = new Item(new Item.Properties()).setRegistryName("lens");
     private static final Item friedEgg = new Item(new Item.Properties().food(new Food.Builder().hunger(3).saturation(0.6f).build())).setRegistryName("friedegg");
@@ -52,12 +50,6 @@ public class Items extends Feature {
     static ForgeConfigSpec.DoubleValue binocularZoomAmount;
     private static Item slimeBucket = new SlimeBucketItem();
     private static Item baubleBino;
-
-    /*TODO @SubscribeEvent
-    public void registerEntities(RegistryEvent.Register<EntityEntry> event) {
-        VanillaTweaks.logInfo("Registering Entities");
-        event.getRegistry().register(EntityEntryBuilder.create().entity(DynamiteEntity.class).id(new ResourceLocation(VTModInfo.MODID, "dynamite"), 0).name("dynamite").tracker(64, 1, false).build());
-    }*/
 
     @SubscribeEvent
     public void onFOVChange(FOVUpdateEvent event) {
@@ -100,7 +92,7 @@ public class Items extends Feature {
 
     @SubscribeEvent
     public void onRegisterItems(RegistryEvent.Register<Item> event) {
-        VanillaTweaks.logInfo("Registering Items");
+        VanillaTweaks.LOGGER.info("Registering Items");
         event.getRegistry().registerAll(craftingPad, slimeBucket, dynamite, binocular, lens, friedEgg);
         if (ModList.get().isLoaded("baubles")) {
             baubleBino = BaubleTools.initBinocularBauble();
@@ -130,16 +122,5 @@ public class Items extends Feature {
         public void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
             event.getRegistry().register(EntityType.Builder.<DynamiteEntity>create(DynamiteEntity::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "entity_sit")));
         }
-        @SubscribeEvent
-        public void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
-            event.getRegistry().registerAll(
-                    IForgeContainerType.create(CraftingPadContainer::new).setRegistryName("crafting_pad")
-            );
-        }
     }
-
-    /*TODO ADD json @SubscribeEvent
-    public void registerRecipes(RegistryEvent.Register<IRecipe> event) {
-        GameRegistry.addSmelting(net.minecraft.init.Items.EGG, new ItemStack(friedEgg), 0.35F);
-    }*/
 }
