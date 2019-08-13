@@ -2,26 +2,24 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.Module;
 import io.github.strikerrocker.vt.content.ContentModule;
-import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
+import io.github.strikerrocker.vt.content.blocks.pedestal.PacketUpdatePedestal;
 import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
 import io.github.strikerrocker.vt.loot.LootModule;
 import io.github.strikerrocker.vt.recipes.RecipeModule;
 import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.WorldModule;
-import net.minecraft.block.Block;
-import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.extensions.IForgeContainerType;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,21 +30,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
+import static io.github.strikerrocker.vt.VTModInfo.MODID;
+
 @Mod("vanillatweaks")
 public class VanillaTweaks {
     public static final Logger LOGGER = LogManager.getLogger();
     public static List<Module> modules = new ArrayList<>();
+    public static final String PROTOCOL_VERSION = "1.0"; //for channel
+    public static SimpleChannel network;
 
     public VanillaTweaks() {
         registerModules();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addGenericListener(ContainerType.class, this::registerContainers);
         modEventBus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    public static void logInfo(String message) {
-        LOGGER.info("VanillaTweaks : " + message);
+        network = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
+        network.registerMessage(0, PacketUpdatePedestal.class, PacketUpdatePedestal::encode, PacketUpdatePedestal::decode, PacketUpdatePedestal::onMessage);
     }
 
     private void registerModules() {
@@ -54,28 +53,19 @@ public class VanillaTweaks {
         Collections.addAll(moduleBuilder, ContentModule::new, EnchantmentModule::new, LootModule::new, RecipeModule::new, TweaksModule::new, WorldModule::new);
         for (Function<ForgeConfigSpec.Builder, Module> function : moduleBuilder) {
             Pair<Module, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(function);
-            specPair.getLeft().configSpec = specPair.getRight();
             modules.add(specPair.getLeft());
 
-            File cfgFile = FMLPaths.CONFIGDIR.get().resolve(VTModInfo.MODID).resolve(String.format("VanillaTweaks" + specPair.getLeft().getName() + ".toml", VTModInfo.MODID, ModConfig.Type.SERVER)).toFile();
+            File cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(String.format("VanillaTweaks" + specPair.getLeft().getName() + ".toml", MODID, ModConfig.Type.SERVER)).toFile();
             if (!cfgFile.getParentFile().exists()) {
                 cfgFile.getParentFile().mkdirs();
             }
             ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgFile.toString());
+            specPair.getLeft().setupConfig();
         }
     }
 
     private void setup(final FMLCommonSetupEvent event) {
         modules.forEach(Module::setup);
-        logInfo("Setup Complete");
+        LOGGER.info("Setup Complete");
     }
-
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-        }
-    }
-
-
 }

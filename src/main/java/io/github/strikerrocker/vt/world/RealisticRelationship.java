@@ -3,6 +3,7 @@ package io.github.strikerrocker.vt.world;
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.item.Item;
@@ -40,7 +41,8 @@ public class RealisticRelationship extends Feature {
             if (event.getSource().getImmediateSource() != null) {
                 Item drop = dropItem.getItem();
                 Entity source = event.getSource().getImmediateSource();
-                if (realisticRelationship.get() && (source instanceof WolfEntity && entity instanceof SheepEntity && (drop == Items.MUTTON || drop == Items.COOKED_MUTTON)) || (source instanceof EntityOcelot && entity instanceof EntityChicken && (drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN))) {
+                if (realisticRelationship.get() && (source instanceof WolfEntity && entity instanceof SheepEntity
+                        && (drop == Items.MUTTON || drop == Items.COOKED_MUTTON)) || (source instanceof WolfEntity && entity instanceof ChickenEntity && (drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN))) {
                     event.getDrops().remove(dropEntity);
                 }
             }

@@ -24,7 +24,6 @@ public class CraftingPadItem extends Item {
         if (!worldIn.isRemote()) {
             NetworkHooks.openGui((ServerPlayerEntity) playerIn, new SimpleNamedContainerProvider((id, playerInventory, player) -> new CraftingPadContainer(id, playerInventory), new TranslationTextComponent("item.vanillatweaks.pad")));
         }
-
         return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
     }
 }

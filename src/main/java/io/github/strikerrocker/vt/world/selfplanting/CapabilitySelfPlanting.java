@@ -8,20 +8,23 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CapabilitySelfPlanting extends Feature {
+    private static final LazyOptional<ISelfPlanting> holder = LazyOptional.of(SelfPlanting::new);
     @CapabilityInject(ISelfPlanting.class)
     static Capability<ISelfPlanting> CAPABILITY_PLANTING = null;
     private ForgeConfigSpec.BooleanValue selfPlanting;
@@ -37,7 +40,7 @@ public class CapabilitySelfPlanting extends Feature {
     @Override
     public void setup() {
         if (selfPlanting.get()) {
-            VanillaTweaks.logInfo("Registering self planting capability");
+            VanillaTweaks.LOGGER.info("Registering self planting capability");
             CapabilityManager.INSTANCE.register(ISelfPlanting.class, new Capability.IStorage<ISelfPlanting>() {
                 @Nullable
                 @Override
@@ -66,19 +69,24 @@ public class CapabilitySelfPlanting extends Feature {
     @SubscribeEvent
     public void attachCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof ItemEntity) {
-            event.addCapability(new ResourceLocation(VTModInfo.MODID, "planting"), new SelfPlantingProvider());
+            event.addCapability(new ResourceLocation(VTModInfo.MODID, "planting"), new ICapabilityProvider() {
+                @Nonnull
+                @Override
+                public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+                    return CapabilitySelfPlanting.CAPABILITY_PLANTING.orEmpty(cap, holder);
+                }
+            });
         }
     }
 
     @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event) {
-        World world = event.world;
-        if (selfPlanting.get() && !world.isRemote) {
-            for (ItemEntity entityItem : world.getEntities(ItemEntity.class, EntityPredicates.IS_ALIVE)) {
-                if (entityItem.getCapability(CAPABILITY_PLANTING).isPresent()) {
-                    entityItem.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic(entityItem));
-                }
-            }
+    public void onEntityEvent(EntityEvent event) {
+        World world = event.getEntity().world;
+        if (selfPlanting.get() && !world.isRemote && event.getEntity() instanceof ItemEntity) {
+            ItemEntity entityItem = (ItemEntity) event.getEntity();
+            entityItem.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic(entityItem));
         }
     }
+
+
 }
