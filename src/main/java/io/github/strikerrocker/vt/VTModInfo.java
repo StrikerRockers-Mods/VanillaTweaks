@@ -7,7 +7,7 @@ public final class VTModInfo {
     /**
      * Vanilla Tweaks's mod ID
      */
-    public static final String MODID = "vt";
+    public static final String MODID = "vanillatweaks";
 
     /**
      * Vanilla Tweaks's package location

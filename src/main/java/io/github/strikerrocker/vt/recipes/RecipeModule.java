@@ -12,7 +12,7 @@ public class RecipeModule extends Module {
 
     @Override
     public void addFeatures() {
-        registerFeature(new VanillaRecipes());
-        registerFeature(new BetterRecipes());
+        registerFeature("vanilla_recipes", new VanillaRecipes());
+        registerFeature("better_recipes", new BetterRecipes());
     }
 }
