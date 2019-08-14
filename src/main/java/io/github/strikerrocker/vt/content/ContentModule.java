@@ -12,7 +12,7 @@ public class ContentModule extends Module {
 
     @Override
     public void addFeatures() {
-        registerFeature(new Items());
-        registerFeature(new Blocks());
+        registerFeature("items", new Items());
+        registerFeature("blocks", new Blocks());
     }
 }

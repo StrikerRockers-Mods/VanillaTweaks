@@ -26,12 +26,12 @@ public class StackSizes extends Feature {
 
     @Override
     public void setup() {
-        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ACACIA_STAIRS, boatStackSize, "maxStackSize");
-        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.BIRCH_BOAT, boatStackSize, "maxStackSize");
-        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.OAK_BOAT, boatStackSize, "maxStackSize");
-        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DARK_OAK_BOAT, boatStackSize, "maxStackSize");
-        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.JUNGLE_BOAT, boatStackSize, "maxStackSize");
-        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPRUCE_BOAT, boatStackSize, "maxStackSize");
-        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ENDER_PEARL, enderPearlStackSize, "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ACACIA_STAIRS, boatStackSize.get(), "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.BIRCH_BOAT, boatStackSize.get(), "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.OAK_BOAT, boatStackSize.get(), "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DARK_OAK_BOAT, boatStackSize.get(), "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.JUNGLE_BOAT, boatStackSize.get(), "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPRUCE_BOAT, boatStackSize.get(), "maxStackSize");
+        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ENDER_PEARL, enderPearlStackSize.get(), "maxStackSize");
     }
 }

@@ -10,8 +10,8 @@ public class LootModule extends Module {
 
     @Override
     public void addFeatures() {
-        registerFeature(new CreeperTNT());
-        registerFeature(new BatLeather());
-        registerFeature(new MobNametag());
+        registerFeature("creeper_tnt", new CreeperTNT());
+        registerFeature("bat_leather", new BatLeather());
+        registerFeature("mob_nametag", new MobNametag());
     }
 }
