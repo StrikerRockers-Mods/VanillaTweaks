@@ -7,9 +7,9 @@ import net.minecraft.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
-public class ModifiedCreativeTab extends Feature {
-    private ForgeConfigSpec.BooleanValue commandBlockInRedstone;
-    private ForgeConfigSpec.BooleanValue dragonEggInDecorations;
+public class ModifiedItemGroups extends Feature {
+    protected ForgeConfigSpec.BooleanValue commandBlockInRedstone;
+    protected ForgeConfigSpec.BooleanValue dragonEggInDecorations;
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {

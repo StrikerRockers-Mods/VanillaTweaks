@@ -32,19 +32,23 @@ import java.util.function.Function;
 
 import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
-@Mod("vanillatweaks")
+@Mod(MODID)
 public class VanillaTweaks {
     public static final Logger LOGGER = LogManager.getLogger();
-    public static List<Module> modules = new ArrayList<>();
-    public static final String PROTOCOL_VERSION = "1.0"; //for channel
-    public static SimpleChannel network;
+    private static final String PROTOCOL_VERSION = "1.0"; //for channel
+    public static SimpleChannel network = NetworkRegistry.ChannelBuilder
+            .named(new ResourceLocation(MODID, MODID))
+            .clientAcceptedVersions(PROTOCOL_VERSION::equals)
+            .serverAcceptedVersions(PROTOCOL_VERSION::equals)
+            .networkProtocolVersion(() -> PROTOCOL_VERSION)
+            .simpleChannel();
+    private static List<Module> modules = new ArrayList<>();
 
     public VanillaTweaks() {
         registerModules();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
-        network = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
         network.registerMessage(0, PacketUpdatePedestal.class, PacketUpdatePedestal::encode, PacketUpdatePedestal::decode, PacketUpdatePedestal::onMessage);
     }
 
@@ -55,7 +59,7 @@ public class VanillaTweaks {
             Pair<Module, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(function);
             modules.add(specPair.getLeft());
 
-            File cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(String.format("VanillaTweaks" + specPair.getLeft().getName() + ".toml", MODID, ModConfig.Type.SERVER)).toFile();
+            File cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(String.format(specPair.getLeft().getName() + ".toml", MODID, ModConfig.Type.SERVER)).toFile();
             if (!cfgFile.getParentFile().exists()) {
                 cfgFile.getParentFile().mkdirs();
             }

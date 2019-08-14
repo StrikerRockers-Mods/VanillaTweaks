@@ -24,12 +24,12 @@ public class VeteranEnchantment extends Enchantment {
     public void onTick(TickEvent.WorldTickEvent event) {
         for (PlayerEntity player : event.world.getPlayers()) {
             for (ExperienceOrbEntity experienceOrbEntity : player.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, player.getBoundingBox().expand(32, 32, 32), EntityPredicates.IS_ALIVE)) {
-                attemptToMove(experienceOrbEntity,player);
+                attemptToMove(experienceOrbEntity, player);
             }
         }
     }
 
-    private void attemptToMove(Entity entity,PlayerEntity closestPlayer) {
+    private void attemptToMove(Entity entity, PlayerEntity closestPlayer) {
         double range = 32;
         if (closestPlayer != null && EnchantmentHelper.getEnchantmentLevel(this, closestPlayer.getItemStackFromSlot(EquipmentSlotType.HEAD)) > 0) {
             double xDiff = (closestPlayer.posX - entity.posX) / range;
