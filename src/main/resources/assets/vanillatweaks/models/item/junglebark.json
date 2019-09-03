@@ -1,5 +1,5 @@
 {
-  "parent": "vt:block/junglebark",
+  "parent": "vanillatweaks:block/junglebark",
   "display": {
     "thirdperson": {
       "rotation": [

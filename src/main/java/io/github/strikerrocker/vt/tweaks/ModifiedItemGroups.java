@@ -5,11 +5,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.config.ModConfig;
 
 public class ModifiedItemGroups extends Feature {
-    protected ForgeConfigSpec.BooleanValue commandBlockInRedstone;
-    protected ForgeConfigSpec.BooleanValue dragonEggInDecorations;
+    private ForgeConfigSpec.BooleanValue commandBlockInRedstone;
+    private ForgeConfigSpec.BooleanValue dragonEggInDecorations;
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -24,10 +26,18 @@ public class ModifiedItemGroups extends Feature {
     }
 
     @Override
-    public void setup() {
-        if (commandBlockInRedstone.get())
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
-        if (dragonEggInDecorations.get())
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "group");
+    public boolean usesEvents() {
+        return true;
+    }
+
+    @SubscribeEvent
+    public void modConfig(ModConfig.ModConfigEvent event) {
+        ModConfig config = event.getConfig();
+        if (config.getSpec() == module.getConfigSpec()) {
+            if (commandBlockInRedstone.get())
+                ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
+            if (dragonEggInDecorations.get())
+                ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "group");
+        }
     }
 }

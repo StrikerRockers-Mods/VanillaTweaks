@@ -11,8 +11,8 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class VeteranEnchantment extends Enchantment {
     VeteranEnchantment(String name) {
@@ -22,11 +22,12 @@ public class VeteranEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onTick(TickEvent.WorldTickEvent event) {
-        for (PlayerEntity player : event.world.getPlayers()) {
-            for (ExperienceOrbEntity experienceOrbEntity : player.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, player.getBoundingBox().expand(32, 32, 32), EntityPredicates.IS_ALIVE)) {
-                attemptToMove(experienceOrbEntity, player);
+        if (EnchantmentFeature.enableVeteran.get())
+            for (PlayerEntity player : event.world.getPlayers()) {
+                for (ExperienceOrbEntity experienceOrbEntity : player.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, player.getBoundingBox().expand(32, 32, 32), EntityPredicates.IS_ALIVE)) {
+                    attemptToMove(experienceOrbEntity, player);
+                }
             }
-        }
     }
 
     private void attemptToMove(Entity entity, PlayerEntity closestPlayer) {
@@ -57,11 +58,16 @@ public class VeteranEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 1;
+        return EnchantmentFeature.enableVeteran.get() ? 1 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.HEAD);
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.HEAD) && EnchantmentFeature.enableVeteran.get();
+    }
+
+    @Override
+    public boolean isTreasureEnchantment() {
+        return EnchantmentFeature.enableVeteran.get();
     }
 }

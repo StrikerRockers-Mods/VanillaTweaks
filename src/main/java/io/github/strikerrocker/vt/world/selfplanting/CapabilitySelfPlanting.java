@@ -26,44 +26,43 @@ import javax.annotation.Nullable;
 public class CapabilitySelfPlanting extends Feature {
     private static final LazyOptional<ISelfPlanting> holder = LazyOptional.of(SelfPlanting::new);
     @CapabilityInject(ISelfPlanting.class)
-    static Capability<ISelfPlanting> CAPABILITY_PLANTING = null;
+    private static Capability<ISelfPlanting> CAPABILITY_PLANTING = null;
     private ForgeConfigSpec.BooleanValue selfPlanting;
+
+    @Override
+    public boolean usesEvents() {
+        return true;
+    }
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
         selfPlanting = builder
                 .translation("config.vanillatweaks:selfPlanting")
                 .comment("Want seeds to auto-plant themselves when broken?")
-                .define("selfPlanting", true);
+                .define("selfPlanting", false);
     }
 
     @Override
     public void setup() {
-        if (selfPlanting.get()) {
-            VanillaTweaks.LOGGER.info("Registering self planting capability");
-            CapabilityManager.INSTANCE.register(ISelfPlanting.class, new Capability.IStorage<ISelfPlanting>() {
-                @Nullable
-                @Override
-                public INBT writeNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, Direction side) {
-                    CompoundNBT compound = new CompoundNBT();
-                    compound.putInt(SelfPlanting.MIN_STEADY_TICKS_KEY, instance.getMinSteadyTicks());
-                    compound.putInt(SelfPlanting.STEADY_TICKS_KEY, instance.getSteadyTicks());
-                    return compound;
-                }
+        VanillaTweaks.LOGGER.info("Registering self planting capability");
+        CapabilityManager.INSTANCE.register(ISelfPlanting.class, new Capability.IStorage<ISelfPlanting>() {
+            @Nullable
+            @Override
+            public INBT writeNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, Direction side) {
+                CompoundNBT compound = new CompoundNBT();
+                compound.putInt(SelfPlanting.MIN_STEADY_TICKS_KEY, instance.getMinSteadyTicks());
+                compound.putInt(SelfPlanting.STEADY_TICKS_KEY, instance.getSteadyTicks());
+                return compound;
+            }
 
-                @Override
-                public void readNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, Direction side, INBT nbt) {
-                    CompoundNBT compound = (CompoundNBT) nbt;
-                    instance.setMinSteadyTicks(compound.getInt(SelfPlanting.MIN_STEADY_TICKS_KEY));
-                    instance.setSteadyTicks(compound.getInt(SelfPlanting.STEADY_TICKS_KEY));
-                }
-            }, SelfPlanting::new);
-        }
-    }
+            @Override
+            public void readNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, Direction side, INBT nbt) {
+                CompoundNBT compound = (CompoundNBT) nbt;
+                instance.setMinSteadyTicks(compound.getInt(SelfPlanting.MIN_STEADY_TICKS_KEY));
+                instance.setSteadyTicks(compound.getInt(SelfPlanting.STEADY_TICKS_KEY));
+            }
+        }, SelfPlanting::new);
 
-    @Override
-    public boolean usesEvents() {
-        return selfPlanting.get();
     }
 
     @SubscribeEvent
@@ -81,12 +80,10 @@ public class CapabilitySelfPlanting extends Feature {
 
     @SubscribeEvent
     public void onEntityEvent(EntityEvent event) {
-        World world = event.getEntity().world;
-        if (selfPlanting.get() && !world.isRemote && event.getEntity() instanceof ItemEntity) {
-            ItemEntity entityItem = (ItemEntity) event.getEntity();
-            entityItem.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic(entityItem));
-        }
+//        TODO Fix thisWorld world = event.getEntity().world;
+//        if (selfPlanting.get() && !world.isRemote && event.getEntity() instanceof ItemEntity) {
+//            ItemEntity entityItem = (ItemEntity) event.getEntity();
+//            entityItem.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic(entityItem));
+//        }
     }
-
-
 }

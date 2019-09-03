@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:string"
+      "type": "vanillatweaks:vanilla",
+      "object": "string"
     }
   ],
   "type": "forge:ore_shapeless",

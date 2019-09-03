@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:nametag"
+      "type": "vanillatweaks:vanilla",
+      "object": "nametag"
     }
   ],
   "type": "minecraft:crafting_shaped",

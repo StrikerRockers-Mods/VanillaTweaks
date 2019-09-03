@@ -12,8 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class HomingEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.world != null) {
+        if (event.world != null && EnchantmentFeature.enableHoming.get()) {
             for (PlayerEntity player : event.world.getPlayers()) {
                 for (ArrowEntity arrowEntity : event.world.getEntitiesWithinAABB(ArrowEntity.class, player.getBoundingBox().grow(128), EntityPredicates.IS_ALIVE)) {
                     attemptToMove(arrowEntity);
@@ -72,11 +72,16 @@ public class HomingEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return EnchantmentFeature.enableHoming.get() ? 3 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof BowItem;
+        return stack.getItem() instanceof BowItem && EnchantmentFeature.enableHoming.get();
+    }
+
+    @Override
+    public boolean isTreasureEnchantment() {
+        return EnchantmentFeature.enableHoming.get();
     }
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "vt:block/oakbark",
+  "parent": "vanillatweaks:block/oakbark",
   "display": {
     "thirdperson": {
       "rotation": [

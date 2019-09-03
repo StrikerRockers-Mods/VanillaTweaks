@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:better_stone_tools"
+      "type": "vanillatweaks:better_vanilla",
+      "object": "better_stone_tools"
     }
   ],
   "type": "minecraft:crafting_shaped",

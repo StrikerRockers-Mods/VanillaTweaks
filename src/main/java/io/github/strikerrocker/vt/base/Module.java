@@ -12,19 +12,29 @@ public abstract class Module {
     private Map<String, Feature> features = new HashMap<>();
     private String name;
     private String comments;
+    private ForgeConfigSpec forgeConfigSpec;
 
     public Module(String name, String comments, boolean requiresMCRestart, ForgeConfigSpec.Builder configBuilder) {
         this.name = name;
         this.comments = comments;
         this.configBuilder = configBuilder;
         addFeatures();
+        setupConfig();
+    }
+
+    public ForgeConfigSpec getConfigSpec() {
+        return forgeConfigSpec;
+    }
+
+    public void setConfigSpec(ForgeConfigSpec forgeConfigSpec) {
+        this.forgeConfigSpec = forgeConfigSpec;
     }
 
     public abstract void addFeatures();
 
     public void setup() {
         features.values().stream().filter(Feature::usesEvents).forEach(MinecraftForge.EVENT_BUS::register);
-        features.values().stream().filter(Feature::usesEvents).forEach(feature -> VanillaTweaks.LOGGER.debug("Registered Event Handler class" + feature.getClass().getName()));
+        features.values().stream().filter(Feature::usesEvents).forEach(feature -> VanillaTweaks.LOGGER.debug("Registered Event Handler for class " + feature.getClass().getName()));
         features.values().forEach(Feature::setup);
     }
 

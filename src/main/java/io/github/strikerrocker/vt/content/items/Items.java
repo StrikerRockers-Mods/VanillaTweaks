@@ -17,6 +17,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
@@ -26,6 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -48,6 +50,7 @@ public class Items extends Feature {
     static ForgeConfigSpec.BooleanValue enableDynamite;
     static ForgeConfigSpec.BooleanValue enableSlimeBucket;
     static ForgeConfigSpec.DoubleValue binocularZoomAmount;
+    static ForgeConfigSpec.BooleanValue enableFriedEgg;
     private static Item slimeBucket = new SlimeBucketItem();
     private static Item baubleBino;
 
@@ -79,6 +82,10 @@ public class Items extends Feature {
                 .translation("config.vanillatweaks:enableDynamite")
                 .comment("Want a less effective but throwable TNT?")
                 .define("enableDynamite", true);
+        enableFriedEgg = builder
+                .translation("config.vanillatweaks:enableFriedEgg")
+                .comment("Want a food which can be obtained with eggs and heals 2.5 hunger?")
+                .define("enableFriedEgg", true);
         binocularZoomAmount = builder
                 .translation("config.vanillatweaks:binocularZoomAmount")
                 .comment("How much do you want the binoculars to zoom? ( 0 = disabled)")
@@ -88,16 +95,6 @@ public class Items extends Feature {
     @Override
     public boolean usesEvents() {
         return true;
-    }
-
-    @SubscribeEvent
-    public void onRegisterItems(RegistryEvent.Register<Item> event) {
-        VanillaTweaks.LOGGER.info("Registering Items");
-        event.getRegistry().registerAll(craftingPad, slimeBucket, dynamite, binocular, lens, friedEgg);
-        if (ModList.get().isLoaded("baubles")) {
-            baubleBino = BaubleTools.initBinocularBauble();
-            event.getRegistry().register(baubleBino);
-        }
     }
 
     @SubscribeEvent
@@ -119,8 +116,23 @@ public class Items extends Feature {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
-        public void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
+        public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
             event.getRegistry().register(EntityType.Builder.<DynamiteEntity>create(DynamiteEntity::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "entity_sit")));
+        }
+
+        @SubscribeEvent
+        public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+            CraftingHelper.register(ItemConditions.Serializer.INSTANCE);
+        }
+
+        @SubscribeEvent
+        public void onRegisterItems(RegistryEvent.Register<Item> event) {
+            VanillaTweaks.LOGGER.info("Registering Items");
+            event.getRegistry().registerAll(craftingPad, slimeBucket, dynamite, binocular, lens, friedEgg);
+            if (ModList.get().isLoaded("baubles")) {
+                baubleBino = BaubleTools.initBinocularBauble();
+                event.getRegistry().register(baubleBino);
+            }
         }
     }
 }
