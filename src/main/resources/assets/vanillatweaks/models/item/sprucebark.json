@@ -1,5 +1,5 @@
 {
-  "parent": "vt:block/sprucebark",
+  "parent": "vanillatweaks:block/sprucebark",
   "display": {
     "thirdperson": {
       "rotation": [

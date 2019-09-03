@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:packed_ice"
+      "type": "vanillatweaks:vanilla",
+      "object": "packed_ice"
     }
   ],
   "type": "minecraft:crafting_shaped",

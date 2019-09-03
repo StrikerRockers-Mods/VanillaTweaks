@@ -4,7 +4,8 @@
       "type": "forge:and",
       "values": [
         {
-          "type": "vt:binoculars"
+          "type": "vanillatweaks:items",
+          "object": "binoculars"
         },
         {
           "type": "forge:mod_loaded",
@@ -25,13 +26,13 @@
       "data": 0
     },
     "L": {
-      "item": "vt:lens"
+      "item": "vanillatweaks:lens"
     },
     "I": {
       "item": "minecraft:iron_ingot"
     }
   },
   "result": {
-    "item": "vt:binoculars"
+    "item": "vanillatweaks:binoculars"
   }
 }

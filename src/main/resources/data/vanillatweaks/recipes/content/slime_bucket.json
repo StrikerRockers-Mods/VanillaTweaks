@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:slime_bucket"
+      "type": "vanillatweaks:items",
+      "object": "slime_bucket"
     }
   ],
   "type": "minecraft:crafting_shaped",
@@ -14,10 +15,10 @@
       "item": "minecraft:iron_ingot"
     },
     "S": {
-      "item": "minecraft:slime"
+      "item": "minecraft:slime_ball"
     }
   },
   "result": {
-    "item": "vt:slime"
+    "item": "vanillatweaks:slime"
   }
 }

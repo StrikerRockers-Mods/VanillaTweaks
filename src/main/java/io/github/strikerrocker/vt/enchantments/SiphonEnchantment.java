@@ -20,7 +20,7 @@ public class SiphonEnchantment extends Enchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void harvestDropEvent(BlockEvent.HarvestDropsEvent event) {
-        if (event.getHarvester() != null && EnchantmentHelper.getEnchantmentLevel(this, event.getHarvester().getHeldItemMainhand()) > 0) {
+        if (EnchantmentFeature.enableSiphon.get() && event.getHarvester() != null && EnchantmentHelper.getEnchantmentLevel(this, event.getHarvester().getHeldItemMainhand()) > 0) {
             event.getDrops().removeAll(event.getDrops().stream().filter(event.getHarvester().inventory::addItemStackToInventory).collect(Collectors.toList()));
         }
     }
@@ -37,11 +37,16 @@ public class SiphonEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 1;
+        return EnchantmentFeature.enableSiphon.get() ? 1 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ToolItem;
+        return stack.getItem() instanceof ToolItem && EnchantmentFeature.enableSiphon.get();
+    }
+
+    @Override
+    public boolean isTreasureEnchantment() {
+        return EnchantmentFeature.enableSiphon.get();
     }
 }

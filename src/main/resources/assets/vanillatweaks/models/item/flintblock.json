@@ -1,5 +1,5 @@
 {
-  "parent": "vt:block/flintblock",
+  "parent": "vanillatweaks:block/flintblock",
   "display": {
     "thirdperson": {
       "rotation": [

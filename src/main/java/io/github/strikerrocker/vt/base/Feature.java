@@ -4,7 +4,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public abstract class Feature {
     private String name;
-    private Module module;
+    protected Module module;
 
     public String getName() {
         return name;

@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:dynamite"
+      "type": "vanillatweaks:items",
+      "object": "dynamite"
     }
   ],
   "type": "minecraft:crafting_shaped",
@@ -18,11 +19,10 @@
       "item": "minecraft:gunpowder"
     },
     "S": {
-      "item": "minecraft:sand",
-      "data": 0
+      "item": "minecraft:sand"
     }
   },
   "result": {
-    "item": "vt:dynamite"
+    "item": "vanillatweaks:dynamite"
   }
 }

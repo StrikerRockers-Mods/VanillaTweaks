@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:storage_blocks"
+      "type": "vanillatweaks:blocks",
+      "object": "storage_blocks"
     }
   ],
   "type": "minecraft:crafting_shaped",
@@ -16,6 +17,6 @@
     }
   },
   "result": {
-    "item": "vt:flintblock"
+    "item": "vanillatweaks:flintblock"
   }
 }

@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "vanillatweaks:items",
+      "object": "fried_egg"
+    }
+  ],
   "type": "minecraft:smelting",
   "ingredient": {
     "item": "minecraft:egg"

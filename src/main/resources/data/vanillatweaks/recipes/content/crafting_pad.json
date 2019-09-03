@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:crafting_pad"
+      "type": "vanillatweaks:items",
+      "object": "crafting_pad"
     }
   ],
   "type": "minecraft:crafting_shaped",
@@ -18,6 +19,6 @@
     }
   },
   "result": {
-    "item": "vt:pad"
+    "item": "vanillatweaks:pad"
   }
 }

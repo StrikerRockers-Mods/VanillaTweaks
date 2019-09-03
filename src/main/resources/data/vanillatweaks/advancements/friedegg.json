@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "vt:friedegg"
+      "item": "vanillatweaks:friedegg"
     },
     "title": {
       "translate": "advancements.vt.friedegg"
@@ -10,14 +10,14 @@
       "translate": "advancements.vt.friedegg.desc"
     }
   },
-  "parent": "vt:pad",
+  "parent": "vanillatweaks:pad",
   "criteria": {
     "sugar_in_inventory": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "vt:friedegg"
+            "item": "vanillatweaks:friedegg"
           }
         ]
       }

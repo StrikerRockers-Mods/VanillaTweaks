@@ -50,10 +50,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.0.27'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.0.76'
 
-    compileOnly fg.deobf("mezz.jei:jei-1.14.3:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.14.3:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}")
 }
 
 jar {

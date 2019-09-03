@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "vt:binoculars"
+      "item": "vanillatweaks:binoculars"
     },
     "title": {
       "translate": "advancements.vt.zoom"
@@ -10,14 +10,14 @@
       "translate": "advancements.vt.zoom.desc"
     }
   },
-  "parent": "vt:pad",
+  "parent": "vanillatweaks:pad",
   "criteria": {
     "sugar_in_inventory": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "vt:binoculars"
+            "item": "vanillatweaks:binoculars"
           }
         ]
       }

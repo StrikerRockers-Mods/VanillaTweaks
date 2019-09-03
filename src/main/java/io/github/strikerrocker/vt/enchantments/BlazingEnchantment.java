@@ -29,7 +29,7 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 1;
+        return EnchantmentFeature.enableBlazing.get() ? 1 : 0;
     }
 
     @Override
@@ -49,13 +49,18 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ToolItem;
+        return stack.getItem() instanceof ToolItem && EnchantmentFeature.enableBlazing.get();
+    }
+
+    @Override
+    public boolean isTreasureEnchantment() {
+        return EnchantmentFeature.enableBlazing.get();
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void harvestDropEvent(BlockEvent.HarvestDropsEvent event) {
         PlayerEntity player = event.getHarvester();
-        if (player != null && EnchantmentHelper.getEnchantmentLevel(this, player.getHeldItemMainhand()) > 0) {
+        if (player != null && EnchantmentHelper.getEnchantmentLevel(this, player.getHeldItemMainhand()) > 0 && EnchantmentFeature.enableBlazing.get()) {
             List<ItemStack> dropsCopy = new ArrayList<>(event.getDrops());
             event.getDrops().clear();
             for (ItemStack drop : dropsCopy) {

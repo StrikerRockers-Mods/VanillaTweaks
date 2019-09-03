@@ -1,5 +1,5 @@
 {
-  "parent": "vt:block/charcoalblock",
+  "parent": "vanillatweaks:block/charcoalblock",
   "display": {
     "thirdperson": {
       "rotation": [

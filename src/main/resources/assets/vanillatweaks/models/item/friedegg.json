@@ -1,6 +1,6 @@
 {
-  "parent": "vt:item/base_item",
+  "parent": "vanillatweaks:item/base_item",
   "textures": {
-    "layer0": "vt:items/friedegg"
+    "layer0": "vanillatweaks:items/friedegg"
   }
 }

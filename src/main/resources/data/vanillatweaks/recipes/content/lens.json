@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:binoculars"
+      "type": "vanillatweaks:items",
+      "object": "binoculars"
     }
   ],
   "type": "minecraft:crafting_shaped",
@@ -19,6 +20,6 @@
     }
   },
   "result": {
-    "item": "vt:lens"
+    "item": "vanillatweaks:lens"
   }
 }
