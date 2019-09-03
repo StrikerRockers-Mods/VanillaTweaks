@@ -1,5 +1,5 @@
 {
-  "parent": "vt:block/sugarblock",
+  "parent": "vanillatweaks:block/sugarblock",
   "display": {
     "thirdperson": {
       "rotation": [

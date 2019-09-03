@@ -1,5 +1,5 @@
 {
-  "parent": "vt:block/darkoakbark",
+  "parent": "vanillatweaks:block/darkoakbark",
   "display": {
     "thirdperson": {
       "rotation": [

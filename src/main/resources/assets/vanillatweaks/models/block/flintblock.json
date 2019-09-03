@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "vt:blocks/flintblock",
-    "particle": "vt:blocks/flintblock"
+    "all": "vanillatweaks:blocks/flintblock",
+    "particle": "vanillatweaks:blocks/flintblock"
   }
 }

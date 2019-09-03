@@ -1,5 +1,5 @@
 {
-  "parent": "vt:block/birchbark",
+  "parent": "vanillatweaks:block/birchbark",
   "display": {
     "thirdperson": {
       "rotation": [

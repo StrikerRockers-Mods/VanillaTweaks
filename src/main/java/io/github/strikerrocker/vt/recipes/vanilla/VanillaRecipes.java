@@ -1,7 +1,13 @@
 package io.github.strikerrocker.vt.recipes.vanilla;
 
 import io.github.strikerrocker.vt.base.Feature;
+import io.github.strikerrocker.vt.content.items.ItemConditions;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 public class VanillaRecipes extends Feature {
     static ForgeConfigSpec.BooleanValue betterChest;
@@ -22,5 +28,13 @@ public class VanillaRecipes extends Feature {
                 .translation("config.vanillatweaks:string")
                 .comment("Have wool but need string?")
                 .define("string", true);
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents {
+        @SubscribeEvent
+        public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+            CraftingHelper.register(VanillaRecipeConditions.Serializer.INSTANCE);
+        }
     }
 }

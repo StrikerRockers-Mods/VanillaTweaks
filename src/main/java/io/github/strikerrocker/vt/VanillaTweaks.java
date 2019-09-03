@@ -8,10 +8,13 @@ import io.github.strikerrocker.vt.loot.LootModule;
 import io.github.strikerrocker.vt.recipes.RecipeModule;
 import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.WorldModule;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -52,19 +55,19 @@ public class VanillaTweaks {
         network.registerMessage(0, PacketUpdatePedestal.class, PacketUpdatePedestal::encode, PacketUpdatePedestal::decode, PacketUpdatePedestal::onMessage);
     }
 
-    private void registerModules() {
+    private static void registerModules() {
         List<Function<ForgeConfigSpec.Builder, Module>> moduleBuilder = new ArrayList<>();
         Collections.addAll(moduleBuilder, ContentModule::new, EnchantmentModule::new, LootModule::new, RecipeModule::new, TweaksModule::new, WorldModule::new);
         for (Function<ForgeConfigSpec.Builder, Module> function : moduleBuilder) {
             Pair<Module, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(function);
             modules.add(specPair.getLeft());
 
-            File cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(String.format(specPair.getLeft().getName() + ".toml", MODID, ModConfig.Type.SERVER)).toFile();
+            File cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(specPair.getLeft().getName() + ".toml").toFile();
             if (!cfgFile.getParentFile().exists()) {
-                cfgFile.getParentFile().mkdirs();
+                cfgFile.mkdirs();
             }
+            specPair.getLeft().setConfigSpec(specPair.getRight());
             ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgFile.toString());
-            specPair.getLeft().setupConfig();
         }
     }
 

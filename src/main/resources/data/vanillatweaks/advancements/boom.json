@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "vt:dynamite"
+      "item": "vanillatweaks:dynamite"
     },
     "title": {
       "translate": "advancements.vt.boom"
@@ -10,14 +10,14 @@
       "translate": "advancements.vt.boom.desc"
     }
   },
-  "parent": "vt:pad",
+  "parent": "vanillatweaks:pad",
   "criteria": {
     "sugar_in_inventory": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "vt:dynamite"
+            "item": "vanillatweaks:dynamite"
           }
         ]
       }

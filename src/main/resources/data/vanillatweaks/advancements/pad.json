@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "vt:pad"
+      "item": "vanillatweaks:pad"
     },
     "title": {
       "translate": "advancements.vt.pad"
@@ -9,9 +9,7 @@
     "description": {
       "translate": "advancements.vt.pad.desc"
     },
-    "background": "vt:textures/blocks/sugarblock.png",
-    "show_toast": false,
-    "announce_to_chat": false
+    "background": "vanillatweaks:textures/blocks/sugarblock.png"
   },
   "criteria": {
     "pad_in_inventory": {
@@ -19,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "item": "vt:pad"
+            "item": "vanillatweaks:pad"
           }
         ]
       }

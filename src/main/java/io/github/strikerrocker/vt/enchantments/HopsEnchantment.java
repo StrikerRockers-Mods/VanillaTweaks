@@ -20,13 +20,16 @@ public class HopsEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        Vec3d vec3d = event.getEntityLiving().getMotion();
-        event.getEntityLiving().setMotion(vec3d.x, vec3d.y + EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)) / 10, vec3d.z);
+        if (EnchantmentFeature.enableHops.get()) {
+            Vec3d vec3d = event.getEntityLiving().getMotion();
+            event.getEntityLiving().setMotion(vec3d.x, vec3d.y + EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)) / 10, vec3d.z);
+        }
     }
 
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
-        event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)));
+        if (EnchantmentFeature.enableHops.get())
+            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)));
     }
 
     @Override
@@ -41,11 +44,16 @@ public class HopsEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return EnchantmentFeature.enableHops.get() ? 3 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET);
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.enableHops.get();
+    }
+
+    @Override
+    public boolean isTreasureEnchantment() {
+        return EnchantmentFeature.enableHops.get();
     }
 }

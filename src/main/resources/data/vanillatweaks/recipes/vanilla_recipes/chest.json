@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:chest"
+      "type": "vanillatweaks:vanilla",
+      "object": "chest"
     }
   ],
   "type": "forge:ore_shaped",

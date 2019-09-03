@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.recipes;
 
 import io.github.strikerrocker.vt.base.Module;
-import io.github.strikerrocker.vt.recipes.better.BetterRecipes;
+import io.github.strikerrocker.vt.recipes.better_vanilla.BetterVanillaRecipes;
 import io.github.strikerrocker.vt.recipes.vanilla.VanillaRecipes;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -13,6 +13,6 @@ public class RecipeModule extends Module {
     @Override
     public void addFeatures() {
         registerFeature("vanilla_recipes", new VanillaRecipes());
-        registerFeature("better_recipes", new BetterRecipes());
+        registerFeature("better_recipes", new BetterVanillaRecipes());
     }
 }

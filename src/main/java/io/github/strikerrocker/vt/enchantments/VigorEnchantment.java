@@ -24,18 +24,20 @@ public class VigorEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        int lvl = EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.CHEST));
-        IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributes().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
-        AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "vigor", (float) lvl / 10, AttributeModifier.Operation.MULTIPLY_BASE);
-        if (lvl > 0) {
-            if (vigorAttribute.getModifier(vigorUUID) == null) {
-                vigorAttribute.applyModifier(vigorModifier);
-            }
-        } else {
-            if (vigorAttribute.getModifier(vigorUUID) != null) {
-                vigorAttribute.removeModifier(vigorModifier);
-                if (event.getEntityLiving().getHealth() > event.getEntityLiving().getMaxHealth())
-                    event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
+        if (EnchantmentFeature.enableVigor.get()) {
+            int lvl = EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.CHEST));
+            IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributes().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
+            AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "vigor", (float) lvl / 10, AttributeModifier.Operation.MULTIPLY_BASE);
+            if (lvl > 0) {
+                if (vigorAttribute.getModifier(vigorUUID) == null) {
+                    vigorAttribute.applyModifier(vigorModifier);
+                }
+            } else {
+                if (vigorAttribute.getModifier(vigorUUID) != null) {
+                    vigorAttribute.removeModifier(vigorModifier);
+                    if (event.getEntityLiving().getHealth() > event.getEntityLiving().getMaxHealth())
+                        event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
+                }
             }
         }
     }
@@ -52,11 +54,16 @@ public class VigorEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return EnchantmentFeature.enableVigor.get() ? 3 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.CHEST);
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.CHEST) && EnchantmentFeature.enableVigor.get();
+    }
+
+    @Override
+    public boolean isTreasureEnchantment() {
+        return EnchantmentFeature.enableVigor.get();
     }
 }

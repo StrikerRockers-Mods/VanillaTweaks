@@ -1,7 +1,8 @@
 {
   "conditions": [
     {
-      "type": "vt:pedestal"
+      "type": "vanillatweaks:blocks",
+      "object": "pedestal"
     }
   ],
   "type": "minecraft:crafting_shaped",
@@ -21,6 +22,6 @@
     }
   },
   "result": {
-    "item": "vt:pedestal"
+    "item": "vanillatweaks:pedestal"
   }
 }

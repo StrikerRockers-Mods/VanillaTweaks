@@ -1,18 +1,18 @@
 {
   "conditions": [
     {
-      "type": "vt:storage_blocks"
+      "type": "vanillatweaks:blocks",
+      "object": "storage_blocks"
     }
   ],
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "vt:flintblock"
+      "item": "vanillatweaks:flintblock"
     }
   ],
   "result": {
     "item": "minecraft:flint",
-    "data": 0,
     "count": 9
   }
 }
