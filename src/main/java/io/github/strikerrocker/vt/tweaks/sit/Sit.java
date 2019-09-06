@@ -27,7 +27,7 @@ import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
 public class Sit extends Feature {
     @ObjectHolder(MODID + ":entity_sit")
-    public static final EntityType<EntitySit> SIT_ENTITY_TYPE = null;
+    static final EntityType<EntitySit> SIT_ENTITY_TYPE = null;
     private ForgeConfigSpec.BooleanValue enableSit;
 
     @Override
@@ -50,7 +50,7 @@ public class Sit extends Feature {
             BlockPos p = event.getPos();
             BlockState s = w.getBlockState(p);
             Block b = w.getBlockState(p).getBlock();
-            PlayerEntity e = event.getEntityPlayer();
+            PlayerEntity e = event.getPlayer();
 
             if ((b instanceof SlabBlock || b instanceof StairsBlock) && !EntitySit.OCCUPIED.containsKey(p) && e.getHeldItemMainhand().isEmpty()) {
                 if (b instanceof SlabBlock && (!s.has(SlabBlock.TYPE) || s.get(SlabBlock.TYPE) != SlabType.BOTTOM))
@@ -88,10 +88,9 @@ public class Sit extends Feature {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
-        public void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-            event.getRegistry().register(EntityType.Builder.<EntitySit>create(EntitySit::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world) -> {
-                return SIT_ENTITY_TYPE.create(world);
-            }).setTrackingRange(256).setUpdateInterval(20).size(0.0001F, 0.0001F).build(MODID + ":entity_sit").setRegistryName(new ResourceLocation(MODID, "entity_sit")));
+        public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
+            event.getRegistry().register(EntityType.Builder.<EntitySit>create(EntitySit::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world)
+                    -> SIT_ENTITY_TYPE.create(world)).setTrackingRange(256).setUpdateInterval(20).size(0.0001F, 0.0001F).build(MODID + ":entity_sit").setRegistryName(new ResourceLocation(MODID, "entity_sit")));
         }
     }
 }

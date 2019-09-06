@@ -1,26 +1,26 @@
 #blocks
-tile.flintblock.name=Block of Flint
-tile.sugarblock.name=Block of Sugar
-tile.charcoalblock.name=Block of Charcoal
-tile.acaciabark.name=Acacia Bark
-tile.birchbark.name=Birch Bark
-tile.darkoakbark.name=Dark Oak Bark
-tile.oakbark.name=Oak Bark
-tile.sprucebark.name=Spruce Bark
-tile.junglebark.name=Jungle Bark
-tile.buttonStone.name=Stone Button
-tile.buttonWood.name=Wooden Button
-tile.sand.name=Sand/Red Sand
-tile.pedestal.name=Pedestal
+block.vanillatweaks.flintblock.name=Block of Flint
+block.vanillatweaks.sugarblock.name=Block of Sugar
+block.vanillatweaks.charcoalblock.name=Block of Charcoal
+block.vanillatweaks.acaciabark.name=Acacia Bark
+block.vanillatweaks.birchbark.name=Birch Bark
+block.vanillatweaks.darkoakbark.name=Dark Oak Bark
+block.vanillatweaks.oakbark.name=Oak Bark
+block.vanillatweaks.sprucebark.name=Spruce Bark
+block.vanillatweaks.junglebark.name=Jungle Bark
+block.vanillatweaks.buttonStone.name=Stone Button
+block.vanillatweaks.buttonWood.name=Wooden Button
+block.vanillatweaks.sand.name=Sand/Red Sand
+block.vanillatweaks.pedestal.name=Pedestal
 
-#Items
-item.dynamite.name=Dynamite
-item.friedegg.name=Fried Egg
-item.pad.name=Crafting Pad
-item.lens.name=Binocular Lens
-item.binoculars.name=Binoculars
-item.slime.name=Slime Finder
-item.binocular_bauble.name=Binoculars(Baubles)
+#item.vanillatweakss
+item.vanillatweaks.vanillatweaks.dynamite.name=Dynamite
+item.vanillatweaks.vanillatweaks.friedegg.name=Fried Egg
+item.vanillatweaks.vanillatweaks.pad.name=Crafting Pad
+item.vanillatweaks.vanillatweaks.lens.name=Binocular Lens
+item.vanillatweaks.vanillatweaks.binoculars.name=Binoculars
+item.vanillatweaks.vanillatweaks.slime.name=Slime Finder
+item.vanillatweaks.vanillatweaks.binocular_bauble.name=Binoculars(Baubles)
 
 #advancement
 advancements.vt.pad=Vanilla Tweaks

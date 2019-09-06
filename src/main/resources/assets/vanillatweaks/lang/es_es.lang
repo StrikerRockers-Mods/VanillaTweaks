@@ -1,26 +1,26 @@
 #blocks
-tile.flintblock.name=Bloque de Flint
-tile.sugarblock.name=Bloque de Az�car
-tile.charcoalblock.name=Bloque de Carb�n
-tile.buttonStone.name=Bot�n de Piedra
-tile.buttonWood.name=Bot�n de Madera
-tile.sand.name=Arena/Arena Roja
-tile.acaciabark.name=Acacia Bark
-tile.birchbark.name=Birch Bark
-tile.darkoakbark.name=Dark Oak Bark
-tile.oakbark.name=Oak Bark
-tile.sprucebark.name=Spruce Bark
-tile.junglebark.name=Jungle Bark
-tile.pedestal.name=Pedestal
+block.vanillatweaks.flintblock.name=Bloque de Flint
+block.vanillatweaks.sugarblock.name=Bloque de Az�car
+block.vanillatweaks.charcoalblock.name=Bloque de Carb�n
+block.vanillatweaks.buttonStone.name=Bot�n de Piedra
+block.vanillatweaks.buttonWood.name=Bot�n de Madera
+block.vanillatweaks.sand.name=Arena/Arena Roja
+block.vanillatweaks.acaciabark.name=Acacia Bark
+block.vanillatweaks.birchbark.name=Birch Bark
+block.vanillatweaks.darkoakbark.name=Dark Oak Bark
+block.vanillatweaks.oakbark.name=Oak Bark
+block.vanillatweaks.sprucebark.name=Spruce Bark
+block.vanillatweaks.junglebark.name=Jungle Bark
+block.vanillatweaks.pedestal.name=Pedestal
 
-#items
-item.dynamite.name=Dinamita
-item.friedegg.name=Huevo Frito
-item.pad.name=Almohadilla Artesan�a
-item.lens.name=Binocular Lente
-item.binoculars.name=Prism�ticos
-item.slime.name=Slime Finder
-item.binocular_bauble.name=Binocular Lente(Baubles)
+#item.vanillatweakss
+item.vanillatweaks.dynamite.name=Dinamita
+item.vanillatweaks.friedegg.name=Huevo Frito
+item.vanillatweaks.pad.name=Almohadilla Artesan�a
+item.vanillatweaks.lens.name=Binocular Lente
+item.vanillatweaks.binoculars.name=Prism�ticos
+item.vanillatweaks.slime.name=Slime Finder
+item.vanillatweaks.binocular_bauble.name=Binocular Lente(Baubles)
 
 #enchantments
 enchantment.nimble=�gil

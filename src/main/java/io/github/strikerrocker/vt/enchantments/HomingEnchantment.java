@@ -27,7 +27,7 @@ public class HomingEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.world != null && EnchantmentFeature.enableHoming.get()) {
+        if (event.world != null && EnchantmentFeature.homing) {
             for (PlayerEntity player : event.world.getPlayers()) {
                 for (ArrowEntity arrowEntity : event.world.getEntitiesWithinAABB(ArrowEntity.class, player.getBoundingBox().grow(128), EntityPredicates.IS_ALIVE)) {
                     attemptToMove(arrowEntity);
@@ -72,16 +72,16 @@ public class HomingEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableHoming.get() ? 3 : 0;
+        return EnchantmentFeature.homing ? 3 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof BowItem && EnchantmentFeature.enableHoming.get();
+        return stack.getItem() instanceof BowItem && EnchantmentFeature.homing;
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableHoming.get();
+        return EnchantmentFeature.homing;
     }
 }

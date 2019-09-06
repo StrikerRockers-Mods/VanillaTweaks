@@ -34,7 +34,8 @@ public class ArrowSetFire extends Feature {
             RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(new RayTraceContext(vec3d1, vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, event.getArrow()));
             BlockPos hitBlock = new BlockPos(raytraceresult.getHitVec()).up();
             if (raytraceresult.getType() == RayTraceResult.Type.BLOCK && event.getArrow().world.isAirBlock(hitBlock)) {
-                event.getArrow().world.setBlockState(hitBlock, Blocks.FIRE.getDefaultState(), 11);
+                //TODO Doesnt Set
+                event.getArrow().world.setBlockState(hitBlock, Blocks.FIRE.getDefaultState());
             }
         }
     }

@@ -39,5 +39,6 @@ public class ModifiedItemGroups extends Feature {
             if (dragonEggInDecorations.get())
                 ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "group");
         }
+        //TODO Doesnt work?
     }
 }

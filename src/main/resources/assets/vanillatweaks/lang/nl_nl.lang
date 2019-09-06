@@ -1,26 +1,26 @@
 # blocks
-tile.flintblock.name=Blok van Vuursteen
-tile.sugarblock.name=Blok van Suiker
-tile.charcoalblock.name=Blok van Houtskool
-tile.acaciabark.name=Acacia Bast
-tile.birchbark.name=Berken Bast
-tile.darkoakbark.name=Dokere Eiken Bast
-tile.oakbark.name=Eiken Bast
-tile.sprucebark.name=Dennen Bast
-tile.junglebark.name=Jungel Bast
-tile.buttonStone.name=Stenen Knop
-tile.buttonWood.name=Houten Knop
-tile.sand.name=Zand/Rood Zand
-tile.pedestal.name=Voetstuk
+block.vanillatweaks.flintblock.name=Blok van Vuursteen
+block.vanillatweaks.sugarblock.name=Blok van Suiker
+block.vanillatweaks.charcoalblock.name=Blok van Houtskool
+block.vanillatweaks.acaciabark.name=Acacia Bast
+block.vanillatweaks.birchbark.name=Berken Bast
+block.vanillatweaks.darkoakbark.name=Dokere Eiken Bast
+block.vanillatweaks.oakbark.name=Eiken Bast
+block.vanillatweaks.sprucebark.name=Dennen Bast
+block.vanillatweaks.junglebark.name=Jungel Bast
+block.vanillatweaks.buttonStone.name=Stenen Knop
+block.vanillatweaks.buttonWood.name=Houten Knop
+block.vanillatweaks.sand.name=Zand/Rood Zand
+block.vanillatweaks.pedestal.name=Voetstuk
 
-# Items
-item.dynamite.name=Dynamiet
-item.friedegg.name=Gebakken Ei
-item.pad.name=Bouw Onderlegger
-item.lens.name=Verrekijker lens
-item.binoculars.name=Verrekijker
-item.slime.name=Slijm Vinder
-item.binocular_bauble.name=Verrekijker(Baubles)
+# item.vanillatweakss
+item.vanillatweaks.dynamite.name=Dynamiet
+item.vanillatweaks.friedegg.name=Gebakken Ei
+item.vanillatweaks.pad.name=Bouw Onderlegger
+item.vanillatweaks.lens.name=Verrekijker lens
+item.vanillatweaks.binoculars.name=Verrekijker
+item.vanillatweaks.slime.name=Slijm Vinder
+item.vanillatweaks.binocular_bauble.name=Verrekijker(Baubles)
 
 # advancement
 advancements.vt.pad=Vanille Aanpassingen

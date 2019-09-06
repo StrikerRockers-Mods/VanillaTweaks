@@ -29,7 +29,7 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableBlazing.get() ? 1 : 0;
+        return EnchantmentFeature.blazing ? 1 : 0;
     }
 
     @Override
@@ -49,18 +49,18 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ToolItem && EnchantmentFeature.enableBlazing.get();
+        return stack.getItem() instanceof ToolItem && EnchantmentFeature.blazing;
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableBlazing.get();
+        return EnchantmentFeature.blazing;
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void harvestDropEvent(BlockEvent.HarvestDropsEvent event) {
         PlayerEntity player = event.getHarvester();
-        if (player != null && EnchantmentHelper.getEnchantmentLevel(this, player.getHeldItemMainhand()) > 0 && EnchantmentFeature.enableBlazing.get()) {
+        if (player != null && EnchantmentHelper.getEnchantmentLevel(this, player.getHeldItemMainhand()) > 0 && EnchantmentFeature.blazing) {
             List<ItemStack> dropsCopy = new ArrayList<>(event.getDrops());
             event.getDrops().clear();
             for (ItemStack drop : dropsCopy) {
@@ -80,5 +80,6 @@ public class BlazingEnchantment extends Enchantment {
                 }
             }
         }
+        //TODO Update when https://github.com/MinecraftForge/MinecraftForge/pull/5871 is merged
     }
 }

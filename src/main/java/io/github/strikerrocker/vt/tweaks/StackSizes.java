@@ -43,5 +43,6 @@ public class StackSizes extends Feature {
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPRUCE_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ENDER_PEARL, enderPearlStackSize.get(), "maxStackSize");
         }
+        //TODO Doesnt work?
     }
 }
