@@ -3,10 +3,12 @@ package io.github.strikerrocker.vt.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.network.play.server.SEntityVelocityPacket;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,16 +22,21 @@ public class HopsEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        if (EnchantmentFeature.enableHops.get()) {
-            Vec3d vec3d = event.getEntityLiving().getMotion();
-            event.getEntityLiving().setMotion(vec3d.x, vec3d.y + EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)) / 10, vec3d.z);
+        LivingEntity entity = event.getEntityLiving();
+        if (EnchantmentFeature.hops && !event.getEntity().world.isRemote()) {
+            entity.addVelocity(0, EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)) / 10D, 0);
+            if (entity instanceof ServerPlayerEntity) {
+                ServerPlayerEntity playerMP = (ServerPlayerEntity) entity;
+                playerMP.connection.sendPacket(new SEntityVelocityPacket(playerMP));
+            }
         }
     }
 
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentFeature.enableHops.get())
+        if (EnchantmentFeature.hops) {
             event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)));
+        }
     }
 
     @Override
@@ -44,16 +51,16 @@ public class HopsEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableHops.get() ? 3 : 0;
+        return EnchantmentFeature.hops ? 3 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.enableHops.get();
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.hops;
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableHops.get();
+        return EnchantmentFeature.hops;
     }
 }

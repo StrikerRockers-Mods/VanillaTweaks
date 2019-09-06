@@ -68,16 +68,18 @@ public class DynamiteEntity extends ProjectileItemEntity {
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        if (!world.isRemote)
+        if (!world.isRemote) {
             if (this.dataManager.get(TICKSSINCEWET) < WET_TICKS) {
                 if (!(getThrower() instanceof PlayerEntity) || ((PlayerEntity) getThrower()).abilities.isCreativeMode)
                     this.entityDropItem(Items.dynamite);
             } else {
-                if (((EntityRayTraceResult) result).getEntity() instanceof DynamiteEntity)
+                if (result instanceof EntityRayTraceResult && ((EntityRayTraceResult) result).getEntity() instanceof DynamiteEntity) {
                     return;
-                else
+                } else {
                     world.createExplosion(this, posX, posY, posZ, 3F, Explosion.Mode.BREAK);
+                }
             }
-        this.remove();
+            this.remove();
+        }
     }
 }

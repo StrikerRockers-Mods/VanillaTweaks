@@ -1,26 +1,26 @@
 #blocks
-tile.flintblock.name=Feuersteinblock
-tile.sugarblock.name=Zuckerblock
-tile.charcoalblock.name=Holzkohleblock
-tile.acaciabark.name=Akazienrindenholz
-tile.birchbark.name=Birkenrindenholz
-tile.darkoakbark.name=Schwarzeichenrindenholz
-tile.oakbark.name=Eichenrindenholz
-tile.sprucebark.name=Fichtenrindenholz
-tile.junglebark.name=Tropenrindenholz
-tile.buttonStone.name=Steinknopf
-tile.buttonWood.name=Holzknopf
-tile.sand.name=Sand/Roter Sand
-tile.pedestal.name=Podest
+block.vanillatweaks.flintblock.name=Feuersteinblock
+block.vanillatweaks.sugarblock.name=Zuckerblock
+block.vanillatweaks.charcoalblock.name=Holzkohleblock
+block.vanillatweaks.acaciabark.name=Akazienrindenholz
+block.vanillatweaks.birchbark.name=Birkenrindenholz
+block.vanillatweaks.darkoakbark.name=Schwarzeichenrindenholz
+block.vanillatweaks.oakbark.name=Eichenrindenholz
+block.vanillatweaks.sprucebark.name=Fichtenrindenholz
+block.vanillatweaks.junglebark.name=Tropenrindenholz
+block.vanillatweaks.buttonStone.name=Steinknopf
+block.vanillatweaks.buttonWood.name=Holzknopf
+block.vanillatweaks.sand.name=Sand/Roter Sand
+block.vanillatweaks.pedestal.name=Podest
 
-#items
-item.dynamite.name=Dynamit
-item.friedegg.name=Spiegelei
-item.pad.name=Werkbankunterlage
-item.lens.name=Fernglaslinse
-item.binoculars.name=Fernglas
-item.slime.name=Schleimfinder
-item.binocular_bauble.name=Fernglas (Baubles)
+#item.vanillatweakss
+item.vanillatweaks.dynamite.name=Dynamit
+item.vanillatweaks.friedegg.name=Spiegelei
+item.vanillatweaks.pad.name=Werkbankunterlage
+item.vanillatweaks.lens.name=Fernglaslinse
+item.vanillatweaks.binoculars.name=Fernglas
+item.vanillatweaks.slime.name=Schleimfinder
+item.vanillatweaks.binocular_bauble.name=Fernglas (Baubles)
 
 #advancement
 advancements.vt.pad=Vanilla Tweaks

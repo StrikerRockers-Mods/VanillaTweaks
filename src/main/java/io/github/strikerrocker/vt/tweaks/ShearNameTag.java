@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShearsItem;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -19,18 +18,17 @@ public class ShearNameTag extends Feature {
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        PlayerEntity player = event.getEntityPlayer();
+        PlayerEntity player = event.getPlayer();
         Entity target = event.getTarget();
         ItemStack heldItem = !player.getHeldItemMainhand().isEmpty() ? player.getHeldItemMainhand() : player.getHeldItemOffhand();
         if (shearOffNameTag.get() && !heldItem.isEmpty()) {
             World world = player.world;
             if (heldItem.getItem() instanceof ShearsItem && target instanceof LivingEntity && target.hasCustomName() && !world.isRemote) {
-                heldItem.damageItem(1, player, playerEntity -> {
-                    target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
-                    ItemStack nameTag = new ItemStack(Items.NAME_TAG).setDisplayName(target.getCustomName());
-                    target.entityDropItem(nameTag, 0);
-                    target.setCustomName(new StringTextComponent(""));
-                });
+                target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
+                ItemStack nameTag = new ItemStack(Items.NAME_TAG).setDisplayName(target.getCustomName());
+                target.entityDropItem(nameTag, 0);
+                target.setCustomName(null);
+                heldItem.damageItem(1, player, playerEntity -> playerEntity.sendBreakAnimation(playerEntity.getActiveHand()));
             }
         }
     }

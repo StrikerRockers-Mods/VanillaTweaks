@@ -1,26 +1,26 @@
 #blocks
-tile.flintblock.name=火打石ブロック
-tile.sugarblock.name=砂糖ブロック
-tile.charcoalblock.name=木炭ブロック
-tile.buttonStone.name=石ボタン
-tile.buttonWood.name=木材ボタン
-tile.sand.name=砂・赤砂
-tile.pedestal.name=台座
-tile.acaciabark.name=Acacia Bark
-tile.birchbark.name=Birch Bark
-tile.darkoakbark.name=Dark Oak Bark
-tile.oakbark.name=Oak Bark
-tile.sprucebark.name=Spruce Bark
-tile.junglebark.name=Jungle Bark
+block.vanillatweaks.flintblock.name=火打石ブロック
+block.vanillatweaks.sugarblock.name=砂糖ブロック
+block.vanillatweaks.charcoalblock.name=木炭ブロック
+block.vanillatweaks.buttonStone.name=石ボタン
+block.vanillatweaks.buttonWood.name=木材ボタン
+block.vanillatweaks.sand.name=砂・赤砂
+block.vanillatweaks.pedestal.name=台座
+block.vanillatweaks.acaciabark.name=Acacia Bark
+block.vanillatweaks.birchbark.name=Birch Bark
+block.vanillatweaks.darkoakbark.name=Dark Oak Bark
+block.vanillatweaks.oakbark.name=Oak Bark
+block.vanillatweaks.sprucebark.name=Spruce Bark
+block.vanillatweaks.junglebark.name=Jungle Bark
 
-#items
-item.dynamite.name=ダイナマイト
-item.friedegg.name=フライドエッグ
-item.pad.name=作業パッド
-item.lens.name=双眼鏡のレンズ
-item.binoculars.name=双眼鏡
-item.slime.name=Slime Finder
-item.binocular_bauble.name=Binoculars(Baubles)
+#item.vanillatweakss
+item.vanillatweaks.dynamite.name=ダイナマイト
+item.vanillatweaks.friedegg.name=フライドエッグ
+item.vanillatweaks.pad.name=作業パッド
+item.vanillatweaks.lens.name=双眼鏡のレンズ
+item.vanillatweaks.binoculars.name=双眼鏡
+item.vanillatweaks.slime.name=Slime Finder
+item.vanillatweaks.binocular_bauble.name=Binoculars(Baubles)
 #advancement
 advancements.vt.pad=Vanilla Tweaks
 advancements.vt.storage=Storage Blocks

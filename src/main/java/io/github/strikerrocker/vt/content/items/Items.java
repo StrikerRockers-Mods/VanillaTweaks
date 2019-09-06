@@ -43,7 +43,7 @@ public class Items extends Feature {
     private static final IArmorMaterial binocular_material = new BasicArmorMaterial(VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, () -> Ingredient.fromItems(net.minecraft.item.Items.IRON_INGOT));
     private static final Item binocular = new ArmorItem(binocular_material, EquipmentSlotType.HEAD, new Item.Properties().maxStackSize(1)).setRegistryName("binoculars");
     private static final Item lens = new Item(new Item.Properties()).setRegistryName("lens");
-    private static final Item friedEgg = new Item(new Item.Properties().food(new Food.Builder().hunger(3).saturation(0.6f).build())).setRegistryName("friedegg");
+    private static final Item friedEgg = new Item(new Item.Properties().food(new Food.Builder().hunger(5).saturation(0.6f).build())).setRegistryName("friedegg");
     public static Item craftingPad = new CraftingPadItem();
     public static Item dynamite = new DynamiteItem("dynamite");
     public static ForgeConfigSpec.BooleanValue enablePad;
@@ -97,12 +97,6 @@ public class Items extends Feature {
         return true;
     }
 
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public void onModelRegister(ModelRegistryEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(DynamiteEntity.class, manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
-    }
-
     @Override
     public void setup() {
         DispenserBlock.registerDispenseBehavior(dynamite, new ProjectileDispenseBehavior() {
@@ -117,22 +111,29 @@ public class Items extends Feature {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-            event.getRegistry().register(EntityType.Builder.<DynamiteEntity>create(DynamiteEntity::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "entity_sit")));
+            event.getRegistry().register(EntityType.Builder.<DynamiteEntity>create(DynamiteEntity::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "dynamite")));
         }
 
         @SubscribeEvent
-        public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
             CraftingHelper.register(ItemConditions.Serializer.INSTANCE);
         }
 
         @SubscribeEvent
-        public void onRegisterItems(RegistryEvent.Register<Item> event) {
+        public static void onRegisterItems(RegistryEvent.Register<Item> event) {
             VanillaTweaks.LOGGER.info("Registering Items");
             event.getRegistry().registerAll(craftingPad, slimeBucket, dynamite, binocular, lens, friedEgg);
             if (ModList.get().isLoaded("baubles")) {
                 baubleBino = BaubleTools.initBinocularBauble();
                 event.getRegistry().register(baubleBino);
             }
+        }
+
+        @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
+        public static void onModelRegister(ModelRegistryEvent event) {
+            RenderingRegistry.registerEntityRenderingHandler(DynamiteEntity.class,
+                    manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
         }
     }
 }

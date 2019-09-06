@@ -22,12 +22,13 @@ public class VeteranEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onTick(TickEvent.WorldTickEvent event) {
-        if (EnchantmentFeature.enableVeteran.get())
+        if (EnchantmentFeature.veteran)
             for (PlayerEntity player : event.world.getPlayers()) {
                 for (ExperienceOrbEntity experienceOrbEntity : player.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, player.getBoundingBox().expand(32, 32, 32), EntityPredicates.IS_ALIVE)) {
                     attemptToMove(experienceOrbEntity, player);
                 }
             }
+        //TODO doesnt work
     }
 
     private void attemptToMove(Entity entity, PlayerEntity closestPlayer) {
@@ -58,16 +59,16 @@ public class VeteranEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableVeteran.get() ? 1 : 0;
+        return EnchantmentFeature.veteran ? 1 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.HEAD) && EnchantmentFeature.enableVeteran.get();
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.HEAD) && EnchantmentFeature.veteran;
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableVeteran.get();
+        return EnchantmentFeature.veteran;
     }
 }

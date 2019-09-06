@@ -20,9 +20,10 @@ public class SiphonEnchantment extends Enchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void harvestDropEvent(BlockEvent.HarvestDropsEvent event) {
-        if (EnchantmentFeature.enableSiphon.get() && event.getHarvester() != null && EnchantmentHelper.getEnchantmentLevel(this, event.getHarvester().getHeldItemMainhand()) > 0) {
+        if (EnchantmentFeature.siphon && event.getHarvester() != null && EnchantmentHelper.getEnchantmentLevel(this, event.getHarvester().getHeldItemMainhand()) > 0) {
             event.getDrops().removeAll(event.getDrops().stream().filter(event.getHarvester().inventory::addItemStackToInventory).collect(Collectors.toList()));
         }
+        //TODO Update when https://github.com/MinecraftForge/MinecraftForge/pull/5871 is merged
     }
 
     @Override
@@ -37,16 +38,16 @@ public class SiphonEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableSiphon.get() ? 1 : 0;
+        return EnchantmentFeature.siphon ? 1 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ToolItem && EnchantmentFeature.enableSiphon.get();
+        return stack.getItem() instanceof ToolItem && EnchantmentFeature.siphon;
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableSiphon.get();
+        return EnchantmentFeature.siphon;
     }
 }
