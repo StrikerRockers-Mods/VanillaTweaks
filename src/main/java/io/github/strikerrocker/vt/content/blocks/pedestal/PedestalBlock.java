@@ -24,13 +24,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 
-public class BlockPedestal extends Block {
-    public BlockPedestal() {
+public class PedestalBlock extends Block {
+    public PedestalBlock() {
         super(Block.Properties.create(Material.ROCK, MaterialColor.GRAY_TERRACOTTA).hardnessAndResistance(2.0f, 10.0f));
         this.setRegistryName("pedestal");
     }
 
-    public static PedestalTileEntity getPedestalTE(IWorldReader world, BlockPos pos) {
+    private static PedestalTileEntity getPedestalTE(IWorldReader world, BlockPos pos) {
         return (PedestalTileEntity) world.getTileEntity(pos);
     }
 
@@ -49,6 +49,8 @@ public class BlockPedestal extends Block {
                 });
                 tile.markDirty();
             } else {
+                //Gui doesnt open?
+
                 NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), new TranslationTextComponent("block.vanillatweaks.pedestal")));
             }
         }
@@ -60,7 +62,7 @@ public class BlockPedestal extends Block {
         PedestalTileEntity tile = getPedestalTE(worldIn, pos);
         tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).ifPresent(itemHandler -> {
             ItemStack stack = itemHandler.getStackInSlot(0);
-            if (stack.isEmpty()) {
+            if (stack.isEmpty() && !worldIn.isRemote) {
                 ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
                 worldIn.addEntity(item);
             }

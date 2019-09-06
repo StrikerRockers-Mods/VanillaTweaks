@@ -1,11 +1,10 @@
 package io.github.strikerrocker.vt.content.blocks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.content.blocks.pedestal.BlockPedestal;
+import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalBlock;
 import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalContainer;
 import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalTileEntity;
 import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalTileEntityRenderer;
-import io.github.strikerrocker.vt.content.items.ItemConditions;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -35,7 +34,7 @@ import java.util.Arrays;
 import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
 public class Blocks extends Feature {
-    public static final Block pedestal = new BlockPedestal();
+    public static final Block pedestal = new PedestalBlock();
     private static final CharcoalBlock charcoal = new CharcoalBlock("charcoalblock");
     private static final Block sugar = new Block(Block.Properties.create(Material.SAND, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
     private static final Block flint = new Block(Block.Properties.create(Material.SAND, MaterialColor.BROWN).hardnessAndResistance(1.0f, 10.0f)).setRegistryName("flintblock");
