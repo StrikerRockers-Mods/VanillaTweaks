@@ -1,6 +1,5 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import io.github.strikerrocker.vt.content.blocks.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -57,18 +56,19 @@ public class PedestalBlock extends Block {
         return true;
     }
 
+
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        PedestalTileEntity tile = getPedestalTE(worldIn, pos);
-        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).ifPresent(itemHandler -> {
-            ItemStack stack = itemHandler.getStackInSlot(0);
-            if (stack.isEmpty() && !worldIn.isRemote) {
-                ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
-                worldIn.addEntity(item);
-            }
-            ItemEntity pedestal = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.pedestal));
-            worldIn.addEntity(pedestal);
-        });
+        if (!worldIn.isRemote()) {
+            PedestalTileEntity tile = getPedestalTE(worldIn, pos);
+            tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).ifPresent(itemHandler -> {
+                ItemStack stack = itemHandler.getStackInSlot(0);
+                if (stack.isEmpty() && !worldIn.isRemote) {
+                    ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
+                    worldIn.addEntity(item);
+                }
+            });
+        }
     }
 
     @Override

@@ -34,15 +34,15 @@ import java.util.Arrays;
 import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
 public class Blocks extends Feature {
-    public static final Block pedestal = new PedestalBlock();
-    private static final CharcoalBlock charcoal = new CharcoalBlock("charcoalblock");
-    private static final Block sugar = new Block(Block.Properties.create(Material.SAND, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
-    private static final Block flint = new Block(Block.Properties.create(Material.SAND, MaterialColor.BROWN).hardnessAndResistance(1.0f, 10.0f)).setRegistryName("flintblock");
+    public static final Block PEDESTAL_BLOCK = new PedestalBlock();
+    private static final CharcoalBlock CHARCOAL_BLOCK = new CharcoalBlock("charcoalblock");
+    private static final Block SUGAR_BLOCK = new Block(Block.Properties.create(Material.SAND, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
+    private static final Block FLINT_BLOCK = new Block(Block.Properties.create(Material.SAND, MaterialColor.BROWN).hardnessAndResistance(1.0f, 10.0f)).setRegistryName("flintblock");
     @ObjectHolder(MODID + ":pedestal")
     public static TileEntityType<PedestalTileEntity> PEDESTAL_TYPE;
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
-    private static Block[] blocks = new Block[]{charcoal, sugar, flint, pedestal};
+    private static Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -70,7 +70,7 @@ public class Blocks extends Feature {
     @SubscribeEvent
     public void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event) {
         Item item = event.getItemStack().getItem();
-        if (item == charcoal.asItem())
+        if (item == CHARCOAL_BLOCK.asItem())
             event.setBurnTime(16000);
         if (item == net.minecraft.block.Blocks.TORCH.asItem())
             event.setBurnTime(400);
@@ -90,12 +90,12 @@ public class Blocks extends Feature {
 
         @SubscribeEvent
         public static void onRegisterContainers(RegistryEvent.Register<ContainerType<?>> event) {
-            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))).setRegistryName("crafting_pad"));
+            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))).setRegistryName(MODID, "pedestal"));
         }
 
         @SubscribeEvent
         public static void onRegisterTEType(RegistryEvent.Register<TileEntityType<?>> event) {
-            event.getRegistry().register(TileEntityType.Builder.create(PedestalTileEntity::new, pedestal).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
+            event.getRegistry().register(TileEntityType.Builder.create(PedestalTileEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
         }
 
         @SubscribeEvent

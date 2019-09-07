@@ -22,7 +22,7 @@ public class PedestalScreen extends ContainerScreen<PedestalContainer> {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String name = I18n.format(Blocks.pedestal.getTranslationKey() + ".name");
+        String name = I18n.format(Blocks.PEDESTAL_BLOCK.getTranslationKey() + ".name");
         font.drawString(name, xSize / 2 - font.getStringWidth(name) / 2, 6, 0x404040);
         font.drawString(playerInv.getDisplayName().getFormattedText(), 8, ySize - 94, 0x404040);
     }

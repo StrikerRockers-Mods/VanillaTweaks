@@ -1,7 +1,7 @@
 {
   "variants": {
-    "normal": {
-      "model": "vanillatweaks:flintblock"
+    "": {
+      "model": "vanillatweaks:block/flintblock"
     }
   }
 }
