@@ -1,9 +1,29 @@
 {
+  "parent": "block/block",
   "author": "Model made by Subaraki for StrikerRocker. ",
   "textures": {
-    "0": "blocks/stonebrick",
-    "1": "blocks/stonebrick_carved",
-    "particle": "blocks/stonebrick"
+    "0": "block/stone_bricks",
+    "1": "block/chiseled_stone_bricks",
+    "particle": "block/stone_bricks"
+  },
+  "display": {
+    "fixed": {
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
   },
   "elements": [
     {

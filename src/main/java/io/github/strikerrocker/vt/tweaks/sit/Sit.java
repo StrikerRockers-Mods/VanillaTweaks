@@ -27,7 +27,7 @@ import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
 public class Sit extends Feature {
     @ObjectHolder(MODID + ":entity_sit")
-    static final EntityType<EntitySit> SIT_ENTITY_TYPE = null;
+    public static final EntityType<EntitySit> SIT_ENTITY_TYPE = null;
     private ForgeConfigSpec.BooleanValue enableSit;
 
     @Override

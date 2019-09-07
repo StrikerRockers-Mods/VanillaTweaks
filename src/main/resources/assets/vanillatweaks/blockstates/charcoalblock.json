@@ -1,7 +1,7 @@
 {
   "variants": {
-    "normal": {
-      "model": "vanillatweaks:charcoalblock"
+    "": {
+      "model": "vanillatweaks:block/charcoalblock"
     }
   }
 }
