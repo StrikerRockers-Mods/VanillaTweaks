@@ -24,7 +24,8 @@ public class HopsEnchantment extends Enchantment {
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity entity = event.getEntityLiving();
         if (EnchantmentFeature.hops && !event.getEntity().world.isRemote()) {
-            entity.addVelocity(0, EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)) / 10D, 0);
+            float height = (float) (EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)) / 10D);
+            entity.addVelocity(0, height, 0);
             if (entity instanceof ServerPlayerEntity) {
                 ServerPlayerEntity playerMP = (ServerPlayerEntity) entity;
                 playerMP.connection.sendPacket(new SEntityVelocityPacket(playerMP));
