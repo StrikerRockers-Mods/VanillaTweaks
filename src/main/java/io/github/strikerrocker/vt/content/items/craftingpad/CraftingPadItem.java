@@ -21,10 +21,8 @@ public class CraftingPadItem extends Item {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (!worldIn.isRemote()) {
-            //TODO Why isnt it crafting?
+        if (!worldIn.isRemote())
             NetworkHooks.openGui((ServerPlayerEntity) playerIn, new SimpleNamedContainerProvider((id, playerInventory, player) -> new CraftingPadContainer(id, playerInventory), new TranslationTextComponent("item.vanillatweaks.pad")));
-        }
         return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
     }
 }

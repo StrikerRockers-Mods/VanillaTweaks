@@ -74,8 +74,8 @@ public class SilkSpawner extends Feature {
 
             Block.spawnAsEntity(tile.getWorld(), event.getPos(), drop);
             //Does this cause problems w/ block protection?
+            tile.getWorld().removeTileEntity(tile.getPos());
             world.destroyBlock(event.getPos(), false);
-            //world.removeTileEntity(event.getPos());
             event.setCanceled(true);
         }
     }
@@ -95,5 +95,4 @@ public class SilkSpawner extends Feature {
             }
         }
     }
-
 }

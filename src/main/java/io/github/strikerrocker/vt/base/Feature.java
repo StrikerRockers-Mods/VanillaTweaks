@@ -17,6 +17,9 @@ public abstract class Feature {
     public void setup() {
     }
 
+    public void clientSetup() {
+    }
+
     public void setupConfig(ForgeConfigSpec.Builder builder) {
     }
 

@@ -27,7 +27,7 @@ import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
 public class Sit extends Feature {
     @ObjectHolder(MODID + ":entity_sit")
-    public static final EntityType<EntitySit> SIT_ENTITY_TYPE = null;
+    public static final EntityType<SitEntity> SIT_ENTITY_TYPE = null;
     private ForgeConfigSpec.BooleanValue enableSit;
 
     @Override
@@ -52,13 +52,13 @@ public class Sit extends Feature {
             Block b = w.getBlockState(p).getBlock();
             PlayerEntity e = event.getPlayer();
 
-            if ((b instanceof SlabBlock || b instanceof StairsBlock) && !EntitySit.OCCUPIED.containsKey(p) && e.getHeldItemMainhand().isEmpty()) {
+            if ((b instanceof SlabBlock || b instanceof StairsBlock) && !SitEntity.OCCUPIED.containsKey(p) && e.getHeldItemMainhand().isEmpty()) {
                 if (b instanceof SlabBlock && (!s.has(SlabBlock.TYPE) || s.get(SlabBlock.TYPE) != SlabType.BOTTOM))
                     return;
                 else if (b instanceof StairsBlock && (!s.has(StairsBlock.HALF) || s.get(StairsBlock.HALF) != Half.BOTTOM))
                     return;
 
-                EntitySit sit = new EntitySit(w, p);
+                SitEntity sit = new SitEntity(w, p);
 
                 w.addEntity(sit);
                 e.startRiding(sit);
@@ -70,18 +70,18 @@ public class Sit extends Feature {
     public void onEntityMount(EntityMountEvent event) {
         if (event.isDismounting()) {
             Entity entity = event.getEntityBeingMounted();
-            if (entity instanceof EntitySit) {
+            if (entity instanceof SitEntity) {
                 entity.remove();
-                EntitySit.OCCUPIED.remove(entity.getPosition());
+                SitEntity.OCCUPIED.remove(entity.getPosition());
             }
         }
     }
 
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
-        if (EntitySit.OCCUPIED.containsKey(event.getPos())) {
-            EntitySit.OCCUPIED.get(event.getPos()).remove();
-            EntitySit.OCCUPIED.remove(event.getPos());
+        if (SitEntity.OCCUPIED.containsKey(event.getPos())) {
+            SitEntity.OCCUPIED.get(event.getPos()).remove();
+            SitEntity.OCCUPIED.remove(event.getPos());
         }
     }
 
@@ -89,7 +89,7 @@ public class Sit extends Feature {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-            event.getRegistry().register(EntityType.Builder.<EntitySit>create(EntitySit::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world)
+            event.getRegistry().register(EntityType.Builder.<SitEntity>create(SitEntity::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world)
                     -> SIT_ENTITY_TYPE.create(world)).setTrackingRange(256).setUpdateInterval(20).size(0.0001F, 0.0001F).build(MODID + ":entity_sit").setRegistryName(new ResourceLocation(MODID, "entity_sit")));
         }
     }

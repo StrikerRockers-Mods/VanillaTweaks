@@ -8,16 +8,14 @@ import io.github.strikerrocker.vt.loot.LootModule;
 import io.github.strikerrocker.vt.recipes.RecipeModule;
 import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.WorldModule;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -51,6 +49,7 @@ public class VanillaTweaks {
         registerModules();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
+        modEventBus.addListener(this::clientSetup);
         MinecraftForge.EVENT_BUS.register(this);
         network.registerMessage(0, PacketUpdatePedestal.class, PacketUpdatePedestal::encode, PacketUpdatePedestal::decode, PacketUpdatePedestal::onMessage);
     }
@@ -74,5 +73,10 @@ public class VanillaTweaks {
     private void setup(final FMLCommonSetupEvent event) {
         modules.forEach(Module::setup);
         LOGGER.info("Setup Complete");
+    }
+
+    private void clientSetup(final FMLClientSetupEvent event) {
+        modules.forEach(Module::clientSetup);
+        LOGGER.info("Client Setup Complete");
     }
 }
