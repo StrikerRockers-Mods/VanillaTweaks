@@ -4,11 +4,14 @@ import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
+import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
 import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadItem;
+import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadScreen;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteEntity;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteItem;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
@@ -16,6 +19,7 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -23,11 +27,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -107,11 +111,17 @@ public class Items extends Feature {
         });
     }
 
+    @Override
+    public void clientSetup() {
+        ScreenManager.registerFactory(CraftingPadContainer.TYPE, CraftingPadScreen::new);
+    }
+
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-            event.getRegistry().register(EntityType.Builder.<DynamiteEntity>create(DynamiteEntity::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "dynamite")));
+            event.getRegistry().register(EntityType.Builder.<DynamiteEntity>create(DynamiteEntity::new, EntityClassification.MISC).
+                    setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "dynamite")));
         }
 
         @SubscribeEvent
@@ -130,7 +140,14 @@ public class Items extends Feature {
         }
 
         @SubscribeEvent
-        @OnlyIn(Dist.CLIENT)
+        public static void onRegisterContainers(RegistryEvent.Register<ContainerType<?>> event) {
+            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingPadContainer(windowId, inv))).setRegistryName(MODID, "crafting_pad"));
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ClientEvents {
+        @SubscribeEvent
         public static void onModelRegister(ModelRegistryEvent event) {
             RenderingRegistry.registerEntityRenderingHandler(DynamiteEntity.class,
                     manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));

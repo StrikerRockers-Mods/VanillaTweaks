@@ -7,7 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.SharedSeedRandom;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class SlimeBucketItem extends Item {
@@ -19,11 +22,9 @@ public class SlimeBucketItem extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if (!worldIn.isRemote) {
-            int x = MathHelper.floor(playerIn.posX);
-            int z = MathHelper.floor(playerIn.posZ);
-            /*TODO = worldIn.getChunk(new BlockPos(x, 0, z)).getRandomWithSeed(987234911L).nextInt(10) == 0;
-            boolean slime;
-            playerIn.sendStatusMessage(new TranslationTextComponent(slime ? "slime.chunk" : "slime.chunk.false"), true);*/
+            ChunkPos chunkpos = new ChunkPos(new BlockPos(playerIn.posX, playerIn.posY, playerIn.posZ));
+            boolean slime = SharedSeedRandom.seedSlimeChunk(chunkpos.x, chunkpos.z, worldIn.getSeed(), 987234911L).nextInt(10) == 0;
+            playerIn.sendStatusMessage(new TranslationTextComponent(slime ? "slime.chunk" : "slime.chunk.false"), true);
         }
         return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
     }

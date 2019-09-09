@@ -1,14 +1,12 @@
 package io.github.strikerrocker.vt.content.blocks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalBlock;
-import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalContainer;
-import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalTileEntity;
-import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalTileEntityRenderer;
+import io.github.strikerrocker.vt.content.blocks.pedestal.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -17,7 +15,6 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -62,12 +59,6 @@ public class Blocks extends Feature {
     }
 
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public void onModelRegister(ModelRegistryEvent event) {
-        ClientRegistry.bindTileEntitySpecialRenderer(PedestalTileEntity.class, new PedestalTileEntityRenderer());
-    }
-
-    @SubscribeEvent
     public void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event) {
         Item item = event.getItemStack().getItem();
         if (item == CHARCOAL_BLOCK.asItem())
@@ -76,10 +67,10 @@ public class Blocks extends Feature {
             event.setBurnTime(400);
     }
 
-    /*@Override
-    public void registerPacket(SimpleNetworkWrapper network) {
-        network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
-    }*/
+    @Override
+    public void clientSetup() {
+        ScreenManager.registerFactory(PedestalContainer.TYPE, PedestalScreen::new);
+    }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
@@ -106,6 +97,14 @@ public class Blocks extends Feature {
         @SubscribeEvent
         public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
             CraftingHelper.register(BlockConditions.Serializer.INSTANCE);
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ClientEvents {
+        @SubscribeEvent
+        public static void onModelRegister(ModelRegistryEvent event) {
+            ClientRegistry.bindTileEntitySpecialRenderer(PedestalTileEntity.class, new PedestalTileEntityRenderer());
         }
     }
 }
