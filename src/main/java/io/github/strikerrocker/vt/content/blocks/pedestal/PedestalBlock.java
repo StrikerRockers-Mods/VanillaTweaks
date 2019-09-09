@@ -14,6 +14,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
@@ -24,6 +27,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nullable;
 
 public class PedestalBlock extends Block {
+    private VoxelShape base = Block.makeCuboidShape(0.5, 0.0, 0.5, 15.5, 1.0, 15.5);
+    private VoxelShape deco1 = Block.makeCuboidShape(2.0, 1.0, 2.0, 14.0, 2.0, 14.0);
+    private VoxelShape pillar = Block.makeCuboidShape(4.5, 2.0, 4.5, 11.5, 12.0, 11.5);
+    private VoxelShape deco2 = Block.makeCuboidShape(2.0, 12.0, 2.0, 14.0, 13.0, 14.0);
+    private VoxelShape top = Block.makeCuboidShape(1, 13.0, 1, 15.0, 15.0, 15.0);
+    private VoxelShape PEDESTAL_VOXEL_SHAPE = VoxelShapes.or(base, deco1, pillar, deco2, top);
+
     public PedestalBlock() {
         super(Block.Properties.create(Material.ROCK, MaterialColor.GRAY_TERRACOTTA).hardnessAndResistance(2.0f, 10.0f));
         this.setRegistryName("pedestal");
@@ -48,9 +58,7 @@ public class PedestalBlock extends Block {
                 });
                 tile.markDirty();
             } else {
-                //Gui doesnt open?
-
-                NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), new TranslationTextComponent("block.vanillatweaks.pedestal")));
+                NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), new TranslationTextComponent("block.vanillatweaks.pedestal")), pos);
             }
         }
         return true;
@@ -63,11 +71,12 @@ public class PedestalBlock extends Block {
             PedestalTileEntity tile = getPedestalTE(worldIn, pos);
             tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).ifPresent(itemHandler -> {
                 ItemStack stack = itemHandler.getStackInSlot(0);
-                if (stack.isEmpty() && !worldIn.isRemote) {
+                if (!stack.isEmpty() && !worldIn.isRemote) {
                     ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
                     worldIn.addEntity(item);
                 }
             });
+            worldIn.removeTileEntity(pos);
         }
     }
 
@@ -80,5 +89,10 @@ public class PedestalBlock extends Block {
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new PedestalTileEntity();
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+        return PEDESTAL_VOXEL_SHAPE;
     }
 }

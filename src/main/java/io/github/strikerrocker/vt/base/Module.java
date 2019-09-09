@@ -33,9 +33,15 @@ public abstract class Module {
     public abstract void addFeatures();
 
     public void setup() {
-        features.values().stream().filter(Feature::usesEvents).forEach(MinecraftForge.EVENT_BUS::register);
-        features.values().stream().filter(Feature::usesEvents).forEach(feature -> VanillaTweaks.LOGGER.debug("Registered Event Handler for class " + feature.getClass().getName()));
+        features.values().stream().filter(Feature::usesEvents).forEach(feature -> {
+            MinecraftForge.EVENT_BUS.register(feature);
+            VanillaTweaks.LOGGER.debug("Registered Event Handler for class " + feature.getClass().getName());
+        });
         features.values().forEach(Feature::setup);
+    }
+
+    public void clientSetup() {
+        features.values().forEach(Feature::clientSetup);
     }
 
     public void setupConfig() {
