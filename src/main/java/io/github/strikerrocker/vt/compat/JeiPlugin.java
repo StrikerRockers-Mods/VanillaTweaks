@@ -16,7 +16,7 @@ public class JeiPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         if (Items.enablePad.get())
-            registration.addRecipeCatalyst(new ItemStack(Items.craftingPad), VanillaRecipeCategoryUid.CRAFTING);
+            registration.addRecipeCatalyst(new ItemStack(Items.CRAFTING_PAD), VanillaRecipeCategoryUid.CRAFTING);
     }
 
     @Override

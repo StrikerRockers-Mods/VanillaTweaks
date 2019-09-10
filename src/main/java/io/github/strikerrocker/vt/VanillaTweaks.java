@@ -79,4 +79,8 @@ public class VanillaTweaks {
         modules.forEach(Module::clientSetup);
         LOGGER.info("Client Setup Complete");
     }
+
+    private void configChanged(final ModConfig.ModConfigEvent event) {
+        modules.forEach(module -> module.configChanged(event));
+    }
 }

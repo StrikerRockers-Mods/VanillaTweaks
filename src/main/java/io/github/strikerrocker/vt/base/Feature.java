@@ -1,6 +1,7 @@
 package io.github.strikerrocker.vt.base;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.config.ModConfig;
 
 public abstract class Feature {
     private String name;
@@ -18,6 +19,9 @@ public abstract class Feature {
     }
 
     public void clientSetup() {
+    }
+
+    public void configChanged(ModConfig.ModConfigEvent event) {
     }
 
     public void setupConfig(ForgeConfigSpec.Builder builder) {

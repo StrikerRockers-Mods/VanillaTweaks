@@ -4,7 +4,6 @@ import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.config.ModConfig;
 
@@ -27,22 +26,17 @@ public class StackSizes extends Feature {
     }
 
     @Override
-    public boolean usesEvents() {
-        return true;
-    }
-
-    @SubscribeEvent
-    public void modConfig(ModConfig.ModConfigEvent event) {
+    public void configChanged(ModConfig.ModConfigEvent event) {
         ModConfig config = event.getConfig();
         if (config.getSpec() == module.getConfigSpec()) {
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ACACIA_STAIRS, boatStackSize.get(), "maxStackSize");
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ACACIA_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.BIRCH_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.OAK_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DARK_OAK_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.JUNGLE_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPRUCE_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ENDER_PEARL, enderPearlStackSize.get(), "maxStackSize");
+            //TODO make it work
         }
-        //TODO Doesn't work?
     }
 }

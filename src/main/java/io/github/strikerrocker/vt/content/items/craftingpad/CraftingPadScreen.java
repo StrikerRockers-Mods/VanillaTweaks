@@ -63,7 +63,7 @@ public class CraftingPadScreen extends ContainerScreen<CraftingPadContainer> imp
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String name = I18n.format(Items.craftingPad.getTranslationKey() + ".name");
+        String name = I18n.format(Items.CRAFTING_PAD.getTranslationKey() + ".name");
         font.drawString(name, xSize / 2 - font.getStringWidth(name) / 2, 6, 0x404040);
     }
 

@@ -3,6 +3,7 @@ package io.github.strikerrocker.vt.base;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.config.ModConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,10 @@ public abstract class Module {
 
     public void clientSetup() {
         features.values().forEach(Feature::clientSetup);
+    }
+
+    public void configChanged(ModConfig.ModConfigEvent event) {
+        features.values().forEach(feature -> feature.configChanged(event));
     }
 
     public void setupConfig() {
