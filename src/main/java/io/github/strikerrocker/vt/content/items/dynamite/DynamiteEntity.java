@@ -3,9 +3,9 @@ package io.github.strikerrocker.vt.content.items.dynamite;
 import io.github.strikerrocker.vt.content.items.Items;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -36,7 +36,12 @@ public class DynamiteEntity extends ProjectileItemEntity {
 
     @Override
     protected Item func_213885_i() {
-        return Items.dynamite;
+        return Items.DYNAMITE;
+    }
+
+    @Override
+    public ItemStack getItem() {
+        return new ItemStack(Items.DYNAMITE);
     }
 
     @Override
@@ -58,7 +63,6 @@ public class DynamiteEntity extends ProjectileItemEntity {
             else
                 this.dataManager.set(TICKSSINCEWET, 0);
         } else {
-            this.world.addParticle(ParticleTypes.EXPLOSION, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
         }
         if (this.dataManager.get(TICKSSINCEWET) < WET_TICKS && !this.isInWater())
             for (int i = 0; i < 3; ++i) {
@@ -72,8 +76,8 @@ public class DynamiteEntity extends ProjectileItemEntity {
     protected void onImpact(RayTraceResult result) {
         if (!world.isRemote) {
             if (this.dataManager.get(TICKSSINCEWET) < WET_TICKS) {
-                if (!(getThrower() instanceof PlayerEntity) || ((PlayerEntity) getThrower()).abilities.isCreativeMode)
-                    this.entityDropItem(Items.dynamite);
+                this.entityDropItem(Items.DYNAMITE);
+                this.remove();
             } else {
                 if (result instanceof EntityRayTraceResult && ((EntityRayTraceResult) result).getEntity() instanceof DynamiteEntity) {
                     return;

@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -46,7 +45,6 @@ public class CapabilitySelfPlanting extends Feature {
     public void setup() {
         VanillaTweaks.LOGGER.info("Registering self planting capability");
         CapabilityManager.INSTANCE.register(ISelfPlanting.class, new Capability.IStorage<ISelfPlanting>() {
-            @Nullable
             @Override
             public INBT writeNBT(Capability<ISelfPlanting> capability, ISelfPlanting instance, Direction side) {
                 CompoundNBT compound = new CompoundNBT();
@@ -80,10 +78,10 @@ public class CapabilitySelfPlanting extends Feature {
 
     @SubscribeEvent
     public void onEntityEvent(EntityEvent event) {
-//        TODO Fix thisWorld world = event.getEntity().world;
-//        if (selfPlanting.get() && !world.isRemote && event.getEntity() instanceof ItemEntity) {
-//            ItemEntity entityItem = (ItemEntity) event.getEntity();
-//            entityItem.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic(entityItem));
-//        }
+        if (selfPlanting.get() && !event.getEntity().getEntityWorld().isRemote() && event.getEntity() instanceof ItemEntity) {
+            ItemEntity entityItem = (ItemEntity) event.getEntity();
+            entityItem.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic(entityItem));
+        }
+        //TODO doesnt auto-plant
     }
 }
