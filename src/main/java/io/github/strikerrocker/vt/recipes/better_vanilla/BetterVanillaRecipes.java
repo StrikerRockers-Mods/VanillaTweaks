@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.recipes.better_vanilla;
 
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.recipes.vanilla.VanillaRecipeConditions;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -23,6 +22,7 @@ public class BetterVanillaRecipes extends Feature {
                 .translation("config.vanillatweaks:betterStoneTools")
                 .comment("Cobblestone used in stone tools doesn't make sense?")
                 .define("betterStoneTools", true);
+        //TODO cobblestone stairs and better doesn't work due to forge.
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
