@@ -14,8 +14,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -70,6 +68,7 @@ public class Blocks extends Feature {
     @Override
     public void clientSetup() {
         ScreenManager.registerFactory(PedestalContainer.TYPE, PedestalScreen::new);
+        ClientRegistry.bindTileEntitySpecialRenderer(PedestalTileEntity.class, new PedestalTileEntityRenderer());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -95,16 +94,8 @@ public class Blocks extends Feature {
         }
 
         @SubscribeEvent
-        public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
             CraftingHelper.register(BlockConditions.Serializer.INSTANCE);
-        }
-    }
-
-    @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ClientEvents {
-        @SubscribeEvent
-        public static void onModelRegister(ModelRegistryEvent event) {
-            ClientRegistry.bindTileEntitySpecialRenderer(PedestalTileEntity.class, new PedestalTileEntityRenderer());
         }
     }
 }
