@@ -22,7 +22,7 @@ public class PedestalScreen extends ContainerScreen<PedestalContainer> {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String name = I18n.format(Blocks.PEDESTAL_BLOCK.getTranslationKey() + ".name");
+        String name = I18n.format(Blocks.PEDESTAL_BLOCK.getTranslationKey());
         font.drawString(name, xSize / 2 - font.getStringWidth(name) / 2, 6, 0x404040);
         font.drawString(playerInv.getDisplayName().getFormattedText(), 8, ySize - 94, 0x404040);
     }
@@ -34,5 +34,12 @@ public class PedestalScreen extends ContainerScreen<PedestalContainer> {
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         blit(x, y, 0, 0, xSize, ySize);
+    }
+
+    @Override
+    public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
+        this.renderBackground();
+        super.render(p_render_1_, p_render_2_, p_render_3_);
+        this.renderHoveredToolTip(p_render_1_, p_render_2_);
     }
 }

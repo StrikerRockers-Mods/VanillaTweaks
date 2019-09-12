@@ -16,26 +16,24 @@ public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTileE
     @Override
     public void render(PedestalTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
         ItemStack stack = tileEntityIn.inventory.getStackInSlot(0);
-        if (!stack.isEmpty()) {
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1f);
-            GlStateManager.enableBlend();
-            RenderHelper.enableStandardItemLighting();
-            GlStateManager.blendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
-            GlStateManager.pushMatrix();
-            double offset = Math.sin((tileEntityIn.getWorld().getGameTime() - tileEntityIn.lastChangeTime + partialTicks) / 8) / 4.0;
-            GlStateManager.translated(x + 0.5, y + 1.25 + offset, z + 0.5);
-            GlStateManager.rotated((tileEntityIn.getWorld().getGameTime() + partialTicks) * 4, 0, 1, 0);
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1f);
+        GlStateManager.enableBlend();
+        RenderHelper.enableStandardItemLighting();
+        GlStateManager.blendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+        GlStateManager.pushMatrix();
+        double offset = Math.sin((tileEntityIn.getWorld().getGameTime() - tileEntityIn.lastChangeTime + partialTicks) / 8) / 4.0;
+        GlStateManager.translated(x + 0.5, y + 1.25 + offset, z + 0.5);
+        GlStateManager.rotated((tileEntityIn.getWorld().getGameTime() + partialTicks) * 4, 0, 1, 0);
 
-            IBakedModel model = Minecraft.getInstance().getItemRenderer().getItemModelWithOverrides(stack, tileEntityIn.getWorld(), null);
-            model = ForgeHooksClient.handleCameraTransforms(model, ItemCameraTransforms.TransformType.GROUND, false);
+        IBakedModel model = Minecraft.getInstance().getItemRenderer().getItemModelWithOverrides(stack, tileEntityIn.getWorld(), null);
+        model = ForgeHooksClient.handleCameraTransforms(model, ItemCameraTransforms.TransformType.GROUND, false);
 
-            Minecraft.getInstance().getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-            Minecraft.getInstance().getItemRenderer().renderItem(stack, model);
+        Minecraft.getInstance().getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+        Minecraft.getInstance().getItemRenderer().renderItem(stack, model);
 
-            GlStateManager.popMatrix();
-            GlStateManager.disableRescaleNormal();
-            GlStateManager.disableBlend();
-        }
+        GlStateManager.popMatrix();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.disableBlend();
     }
 }

@@ -4,14 +4,11 @@ import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
 import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
-import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
 import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadItem;
-import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadScreen;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteEntity;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteItem;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
@@ -19,11 +16,7 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -34,7 +27,6 @@ import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -48,9 +40,9 @@ public class Items extends Feature {
     @ObjectHolder(MODID + ":dynamite")
     public static final EntityType<DynamiteEntity> DYNAMITE_TYPE = null;
     private static final Item BINOCULARS = new ArmorItem(new BasicArmorMaterial(VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, () -> Ingredient.fromItems(net.minecraft.item.Items.IRON_INGOT))
-            , EquipmentSlotType.HEAD, new Item.Properties().maxStackSize(1)).setRegistryName("binoculars");
-    private static final Item LENS = new Item(new Item.Properties()).setRegistryName("lens");
-    private static final Item FRIED_EGG = new Item(new Item.Properties().food(new Food.Builder().hunger(5).saturation(0.6f).build())).setRegistryName("friedegg");
+            , EquipmentSlotType.HEAD, new Item.Properties().maxStackSize(1).group(ItemGroup.TOOLS)).setRegistryName("binoculars");
+    private static final Item LENS = new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName("lens");
+    private static final Item FRIED_EGG = new Item(new Item.Properties().food(new Food.Builder().hunger(5).saturation(0.6f).build()).group(ItemGroup.FOOD)).setRegistryName("friedegg");
     public static Item CRAFTING_PAD = new CraftingPadItem();
     public static Item DYNAMITE = new DynamiteItem("dynamite");
     public static ForgeConfigSpec.BooleanValue enablePad;
@@ -114,11 +106,6 @@ public class Items extends Feature {
         });
     }
 
-    @Override
-    public void clientSetup() {
-        ScreenManager.registerFactory(CraftingPadContainer.TYPE, CraftingPadScreen::new);
-    }
-
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
@@ -140,11 +127,6 @@ public class Items extends Feature {
                 BAUBLE_BINO = BaubleTools.initBinocularBauble();
                 event.getRegistry().register(BAUBLE_BINO);
             }
-        }
-
-        @SubscribeEvent
-        public static void onRegisterContainers(RegistryEvent.Register<ContainerType<?>> event) {
-            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingPadContainer(windowId, inv))).setRegistryName(MODID, "crafting_pad"));
         }
     }
 

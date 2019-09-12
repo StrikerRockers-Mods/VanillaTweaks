@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
@@ -28,14 +29,14 @@ public class ArrowSetFire extends Feature {
 
     @SubscribeEvent
     public void onArrowImpact(ProjectileImpactEvent.Arrow event) {
-        if (!event.getArrow().world.isRemote && event.getArrow().isBurning() && arrowsSetBlockOnFire.get()) {
-            Vec3d vec3d1 = new Vec3d(event.getArrow().posX, event.getArrow().posY, event.getArrow().posZ);
-            Vec3d vec3d = new Vec3d(event.getArrow().posX + event.getArrow().getMotion().x, event.getArrow().posY + event.getArrow().getMotion().y, event.getArrow().posZ + event.getArrow().getMotion().z);
-            RayTraceResult raytraceresult = event.getArrow().world.rayTraceBlocks(new RayTraceContext(vec3d1, vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, event.getArrow()));
-            BlockPos hitBlock = new BlockPos(raytraceresult.getHitVec()).up();
-            if (raytraceresult.getType() == RayTraceResult.Type.BLOCK && event.getArrow().world.isAirBlock(hitBlock)) {
-                //TODO Doesnt Set
-                event.getArrow().world.setBlockState(hitBlock, Blocks.FIRE.getDefaultState());
+        AbstractArrowEntity arrow = event.getArrow();
+        if (!arrow.world.isRemote && arrow.isBurning() && arrowsSetBlockOnFire.get()) {
+            Vec3d vec3d1 = new Vec3d(arrow.posX, arrow.posY, arrow.posZ);
+            Vec3d vec3d = new Vec3d(arrow.posX + arrow.getMotion().x, arrow.posY + arrow.getMotion().y, arrow.posZ + arrow.getMotion().z);
+            RayTraceResult raytraceresult = arrow.world.rayTraceBlocks(new RayTraceContext(vec3d1, vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
+            BlockPos hitPos = new BlockPos(raytraceresult.getHitVec()).up();
+            if (arrow.world.isAirBlock(hitPos)) {
+                arrow.world.setBlockState(hitPos, Blocks.FIRE.getDefaultState());
             }
         }
     }

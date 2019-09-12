@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.content.blocks.Blocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -10,7 +10,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -23,9 +22,10 @@ public class PedestalTileEntity extends TileEntity {
     public ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
-            if (!world.isRemote) {
+            if (world != null && !world.isRemote) {
                 lastChangeTime = world.getGameTime();
-                VanillaTweaks.network.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 64, world.getDimension().getType())), new PacketUpdatePedestal(PedestalTileEntity.this));
+                BlockState state = world.getBlockState(pos);
+                world.notifyBlockUpdate(pos, state, state, 3);
             }
         }
     };
@@ -42,7 +42,7 @@ public class PedestalTileEntity extends TileEntity {
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return new CompoundNBT();
+        return write(new CompoundNBT());
     }
 
     @Nullable
@@ -54,6 +54,8 @@ public class PedestalTileEntity extends TileEntity {
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         read(pkt.getNbtCompound());
+        BlockState state = world.getBlockState(pos);
+        world.notifyBlockUpdate(pos, state, state, 2);
     }
 
     @Override

@@ -2,17 +2,13 @@ package io.github.strikerrocker.vt.content.items.craftingpad;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.WorkbenchContainer;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.util.IWorldPosCallable;
 
 public class CraftingPadContainer extends WorkbenchContainer {
 
-    @ObjectHolder("vanillatweaks:crafting_pad")
-    public static ContainerType<CraftingPadContainer> TYPE;
-
-    public CraftingPadContainer(int id, PlayerInventory playerInventory) {
-        super(id, playerInventory);
+    CraftingPadContainer(int id, PlayerInventory playerInventory, IWorldPosCallable worldPosCallable) {
+        super(id, playerInventory, worldPosCallable);
     }
 
     @Override

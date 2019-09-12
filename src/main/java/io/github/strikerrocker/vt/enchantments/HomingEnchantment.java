@@ -34,6 +34,7 @@ public class HomingEnchantment extends Enchantment {
                 }
             }
         }
+        //TODO doesnt work
     }
 
     private void attemptToMove(ArrowEntity arrow) {
