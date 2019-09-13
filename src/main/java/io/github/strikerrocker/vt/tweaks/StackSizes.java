@@ -27,8 +27,7 @@ public class StackSizes extends Feature {
 
     @Override
     public void configChanged(ModConfig.ModConfigEvent event) {
-        ModConfig config = event.getConfig();
-        if (config.getSpec() == module.getConfigSpec()) {
+        if (event.getConfig().getSpec() == module.getConfigSpec()) {
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ACACIA_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.BIRCH_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.OAK_BOAT, boatStackSize.get(), "maxStackSize");
@@ -36,7 +35,6 @@ public class StackSizes extends Feature {
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.JUNGLE_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPRUCE_BOAT, boatStackSize.get(), "maxStackSize");
             ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ENDER_PEARL, enderPearlStackSize.get(), "maxStackSize");
-            //TODO make it work
         }
     }
 }

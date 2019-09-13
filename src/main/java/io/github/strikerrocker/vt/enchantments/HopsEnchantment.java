@@ -23,7 +23,7 @@ public class HopsEnchantment extends Enchantment {
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity entity = event.getEntityLiving();
-        if (EnchantmentFeature.hops && !event.getEntity().world.isRemote()) {
+        if (EnchantmentFeature.enableHops.get() && !event.getEntity().world.isRemote()) {
 
             float lvl = (float) EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET));
             if (lvl != 0)
@@ -37,7 +37,7 @@ public class HopsEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentFeature.hops) {
+        if (EnchantmentFeature.enableHops.get()) {
             event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)));
         }
     }
@@ -54,16 +54,16 @@ public class HopsEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.hops ? 3 : 0;
+        return EnchantmentFeature.enableHops.get() ? 3 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.hops;
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.enableHops.get();
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.hops;
+        return EnchantmentFeature.enableHops.get();
     }
 }
