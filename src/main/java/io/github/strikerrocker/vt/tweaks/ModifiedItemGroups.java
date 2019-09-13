@@ -4,8 +4,8 @@ import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.config.ModConfig;
 
@@ -30,15 +30,23 @@ public class ModifiedItemGroups extends Feature {
         return true;
     }
 
-    @SubscribeEvent
-    public void modConfig(ModConfig.ModConfigEvent event) {
-        ModConfig config = event.getConfig();
-        if (config.getSpec() == module.getConfigSpec()) {
-            if (commandBlockInRedstone.get())
-                ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
-            if (dragonEggInDecorations.get())
-                ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "group");
+    @Override
+    public void configChanged(ModConfig.ModConfigEvent event) {
+        if (event.getConfig().getSpec() == module.getConfigSpec()) {
+            for (Item item : Registry.ITEM) {
+                String name = item.getRegistryName().getPath();
+                if (commandBlockInRedstone.get() && name.contains("command_block")) {
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.CHAIN_COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.REPEATING_COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK_MINECART, ItemGroup.REDSTONE, "group");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, item, ItemGroup.REDSTONE, "group");
+                }
+                if (dragonEggInDecorations.get() && name.contains("dragon_egg")) {
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "group");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, item, ItemGroup.DECORATIONS, "group");
+                }
+            }
         }
-        //TODO Doesnt work?
     }
 }

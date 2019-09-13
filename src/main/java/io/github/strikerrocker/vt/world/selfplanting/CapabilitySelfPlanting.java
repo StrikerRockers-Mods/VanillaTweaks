@@ -4,11 +4,14 @@ import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -16,7 +19,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nonnull;
@@ -38,7 +41,7 @@ public class CapabilitySelfPlanting extends Feature {
         selfPlanting = builder
                 .translation("config.vanillatweaks:selfPlanting")
                 .comment("Want seeds to auto-plant themselves when broken?")
-                .define("selfPlanting", false);
+                .define("selfPlanting", true);
     }
 
     @Override
@@ -77,11 +80,12 @@ public class CapabilitySelfPlanting extends Feature {
     }
 
     @SubscribeEvent
-    public void onEntityEvent(EntityEvent event) {
-        if (selfPlanting.get() && !event.getEntity().getEntityWorld().isRemote() && event.getEntity() instanceof ItemEntity) {
-            ItemEntity entityItem = (ItemEntity) event.getEntity();
-            entityItem.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic(entityItem));
+    public void onWorldTick(TickEvent.WorldTickEvent event) {
+        if (selfPlanting.get() && !event.world.isRemote()) {
+            ServerWorld world = (ServerWorld) event.world;
+            for (Entity entity : world.getEntities(EntityType.ITEM, EntityPredicates.IS_ALIVE)) {
+                entity.getCapability(CAPABILITY_PLANTING).ifPresent(iSelfPlanting -> iSelfPlanting.handlePlantingLogic((ItemEntity) entity));
+            }
         }
-        //TODO doesnt auto-plant
     }
 }
