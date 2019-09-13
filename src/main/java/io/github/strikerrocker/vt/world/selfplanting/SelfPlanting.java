@@ -10,6 +10,9 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
 
@@ -48,10 +51,13 @@ public class SelfPlanting implements ISelfPlanting {
                 this.minSteadyTicks = random.nextInt(75) + 75;
             ++this.steadyTicks;
             BlockPos entityPos = new BlockPos(entity);
+            Vec3d entityVec = new Vec3d(entityPos.getX(), entityPos.getY(), entityPos.getZ());
             BlockPos lastTickEntityPos = new BlockPos(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ);
             if (entityPos.compareTo(lastTickEntityPos) != 0)
                 this.steadyTicks = 0;
-            if (this.steadyTicks >= this.minSteadyTicks && entity.getItem().getItem().onItemUse(new ItemUseContext(Utils.getFakePlayer(entity.world), Hand.MAIN_HAND, null)) == ActionResultType.SUCCESS) {
+            BlockRayTraceResult rayTraceResult = entity.world.rayTraceBlocks(
+                    new RayTraceContext(entityVec.add(0, 1, 0), entityVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity));
+            if (this.steadyTicks >= this.minSteadyTicks && entity.getItem().getItem().onItemUse(new ItemUseContext(Utils.getFakePlayer(entity.world), Hand.MAIN_HAND, rayTraceResult)) == ActionResultType.SUCCESS) {
                 entity.getItem().shrink(1);
             }
         }

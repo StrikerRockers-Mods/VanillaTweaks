@@ -26,7 +26,7 @@ public class NimbleEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        if (EnchantmentFeature.nimble) {
+        if (EnchantmentFeature.enableNimble.get()) {
             LivingEntity entity = event.getEntityLiving();
             int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(this, entity.getItemStackFromSlot(EquipmentSlotType.FEET));
             IAttributeInstance speedAttribute = entity.getAttributes().getAttributeInstance(SharedMonsterAttributes.MOVEMENT_SPEED);
@@ -53,16 +53,16 @@ public class NimbleEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.nimble ? 3 : 0;
+        return EnchantmentFeature.enableNimble.get() ? 3 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.nimble;
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.enableNimble.get();
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.nimble;
+        return EnchantmentFeature.enableNimble.get();
     }
 }

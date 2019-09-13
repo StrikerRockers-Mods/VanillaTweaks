@@ -9,25 +9,17 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 
 import java.util.Map;
 
 public class EnchantmentFeature extends Feature {
-    static boolean blazing = true;
-    static boolean hops = true;
-    static boolean nimble = true;
-    static boolean siphon = true;
-    static boolean veteran = true;
-    static boolean vigor = true;
-    static boolean homing = true;
-    private static ForgeConfigSpec.BooleanValue enableBlazing;
-    private static ForgeConfigSpec.BooleanValue enableHops;
-    private static ForgeConfigSpec.BooleanValue enableNimble;
-    private static ForgeConfigSpec.BooleanValue enableSiphon;
-    private static ForgeConfigSpec.BooleanValue enableVeteran;
-    private static ForgeConfigSpec.BooleanValue enableVigor;
-    private static ForgeConfigSpec.BooleanValue enableHoming;
+    static ForgeConfigSpec.BooleanValue enableBlazing;
+    static ForgeConfigSpec.BooleanValue enableHops;
+    static ForgeConfigSpec.BooleanValue enableNimble;
+    static ForgeConfigSpec.BooleanValue enableSiphon;
+    static ForgeConfigSpec.BooleanValue enableVeteran;
+    static ForgeConfigSpec.BooleanValue enableVigor;
+    static ForgeConfigSpec.BooleanValue enableHoming;
     private static Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
 
     static {
@@ -39,25 +31,6 @@ public class EnchantmentFeature extends Feature {
         enchantments.put("vigor", new Tuple<>(new VigorEnchantment("vigor"), "Want more health with an enchant?"));
         enchantments.put("homing", new Tuple<>(new HomingEnchantment("homing"), "Don't want to aim but love shooting arrows?"));
         enchantments.forEach((name, tuple) -> MinecraftForge.EVENT_BUS.register(tuple.getA()));
-    }
-
-    @Override
-    public boolean usesEvents() {
-        return true;
-    }
-
-    @SubscribeEvent
-    public void modConfig(ModConfig.ModConfigEvent event) {
-        ModConfig config = event.getConfig();
-        if (config.getSpec() == module.getConfigSpec()) {
-            blazing = enableBlazing.get();
-            hops = enableHops.get();
-            nimble = enableNimble.get();
-            siphon = enableSiphon.get();
-            veteran = enableVeteran.get();
-            vigor = enableVigor.get();
-            homing = enableHoming.get();
-        }
     }
 
     @Override

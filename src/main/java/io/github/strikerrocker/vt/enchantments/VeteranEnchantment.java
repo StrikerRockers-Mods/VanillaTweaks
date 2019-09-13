@@ -22,7 +22,7 @@ public class VeteranEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onTick(TickEvent.WorldTickEvent event) {
-        if (EnchantmentFeature.veteran)
+        if (EnchantmentFeature.enableVeteran.get())
             for (PlayerEntity player : event.world.getPlayers()) {
                 for (ExperienceOrbEntity experienceOrbEntity : player.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, player.getBoundingBox().expand(32, 32, 32), EntityPredicates.IS_ALIVE)) {
                     attemptToMove(experienceOrbEntity, player);
@@ -59,16 +59,16 @@ public class VeteranEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.veteran ? 1 : 0;
+        return EnchantmentFeature.enableVeteran.get() ? 1 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.HEAD) && EnchantmentFeature.veteran;
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.HEAD) && EnchantmentFeature.enableVeteran.get();
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.veteran;
+        return EnchantmentFeature.enableVeteran.get();
     }
 }

@@ -50,8 +50,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.0.76'
-
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.1'
     compileOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}")
 }
@@ -59,11 +58,11 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "VanillaTweaks",
+                "Specification-Title"     : archivesBaseName,
                 "Specification-Vendor"    : "StrikerRocker",
-                "Specification-Version"   : archivesBaseName,
-                "Implementation-Title"    : "VanillaTweaks",
-                "Implementation-Version"  : archivesBaseName,
+                "Specification-Version"   : version,
+                "Implementation-Title"    : archivesBaseName,
+                "Implementation-Version"  : version,
                 "Implementation-Vendor"   : "StrikerRocker",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])

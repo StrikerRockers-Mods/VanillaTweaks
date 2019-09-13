@@ -24,7 +24,7 @@ public class VigorEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        if (EnchantmentFeature.vigor) {
+        if (EnchantmentFeature.enableVigor.get()) {
             int lvl = EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.CHEST));
             IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributes().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
             AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "vigor", (float) lvl / 10, AttributeModifier.Operation.MULTIPLY_BASE);
@@ -54,16 +54,16 @@ public class VigorEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.vigor ? 3 : 0;
+        return EnchantmentFeature.enableVigor.get() ? 3 : 0;
     }
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.CHEST) && EnchantmentFeature.vigor;
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.CHEST) && EnchantmentFeature.enableVigor.get();
     }
 
     @Override
     public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.vigor;
+        return EnchantmentFeature.enableVigor.get();
     }
 }
