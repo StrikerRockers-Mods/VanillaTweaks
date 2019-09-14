@@ -22,13 +22,13 @@ public class BetterVanillaRecipes extends Feature {
                 .translation("config.vanillatweaks:betterStoneTools")
                 .comment("Cobblestone used in stone tools doesn't make sense?")
                 .define("betterStoneTools", true);
-        //TODO cobblestone stairs and better doesn't work due to forge.
+        //TODO better cobblestone stairs and stone tools doesn't work due to forge adding tag support
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
-        public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
             CraftingHelper.register(BetterVanillaConditions.Serializer.INSTANCE);
         }
     }
