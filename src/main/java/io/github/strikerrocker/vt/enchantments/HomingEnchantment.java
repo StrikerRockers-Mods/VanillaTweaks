@@ -33,7 +33,6 @@ public class HomingEnchantment extends Enchantment {
             ServerWorld world = (ServerWorld) event.world;
             world.getEntities(EntityType.ARROW, EntityPredicates.IS_ALIVE).forEach(entity -> attemptToMove(entity, world));
         }
-        //TODO doesnt work
     }
 
     private void attemptToMove(Entity arrowEntity, ServerWorld world) {
