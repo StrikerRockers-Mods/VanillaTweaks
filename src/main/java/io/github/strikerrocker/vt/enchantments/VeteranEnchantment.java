@@ -4,13 +4,14 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -22,17 +23,15 @@ public class VeteranEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onTick(TickEvent.WorldTickEvent event) {
-        if (EnchantmentFeature.enableVeteran.get())
-            for (PlayerEntity player : event.world.getPlayers()) {
-                for (ExperienceOrbEntity experienceOrbEntity : player.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, player.getBoundingBox().expand(32, 32, 32), EntityPredicates.IS_ALIVE)) {
-                    attemptToMove(experienceOrbEntity, player);
-                }
-            }
-        //TODO doesnt work
+        if (EnchantmentFeature.enableVeteran.get() && event.world != null && !event.world.isRemote()) {
+            ServerWorld world = (ServerWorld) event.world;
+            world.getEntities(EntityType.EXPERIENCE_ORB, EntityPredicates.IS_ALIVE).forEach(this::attemptToMove);
+        }
     }
 
-    private void attemptToMove(Entity entity, PlayerEntity closestPlayer) {
+    private void attemptToMove(Entity entity) {
         double range = 32;
+        PlayerEntity closestPlayer = entity.world.getClosestPlayer(entity, range);
         if (closestPlayer != null && EnchantmentHelper.getEnchantmentLevel(this, closestPlayer.getItemStackFromSlot(EquipmentSlotType.HEAD)) > 0) {
             double xDiff = (closestPlayer.posX - entity.posX) / range;
             double yDiff = (closestPlayer.posY + closestPlayer.getEyeHeight() - entity.posY) / range;
@@ -40,8 +39,8 @@ public class VeteranEnchantment extends Enchantment {
             double movementFactor = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
             double invertedMovementFactor = 1 - movementFactor;
             if (invertedMovementFactor > 0) {
-                Vec3d motion = entity.getMotion();
                 invertedMovementFactor *= invertedMovementFactor;
+                Vec3d motion = entity.getMotion();
                 entity.setMotion(motion.x + xDiff / movementFactor * invertedMovementFactor * 0.1, motion.y + yDiff / movementFactor * invertedMovementFactor * 0.1, motion.z + zDiff / movementFactor * invertedMovementFactor * 0.1);
             }
         }
