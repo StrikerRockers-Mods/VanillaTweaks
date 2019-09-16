@@ -26,7 +26,7 @@ public class Sickle extends Feature {
         hoeActsAsSickle = builder
                 .translation("config.vanillatweaks:hoeActsAsSickle")
                 .comment("Want hoe to act like a sickle?")
-                .define("Want hoe to act like a sickle?", true);
+                .define("hoeActsAsSickle", true);
     }
 
     @Override

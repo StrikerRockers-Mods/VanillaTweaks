@@ -14,6 +14,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -22,6 +23,7 @@ import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Arrays;
@@ -65,11 +67,16 @@ public class Blocks extends Feature {
             event.setBurnTime(400);
     }
 
-    @Override
-    public void clientSetup() {
-        ScreenManager.registerFactory(PedestalContainer.TYPE, PedestalScreen::new);
-        ClientRegistry.bindTileEntitySpecialRenderer(PedestalTileEntity.class, new PedestalTileEntityRenderer());
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModBusEvents {
+        @SubscribeEvent
+        public static void clientSetup(FMLClientSetupEvent event) {
+            ScreenManager.registerFactory(PedestalContainer.TYPE, PedestalScreen::new);
+            ClientRegistry.bindTileEntitySpecialRenderer(PedestalTileEntity.class, new PedestalTileEntityRenderer());
+        }
     }
+
+
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {

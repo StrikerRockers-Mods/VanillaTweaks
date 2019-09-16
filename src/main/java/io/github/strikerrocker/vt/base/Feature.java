@@ -18,9 +18,6 @@ public abstract class Feature {
     public void setup() {
     }
 
-    public void clientSetup() {
-    }
-
     public void configChanged(ModConfig.ModConfigEvent event) {
     }
 
