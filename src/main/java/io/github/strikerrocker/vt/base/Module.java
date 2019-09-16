@@ -41,10 +41,6 @@ public abstract class Module {
         features.values().forEach(Feature::setup);
     }
 
-    public void clientSetup() {
-        features.values().forEach(Feature::clientSetup);
-    }
-
     public void configChanged(ModConfig.ModConfigEvent event) {
         features.values().forEach(feature -> feature.configChanged(event));
     }

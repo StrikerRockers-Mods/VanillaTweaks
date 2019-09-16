@@ -65,8 +65,6 @@ public class VanillaTweaks {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        modules.forEach(Module::clientSetup);
-        LOGGER.info("Client Setup Complete");
     }
 
     private void configChanged(final ModConfig.ModConfigEvent event) {

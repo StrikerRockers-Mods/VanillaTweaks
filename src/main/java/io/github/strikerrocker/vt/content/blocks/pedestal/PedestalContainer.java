@@ -6,7 +6,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -21,8 +20,8 @@ public class PedestalContainer extends Container {
     public PedestalContainer(int id, PlayerInventory playerInv, BlockPos pos) {
         super(TYPE, id);
         PedestalTileEntity pedestal = (PedestalTileEntity) playerInv.player.world.getTileEntity(pos);
-        pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH)
-                .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 35) {
+        pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+                .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 20) {
                     @Override
                     public void onSlotChange(@Nonnull ItemStack p_75220_1_, @Nonnull ItemStack p_75220_2_) {
                         pedestal.markDirty();
@@ -31,12 +30,12 @@ public class PedestalContainer extends Container {
         // Add player inv
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 51 + i * 18));
             }
         }
         // Add player hotbar
         for (int k = 0; k < 9; k++) {
-            addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
+            addSlot(new Slot(playerInv, k, 8 + k * 18, 109));
         }
     }
 
