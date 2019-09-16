@@ -8,15 +8,12 @@ displayName="VanillaTweaks" #mandatory
 updateJSONURL="https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.14/version.json" #optional
 displayURL="http://strikerrocker.github.io/vanillatweaks" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="assets/vanillatweaks/textures/logos/logo.png" #optional
+logoFile="logo.png" #optional
 # A text field displayed in the mod UI
 credits="Thanks to Anon10w1z for creating the mod , Subaraki for the textures." #optional
 authors="StrikerRocker" #optional
 # The description text for the mod (multi line!) (#mandatory)
-description='''
-VanillaTweaks is a Minecraft mod designed to enhance vanilla Minecraft without going overboard.
-It is designed to be minimally invasive and configurable to create a user experience like none others.
-'''
+description='''VanillaTweaks is a Minecraft mod designed to enhance vanilla Minecraft without going overboard. It is designed to be minimally invasive and configurable to create a user experience like none others.'''
 [[dependencies.vanillatweaks]]
     modId="forge"
     mandatory=true
