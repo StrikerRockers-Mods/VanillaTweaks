@@ -36,15 +36,15 @@ public class ModifiedItemGroups extends Feature {
             for (Item item : Registry.ITEM) {
                 String name = item.getRegistryName().getPath();
                 if (commandBlockInRedstone.get() && name.contains("command_block")) {
-                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
-                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.CHAIN_COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
-                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.REPEATING_COMMAND_BLOCK, ItemGroup.REDSTONE, "group");
-                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK_MINECART, ItemGroup.REDSTONE, "group");
-                    ObfuscationReflectionHelper.setPrivateValue(Item.class, item, ItemGroup.REDSTONE, "group");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK, ItemGroup.REDSTONE, "field_77701_a");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.CHAIN_COMMAND_BLOCK, ItemGroup.REDSTONE, "field_77701_a");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.REPEATING_COMMAND_BLOCK, ItemGroup.REDSTONE, "field_77701_a");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK_MINECART, ItemGroup.REDSTONE, "field_77701_a");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, item, ItemGroup.REDSTONE, "field_77701_a");
                 }
                 if (dragonEggInDecorations.get() && name.contains("dragon_egg")) {
-                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "group");
-                    ObfuscationReflectionHelper.setPrivateValue(Item.class, item, ItemGroup.DECORATIONS, "group");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "field_77701_a");
+                    ObfuscationReflectionHelper.setPrivateValue(Item.class, item, ItemGroup.DECORATIONS, "field_77701_a");
                 }
             }
         }
