@@ -77,7 +77,6 @@ public class Blocks extends Feature {
     }
 
 
-
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
