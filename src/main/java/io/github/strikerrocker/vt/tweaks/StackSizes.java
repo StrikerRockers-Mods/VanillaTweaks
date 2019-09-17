@@ -28,13 +28,13 @@ public class StackSizes extends Feature {
     @Override
     public void configChanged(ModConfig.ModConfigEvent event) {
         if (event.getConfig().getSpec() == module.getConfigSpec()) {
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ACACIA_BOAT, boatStackSize.get(), "maxStackSize");
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.BIRCH_BOAT, boatStackSize.get(), "maxStackSize");
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.OAK_BOAT, boatStackSize.get(), "maxStackSize");
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DARK_OAK_BOAT, boatStackSize.get(), "maxStackSize");
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.JUNGLE_BOAT, boatStackSize.get(), "maxStackSize");
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPRUCE_BOAT, boatStackSize.get(), "maxStackSize");
-            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ENDER_PEARL, enderPearlStackSize.get(), "maxStackSize");
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ACACIA_BOAT, boatStackSize.get(), "field_77777_bU");
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.BIRCH_BOAT, boatStackSize.get(), "field_77777_bU");
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.OAK_BOAT, boatStackSize.get(), "field_77777_bU");
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DARK_OAK_BOAT, boatStackSize.get(), "field_77777_bU");
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.JUNGLE_BOAT, boatStackSize.get(), "field_77777_bU");
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPRUCE_BOAT, boatStackSize.get(), "field_77777_bU");
+            ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.ENDER_PEARL, enderPearlStackSize.get(), "field_77777_bU");
         }
     }
 }
