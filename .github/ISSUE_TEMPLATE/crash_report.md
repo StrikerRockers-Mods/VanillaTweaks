@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: Crash report
 about: Create a bug report for VanillaTweaks
 ---
 
