@@ -41,7 +41,7 @@ public class Items extends Feature {
     private static final ItemArmor.ArmorMaterial binocular_material = EnumHelper.addArmorMaterial("binoculars", VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
     private static final Item binocular = new ItemArmor(binocular_material, 0, EntityEquipmentSlot.HEAD).setMaxStackSize(1).setRegistryName("binoculars").setTranslationKey("binoculars");
     private static final Item lens = new Item().setTranslationKey("lens").setRegistryName("lens");
-    private static final Item friedEgg = new ItemFood(3, 0.6f, false).setRegistryName("friedegg").setTranslationKey("friedegg");
+    private static final Item friedEgg = new ItemFood(5, 0.6f, false).setRegistryName("friedegg").setTranslationKey("friedegg");
     public static Item craftingPad = new ItemCraftingPad("pad");
     public static Item dynamite = new ItemDynamite("dynamite");
     public static boolean enablePad;

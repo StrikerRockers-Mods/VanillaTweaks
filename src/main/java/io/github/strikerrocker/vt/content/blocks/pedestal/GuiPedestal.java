@@ -23,7 +23,7 @@ public class GuiPedestal extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String name = I18n.format(Blocks.pedestal.getTranslationKey() + ".name");
         fontRenderer.drawString(name, xSize / 2 - fontRenderer.getStringWidth(name) / 2, 6, 0x404040);
-        fontRenderer.drawString(playerInv.getDisplayName().getUnformattedText(), 8, ySize - 94, 0x404040);
+        fontRenderer.drawString(playerInv.getDisplayName().getUnformattedText(), 8, 40, 0x404040);
     }
 
     @Override

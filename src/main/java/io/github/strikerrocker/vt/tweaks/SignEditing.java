@@ -5,15 +5,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SignEditing extends Feature {
-    private boolean enableSignClearing;
     private boolean enableSignEditing;
 
     @SubscribeEvent
@@ -23,11 +19,7 @@ public class SignEditing extends Feature {
         TileEntity te = event.getWorld().getTileEntity(event.getPos());
         if (te instanceof TileEntitySign) {
             TileEntitySign sign = (TileEntitySign) te;
-            if (player.isSneaking() && enableSignClearing) {
-                ITextComponent[] text = new ITextComponent[]{new TextComponentString(""), new TextComponentString(""), new TextComponentString(""), new TextComponentString("")};
-                ObfuscationReflectionHelper.setPrivateValue(TileEntitySign.class, sign, text, "signText", "field_145915_a");
-                success = true;
-            } else if (enableSignEditing) {
+            if (enableSignEditing) {
                 player.openEditSign(sign);
                 success = true;
             }
@@ -40,7 +32,6 @@ public class SignEditing extends Feature {
 
     @Override
     public void syncConfig(Configuration config, String category) {
-        enableSignClearing = config.get(category, "enableSignClearing", true, "Want a way to clear text in signs?").getBoolean();
         enableSignEditing = config.get(category, "enableSignEditing", true, "Want a way to change text in signs without breaking them?").getBoolean();
     }
 

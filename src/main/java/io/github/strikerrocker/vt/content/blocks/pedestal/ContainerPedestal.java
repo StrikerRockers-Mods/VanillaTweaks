@@ -14,7 +14,7 @@ public class ContainerPedestal extends Container {
 
     public ContainerPedestal(InventoryPlayer playerInv, final TileEntityPedestal pedestal) {
         IItemHandler inventory = pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
-        addSlotToContainer(new SlotItemHandler(inventory, 0, 80, 35) {
+        addSlotToContainer(new SlotItemHandler(inventory, 0, 80, 20) {
             @Override
             public void onSlotChanged() {
                 pedestal.markDirty();
@@ -23,12 +23,12 @@ public class ContainerPedestal extends Container {
         // Add player inv
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                addSlotToContainer(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                addSlotToContainer(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 51 + i * 18));
             }
         }
         // Add player hotbar
         for (int k = 0; k < 9; k++) {
-            addSlotToContainer(new Slot(playerInv, k, 8 + k * 18, 142));
+            addSlotToContainer(new Slot(playerInv, k, 8 + k * 18, 109));
         }
     }
 

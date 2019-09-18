@@ -1,6 +1,5 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -13,8 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntitySelectors;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EnchantmentVeteran extends Enchantment {
     EnchantmentVeteran(String name) {
@@ -25,14 +22,8 @@ public class EnchantmentVeteran extends Enchantment {
 
     @SubscribeEvent
     public void onTick(TickEvent.WorldTickEvent event) {
-        event.world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE).forEach(this::attemptToMove);
-    }
-
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (Minecraft.getMinecraft().world != null)
-            Minecraft.getMinecraft().world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE).forEach(this::attemptToMove);
+        if (!event.world.isRemote)
+            event.world.getEntities(EntityXPOrb.class, EntitySelectors.IS_ALIVE).forEach(this::attemptToMove);
     }
 
     private void attemptToMove(Entity entity) {
