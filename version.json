@@ -13,6 +13,7 @@
     "1.12.2-1.5.1": "Added recipe book support and fixed better chest recipe",
     "1.12.2-1.5.2": "Fixed server crash.\nFixed pedestal not having a recipe.\nFixed pedestal TileEntity not registering.",
     "1.12.2-1.5.3": "Fixed lava pockets spawning.",
-    "1.14.3-1.5.5": "Updated to 1.14"
+    "1.14.3-1.5.5": "Updated to 1.14",
+    "1.14.4-1.5.8": "Crafting pad now only stacks 1.\nFixed grass block placing itself."
   }
 }
