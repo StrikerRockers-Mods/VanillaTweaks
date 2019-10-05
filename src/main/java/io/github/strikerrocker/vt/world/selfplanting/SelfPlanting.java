@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.world.selfplanting;
 
 import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.block.IGrowable;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -13,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
@@ -46,7 +46,7 @@ public class SelfPlanting implements ISelfPlanting {
     @Override
     public void handlePlantingLogic(ItemEntity entity) {
         Item item = entity.getItem().getItem();
-        if (item instanceof BlockItem && Block.getBlockFromItem(item) instanceof IGrowable) {
+        if (item instanceof BlockItem && Block.getBlockFromItem(item) instanceof IPlantable) {
             if (this.minSteadyTicks == 0)
                 this.minSteadyTicks = random.nextInt(75) + 75;
             ++this.steadyTicks;
