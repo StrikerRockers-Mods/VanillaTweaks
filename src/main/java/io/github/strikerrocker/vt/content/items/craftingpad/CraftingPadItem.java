@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class CraftingPadItem extends Item {
     public CraftingPadItem() {
-        super(new Item.Properties().group(ItemGroup.TOOLS));
+        super(new Item.Properties().group(ItemGroup.TOOLS).maxStackSize(1));
         setRegistryName("pad");
     }
 
