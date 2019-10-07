@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.tweaks.silkspawner;
 
+import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -15,16 +16,17 @@ import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 public class SilkSpawner extends Feature {
     private static final String SPAWNER_TAG = "SilkSpawnerData";
     private ForgeConfigSpec.BooleanValue enableSilkSpawner;
+    private static Item mobSpawnerItem = null;
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -41,10 +43,10 @@ public class SilkSpawner extends Feature {
 
     @SubscribeEvent
     public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
-        if (event.getEntity() instanceof PlayerEntity) {
+        if (event.getEntity() instanceof PlayerEntity && ((PlayerEntity) event.getEntity()).getActiveHand() != null) {
             PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
             ItemStack stack = playerEntity.getHeldItem(playerEntity.getActiveHand());
-            if (enableSilkSpawner.get() && stack.getItem() == Item.getItemFromBlock(Blocks.SPAWNER) && stack.hasTag()) {
+            if (enableSilkSpawner.get() && stack.getItem() == mobSpawnerItem && stack.hasTag()) {
                 CompoundNBT stackTag = stack.getTag();
                 assert stackTag != null;
                 CompoundNBT spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
@@ -56,6 +58,12 @@ public class SilkSpawner extends Feature {
                 }
             }
         }
+    }
+
+    @Override
+    public void setup() {
+        mobSpawnerItem = Blocks.SPAWNER.asItem();
+
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -80,18 +88,20 @@ public class SilkSpawner extends Feature {
         }
     }
 
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public void onToolTipEvent(ItemTooltipEvent event) {
-        ItemStack stack = event.getItemStack();
-        if (stack.hasTag()) {
-            CompoundNBT stackTag = stack.getTag();
-            assert stackTag != null;
-            CompoundNBT spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
-            if (!spawnerDataNBT.isEmpty()) {
-                DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.read(spawnerDataNBT);
-                Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getCachedEntity();
-                event.getToolTip().add(ent.getDisplayName());
+    @Mod.EventBusSubscriber(modid = VTModInfo.MODID, value = Dist.CLIENT)
+    public static class ClientEvents {
+        @SubscribeEvent
+        public static void onToolTipEvent(ItemTooltipEvent event) {
+            ItemStack stack = event.getItemStack();
+            if (stack.hasTag()) {
+                CompoundNBT stackTag = stack.getTag();
+                assert stackTag != null;
+                CompoundNBT spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
+                if (!spawnerDataNBT.isEmpty()) {
+                    DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.read(spawnerDataNBT);
+                    Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getCachedEntity();
+                    event.getToolTip().add(ent.getDisplayName());
+                }
             }
         }
     }
