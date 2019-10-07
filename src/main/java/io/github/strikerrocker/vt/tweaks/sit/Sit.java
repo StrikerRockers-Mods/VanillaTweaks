@@ -45,7 +45,7 @@ public class Sit extends Feature {
 
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        if (!event.getWorld().isRemote) {
+        if (!event.getWorld().isRemote && enableSit.get()) {
             World w = event.getWorld();
             BlockPos p = event.getPos();
             BlockState s = w.getBlockState(p);
