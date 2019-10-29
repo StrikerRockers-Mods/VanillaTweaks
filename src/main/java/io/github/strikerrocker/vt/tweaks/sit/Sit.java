@@ -8,7 +8,6 @@ import net.minecraft.block.StairsBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.properties.Half;
 import net.minecraft.state.properties.SlabType;
 import net.minecraft.util.ResourceLocation;
@@ -46,22 +45,23 @@ public class Sit extends Feature {
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         if (!event.getWorld().isRemote && enableSit.get()) {
-            World w = event.getWorld();
-            BlockPos p = event.getPos();
-            BlockState s = w.getBlockState(p);
-            Block b = w.getBlockState(p).getBlock();
-            PlayerEntity e = event.getPlayer();
-
-            if ((b instanceof SlabBlock || b instanceof StairsBlock) && !SitEntity.OCCUPIED.containsKey(p) && e.getHeldItemMainhand().isEmpty()) {
-                if (b instanceof SlabBlock && (!s.has(SlabBlock.TYPE) || s.get(SlabBlock.TYPE) != SlabType.BOTTOM))
+            World world = event.getWorld();
+            BlockPos pos = event.getPos();
+            BlockState state = world.getBlockState(pos);
+            Block block = world.getBlockState(pos).getBlock();
+            BlockState blockAbove = world.getBlockState(pos.up());
+            if ((block instanceof SlabBlock || block instanceof StairsBlock) && !SitEntity.OCCUPIED.containsKey(pos) && event.getPlayer().getHeldItemMainhand().isEmpty()) {
+                if (!blockAbove.getBlock().isAir(blockAbove, world, pos.up()))
                     return;
-                else if (b instanceof StairsBlock && (!s.has(StairsBlock.HALF) || s.get(StairsBlock.HALF) != Half.BOTTOM))
+                if (block instanceof SlabBlock && (!state.has(SlabBlock.TYPE) || state.get(SlabBlock.TYPE) != SlabType.BOTTOM))
+                    return;
+                else if (block instanceof StairsBlock && (!state.has(StairsBlock.HALF) || state.get(StairsBlock.HALF) != Half.BOTTOM))
                     return;
 
-                SitEntity sit = new SitEntity(w, p);
+                SitEntity sit = new SitEntity(world, pos);
 
-                w.addEntity(sit);
-                e.startRiding(sit);
+                world.addEntity(sit);
+                event.getPlayer().startRiding(sit);
             }
         }
     }
