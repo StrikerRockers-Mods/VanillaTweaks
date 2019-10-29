@@ -7,7 +7,6 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,18 +40,20 @@ public class Sit extends Feature {
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         World world = event.getWorld();
-        if (!world.isRemote && enableSit) {
-            BlockPos p = event.getPos();
-            IBlockState s = world.getBlockState(p);
-            Block b = world.getBlockState(p).getBlock();
-
-            if ((b instanceof BlockSlab || b instanceof BlockStairs) && !EntitySit.OCCUPIED.containsKey(p) && event.getEntityPlayer().getHeldItemMainhand() == ItemStack.EMPTY) {
-                if ((b instanceof BlockSlab && s.getValue(BlockSlab.HALF) != BlockSlab.EnumBlockHalf.BOTTOM) || (b instanceof BlockStairs && s.getValue(BlockStairs.HALF) != BlockStairs.EnumHalf.BOTTOM))
-                    return;
-                EntitySit sit = new EntitySit(world, p);
-                world.spawnEntity(sit);
-                event.getEntityPlayer().startRiding(sit);
-            }
+        BlockPos pos = event.getPos();
+        IBlockState state = world.getBlockState(pos);
+        Block block = world.getBlockState(pos).getBlock();
+        IBlockState blockAbove = world.getBlockState(pos.up());
+        if ((block instanceof BlockSlab || block instanceof BlockStairs) && !EntitySit.OCCUPIED.containsKey(pos) && event.getEntityPlayer().getHeldItemMainhand().isEmpty() && !world.isRemote && enableSit) {
+            if (!blockAbove.getBlock().isAir(blockAbove, world, pos.up()))
+                return;
+            else if (block instanceof BlockSlab && (!state.getProperties().containsKey(BlockSlab.HALF) || state.getValue(BlockSlab.HALF) != BlockSlab.EnumBlockHalf.BOTTOM))
+                return;
+            else if (block instanceof BlockStairs && (!state.getProperties().containsKey(BlockStairs.HALF) || state.getValue(BlockStairs.HALF) != BlockStairs.EnumHalf.BOTTOM))
+                return;
+            EntitySit sit = new EntitySit(world, pos);
+            world.spawnEntity(sit);
+            event.getEntityPlayer().startRiding(sit);
         }
     }
 

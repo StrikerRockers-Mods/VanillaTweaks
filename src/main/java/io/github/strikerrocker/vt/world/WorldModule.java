@@ -6,7 +6,7 @@ import io.github.strikerrocker.vt.world.selfplanting.CapabilitySelfPlanting;
 public class WorldModule extends Module {
 
     public WorldModule() {
-        super("world", "Dynamic changes in the world", false);
+        super("World", "Dynamic changes in the world", false);
     }
 
     @Override
