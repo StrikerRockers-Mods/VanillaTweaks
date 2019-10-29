@@ -22,7 +22,7 @@ public class DynamiteEntity extends ProjectileItemEntity {
     private static final DataParameter<Integer> TICKSWET = EntityDataManager.createKey(DynamiteEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> TICKSSINCEWET = EntityDataManager.createKey(DynamiteEntity.class, DataSerializers.VARINT);
 
-    public DynamiteEntity(EntityType type, World world) {
+    public DynamiteEntity(EntityType<? extends ProjectileItemEntity> type, World world) {
         super(type, world);
     }
 
@@ -46,6 +46,7 @@ public class DynamiteEntity extends ProjectileItemEntity {
 
     @Override
     protected void registerData() {
+        super.registerData();
         dataManager.register(TICKSWET, 0);
         dataManager.register(TICKSSINCEWET, WET_TICKS);
     }
@@ -62,7 +63,6 @@ public class DynamiteEntity extends ProjectileItemEntity {
                 this.dataManager.set(TICKSSINCEWET, this.dataManager.get(TICKSSINCEWET) + 1);
             else
                 this.dataManager.set(TICKSSINCEWET, 0);
-        } else {
         }
         if (this.dataManager.get(TICKSSINCEWET) < WET_TICKS && !this.isInWater())
             for (int i = 0; i < 3; ++i) {

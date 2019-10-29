@@ -19,12 +19,12 @@ public class DynamiteItem extends Item {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         if (!playerIn.isCreative()) itemstack.shrink(1);
         worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
+        playerIn.getCooldownTracker().setCooldown(this, 20);
         if (!worldIn.isRemote) {
             DynamiteEntity dynamite = new DynamiteEntity(worldIn, playerIn);
             dynamite.func_213884_b(itemstack);
-            playerIn.getEntityWorld().addEntity(dynamite);
             dynamite.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0, 1.5F, 0);
-            playerIn.getCooldownTracker().setCooldown(this, 20);
+            playerIn.getEntityWorld().addEntity(dynamite);
         }
         playerIn.addStat(Stats.ITEM_USED.get(this));
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
