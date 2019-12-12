@@ -1,16 +1,13 @@
 package io.github.strikerrocker.vt.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class SiphonEnchantment extends Enchantment {
     SiphonEnchantment(String name) {
@@ -18,12 +15,11 @@ public class SiphonEnchantment extends Enchantment {
         this.setRegistryName(name);
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void harvestDropEvent(BlockEvent.HarvestDropsEvent event) {
-        if (EnchantmentFeature.enableSiphon.get() && event.getHarvester() != null && EnchantmentHelper.getEnchantmentLevel(this, event.getHarvester().getHeldItemMainhand()) > 0) {
-            event.getDrops().removeAll(event.getDrops().stream().filter(event.getHarvester().inventory::addItemStackToInventory).collect(Collectors.toList()));
+    public static void harvestDropEvent(List<ItemStack> drops, PlayerEntity playerEntity, ItemStack tool) {
+        if (EnchantmentFeature.enableSiphon.get()) {
+            drops.removeIf(playerEntity::addItemStackToInventory);
         }
-        //TODO Update when https://github.com/MinecraftForge/MinecraftForge/pull/5871 is merged
+        //TODO remove asm when https://github.com/MinecraftForge/MinecraftForge/pull/5871 is merged
     }
 
     @Override
