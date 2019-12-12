@@ -20,7 +20,7 @@ public class EnchantmentFeature extends Feature {
     static ForgeConfigSpec.BooleanValue enableVeteran;
     static ForgeConfigSpec.BooleanValue enableVigor;
     static ForgeConfigSpec.BooleanValue enableHoming;
-    private static Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
+    public static Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
 
     static {
         enchantments.put("blazing", new Tuple<>(new BlazingEnchantment("blazing"), "Want to smelt things when you mine them?"));

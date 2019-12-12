@@ -20,17 +20,15 @@ compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 minecraft {
-    mappings channel: 'snapshot', version: '20190719-1.14.3'
+    mappings channel: 'snapshot', version: '20191211-1.14.3'
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client  {
-            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             properties 'forge.logging.console.level': 'debug'
             workingDirectory project.file('run').canonicalPath
             source sourceSets.main
         }
         server {
-            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             properties 'forge.logging.console.level': 'debug'
             workingDirectory project.file('run').canonicalPath
             source sourceSets.main
@@ -50,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.39'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.106'
     compileOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}")
 }
