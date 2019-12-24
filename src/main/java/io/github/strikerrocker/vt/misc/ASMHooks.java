@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
+import net.minecraftforge.fml.ModList;
 
 import java.util.List;
 
@@ -19,12 +20,12 @@ public class ASMHooks {
         return modifyDrops(drops, lootContext);
     }
 
-    public static List<ItemStack> modifyDrops(List<ItemStack> original, LootContext context) {
+    private static List<ItemStack> modifyDrops(List<ItemStack> original, LootContext context) {
 
         Entity entity = context.get(LootParameters.THIS_ENTITY);
         ItemStack tool = context.get(LootParameters.TOOL);
 
-        if (entity instanceof PlayerEntity) {
+        if (entity instanceof PlayerEntity && ModList.get().isLoaded("unstabletools")) {
             PlayerEntity player = (PlayerEntity) entity;
             if (EnchantmentHelper.getEnchantmentLevel(EnchantmentFeature.enchantments.get("blazing").getA(), tool) > 0)
                 BlazingEnchantment.harvestDropEvent(original, player, tool);
