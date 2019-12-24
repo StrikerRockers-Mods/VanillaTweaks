@@ -6,6 +6,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class DynamiteItem extends Item {
@@ -18,7 +19,8 @@ public class DynamiteItem extends Item {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         if (!playerIn.isCreative()) itemstack.shrink(1);
-        worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
+        BlockPos pos=playerIn.getPosition();
+        worldIn.playSound(null,pos.getX(), pos.getY(),pos.getZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
         playerIn.getCooldownTracker().setCooldown(this, 20);
         if (!worldIn.isRemote) {
             DynamiteEntity dynamite = new DynamiteEntity(worldIn, playerIn);

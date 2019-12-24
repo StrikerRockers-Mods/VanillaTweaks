@@ -37,9 +37,9 @@ public class ArmorStandSwap extends Feature {
 
     @SubscribeEvent
     public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        PlayerEntity player = event.getEntityPlayer();
+        PlayerEntity player = event.getPlayer();
         Entity target = event.getTarget();
-        if (player.isSneaking() && enableArmorStandSwapping.get()) {
+        if (player.isCrouching() && enableArmorStandSwapping.get()) {
             if (target.world.isRemote || player.isSpectator() || player.isCreative() || !(target instanceof ArmorStandEntity))
                 return;
             event.setCanceled(true);

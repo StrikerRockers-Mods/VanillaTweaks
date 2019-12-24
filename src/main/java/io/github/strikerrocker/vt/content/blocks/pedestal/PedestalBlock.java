@@ -10,6 +10,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -44,11 +45,11 @@ public class PedestalBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
             ItemStack heldItem = player.getHeldItem(handIn);
             PedestalTileEntity tile = getPedestalTE(worldIn, pos);
-            if (!player.isSneaking()) {
+            if (!player.isCrouching()) {
                 tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, hit.getFace()).ifPresent(itemHandler -> {
                     if (heldItem.isEmpty()) {
                         player.setHeldItem(handIn, itemHandler.extractItem(0, 64, false));
@@ -61,7 +62,7 @@ public class PedestalBlock extends Block {
                 NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), new TranslationTextComponent("block.vanillatweaks.pedestal")), pos);
             }
         }
-        return true;
+        return ActionResultType.PASS;
     }
 
 
