@@ -72,7 +72,7 @@ public class Blocks extends Feature {
         @SubscribeEvent
         public static void clientSetup(FMLClientSetupEvent event) {
             ScreenManager.registerFactory(PedestalContainer.TYPE, PedestalScreen::new);
-            ClientRegistry.bindTileEntitySpecialRenderer(PedestalTileEntity.class, new PedestalTileEntityRenderer());
+            ClientRegistry.bindTileEntityRenderer(PEDESTAL_TYPE, new PedestalTileEntityRenderer());
         }
     }
 

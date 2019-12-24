@@ -10,27 +10,26 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
 version = vt_version
 group = 'io.github.strikerrocker.vt'
 archivesBaseName = 'VanillaTweaks'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+
 minecraft {
-    mappings channel: 'snapshot', version: '20191211-1.14.3'
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-    runs {
+    mappings channel: 'snapshot', version: '20191216-1.14.3'
+
+ runs {
         client  {
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
+            workingDirectory project.file('run')
             source sourceSets.main
         }
         server {
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
+            workingDirectory project.file('run')
             source sourceSets.main
         }
     }
@@ -48,9 +47,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.106'
-    compileOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}")
+    minecraft 'net.minecraftforge:forge:1.15.1-30.0.15'
+    //compileOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}:api")
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}")
 }
 
 jar {

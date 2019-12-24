@@ -3,7 +3,7 @@ package io.github.strikerrocker.vt.content.items;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyLoadBase;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -18,7 +18,7 @@ public class BasicArmorMaterial implements IArmorMaterial {
     private final int enchantability;
     private final SoundEvent soundEvent;
     private final float toughness;
-    private final LazyLoadBase<Ingredient> repairMaterial;
+    private final LazyValue<Ingredient> repairMaterial;
 
     public BasicArmorMaterial(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, Supplier<Ingredient> supplier) {
         this.name = name;
@@ -27,7 +27,7 @@ public class BasicArmorMaterial implements IArmorMaterial {
         this.enchantability = enchantability;
         this.soundEvent = soundEvent;
         this.toughness = toughness;
-        this.repairMaterial = new LazyLoadBase<>(supplier);
+        this.repairMaterial = new LazyValue<>(supplier);
     }
 
     @Override
