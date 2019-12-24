@@ -134,9 +134,8 @@ public class Items extends Feature {
     public static class ClientEvents {
         @SubscribeEvent
         public static void onModelRegister(ModelRegistryEvent event) {
-            RenderingRegistry.registerEntityRenderingHandler(DynamiteEntity.class,
+                RenderingRegistry.registerEntityRenderingHandler(DYNAMITE_TYPE,
                     manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
-
         }
     }
 }

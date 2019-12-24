@@ -51,9 +51,9 @@ public class HomingEnchantment extends Enchantment {
                 }
             }
             if (target != null) {
-                double x = target.posX - arrow.posX;
-                double y = target.getBoundingBox().minY + target.getHeight() / 2 - (arrow.posY + arrow.getHeight() / 2);
-                double z = target.posZ - arrow.posZ;
+                double x = target.getPosition().getX() - arrow.getPosition().getX();
+                double y = target.getBoundingBox().minY + target.getHeight() / 2 - (arrow.getPosition().getY() + arrow.getHeight() / 2);
+                double z = target.getPosition().getZ() - arrow.getPosition().getZ();
                 arrow.shoot(x, y, z, (float) Math.sqrt(Math.pow(2, arrow.getMotion().x) + Math.pow(2, arrow.getMotion().y) + Math.pow(2, arrow.getMotion().z)), 0);
             }
         }

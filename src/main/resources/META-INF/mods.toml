@@ -1,11 +1,11 @@
 modLoader="javafml" #mandatory
-loaderVersion="[28,)" #mandatory (26 is current forge version)
+loaderVersion="[30,)" #mandatory
 issueTrackerURL="http://github.com/strikerrocker/VanillaTweaks/issues/" #optional
 [[mods]] #mandatory
 modId="vanillatweaks" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="VanillaTweaks" #mandatory
-updateJSONURL="https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.14/version.json" #optional
+updateJSONURL="https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.15/version.json" #optional
 displayURL="http://strikerrocker.github.io/vanillatweaks" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="logo.png" #optional
@@ -17,13 +17,13 @@ description='''VanillaTweaks is a Minecraft mod designed to enhance vanilla Mine
 [[dependencies.vanillatweaks]]
     modId="forge"
     mandatory=true
-    versionRange="[28,)"
+    versionRange="[30,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.vanillatweaks]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.15.1)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.vanillatweaks]]

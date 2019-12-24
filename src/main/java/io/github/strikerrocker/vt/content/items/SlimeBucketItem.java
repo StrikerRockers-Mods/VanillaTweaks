@@ -22,7 +22,8 @@ public class SlimeBucketItem extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if (!worldIn.isRemote) {
-            ChunkPos chunkpos = new ChunkPos(new BlockPos(playerIn.posX, playerIn.posY, playerIn.posZ));
+            BlockPos pos=playerIn.getPosition();
+            ChunkPos chunkpos = new ChunkPos(new BlockPos(pos.getX(), pos.getY(),pos.getZ()));
             boolean slime = SharedSeedRandom.seedSlimeChunk(chunkpos.x, chunkpos.z, worldIn.getSeed(), 987234911L).nextInt(10) == 0;
             playerIn.sendStatusMessage(new TranslationTextComponent(slime ? "slime.chunk" : "slime.chunk.false"), true);
         }

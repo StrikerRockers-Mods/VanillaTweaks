@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTileEntity> {
 
     @Override
-    public void render(PedestalTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void func_225616_a_(PedestalTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
         ItemStack stack = tileEntityIn.inventory.getStackInSlot(0);
         GlStateManager.enableRescaleNormal();
         GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1f);

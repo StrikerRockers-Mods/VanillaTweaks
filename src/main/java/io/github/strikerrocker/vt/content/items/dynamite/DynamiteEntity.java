@@ -11,6 +11,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
@@ -68,7 +69,8 @@ public class DynamiteEntity extends ProjectileItemEntity {
             for (int i = 0; i < 3; ++i) {
                 float xOffset = (rand.nextFloat() * 2 - 1) * getWidth() * 0.5F;
                 float zOffset = (rand.nextFloat() * 2 - 1) * getWidth() * 0.5F;
-                world.addParticle(ParticleTypes.DRIPPING_WATER, posX + xOffset, posY, posZ + zOffset, getMotion().x, getMotion().y, getMotion().z);
+                BlockPos pos=getPosition();
+                world.addParticle(ParticleTypes.DRIPPING_WATER, pos.getX()+ xOffset,pos.getY(), pos.getZ()+ zOffset, getMotion().x, getMotion().y, getMotion().z);
             }
     }
 
@@ -82,7 +84,8 @@ public class DynamiteEntity extends ProjectileItemEntity {
                 if (result instanceof EntityRayTraceResult && ((EntityRayTraceResult) result).getEntity() instanceof DynamiteEntity) {
                     return;
                 } else {
-                    world.createExplosion(this, posX, posY, posZ, 3F, Explosion.Mode.BREAK);
+                    BlockPos pos=getPosition();
+                    world.createExplosion(this,pos.getX(),pos.getY(),pos.getZ(), 3F, Explosion.Mode.BREAK);
                 }
             }
             this.remove();
