@@ -25,7 +25,7 @@ public class ASMHooks {
         Entity entity = context.get(LootParameters.THIS_ENTITY);
         ItemStack tool = context.get(LootParameters.TOOL);
 
-        if (entity instanceof PlayerEntity && ModList.get().isLoaded("unstabletools")) {
+        if (entity instanceof PlayerEntity && !ModList.get().isLoaded("unstabletools")) {
             PlayerEntity player = (PlayerEntity) entity;
             if (EnchantmentHelper.getEnchantmentLevel(EnchantmentFeature.enchantments.get("blazing").getA(), tool) > 0)
                 BlazingEnchantment.harvestDropEvent(original, player, tool);
