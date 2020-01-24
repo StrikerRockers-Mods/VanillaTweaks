@@ -18,8 +18,19 @@ archivesBaseName = 'VanillaTweaks'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
+repositories {
+    maven { // JEI
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven { // JEI fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+}
+
 minecraft {
-    mappings channel: 'snapshot', version: '20191216-1.14.3'
+    mappings channel: 'snapshot', version: '20200122-1.15.1'
 
  runs {
         client  {
@@ -35,21 +46,10 @@ minecraft {
     }
 }
 
-repositories {
-    maven { // JEI
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven { // JEI fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
-    }
-}
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.1-30.0.15'
-    //compileOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}:api")
-    //runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}")
+    minecraft 'net.minecraftforge:forge:1.15.2-31.0.0'
+    compileOnly fg.deobf("mezz.jei:jei-1.15.2:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:${jei_version}")
 }
 
 jar {

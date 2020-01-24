@@ -24,6 +24,7 @@ public class BetterVanillaConditions implements ICondition {
     public boolean test() {
         if (object.equals("better_stairs")) return BetterVanillaRecipes.betterStairs.get();
         if (object.equals("better_stone_tools")) return BetterVanillaRecipes.betterStoneTools.get();
+        if (object.equals("better_stone_tools_disabled")) return !BetterVanillaRecipes.betterStoneTools.get();
         return false;
     }
 
