@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.content.blocks.Blocks;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -29,7 +29,7 @@ public class PedestalScreen extends ContainerScreen<PedestalContainer> {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        GlStateManager.color4f(1, 1, 1, 1);
+        RenderSystem.color4f(1, 1, 1, 1);
         minecraft.getTextureManager().bindTexture(BG_TEXTURE);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;

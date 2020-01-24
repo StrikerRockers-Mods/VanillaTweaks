@@ -5,6 +5,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
+import net.minecraft.client.renderer.culling.ClippingHelperImpl;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -13,13 +16,16 @@ import net.minecraft.state.properties.SlabType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
 import static io.github.strikerrocker.vt.VTModInfo.MODID;
@@ -91,6 +97,31 @@ public class Sit extends Feature {
         public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
             event.getRegistry().register(EntityType.Builder.<SitEntity>create(SitEntity::new, EntityClassification.MISC).setCustomClientFactory((spawnEntity, world)
                     -> SIT_ENTITY_TYPE.create(world)).setTrackingRange(256).setUpdateInterval(20).size(0.0001F, 0.0001F).build(MODID + ":entity_sit").setRegistryName(new ResourceLocation(MODID, "entity_sit")));
+        }
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientEvents {
+        @SubscribeEvent
+        public static void onFMLCLientSetup(FMLClientSetupEvent event) {
+            RenderingRegistry.registerEntityRenderingHandler(Sit.SIT_ENTITY_TYPE, EmptyRenderer::new);
+        }
+
+        private static class EmptyRenderer extends EntityRenderer<SitEntity> {
+            protected EmptyRenderer(EntityRendererManager renderManager) {
+                super(renderManager);
+            }
+
+            @Override
+            public boolean func_225626_a_(SitEntity p_225626_1_, ClippingHelperImpl p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) //shouldRender
+            {
+                return false;
+            }
+
+            @Override
+            public ResourceLocation getEntityTexture(SitEntity entity) {
+                return null;
+            }
         }
     }
 }
