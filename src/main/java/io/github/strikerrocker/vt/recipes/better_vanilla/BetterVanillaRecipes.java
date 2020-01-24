@@ -22,7 +22,6 @@ public class BetterVanillaRecipes extends Feature {
                 .translation("config.vanillatweaks:betterStoneTools")
                 .comment("Cobblestone used in stone tools doesn't make sense?")
                 .define("betterStoneTools", true);
-        //TODO better cobblestone stairs and stone tools doesn't work due to forge adding tag support
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

@@ -1,11 +1,10 @@
 package io.github.strikerrocker.vt.loot;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -34,7 +33,7 @@ public class CreeperTNT extends Feature {
         World world = entity.world;
         if (!world.isRemote && world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && event.getSource().getTrueSource() instanceof PlayerEntity && entity instanceof CreeperEntity && event.getSource().damageType != null && (creeperDropTntChance.get() / 10) > Math.random()) {
             event.getDrops().clear();
-            entity.entityDropItem(Item.getItemFromBlock(Blocks.TNT));
+            entity.entityDropItem(Items.TNT);
         }
     }
 }
