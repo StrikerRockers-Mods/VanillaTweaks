@@ -19,10 +19,10 @@ archivesBaseName = 'VanillaTweaks'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 repositories {
-    maven { // JEI
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
+    //maven { 
+    //    name = "Progwml6 maven"
+    //    url = "https://dvs1.progwml6.com/files/maven/"
+    //}
     maven { // JEI fallback
         name = "ModMaven"
         url = "https://modmaven.k-4u.nl"
