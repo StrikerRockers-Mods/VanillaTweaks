@@ -42,7 +42,8 @@ public class BlazingEnchantment extends Enchantment {
                             drops.add(smeltingResult);
                         } else
                             drops.add(drop);
-                    }
+                    } else
+                        drops.add(drop);
                 }
             }
         }
