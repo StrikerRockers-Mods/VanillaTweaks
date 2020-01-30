@@ -26,5 +26,6 @@ public class TweaksModule extends Module {
         registerFeature("stack_sizes", new StackSizes());
         registerFeature("squishy_sponges", new SquishySponges());
         registerFeature("disable_potion_shift", new NoPotionShift());
+        registerFeature("furnace_broken_xp", new FurnaceBrokenXP());
     }
 }
