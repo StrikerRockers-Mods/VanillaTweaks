@@ -1,9 +1,8 @@
 package io.github.strikerrocker.vt.content.items;
 
-import io.github.strikerrocker.vt.VTModInfo;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.compat.baubles.BaubleTools;
+import io.github.strikerrocker.vt.compat.CuriosCompat;
 import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadItem;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteEntity;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteItem;
@@ -16,11 +15,12 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
+import net.minecraft.item.Food;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.FOVUpdateEvent;
@@ -32,6 +32,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
 import static io.github.strikerrocker.vt.VTModInfo.MODID;
@@ -39,8 +40,7 @@ import static io.github.strikerrocker.vt.VTModInfo.MODID;
 public class Items extends Feature {
     @ObjectHolder(MODID + ":dynamite")
     public static final EntityType<DynamiteEntity> DYNAMITE_TYPE = null;
-    private static final Item BINOCULARS = new ArmorItem(new BasicArmorMaterial(VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, () -> Ingredient.fromItems(net.minecraft.item.Items.IRON_INGOT))
-            , EquipmentSlotType.HEAD, new Item.Properties().maxStackSize(1).group(ItemGroup.TOOLS)).setRegistryName("binoculars");
+    private static final Item BINOCULARS = new BinocularItem();
     private static final Item LENS = new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName("lens");
     private static final Item FRIED_EGG = new Item(new Item.Properties().food(new Food.Builder().hunger(5).saturation(0.6f).build()).group(ItemGroup.FOOD)).setRegistryName("friedegg");
     public static Item CRAFTING_PAD = new CraftingPadItem();
@@ -51,16 +51,15 @@ public class Items extends Feature {
     static ForgeConfigSpec.DoubleValue binocularZoomAmount;
     static ForgeConfigSpec.BooleanValue enableFriedEgg;
     private static Item SLIME_BUCKET = new SlimeBucketItem();
-    private static Item BAUBLE_BINO;
 
     @SubscribeEvent
     public void onFOVChange(FOVUpdateEvent event) {
         if (event.getEntity() != null && binocularZoomAmount.get() != 0) {
             ItemStack helmet = event.getEntity().getItemStackFromSlot(EquipmentSlotType.HEAD);
-            if ((!helmet.isEmpty() && helmet.getItem() == BINOCULARS))
+            if ((!helmet.isEmpty() && helmet.getItem() == BINOCULARS)) {
                 event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
-            else if (ModList.get().isLoaded("baubles")) {
-                if (BaubleTools.hasProbeGoggle(event.getEntity())) {
+            } else if (ModList.get().isLoaded("curios")) {
+                if (CuriosCompat.isStackInCuriosSlot(new ItemStack(Items.BINOCULARS), event.getEntity())) {
                     event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
                 }
             }
@@ -123,10 +122,12 @@ public class Items extends Feature {
         public static void onRegisterItems(RegistryEvent.Register<Item> event) {
             VanillaTweaks.LOGGER.info("Registering Items");
             event.getRegistry().registerAll(CRAFTING_PAD, SLIME_BUCKET, DYNAMITE, BINOCULARS, LENS, FRIED_EGG);
-            if (ModList.get().isLoaded("baubles")) {
-                BAUBLE_BINO = BaubleTools.initBinocularBauble();
-                event.getRegistry().register(BAUBLE_BINO);
-            }
+        }
+
+        @SubscribeEvent
+        public static void sendImc(InterModEnqueueEvent event) {
+            if (ModList.get().isLoaded("curios"))
+                CuriosCompat.sendImc();
         }
     }
 
@@ -134,7 +135,7 @@ public class Items extends Feature {
     public static class ClientEvents {
         @SubscribeEvent
         public static void onModelRegister(ModelRegistryEvent event) {
-                RenderingRegistry.registerEntityRenderingHandler(DYNAMITE_TYPE,
+            RenderingRegistry.registerEntityRenderingHandler(DYNAMITE_TYPE,
                     manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
         }
     }
