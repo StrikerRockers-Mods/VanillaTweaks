@@ -27,6 +27,9 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.k-4u.nl"
     }
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
 }
 
 minecraft {
@@ -50,6 +53,8 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.0.0'
     compileOnly fg.deobf("mezz.jei:jei-1.15.2:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:${jei_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
 }
 
 jar {
