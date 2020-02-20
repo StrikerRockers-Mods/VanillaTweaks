@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt.world.selfplanting;
 
 import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.block.FlowerBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -46,7 +47,8 @@ public class SelfPlanting implements ISelfPlanting {
     @Override
     public void handlePlantingLogic(ItemEntity entity) {
         Item item = entity.getItem().getItem();
-        if (item instanceof BlockItem && Block.getBlockFromItem(item) instanceof IPlantable) {
+        Block block = Block.getBlockFromItem(item);
+        if (item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
             if (this.minSteadyTicks == 0)
                 this.minSteadyTicks = random.nextInt(75) + 75;
             ++this.steadyTicks;
@@ -57,7 +59,8 @@ public class SelfPlanting implements ISelfPlanting {
                 this.steadyTicks = 0;
             BlockRayTraceResult rayTraceResult = entity.world.rayTraceBlocks(
                     new RayTraceContext(entityVec.add(0, 1, 0), entityVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity));
-            if (this.steadyTicks >= this.minSteadyTicks && entity.getItem().getItem().onItemUse(new ItemUseContext(Utils.getFakePlayer(entity.world), Hand.MAIN_HAND, rayTraceResult)) == ActionResultType.SUCCESS) {
+            if (this.steadyTicks >= this.minSteadyTicks &&
+                    entity.getItem().getItem().onItemUse(new ItemUseContext(Utils.getFakePlayer(entity.world), Hand.MAIN_HAND, rayTraceResult)) == ActionResultType.SUCCESS) {
                 entity.getItem().shrink(1);
             }
         }
