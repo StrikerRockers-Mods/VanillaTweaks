@@ -25,6 +25,7 @@ If applicable, add screenshots to help explain your problem. This may be skipped
  - Mod Version:
  - JEI Version (if present) :
  - Baubles Version (if present) :
+ - Curios Version (if present) :
 
 **Additional context**
 Add any other context about the problem here. This may be skipped/removed.
