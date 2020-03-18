@@ -13,12 +13,10 @@
   ],
   "key": {
     "S": {
-      "item": "minecraft:stone_slab",
-      "data": 5
+      "item": "minecraft:stone_brick_slab"
     },
     "B": {
-      "item": "minecraft:stone_bricks",
-      "data": 0
+      "item": "minecraft:stone_bricks"
     }
   },
   "result": {

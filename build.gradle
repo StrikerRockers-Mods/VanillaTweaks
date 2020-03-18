@@ -16,7 +16,24 @@ version = vt_version
 group = 'io.github.strikerrocker.vt'
 archivesBaseName = 'VanillaTweaks'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: '20200302-1.15.1'
+
+    runs {
+        client  {
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run')
+            source sourceSets.main
+        }
+        server {
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run')
+            source sourceSets.main
+        }
+    }
+}
 
 repositories {
     //maven { 
@@ -32,25 +49,8 @@ repositories {
     }
 }
 
-minecraft {
-    mappings channel: 'snapshot', version: '20200122-1.15.1'
-
- runs {
-        client  {
-            properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run')
-            source sourceSets.main
-        }
-        server {
-            properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run')
-            source sourceSets.main
-        }
-    }
-}
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.0.0'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.18'
     compileOnly fg.deobf("mezz.jei:jei-1.15.2:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:${jei_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
