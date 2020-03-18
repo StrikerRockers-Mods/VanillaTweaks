@@ -6,7 +6,7 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
@@ -36,7 +36,7 @@ public class HomingEnchantment extends Enchantment {
     }
 
     private void attemptToMove(Entity arrowEntity, ServerWorld world) {
-        ArrowEntity arrow = (ArrowEntity) arrowEntity;
+        AbstractArrowEntity arrow = (AbstractArrowEntity) arrowEntity;
         LivingEntity shooter = (LivingEntity) arrow.getShooter();
         if (shooter != null && EnchantmentHelper.getEnchantmentLevel(this, shooter.getHeldItemMainhand()) > 0) {
             int homingLevel = EnchantmentHelper.getEnchantmentLevel(this, shooter.getHeldItemMainhand());
