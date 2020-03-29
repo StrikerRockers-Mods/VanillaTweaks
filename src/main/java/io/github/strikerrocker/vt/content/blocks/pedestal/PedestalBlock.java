@@ -60,19 +60,21 @@ public class PedestalBlock extends Block implements IWaterLoggable {
             ItemStack heldItem = player.getHeldItem(handIn);
             PedestalTileEntity tile = getPedestalTE(worldIn, pos);
             if (!player.isCrouching()) {
-                tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, hit.getFace()).ifPresent(itemHandler -> {
+                tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
                     if (heldItem.isEmpty()) {
-                        player.setHeldItem(handIn, itemHandler.extractItem(0, 64, false));
+                        ItemStack stack = itemHandler.extractItem(0, 64, false);
+                        player.setHeldItem(handIn, stack);
                     } else {
                         player.setHeldItem(handIn, itemHandler.insertItem(0, heldItem, false));
                     }
                 });
                 tile.markDirty();
+                return ActionResultType.SUCCESS;
             } else {
                 NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), new TranslationTextComponent("block.vanillatweaks.pedestal")), pos);
             }
         }
-        return ActionResultType.PASS;
+        return ActionResultType.SUCCESS;
     }
 
 
