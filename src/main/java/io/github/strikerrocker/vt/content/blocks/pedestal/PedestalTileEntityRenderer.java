@@ -21,7 +21,9 @@ public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTileE
         double offset = Math.sin((tileEntityIn.getWorld().getGameTime() - tileEntityIn.lastChangeTime + partialTicks) / 8) / 4.0;
         matrixStack.translate(0.5, 1.25 + offset, 0.5);
         matrixStack.rotate(Vector3f.YP.rotationDegrees((tileEntityIn.getWorld().getGameTime() + partialTicks) * 4));
-        Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.FIXED, i, i1, matrixStack, iRenderTypeBuffer);
+        float scale = 1.5f;
+        matrixStack.scale(scale, scale, scale);
+        Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.GROUND, i, i1, matrixStack, iRenderTypeBuffer);
         matrixStack.pop();
     }
 }

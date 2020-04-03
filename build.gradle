@@ -11,6 +11,20 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+repositories {
+    maven {
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
+    mavenLocal()
+}
 
 version = vt_version
 group = 'io.github.strikerrocker.vt'
@@ -35,19 +49,6 @@ minecraft {
     }
 }
 
-repositories {
-    //maven { 
-    //    name = "Progwml6 maven"
-    //    url = "https://dvs1.progwml6.com/files/maven/"
-    //}
-    maven { // JEI fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
-    }
-    maven {
-        url = "https://maven.theillusivec4.top/"
-    }
-}
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.1.18'
