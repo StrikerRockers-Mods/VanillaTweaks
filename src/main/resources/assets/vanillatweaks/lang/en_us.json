@@ -45,7 +45,7 @@
   "_comment": "misc",
   "entity.dynamite": "Dynamite",
   "tooltip.entity": "Spawns: %s",
-  "slime.chunk": "§bSlime Chunk",
+  "slime.chunk": "§aSlime Chunk",
   "slime.chunk.false": "Not a Slime chunk",
   "enchantment.level.11": "XI",
   "enchantment.level.12": "XII",
