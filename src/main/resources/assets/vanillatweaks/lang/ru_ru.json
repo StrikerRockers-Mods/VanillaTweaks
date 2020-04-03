@@ -5,7 +5,7 @@
   "block.vanillatweaks.charcoalblock": "Блок древесного угля",
   "block.vanillatweaks.pedestal": "Пьедестал",
 
-  "_comment": "item.vanillatweakss",
+  "_comment": "items",
   "item.vanillatweaks.dynamite": "Динамит",
   "item.vanillatweaks.friedegg": "Жаренное яйцо",
   "item.vanillatweaks.pad": "Планшетный верстак",
@@ -14,14 +14,14 @@
   "item.vanillatweaks.slime": "Слизневый поисковик",
   "item.vanillatweaks.binocular_bauble": "Бинокль (Baubles)",
 
-  "_comment": "advancement",
+  "_comment": "advancements",
   "advancements.vt.pad": "Vanilla Tweaks",
   "advancements.vt.storage": "Блоки для хранения",
   "advancements.vt.zoom": "Зум",
   "advancements.vt.boom": "Бум!!",
   "advancements.vt.friedegg": "Яичница!!",
 
-  "_comment": "advancement desc",
+  "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Создайте блоки для хранения",
   "advancements.vt.pad.desc": "Создайте Планшетный верстак",
   "advancements.vt.zoom.desc": "Создайте Бинокль",
