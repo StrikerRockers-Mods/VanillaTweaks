@@ -4,6 +4,7 @@
   "block.vanillatweaks.sugarblock": "Bloc de Sucre",
   "block.vanillatweaks.charcoalblock": "Bloc de Charbon",
   "block.vanillatweaks.pedestal": "Pedestal",
+
   "_comment": "blocks",
   "item.vanillatweaks.dynamite": "Dynamiter",
   "item.vanillatweaks.friedegg": "Oeuf Frit",
@@ -12,6 +13,7 @@
   "item.vanillatweaks.binoculars": "Jumelles",
   "item.vanillatweaks.slime": "Slime Finder",
   "item.vanillatweaks.binocular_bauble": "Binoculars(Baubles)",
+
   "_comment": "advancement",
   "advancements.vt.pad": "Vanilla Tweaks",
   "advancements.vt.storage": "Storage Blocks",
@@ -29,7 +31,7 @@
   "enchantment.vanillatweaks.hops": "Houblon",
   "enchantment.vanillatweaks.vigor": "Vigueur",
   "enchantment.vanillatweaks.veteran": "Ancien Combattant",
-  "enchantment.vanillatweaks.blazing": "Br�lant",
+  "enchantment.vanillatweaks.blazing": "Brûlant",
   "enchantment.vanillatweaks.siphon": "Siphon",
   "enchantment.vanillatweaks.homing": "La Prise D'origine",
   "_comment": "keybinds",
@@ -38,6 +40,5 @@
   "_comment": "misc",
   "vt:portal_destroyed": "§cYour return portal has been destroyed.",
   "entity.dynamite": "Dynamite",
-  "tooltip.entity": "Spawns: %s",
-  "slime.chunk": "Slime Chunk"
+  "tooltip.entity": "Spawns: %s"
 }

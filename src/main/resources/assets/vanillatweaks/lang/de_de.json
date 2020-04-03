@@ -5,6 +5,7 @@
   "block.vanillatweaks.charcoalblock": "Holzkohleblock",
   "block.vanillatweaks.sand": "Sand/Roter Sand",
   "block.vanillatweaks.pedestal": "Podest",
+
   "_comment": "items",
   "item.vanillatweaks.dynamite": "Dynamit",
   "item.vanillatweaks.friedegg": "Spiegelei",
@@ -13,18 +14,21 @@
   "item.vanillatweaks.binoculars": "Fernglas",
   "item.vanillatweaks.slime": "Schleimfinder",
   "item.vanillatweaks.binocular_bauble": "Fernglas (Baubles)",
-  "_comment": "advancement",
+
+  "_comment": "advancements",
   "advancements.vt.pad": "Vanilla Tweaks",
   "advancements.vt.storage": "Komprimierte Blöcke",
   "advancements.vt.zoom": "Zoom",
   "advancements.vt.boom": "Bumm!!",
   "advancements.vt.friedegg": "Spiegelei!!",
-  "_comment": "advancement desc",
+
+  "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Stelle einen komprimierten Block her",
   "advancements.vt.pad.desc": "Stelle eine Werkbankunterlage her",
   "advancements.vt.zoom.desc": "Stelle ein Fernglas her",
   "advancements.vt.boom.desc": "Stelle Dynamit her",
   "advancements.vt.friedegg.desc": "Brate ein Ei",
+
   "_comment": "enchantments",
   "enchantment.vanillatweaksnimble": "Flink",
   "enchantment.vanillatweakshops": "Hops",
@@ -33,12 +37,13 @@
   "enchantment.vanillatweaksblazing": "Lodernd",
   "enchantment.vanillatweakssiphon": "Siphon",
   "enchantment.vanillatweakshoming": "Zielsuchend",
+
   "_comment": "keybinds",
   "key.category.vt": "VanillaTweaks",
   "key.vt:zoom": "Zoom Key",
+
   "_comment": "misc",
   "vt:portal_destroyed": "§cDein Rückkehrportal wurde zerstört.",
   "entity.dynamite": "Dynamite",
-  "tooltip.entity": "Spawns: %s",
-  "slime.chunk": "Slime Chunk"
+  "tooltip.entity": "Spawns: %s"
 }

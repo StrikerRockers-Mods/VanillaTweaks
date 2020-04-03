@@ -4,7 +4,8 @@
   "block.vanillatweaks.sugarblock": "砂糖ブロック",
   "block.vanillatweaks.charcoalblock": "木炭ブロック",
   "block.vanillatweaks.pedestal": "台座",
-  "_comment": "item.vanillatweakss",
+
+  "_comment": "items",
   "item.vanillatweaks.dynamite": "ダイナマイト",
   "item.vanillatweaks.friedegg": "フライドエッグ",
   "item.vanillatweaks.pad": "作業パッド",
@@ -12,18 +13,21 @@
   "item.vanillatweaks.binoculars": "双眼鏡",
   "item.vanillatweaks.slime": "Slime Finder",
   "item.vanillatweaks.binocular_bauble": "Binoculars(Baubles)",
-  "_comment": "advancement",
+
+  "_comment": "advancements",
   "advancements.vt.pad": "Vanilla Tweaks",
   "advancements.vt.storage": "Storage Blocks",
   "advancements.vt.zoom": "Zoom",
   "advancements.vt.boom": "Boom!!",
   "advancements.vt.friedegg": "Fried Egg!!",
-  "_comment": "advancement desc",
+
+  "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Craft the storage block",
   "advancements.vt.pad.desc": "Craft an Crafting Pad",
   "advancements.vt.zoom.desc": "Craft an Binoculars",
   "advancements.vt.boom.desc": "Craft an Dynamite",
   "advancements.vt.friedegg.desc": "Smelt an Egg",
+
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "素早い",
   "enchantment.vanillatweaks.hops": "ホップ",
@@ -32,12 +36,13 @@
   "enchantment.vanillatweaks.blazing": "炎々",
   "enchantment.vanillatweaks.siphon": "サイフォン",
   "enchantment.vanillatweaks.homing": "ホーミング",
+
   "_comment": "keybinds",
   "key.category.vt": "VanillaTweaks",
   "key.vt:zoom": "Zoom Key",
+
   "_comment": "misc",
   "vt:portal_destroyed": "§cYour return portal has been destroyed.",
   "entity.dynamite": "Dynamite",
-  "tooltip.entity": "Spawns: %s",
-  "slime.chunk": "Slime Chunk"
+  "tooltip.entity": "Spawns: %s"
 }
