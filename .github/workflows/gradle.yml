@@ -16,4 +16,4 @@ jobs:
     - name: Setup Build
       run: chmod 777 gradlew
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build --stacktrace
