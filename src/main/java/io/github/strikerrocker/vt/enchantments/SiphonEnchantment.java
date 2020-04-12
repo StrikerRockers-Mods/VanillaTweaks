@@ -1,25 +1,27 @@
 package io.github.strikerrocker.vt.enchantments;
 
+import com.google.gson.JsonObject;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.LootModifier;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class SiphonEnchantment extends Enchantment {
     SiphonEnchantment(String name) {
         super(Rarity.UNCOMMON, EnchantmentType.DIGGER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
         this.setRegistryName(name);
-    }
-
-    public static void harvestDropEvent(List<ItemStack> drops, PlayerEntity playerEntity, ItemStack tool) {
-        if (EnchantmentFeature.enableSiphon.get()) {
-            drops.removeIf(playerEntity::addItemStackToInventory);
-        }
-        //TODO remove asm when https://github.com/MinecraftForge/MinecraftForge/pull/5871 is merged
     }
 
     @Override
@@ -45,5 +47,28 @@ public class SiphonEnchantment extends Enchantment {
     @Override
     public boolean isTreasureEnchantment() {
         return EnchantmentFeature.enableSiphon.get();
+    }
+
+    private static class SiphonModifier extends LootModifier {
+        public SiphonModifier(ILootCondition[] conditionsIn) {
+            super(conditionsIn);
+        }
+
+        @Nonnull
+        @Override
+        public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+            System.out.println("called");
+            Entity e = context.get(LootParameters.THIS_ENTITY);
+            if (e instanceof PlayerEntity)
+                generatedLoot.removeIf(((PlayerEntity) e)::addItemStackToInventory);
+            return generatedLoot;
+        }
+    }
+
+    public static class Serializer extends GlobalLootModifierSerializer<SiphonEnchantment.SiphonModifier> {
+        @Override
+        public SiphonEnchantment.SiphonModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn) {
+            return new SiphonEnchantment.SiphonModifier(conditionsIn);
+        }
     }
 }
