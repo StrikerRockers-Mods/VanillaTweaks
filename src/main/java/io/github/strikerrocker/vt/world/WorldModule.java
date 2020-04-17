@@ -5,7 +5,7 @@ import io.github.strikerrocker.vt.world.selfplanting.CapabilitySelfPlanting;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class WorldModule extends Module {
-
+    public static CapabilitySelfPlanting selfPlanting = new CapabilitySelfPlanting();
     public WorldModule(ForgeConfigSpec.Builder builder) {
         super("world", "Dynamic changes in the world", false, builder);
     }
@@ -14,6 +14,6 @@ public class WorldModule extends Module {
     public void addFeatures() {
         registerFeature("realistic_relationship", new RealisticRelationship());
         //registerFeature(new NoMoreLavaGen());
-        registerFeature("self_planting", new CapabilitySelfPlanting());
+        registerFeature("self_planting", selfPlanting);
     }
 }
