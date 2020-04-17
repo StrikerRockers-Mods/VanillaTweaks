@@ -9,7 +9,18 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
+
+repositories {
+    maven { // JEI
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven { // JEI fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+    mavenLocal()
+}
 
 version = vt_version
 group = 'io.github.strikerrocker.vt'
@@ -20,8 +31,7 @@ compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 minecraft {
-    mappings channel: 'snapshot', version: '20191211-1.14.3'
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    mappings channel: 'snapshot', version: '20200119-1.14.4'
     runs {
         client  {
             properties 'forge.logging.console.level': 'debug'
@@ -36,26 +46,15 @@ minecraft {
     }
 }
 
-repositories {
-    maven { // JEI
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven { // JEI fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
-    }
-}
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.106'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.2.4'
     compileOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:${jei_version}")
 }
 
 jar {
     manifest {
-        attributes([
+                attributes([
                 "Specification-Title"     : archivesBaseName,
                 "Specification-Vendor"    : "StrikerRocker",
                 "Specification-Version"   : version,
