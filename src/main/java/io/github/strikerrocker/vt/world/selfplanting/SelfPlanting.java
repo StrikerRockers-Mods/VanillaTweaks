@@ -1,6 +1,7 @@
 package io.github.strikerrocker.vt.world.selfplanting;
 
 import io.github.strikerrocker.vt.misc.Utils;
+import io.github.strikerrocker.vt.world.WorldModule;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItem;
@@ -48,8 +49,8 @@ public class SelfPlanting implements ISelfPlanting {
         Item item = entity.getItem().getItem();
         if (item instanceof BlockItem && Block.getBlockFromItem(item) instanceof IPlantable) {
             if (this.minSteadyTicks == 0)
-                this.minSteadyTicks = random.nextInt(75) + 75;
-            ++this.steadyTicks;
+                this.minSteadyTicks = random.nextInt(75) + WorldModule.selfPlanting.minTicks.get();
+            this.steadyTicks++;
             BlockPos entityPos = new BlockPos(entity);
             Vec3d entityVec = new Vec3d(entityPos.getX(), entityPos.getY(), entityPos.getZ());
             BlockPos lastTickEntityPos = new BlockPos(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ);
