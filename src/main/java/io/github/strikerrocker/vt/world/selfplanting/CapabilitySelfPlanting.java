@@ -30,6 +30,7 @@ public class CapabilitySelfPlanting extends Feature {
     @CapabilityInject(ISelfPlanting.class)
     private static Capability<ISelfPlanting> CAPABILITY_PLANTING = null;
     private ForgeConfigSpec.BooleanValue selfPlanting;
+    public ForgeConfigSpec.IntValue minTicks;
 
     @Override
     public boolean usesEvents() {
@@ -42,6 +43,10 @@ public class CapabilitySelfPlanting extends Feature {
                 .translation("config.vanillatweaks:selfPlanting")
                 .comment("Want seeds to auto-plant themselves when broken?")
                 .define("selfPlanting", true);
+        minTicks = builder
+                .translation("config.vanillatweaks:minTicks")
+                .comment("No of minimum ticks after auto-planting occurs.")
+                .defineInRange("minTicks", 75, 0, Integer.MAX_VALUE);
     }
 
     @Override
