@@ -83,4 +83,9 @@ public class HomingEnchantment extends Enchantment {
     public boolean isTreasureEnchantment() {
         return EnchantmentFeature.enableHoming.get();
     }
+
+    @Override
+    public boolean isAllowedOnBooks() {
+        return EnchantmentFeature.enableHoming.get();
+    }
 }
