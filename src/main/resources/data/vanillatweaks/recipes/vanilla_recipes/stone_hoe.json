@@ -2,13 +2,13 @@
   "conditions": [
     {
       "type": "vanillatweaks:better_vanilla",
-      "object": "better_stone_tools"
+      "object": "better_stone_tools_disabled"
     }
   ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "XX",
-    "X#",
+    " #",
     " #"
   ],
   "key": {
@@ -16,10 +16,10 @@
       "tag": "forge:rods/wooden"
     },
     "X": {
-      "item": "minecraft:stone"
+      "tag": "forge:cobblestone"
     }
   },
   "result": {
-    "item": "minecraft:stone_axe"
+    "item": "minecraft:stone_hoe"
   }
 }
