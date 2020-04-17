@@ -70,4 +70,9 @@ public class VeteranEnchantment extends Enchantment {
     public boolean isTreasureEnchantment() {
         return EnchantmentFeature.enableVeteran.get();
     }
+
+    @Override
+    public boolean isAllowedOnBooks() {
+        return EnchantmentFeature.enableVeteran.get();
+    }
 }

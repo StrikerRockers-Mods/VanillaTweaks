@@ -58,6 +58,11 @@ public class BlazingEnchantment extends Enchantment {
         return EnchantmentFeature.enableBlazing.get();
     }
 
+    @Override
+    public boolean isAllowedOnBooks() {
+        return EnchantmentFeature.enableBlazing.get();
+    }
+
     private static class BlazingModifier extends LootModifier {
         public BlazingModifier(ILootCondition[] conditionsIn) {
             super(conditionsIn);

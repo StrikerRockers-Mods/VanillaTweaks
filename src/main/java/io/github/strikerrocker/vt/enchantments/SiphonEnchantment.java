@@ -65,6 +65,11 @@ public class SiphonEnchantment extends Enchantment {
         }
     }
 
+    @Override
+    public boolean isAllowedOnBooks() {
+        return EnchantmentFeature.enableSiphon.get();
+    }
+
     public static class Serializer extends GlobalLootModifierSerializer<SiphonEnchantment.SiphonModifier> {
         @Override
         public SiphonEnchantment.SiphonModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn) {
