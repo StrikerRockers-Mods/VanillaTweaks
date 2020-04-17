@@ -12,10 +12,10 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 repositories {
-    maven {
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
+    //maven {
+    //    name = "Progwml6 maven"
+    //    url = "https://dvs1.progwml6.com/files/maven/"
+    //}
     maven {
         name = "ModMaven"
         url = "https://modmaven.k-4u.nl"
