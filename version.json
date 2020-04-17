@@ -20,6 +20,7 @@
     "1.14.4-1.5.9": "Fixed sit now obeying config.\nFixed crash when placing lily pad.",
     "1.14.4-1.5.10": "Updated BG translation.\nFixed not able throw the last dynamite.\nFix being able to sit when a block is above the slab/stair.",
     "1.14.4-1.5.11": "Siphon and Blazing enchantment now works",
-    "1.14.4-1.5.12": "Temporary fix for duplication with unstable tools"
+    "1.14.4-1.5.12": "Temporary fix for duplication with unstable tools",
+    "1.14.4.1.5.13": "Backported features, fixes from 1.15."
   }
 }
