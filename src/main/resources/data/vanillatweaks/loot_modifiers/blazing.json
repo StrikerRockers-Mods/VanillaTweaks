@@ -1,4 +1,5 @@
 {
+  "type": "vanillatweaks:blazing",
   "conditions": [
     {
       "condition": "minecraft:match_tool",
@@ -13,6 +14,5 @@
         ]
       }
     }
-  ],
-  "function": "vanillatweaks:blazing"
+  ]
 }
