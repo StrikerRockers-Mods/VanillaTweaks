@@ -25,8 +25,8 @@ import net.minecraftforge.fml.common.Mod;
 
 public class SilkSpawner extends Feature {
     private static final String SPAWNER_TAG = "SilkSpawnerData";
-    private ForgeConfigSpec.BooleanValue enableSilkSpawner;
     private static Item mobSpawnerItem = null;
+    private ForgeConfigSpec.BooleanValue enableSilkSpawner;
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -45,8 +45,14 @@ public class SilkSpawner extends Feature {
     public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
         if (event.getEntity() instanceof PlayerEntity && ((PlayerEntity) event.getEntity()).getActiveHand() != null) {
             PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
-            ItemStack stack = playerEntity.getHeldItem(playerEntity.getActiveHand());
-            if (enableSilkSpawner.get() && stack.getItem() == mobSpawnerItem && stack.hasTag()) {
+            ItemStack mainHand = playerEntity.getHeldItemMainhand();
+            ItemStack offHand = playerEntity.getHeldItemOffhand();
+            ItemStack stack = null;
+            if (mainHand.getItem() == mobSpawnerItem)
+                stack = mainHand;
+            else if (offHand.getItem() == mobSpawnerItem)
+                stack = offHand;
+            if (enableSilkSpawner.get() && stack != null && stack.hasTag()) {
                 CompoundNBT stackTag = stack.getTag();
                 assert stackTag != null;
                 CompoundNBT spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
