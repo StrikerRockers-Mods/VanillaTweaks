@@ -2,7 +2,7 @@
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/vanillatweaks",
   "promos": {
     "1.12.2-latest": "1.12.2-1.5.3",
-    "1.14.4-latest": "1.14.4-1.5.12"
+    "1.14.4-latest": "1.14.4-1.5.14"
   },
   "1.12.2": {
     "1.3.6": "* Arrows which hit ground and are on fire sets the ground to fire\n* TNT placed adjacent to lava and magma block ignites itself",
@@ -21,6 +21,7 @@
     "1.14.4-1.5.10": "Updated BG translation.\nFixed not able throw the last dynamite.\nFix being able to sit when a block is above the slab/stair.",
     "1.14.4-1.5.11": "Siphon and Blazing enchantment now works",
     "1.14.4-1.5.12": "Temporary fix for duplication with unstable tools",
-    "1.14.4.1.5.13": "Backported features, fixes from 1.15."
+    "1.14.4.1.5.13": "Backported features, fixes from 1.15.",
+    "1.14.4.1.5.14": "Backported features, fixes from 1.15."
   }
 }
