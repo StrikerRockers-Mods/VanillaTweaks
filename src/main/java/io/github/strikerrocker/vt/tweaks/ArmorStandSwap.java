@@ -44,11 +44,9 @@ public class ArmorStandSwap extends Feature {
                 return;
             event.setCanceled(true);
             ArmorStandEntity armorStand = (ArmorStandEntity) target;
+
             Arrays.stream(EquipmentSlotType.values()).filter(equipmentSlotType -> equipmentSlotType.getSlotType() == EquipmentSlotType.Group.ARMOR).forEach(equipmentSlotType -> {
-                ItemStack playerItem = player.getItemStackFromSlot(equipmentSlotType);
-                ItemStack armorStandItem = armorStand.getItemStackFromSlot(equipmentSlotType);
-                player.setItemStackToSlot(equipmentSlotType, armorStandItem);
-                armorStand.setItemStackToSlot(equipmentSlotType, playerItem);
+                swapSlot(player, armorStand, equipmentSlotType);
             });
         }
     }
