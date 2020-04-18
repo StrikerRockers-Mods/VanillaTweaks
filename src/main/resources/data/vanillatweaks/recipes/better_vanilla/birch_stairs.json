@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:better_vanilla",
+      "object": "better_stairs_disabled"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_stairs",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:birch_planks"
+    }
+  },
+  "result": {
+    "item": "minecraft:birch_stairs",
+    "count": 4
+  }
+}
