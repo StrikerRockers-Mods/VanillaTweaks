@@ -2,7 +2,7 @@
   "conditions": [
     {
       "type": "vanillatweaks:better_vanilla",
-      "object": "better_stone_tools"
+      "object": "better_stairs"
     }
   ],
   "type": "minecraft:crafting_shaped",
