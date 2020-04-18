@@ -26,6 +26,7 @@ public class ShearNameTag extends Feature {
             if (heldItem.getItem() instanceof ShearsItem && target instanceof LivingEntity && target.hasCustomName() && !world.isRemote) {
                 target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setDisplayName(target.getCustomName());
+                nameTag.getTag().putInt("RepairCost", 0);
                 target.entityDropItem(nameTag, 0);
                 target.setCustomName(null);
                 heldItem.damageItem(1, player, playerEntity -> playerEntity.sendBreakAnimation(playerEntity.getActiveHand()));
