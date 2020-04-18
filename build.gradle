@@ -23,7 +23,6 @@ repositories {
     maven {
         url = "https://maven.theillusivec4.top/"
     }
-    mavenLocal()
 }
 
 version = vt_version
