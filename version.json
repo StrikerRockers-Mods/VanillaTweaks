@@ -28,6 +28,7 @@
     "1.15.2-1.5.17": "Added curios compat for binocular.",
     "1.15.2-1.5.18": "Fixed issues #87,#88,#89",
     "1.15.2-1.5.20": "Added ru_ru.json. \n  Changed the display color of \"slime.chunk\" to green\nFixed incorrect sizing of items in pedestal.",
-    "1.15.2-1.5.21": "Fixed several issues."
+    "1.15.2-1.5.21": "Fixed several issues.",
+    "1.15.2-1.5.22": "Fixed several features not working properly."
   }
 }
