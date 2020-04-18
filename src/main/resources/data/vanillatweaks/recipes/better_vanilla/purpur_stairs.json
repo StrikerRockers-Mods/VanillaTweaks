@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:better_vanilla",
+      "object": "better_stairs_disabled"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "minecraft:purpur_block"
+      },
+      {
+        "item": "minecraft:purpur_pillar"
+      }
+    ]
+  },
+  "result": {
+    "item": "minecraft:purpur_stairs",
+    "count": 4
+  }
+}
