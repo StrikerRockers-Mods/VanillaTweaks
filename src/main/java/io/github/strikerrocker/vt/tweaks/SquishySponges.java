@@ -17,10 +17,13 @@ public class SquishySponges extends Feature {
     private ForgeConfigSpec.BooleanValue squishySponge;
 
     private static void turnIntoWater(World worldIn, BlockPos pos) {
-        if (worldIn.dimension.doesWaterVaporize()) {
-            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
-        } else {
-            worldIn.setBlockState(pos, Fluids.WATER.getDefaultState().getBlockState(), 11);
+        if (worldIn.getBlockState(pos).getMaterial().isReplaceable()) {
+            if (worldIn.dimension.doesWaterVaporize()) {
+                worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+            } else {
+                worldIn.setBlockState(pos, Fluids.WATER.getDefaultState().getBlockState(), 11);
+                worldIn.neighborChanged(pos, Blocks.WATER, pos);
+            }
         }
     }
 
