@@ -17,7 +17,7 @@ description='''VanillaTweaks is a Minecraft mod designed to enhance vanilla Mine
 [[dependencies.vanillatweaks]]
     modId="forge"
     mandatory=true
-    versionRange="[30,)"
+    versionRange="[31.1.18,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.vanillatweaks]]
