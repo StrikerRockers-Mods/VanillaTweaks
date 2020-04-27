@@ -20,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,13 +49,6 @@ public class VanillaTweaks {
             File cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(specPair.getLeft().getName() + ".toml").toFile();
             if (!cfgFile.getParentFile().exists()) {
                 cfgFile.getParentFile().mkdirs();
-            }
-            if (!cfgFile.exists()) {
-                try {
-                    cfgFile.createNewFile();
-                } catch (IOException e) {
-                    LOGGER.info(e.getMessage());
-                }
             }
             specPair.getLeft().setConfigSpec(specPair.getRight());
             ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgFile.toString());
