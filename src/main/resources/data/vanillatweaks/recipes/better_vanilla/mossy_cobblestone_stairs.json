@@ -1,8 +1,11 @@
 {
   "conditions": [
     {
-      "type": "vanillatweaks:better_vanilla",
-      "object": "better_stairs_disabled"
+      "type": "forge:not",
+      "value": {
+        "type": "vanillatweaks:better_vanilla",
+        "object": "better_stairs"
+      }
     }
   ],
   "type": "minecraft:crafting_shaped",
