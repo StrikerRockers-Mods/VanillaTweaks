@@ -57,7 +57,6 @@ public class SiphonEnchantment extends Enchantment {
         @Nonnull
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            System.out.println("called");
             Entity e = context.get(LootParameters.THIS_ENTITY);
             if (e instanceof PlayerEntity)
                 generatedLoot.removeIf(((PlayerEntity) e)::addItemStackToInventory);

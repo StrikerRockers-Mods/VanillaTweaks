@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt.enchantments;
 
 import com.google.gson.JsonObject;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -11,8 +12,8 @@ import net.minecraft.item.ToolItem;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
@@ -21,6 +22,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlazingEnchantment extends Enchantment {
     BlazingEnchantment(String name) {
@@ -69,9 +71,7 @@ public class BlazingEnchantment extends Enchantment {
         }
 
         private static ItemStack smelt(ItemStack stack, LootContext context) {
-            System.out.println("called blazing");
-            World world = context.func_202879_g();
-            return world.getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(stack), world)
+            return context.func_202879_g().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(stack), context.func_202879_g())
                     .map(FurnaceRecipe::getRecipeOutput)
                     .filter(itemStack -> !itemStack.isEmpty())
                     .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount()))
@@ -81,6 +81,10 @@ public class BlazingEnchantment extends Enchantment {
         @Nonnull
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(context.get(LootParameters.TOOL));
+            if (enchantments.containsKey(Enchantments.FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
+                return generatedLoot;
+            }
             ArrayList<ItemStack> ret = new ArrayList<>();
             generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
             return ret;
