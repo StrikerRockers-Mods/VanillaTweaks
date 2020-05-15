@@ -44,11 +44,6 @@ public class SiphonEnchantment extends Enchantment {
         return stack.getItem() instanceof ToolItem && EnchantmentFeature.enableSiphon.get();
     }
 
-    @Override
-    public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableSiphon.get();
-    }
-
     private static class SiphonModifier extends LootModifier {
         public SiphonModifier(ILootCondition[] conditionsIn) {
             super(conditionsIn);

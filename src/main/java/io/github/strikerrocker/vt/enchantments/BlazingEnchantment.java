@@ -56,11 +56,6 @@ public class BlazingEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableBlazing.get();
-    }
-
-    @Override
     public boolean isAllowedOnBooks() {
         return EnchantmentFeature.enableBlazing.get();
     }

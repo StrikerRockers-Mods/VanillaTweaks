@@ -63,11 +63,6 @@ public class HopsEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableHops.get();
-    }
-
-    @Override
     public boolean isAllowedOnBooks() {
         return EnchantmentFeature.enableHops.get();
     }
