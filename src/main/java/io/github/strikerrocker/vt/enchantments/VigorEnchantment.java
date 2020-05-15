@@ -63,11 +63,6 @@ public class VigorEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean isTreasureEnchantment() {
-        return EnchantmentFeature.enableVigor.get();
-    }
-
-    @Override
     public boolean isAllowedOnBooks() {
         return EnchantmentFeature.enableVigor.get();
     }
