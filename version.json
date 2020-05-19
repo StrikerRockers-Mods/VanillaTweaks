@@ -3,7 +3,7 @@
   "promos": {
     "1.12.2-latest": "1.12.2-1.5.3",
     "1.14.4-latest": "1.14.4-1.5.11",
-    "1.15.2-latest": "1.15.2-1.5.25"
+    "1.15.2-latest": "1.15.2-1.5.26"
   },
   "1.12.2": {
     "1.3.6": "* Arrows which hit ground and are on fire sets the ground to fire\n* TNT placed adjacent to lava and magma block ignites itself",
@@ -32,6 +32,7 @@
     "1.15.2-1.5.22": "Fixed several features not working properly.",
     "1.15.2-1.5.23": "Reimplement self planting. \n Fixed several issues.",
     "1.15.2-1.5.24": "Fixed not being able apply enchantment at table.",
-    "1.15.2-1.5.25": "Fixed /give giving an extra item. \n Fixed items not despawning."
+    "1.15.2-1.5.25": "Fixed /give giving an extra item. \n Fixed items not despawning.",
+    "1.15.2-1.5.26": "Fixed all items despawning in 1min. \n Fixed sign editor when disabled on servers."
   }
 }

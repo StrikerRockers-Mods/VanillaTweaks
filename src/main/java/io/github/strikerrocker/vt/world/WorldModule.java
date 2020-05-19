@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.world;
 
 import io.github.strikerrocker.vt.base.Module;
-import io.github.strikerrocker.vt.world.selfplanting.SelfPlanting;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class WorldModule extends Module {
