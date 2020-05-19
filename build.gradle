@@ -12,15 +12,13 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 repositories {
-    //maven {
-    //    name = "Progwml6 maven"
-    //    url = "https://dvs1.progwml6.com/files/maven/"
-    //}
     maven {
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
     }
+
     maven {
+        name = "Curios maven"
         url = "https://maven.theillusivec4.top/"
     }
 }
@@ -32,7 +30,7 @@ archivesBaseName = 'VanillaTweaks'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200302-1.15.1'
+    mappings channel: 'snapshot', version: '20200518-1.15.1'
 
     runs {
         client  {
@@ -50,7 +48,7 @@ minecraft {
 
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.18'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.2.0'
     compileOnly fg.deobf("mezz.jei:jei-1.15.2:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:${jei_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
