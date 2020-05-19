@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.world.selfplanting;
+package io.github.strikerrocker.vt.world;
 
 import io.github.strikerrocker.vt.base.Feature;
 import io.github.strikerrocker.vt.misc.Utils;
@@ -60,7 +60,8 @@ public class SelfPlanting extends Feature {
         if (!event.getWorld().isRemote && event.getEntity() instanceof ItemEntity) {
             ItemEntity itemEntity = (ItemEntity) event.getEntity();
             Item item = itemEntity.getItem().getItem();
-            if (selfPlanting.get() && item instanceof BlockItem && !(Block.getBlockFromItem(item) instanceof FlowerBlock)) {
+            Block block = Block.getBlockFromItem(item);
+            if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
                 itemEntity.lifespan = despawnTime.get();
             }
         }
@@ -88,8 +89,6 @@ public class SelfPlanting extends Feature {
                 if (stack.getCount() > 0) {
                     world.addEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
                 }
-            } else {
-                world.addEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
             }
         }
     }
