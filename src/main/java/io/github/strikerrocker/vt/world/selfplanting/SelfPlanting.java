@@ -52,7 +52,7 @@ public class SelfPlanting extends Feature {
 
     @SubscribeEvent
     public void itemDecay(ItemExpireEvent event) {
-        plant(event.getEntityItem(), event);
+        plant(event.getEntityItem());
     }
 
     @SubscribeEvent
@@ -67,30 +67,30 @@ public class SelfPlanting extends Feature {
     }
 
 
-    public void plant(ItemEntity entity, ItemExpireEvent event) {
+    public void plant(ItemEntity entity) {
         World world = entity.getEntityWorld();
         ItemStack stack = entity.getItem().copy();
         Item item = stack.getItem();
         Block block = Block.getBlockFromItem(item);
         BlockPos entityPos = new BlockPos(entity);
-        if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock) && world.rand.nextInt() > chanceToPlant.get()) {
-            FakePlayer player = Utils.getFakePlayer(world);
-            Vec3d entityVec = new Vec3d(entityPos.getX(), entityPos.getY(), entityPos.getZ());
-            System.out.println(stack);
-            BlockRayTraceResult rayTraceResult = entity.world.rayTraceBlocks(
-                    new RayTraceContext(entityVec.add(0, 2, 0), entityVec.add(0, -1, 0), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity));
-            ActionResultType result = item.onItemUse(new ItemUseContext(player, Hand.MAIN_HAND, rayTraceResult));
-            System.out.println(result);
-            System.out.println(stack);
-            if (result == ActionResultType.SUCCESS) {
-                if (stack.getCount() > 0) {
-                    stack.shrink(1);
+        if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
+            if (world.rand.nextInt() > chanceToPlant.get()) {
+                FakePlayer player = Utils.getFakePlayer(world);
+                Vec3d entityVec = new Vec3d(entityPos.getX(), entityPos.getY(), entityPos.getZ());
+                BlockRayTraceResult rayTraceResult = entity.world.rayTraceBlocks(
+                        new RayTraceContext(entityVec.add(0, 2, 0), entityVec.add(0, -1, 0), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity));
+                ActionResultType result = item.onItemUse(new ItemUseContext(player, Hand.MAIN_HAND, rayTraceResult));
+                if (result == ActionResultType.SUCCESS) {
+                    if (stack.getCount() > 0) {
+                        stack.shrink(1);
+                    }
                 }
-            }
-            System.out.println(stack);
-            if (stack.getCount() > 0)
+                if (stack.getCount() > 0) {
+                    world.addEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
+                }
+            } else {
                 world.addEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
-        } else
-            world.addEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
+            }
+        }
     }
 }
