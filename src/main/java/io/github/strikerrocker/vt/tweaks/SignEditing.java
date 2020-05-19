@@ -14,7 +14,7 @@ public class SignEditing extends Feature {
 
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        PlayerEntity player = event.getEntityPlayer();
+        PlayerEntity player = event.getPlayer();
         boolean success = false;
         TileEntity te = event.getWorld().getTileEntity(event.getPos());
         if (te instanceof SignTileEntity && enableSignEditing.get() && !event.getWorld().isRemote) {
