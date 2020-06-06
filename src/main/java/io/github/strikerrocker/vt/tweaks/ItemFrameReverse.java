@@ -13,7 +13,10 @@ public class ItemFrameReverse extends Feature {
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         if (itemFrameRotateBackwards.get() && event.getTarget() instanceof ItemFrameEntity && event.getPlayer().isCrouching()) {
             ItemFrameEntity frame = (ItemFrameEntity) event.getTarget();
-            frame.setItemRotation(frame.getRotation() - 2);
+            int rotation = frame.getRotation() - 2;
+            if (rotation < 0)
+                rotation = 6;
+            frame.setItemRotation(rotation);
         }
     }
 
