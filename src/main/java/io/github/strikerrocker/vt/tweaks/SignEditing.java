@@ -17,7 +17,7 @@ public class SignEditing extends Feature {
         PlayerEntity player = event.getPlayer();
         boolean success = false;
         TileEntity te = event.getWorld().getTileEntity(event.getPos());
-        if (te instanceof SignTileEntity && enableSignEditing.get() && !event.getWorld().isRemote) {
+        if (te instanceof SignTileEntity && enableSignEditing.get() && !event.getWorld().isRemote && !player.isSneaking()) {
             SignTileEntity sign = (SignTileEntity) te;
             player.openSignEditor(sign);
             success = true;
