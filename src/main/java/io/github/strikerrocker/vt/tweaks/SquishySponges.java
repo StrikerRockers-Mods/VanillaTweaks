@@ -18,7 +18,7 @@ public class SquishySponges extends Feature {
 
     private static void turnIntoWater(World worldIn, BlockPos pos) {
         if (worldIn.getBlockState(pos).getMaterial().isReplaceable()) {
-            if (worldIn.dimension.doesWaterVaporize()) {
+            if (worldIn.func_230315_m_().func_236040_e_()) {
                 worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
             } else {
                 worldIn.setBlockState(pos, Fluids.WATER.getDefaultState().getBlockState(), 11);
@@ -44,7 +44,7 @@ public class SquishySponges extends Feature {
     public void onLivingFall(LivingFallEvent event) {
         World world = event.getEntity().getEntityWorld();
         LivingEntity entity = event.getEntityLiving();
-        BlockPos pos = entity.getPosition().down();
+        BlockPos pos = entity.func_233580_cy_().down();
         if (entity instanceof PlayerEntity && squishySponge.get() && world.getBlockState(pos).getBlock() instanceof WetSpongeBlock) {
             turnIntoWater(world, pos.offset(Direction.Plane.HORIZONTAL.random(world.rand)));
             world.setBlockState(pos, Blocks.SPONGE.getDefaultState());

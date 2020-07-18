@@ -14,7 +14,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.IPlantable;
@@ -33,6 +33,8 @@ public class SelfPlanting extends Feature {
     public boolean usesEvents() {
         return true;
     }
+
+    //TODO check
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -73,11 +75,11 @@ public class SelfPlanting extends Feature {
         ItemStack stack = entity.getItem().copy();
         Item item = stack.getItem();
         Block block = Block.getBlockFromItem(item);
-        BlockPos entityPos = new BlockPos(entity);
+        BlockPos entityPos = new BlockPos(entity.func_233580_cy_());
         if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
             if (world.rand.nextInt() > chanceToPlant.get()) {
                 FakePlayer player = Utils.getFakePlayer(world);
-                Vec3d entityVec = new Vec3d(entityPos.getX(), entityPos.getY(), entityPos.getZ());
+                Vector3d entityVec = new Vector3d(entityPos.getX(), entityPos.getY(), entityPos.getZ());
                 BlockRayTraceResult rayTraceResult = entity.world.rayTraceBlocks(
                         new RayTraceContext(entityVec.add(0, 2, 0), entityVec.add(0, -1, 0), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity));
                 ActionResultType result = item.onItemUse(new ItemUseContext(player, Hand.MAIN_HAND, rayTraceResult));

@@ -4,9 +4,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
@@ -29,11 +29,11 @@ public class NimbleEnchantment extends Enchantment {
         if (EnchantmentFeature.enableNimble.get()) {
             LivingEntity entity = event.getEntityLiving();
             int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(this, entity.getItemStackFromSlot(EquipmentSlotType.FEET));
-            IAttributeInstance speedAttribute = entity.getAttributes().getAttributeInstance(SharedMonsterAttributes.MOVEMENT_SPEED);
+            ModifiableAttributeInstance speedAttribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", (float) enchantmentLevel * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
             if (enchantmentLevel > 0) {
                 if (speedAttribute.getModifier(nimbleUUID) == null) {
-                    speedAttribute.applyModifier(speedModifier);
+                    speedAttribute.func_233767_b_(speedModifier);
                 }
             } else if (speedAttribute.getModifier(nimbleUUID) != null) {
                 speedAttribute.removeModifier(speedModifier);

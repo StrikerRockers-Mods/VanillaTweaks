@@ -24,6 +24,7 @@ public class ModifiedItemGroups extends Feature {
                 .comment("Want dragon egg to appear in decorations tab?")
                 .define("dragonEggInDecorations", true);
     }
+    //TODO fix not appearing in search
 
     @Override
     public boolean usesEvents() {

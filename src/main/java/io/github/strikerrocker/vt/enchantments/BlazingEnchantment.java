@@ -11,10 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -75,7 +75,7 @@ public class BlazingEnchantment extends Enchantment {
 
         @Nonnull
         @Override
-        public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+        protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(context.get(LootParameters.TOOL));
             if (enchantments.containsKey(Enchantments.FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
                 return generatedLoot;

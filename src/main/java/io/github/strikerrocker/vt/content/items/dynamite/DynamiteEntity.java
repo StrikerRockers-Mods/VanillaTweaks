@@ -69,7 +69,7 @@ public class DynamiteEntity extends ProjectileItemEntity {
             for (int i = 0; i < 3; ++i) {
                 float xOffset = (rand.nextFloat() * 2 - 1) * getWidth() * 0.5F;
                 float zOffset = (rand.nextFloat() * 2 - 1) * getWidth() * 0.5F;
-                BlockPos pos = getPosition();
+                BlockPos pos = func_233580_cy_();
                 world.addParticle(ParticleTypes.DRIPPING_WATER, pos.getX() + xOffset, pos.getY(), pos.getZ() + zOffset, getMotion().x, getMotion().y, getMotion().z);
             }
     }
@@ -84,7 +84,7 @@ public class DynamiteEntity extends ProjectileItemEntity {
                 if (result instanceof EntityRayTraceResult && ((EntityRayTraceResult) result).getEntity() instanceof DynamiteEntity) {
                     return;
                 } else {
-                    BlockPos pos = getPosition();
+                    BlockPos pos = func_233580_cy_();
                     world.createExplosion(this, pos.getX(), pos.getY(), pos.getZ(), 3F, Explosion.Mode.BREAK);
                 }
             }

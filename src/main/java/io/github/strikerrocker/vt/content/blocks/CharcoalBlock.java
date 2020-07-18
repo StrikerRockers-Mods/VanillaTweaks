@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 
 public class CharcoalBlock extends Block {
     CharcoalBlock(String name) {
@@ -15,7 +15,7 @@ public class CharcoalBlock extends Block {
     }
 
     @Override
-    public boolean isFireSource(BlockState state, IBlockReader world, BlockPos pos, Direction side) {
+    public boolean isFireSource(BlockState state, IWorldReader world, BlockPos pos, Direction side) {
         return true;
     }
 }

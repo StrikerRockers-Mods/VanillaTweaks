@@ -8,10 +8,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -44,6 +44,11 @@ public class SiphonEnchantment extends Enchantment {
         return stack.getItem() instanceof ToolItem && EnchantmentFeature.enableSiphon.get();
     }
 
+    @Override
+    public boolean isAllowedOnBooks() {
+        return EnchantmentFeature.enableSiphon.get();
+    }
+
     private static class SiphonModifier extends LootModifier {
         public SiphonModifier(ILootCondition[] conditionsIn) {
             super(conditionsIn);
@@ -51,17 +56,12 @@ public class SiphonEnchantment extends Enchantment {
 
         @Nonnull
         @Override
-        public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+        protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             Entity e = context.get(LootParameters.THIS_ENTITY);
             if (e instanceof PlayerEntity)
                 generatedLoot.removeIf(((PlayerEntity) e)::addItemStackToInventory);
             return generatedLoot;
         }
-    }
-
-    @Override
-    public boolean isAllowedOnBooks() {
-        return EnchantmentFeature.enableSiphon.get();
     }
 
     public static class Serializer extends GlobalLootModifierSerializer<SiphonEnchantment.SiphonModifier> {

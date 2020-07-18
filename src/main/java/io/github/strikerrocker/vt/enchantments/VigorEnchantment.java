@@ -3,9 +3,9 @@ package io.github.strikerrocker.vt.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
@@ -26,11 +26,11 @@ public class VigorEnchantment extends Enchantment {
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
         if (EnchantmentFeature.enableVigor.get()) {
             int lvl = EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.CHEST));
-            IAttributeInstance vigorAttribute = event.getEntityLiving().getAttributes().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH);
+            ModifiableAttributeInstance vigorAttribute = event.getEntityLiving().getAttribute(Attributes.MAX_HEALTH);
             AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "vigor", (float) lvl / 10, AttributeModifier.Operation.MULTIPLY_BASE);
             if (lvl > 0) {
                 if (vigorAttribute.getModifier(vigorUUID) == null) {
-                    vigorAttribute.applyModifier(vigorModifier);
+                    vigorAttribute.func_233767_b_(vigorModifier);
                 }
             } else {
                 if (vigorAttribute.getModifier(vigorUUID) != null) {

@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:better_vanilla",
+      "object": "better_stairs"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:polished_blackstone_bricks"
+    }
+  },
+  "result": {
+    "item": "minecraft:polished_blackstone_brick_stairs",
+    "count": 8
+  }
+}

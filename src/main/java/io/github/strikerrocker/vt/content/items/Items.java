@@ -13,7 +13,7 @@ import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
@@ -50,16 +50,17 @@ public class Items extends Feature {
     static ForgeConfigSpec.BooleanValue enableSlimeBucket;
     static ForgeConfigSpec.DoubleValue binocularZoomAmount;
     static ForgeConfigSpec.BooleanValue enableFriedEgg;
-    private static Item SLIME_BUCKET = new SlimeBucketItem();
+    private static final Item SLIME_BUCKET = new SlimeBucketItem();
 
     @SubscribeEvent
     public void onFOVChange(FOVUpdateEvent event) {
         if (event.getEntity() != null && binocularZoomAmount.get() != 0) {
             ItemStack helmet = event.getEntity().getItemStackFromSlot(EquipmentSlotType.HEAD);
-            if ((!helmet.isEmpty() && helmet.getItem() == BINOCULARS)) {
+            if (!helmet.isEmpty() && helmet.getItem() == BINOCULARS) {
                 event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
             } else if (ModList.get().isLoaded("curios")) {
-                if (CuriosCompat.isStackInCuriosSlot(new ItemStack(Items.BINOCULARS), event.getEntity())) {
+                //TODO fix curios compat not working
+                if (CuriosCompat.isStackInCuriosSlot(new ItemStack(Items.BINOCULARS))) {
                     event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
                 }
             }
@@ -99,7 +100,7 @@ public class Items extends Feature {
     public void setup() {
         DispenserBlock.registerDispenseBehavior(DYNAMITE, new ProjectileDispenseBehavior() {
             @Override
-            protected IProjectile getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+            protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
                 return new DynamiteEntity(worldIn, position.getX(), position.getY(), position.getZ());
             }
         });

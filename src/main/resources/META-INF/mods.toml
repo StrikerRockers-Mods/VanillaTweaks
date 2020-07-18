@@ -5,7 +5,7 @@ issueTrackerURL="http://github.com/strikerrocker/VanillaTweaks/issues/" #optiona
 modId="vanillatweaks" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="VanillaTweaks" #mandatory
-updateJSONURL="https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.15/version.json" #optional
+updateJSONURL="https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.16/version.json" #optional
 displayURL="http://strikerrocker.github.io/vanillatweaks" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="logo.png" #optional

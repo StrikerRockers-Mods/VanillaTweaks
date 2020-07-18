@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Module;
 import io.github.strikerrocker.vt.tweaks.silkspawner.SilkSpawner;
-import io.github.strikerrocker.vt.tweaks.sit.Sit;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class TweaksModule extends Module {
@@ -12,7 +11,6 @@ public class TweaksModule extends Module {
 
     @Override
     public void addFeatures() {
-        registerFeature("sit", new Sit());
         registerFeature("sign_editing", new SignEditing());
         registerFeature("arrow_set_fire", new ArrowSetFire());
         registerFeature("tnt_ignition", new TNTIgnition());
@@ -23,9 +21,7 @@ public class TweaksModule extends Module {
         registerFeature("shear_nametag", new ShearNameTag());
         registerFeature("mobs_burn_daylight", new MobsBurnInDaylight());
         registerFeature("item_frame_reverse_rotate", new ItemFrameReverse());
-        registerFeature("stack_sizes", new StackSizes());
         registerFeature("squishy_sponges", new SquishySponges());
         registerFeature("disable_potion_shift", new NoPotionShift());
-        registerFeature("furnace_broken_xp", new FurnaceBrokenXP());
     }
 }

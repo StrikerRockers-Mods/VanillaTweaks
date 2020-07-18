@@ -6,7 +6,7 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,6 +21,7 @@ public class ArrowSetFire extends Feature {
                 .comment("Want the fire arrows to set fire on block it landed?")
                 .define("arrowsSetBlockOnFire", true);
     }
+    //TODO Doesnt work
 
     @Override
     public boolean usesEvents() {
@@ -31,10 +32,9 @@ public class ArrowSetFire extends Feature {
     public void onArrowImpact(ProjectileImpactEvent.Arrow event) {
         AbstractArrowEntity arrow = event.getArrow();
         if (!arrow.world.isRemote && arrow.isBurning() && arrowsSetBlockOnFire.get()) {
-            BlockPos pos=arrow.getPosition();
-            Vec3d vec3d1 = new Vec3d(pos.getX(),pos.getY(),pos.getZ());
-            Vec3d vec3d = new Vec3d(pos.getX() + arrow.getMotion().x, pos.getY()+ arrow.getMotion().y, pos.getZ() + arrow.getMotion().z);
-            RayTraceResult raytraceresult = arrow.world.rayTraceBlocks(new RayTraceContext(vec3d1, vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
+            BlockPos pos = arrow.func_233580_cy_();
+            Vector3d vec3d = new Vector3d(pos.getX() + arrow.getMotion().x, pos.getY() + arrow.getMotion().y, pos.getZ() + arrow.getMotion().z);
+            RayTraceResult raytraceresult = arrow.world.rayTraceBlocks(new RayTraceContext(arrow.getPositionVec(), vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
             BlockPos hitPos = new BlockPos(raytraceresult.getHitVec()).up();
             if (arrow.world.isAirBlock(hitPos)) {
                 arrow.world.setBlockState(hitPos, Blocks.FIRE.getDefaultState());

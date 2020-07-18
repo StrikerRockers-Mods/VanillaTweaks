@@ -53,8 +53,13 @@ public class PedestalTileEntity extends TileEntity {
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(pkt.getNbtCompound());
-        BlockState state = world.getBlockState(pos);
+        super.onDataPacket(net, pkt);
+        handleUpdateTag(getBlockState(), pkt.getNbtCompound());
+    }
+
+    @Override
+    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+        read(state, tag);
         world.notifyBlockUpdate(pos, state, state, 2);
     }
 
@@ -66,10 +71,10 @@ public class PedestalTileEntity extends TileEntity {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        inventory.deserializeNBT(compound.getCompound("inventory"));
-        lastChangeTime = compound.getLong("lastChangeTime");
-        super.read(compound);
+    public void read(BlockState stateIn, CompoundNBT nbtIn) {
+        inventory.deserializeNBT(nbtIn.getCompound("inventory"));
+        lastChangeTime = nbtIn.getLong("lastChangeTime");
+        super.read(stateIn, nbtIn);
     }
 
     @Nonnull

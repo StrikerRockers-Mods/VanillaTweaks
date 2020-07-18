@@ -65,4 +65,9 @@ public class BasicArmorMaterial implements IArmorMaterial {
     public float getToughness() {
         return toughness;
     }
+
+    @Override
+    public float func_230304_f_() {
+        return 0;
+    }
 }

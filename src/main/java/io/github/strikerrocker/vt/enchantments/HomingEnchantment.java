@@ -12,6 +12,7 @@ import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -37,7 +38,7 @@ public class HomingEnchantment extends Enchantment {
 
     private void attemptToMove(Entity arrowEntity, ServerWorld world) {
         AbstractArrowEntity arrow = (AbstractArrowEntity) arrowEntity;
-        LivingEntity shooter = (LivingEntity) arrow.getShooter();
+        LivingEntity shooter = (LivingEntity) arrow.func_234616_v_();
         if (shooter != null && EnchantmentHelper.getEnchantmentLevel(this, shooter.getHeldItemMainhand()) > 0) {
             int homingLevel = EnchantmentHelper.getEnchantmentLevel(this, shooter.getHeldItemMainhand());
             double distance = Math.pow(2, (double) homingLevel - 1) * 32;
@@ -51,9 +52,11 @@ public class HomingEnchantment extends Enchantment {
                 }
             }
             if (target != null) {
-                double x = target.getPosition().getX() - arrow.getPosition().getX();
-                double y = target.getBoundingBox().minY + target.getHeight() / 2 - (arrow.getPosition().getY() + arrow.getHeight() / 2);
-                double z = target.getPosition().getZ() - arrow.getPosition().getZ();
+                BlockPos arrowPos = arrow.func_233580_cy_();
+                BlockPos targetPos = target.func_233580_cy_();
+                double x = targetPos.getX() - arrowPos.getX();
+                double y = target.getBoundingBox().minY + target.getHeight() / 2 - (arrowPos.getY() + arrow.getHeight() / 2);
+                double z = targetPos.getZ() - arrowPos.getZ();
                 arrow.shoot(x, y, z, (float) Math.sqrt(Math.pow(2, arrow.getMotion().x) + Math.pow(2, arrow.getMotion().y) + Math.pow(2, arrow.getMotion().z)), 0);
             }
         }

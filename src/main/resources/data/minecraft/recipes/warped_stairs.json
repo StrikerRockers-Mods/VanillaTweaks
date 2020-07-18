@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:better_vanilla",
+      "object": "better_stairs"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_stairs",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:warped_planks"
+    }
+  },
+  "result": {
+    "item": "minecraft:warped_stairs",
+    "count": 8
+  }
+}
