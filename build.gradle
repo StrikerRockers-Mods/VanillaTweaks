@@ -30,7 +30,7 @@ archivesBaseName = 'VanillaTweaks'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200518-1.15.1'
+    mappings channel: 'snapshot', version: '20200718-1.15.1'
 
     runs {
         client  {
