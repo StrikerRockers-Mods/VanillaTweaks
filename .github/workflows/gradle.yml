@@ -9,8 +9,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: 'Setup Build'
-        run: 'chmod 777 gradlew'
-      - name: Build with Gradle
-        id: build
-        run: ./gradlew clean build --no-daemon
+      - name: "Build"
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: build
+          wrapper-cache-enabled: true
+          dependencies-cache-enabled: true
+          configuration-cache-enabled: true
