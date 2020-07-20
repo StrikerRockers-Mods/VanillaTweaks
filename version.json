@@ -3,7 +3,7 @@
   "promos": {
     "1.12.2-latest": "1.12.2-1.5.3",
     "1.14.4-latest": "1.14.4-1.5.11",
-    "1.15.2-latest": "1.15.2-1.5.29"
+    "1.15.2-latest": "1.15.2-1.5.30"
   },
   "1.12.2": {
     "1.3.6": "* Arrows which hit ground and are on fire sets the ground to fire\n* TNT placed adjacent to lava and magma block ignites itself",
@@ -36,6 +36,7 @@
     "1.15.2-1.5.26": "Fixed all items despawning in 1min. \n Fixed sign editor when disabled on servers.",
     "1.15.2-1.5.27": "Fixed Item frame reverse rotation functionality may leave the item frame in an invalid state.",
     "1.15.2-1.5.28": "Fixed Shift-Right clicking sign with block in hand opens sign text editor instead of placing block in front of it.",
-    "1.15.2-1.5.29": "Fixed not being able to connect to server if the absolute path is more than 128."
+    "1.15.2-1.5.29": "Fixed not being able to connect to server if the absolute path is more than 128.",
+    "1.15.2-1.5.30": "Fixed crash"
   }
 }

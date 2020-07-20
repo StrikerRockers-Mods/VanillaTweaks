@@ -53,7 +53,7 @@ public class VanillaTweaks {
             if (cfgStr.length() > 128) cfgStr = MODID + "-" + specPair.getLeft().getName() + ".toml";
             else
                 try {
-                    Files.createDirectories(cfgFile);
+                    Files.createDirectories(cfgFile.getParent());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
