@@ -19,7 +19,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,12 +48,17 @@ public class VanillaTweaks {
             Pair<Module, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(function);
             modules.add(specPair.getLeft());
 
-            File cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(specPair.getLeft().getName() + ".toml").toFile();
-            if (!cfgFile.getParentFile().exists()) {
-                cfgFile.getParentFile().mkdirs();
-            }
+            Path cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(specPair.getLeft().getName() + ".toml");
+            String cfgStr = cfgFile.toString();
+            if (cfgStr.length() > 128) cfgStr = MODID + "-" + specPair.getLeft().getName() + ".toml";
+            else
+                try {
+                    Files.createDirectories(cfgFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             specPair.getLeft().setConfigSpec(specPair.getRight());
-            ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgFile.toString());
+            ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgStr);
         }
     }
 
