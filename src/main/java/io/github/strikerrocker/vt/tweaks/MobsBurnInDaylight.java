@@ -44,7 +44,7 @@ public class MobsBurnInDaylight extends Feature {
                     babyZombieBurnInDaylight.get())) && world.isDaytime()) {
                 float brightness = livingEntity.getBrightness();
                 Random random = world.rand;
-                BlockPos blockPos = livingEntity.func_233580_cy_();
+                BlockPos blockPos = livingEntity.getPosition();
                 if (brightness > 0.5 && random.nextFloat() * 30 < (brightness - 0.4) * 2 && world.canBlockSeeSky(blockPos)) {
                     ItemStack itemstack = livingEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
                     boolean setFire = true;

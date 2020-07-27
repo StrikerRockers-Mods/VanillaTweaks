@@ -6,7 +6,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class TweaksModule extends Module {
     public TweaksModule(ForgeConfigSpec.Builder builder) {
-        super("Tweaks", "Tweaks", false, builder);
+        super("tweaks", "Tweaks", false, builder);
     }
 
     @Override

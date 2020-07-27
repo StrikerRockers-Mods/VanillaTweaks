@@ -32,7 +32,7 @@ public class ArrowSetFire extends Feature {
     public void onArrowImpact(ProjectileImpactEvent.Arrow event) {
         AbstractArrowEntity arrow = event.getArrow();
         if (!arrow.world.isRemote && arrow.isBurning() && arrowsSetBlockOnFire.get()) {
-            BlockPos pos = arrow.func_233580_cy_();
+            BlockPos pos = arrow.getPosition();
             Vector3d vec3d = new Vector3d(pos.getX() + arrow.getMotion().x, pos.getY() + arrow.getMotion().y, pos.getZ() + arrow.getMotion().z);
             RayTraceResult raytraceresult = arrow.world.rayTraceBlocks(new RayTraceContext(arrow.getPositionVec(), vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
             BlockPos hitPos = new BlockPos(raytraceresult.getHitVec()).up();

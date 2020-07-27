@@ -39,7 +39,7 @@ public class Blocks extends Feature {
     public static TileEntityType<PedestalTileEntity> PEDESTAL_TYPE;
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
-    private static Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
+    private static final Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {

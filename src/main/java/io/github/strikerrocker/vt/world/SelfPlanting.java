@@ -75,7 +75,7 @@ public class SelfPlanting extends Feature {
         ItemStack stack = entity.getItem().copy();
         Item item = stack.getItem();
         Block block = Block.getBlockFromItem(item);
-        BlockPos entityPos = new BlockPos(entity.func_233580_cy_());
+        BlockPos entityPos = new BlockPos(entity.getPosition());
         if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
             if (world.rand.nextInt() > chanceToPlant.get()) {
                 FakePlayer player = Utils.getFakePlayer(world);

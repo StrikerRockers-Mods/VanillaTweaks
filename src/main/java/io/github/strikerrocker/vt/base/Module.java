@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Module {
-    private ForgeConfigSpec.Builder configBuilder;
-    private Map<String, Feature> features = new HashMap<>();
-    private String name;
-    private String comments;
+    private final ForgeConfigSpec.Builder configBuilder;
+    private final Map<String, Feature> features = new HashMap<>();
+    private final String name;
+    private final String comments;
     private ForgeConfigSpec forgeConfigSpec;
 
     public Module(String name, String comments, boolean requiresMCRestart, ForgeConfigSpec.Builder configBuilder) {

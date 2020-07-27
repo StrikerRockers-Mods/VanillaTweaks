@@ -5,7 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class LootModule extends Module {
     public LootModule(ForgeConfigSpec.Builder builder) {
-        super("Loot", "Mob Drops", false, builder);
+        super("loot", "Mob Drops", false, builder);
     }
 
     @Override

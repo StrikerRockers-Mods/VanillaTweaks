@@ -56,7 +56,7 @@ public class Sickle extends Feature {
                         if (block.canHarvestBlock(state, world, pos, player))
                             block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), stack);
                         world.setBlockState(pos, Blocks.AIR.getDefaultState());
-                        world.playSound(player, player.func_233580_cy_(), state.getSoundType(world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1f, 1f);
+                        world.playSound(player, player.getPosition(), state.getSoundType(world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1f, 1f);
                     }
                 }
             }

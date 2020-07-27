@@ -37,12 +37,12 @@ import javax.annotation.Nullable;
 
 public class PedestalBlock extends Block implements IWaterLoggable {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    private VoxelShape base = Block.makeCuboidShape(0.5, 0.0, 0.5, 15.5, 1.0, 15.5);
-    private VoxelShape deco1 = Block.makeCuboidShape(2.0, 1.0, 2.0, 14.0, 2.0, 14.0);
-    private VoxelShape pillar = Block.makeCuboidShape(4.5, 2.0, 4.5, 11.5, 12.0, 11.5);
-    private VoxelShape deco2 = Block.makeCuboidShape(2.0, 12.0, 2.0, 14.0, 13.0, 14.0);
-    private VoxelShape top = Block.makeCuboidShape(1, 13.0, 1, 15.0, 15.0, 15.0);
-    private VoxelShape PEDESTAL_VOXEL_SHAPE = VoxelShapes.or(base, deco1, pillar, deco2, top);
+    private final VoxelShape base = Block.makeCuboidShape(0.5, 0.0, 0.5, 15.5, 1.0, 15.5);
+    private final VoxelShape deco1 = Block.makeCuboidShape(2.0, 1.0, 2.0, 14.0, 2.0, 14.0);
+    private final VoxelShape pillar = Block.makeCuboidShape(4.5, 2.0, 4.5, 11.5, 12.0, 11.5);
+    private final VoxelShape deco2 = Block.makeCuboidShape(2.0, 12.0, 2.0, 14.0, 13.0, 14.0);
+    private final VoxelShape top = Block.makeCuboidShape(1, 13.0, 1, 15.0, 15.0, 15.0);
+    private final VoxelShape PEDESTAL_VOXEL_SHAPE = VoxelShapes.or(base, deco1, pillar, deco2, top);
 
     public PedestalBlock() {
         super(Block.Properties.create(Material.ROCK, MaterialColor.GRAY_TERRACOTTA).hardnessAndResistance(2.0f, 10.0f));

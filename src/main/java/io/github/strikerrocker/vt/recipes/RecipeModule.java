@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class RecipeModule extends Module {
     public RecipeModule(ForgeConfigSpec.Builder builder) {
-        super("Crafting", "Modification of vanilla_recipes recipes and addition of new recipes regarding vanilla_recipes", true, builder);
+        super("crafting", "Modification of vanilla_recipes recipes and addition of new recipes regarding vanilla_recipes", true, builder);
     }
 
     @Override

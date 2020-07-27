@@ -20,19 +20,19 @@ public class PedestalScreen extends ContainerScreen<PedestalContainer> {
     }
 
     @Override
-    protected void func_230450_a_(MatrixStack matrixStack, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
-        RenderSystem.color4f(1, 1, 1, 1);
-        minecraft.getTextureManager().bindTexture(BG_TEXTURE);
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
-        this.blit(matrixStack, x, y, 0, 0, xSize, ySize);
+    public void render(MatrixStack matrixStack, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
+        renderBackground(matrixStack);
+        this.drawGuiContainerBackgroundLayer(matrixStack, p_230430_4_, p_230430_2_, p_230430_3_);
+        super.render(matrixStack, p_230430_2_, p_230430_3_, p_230430_4_);
+        this.func_230459_a_(matrixStack, p_230430_2_, p_230430_3_);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
-        renderBackground(matrixStack);
-        this.func_230450_a_(matrixStack, p_230430_4_, p_230430_2_, p_230430_3_);
-        super.render(matrixStack, p_230430_2_, p_230430_3_, p_230430_4_);
-        this.func_230459_a_(matrixStack, p_230430_2_, p_230430_3_);
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+        RenderSystem.color4f(1, 1, 1, 1);
+        minecraft.getTextureManager().bindTexture(BG_TEXTURE);
+        int posX = (width - xSize) / 2;
+        int posY = (height - ySize) / 2;
+        this.blit(matrixStack, posX, posY, 0, 0, xSize, ySize);
     }
 }

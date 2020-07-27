@@ -21,7 +21,7 @@ public class CraftingPadItem extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if (!worldIn.isRemote()) {
-            playerIn.openContainer(new SimpleNamedContainerProvider((id, playerInv, player) -> new CraftingPadContainer(id, playerInv, IWorldPosCallable.of(worldIn, player.func_233580_cy_())), new TranslationTextComponent("item.vanillatweaks.pad")));
+            playerIn.openContainer(new SimpleNamedContainerProvider((id, playerInv, player) -> new CraftingPadContainer(id, playerInv, IWorldPosCallable.of(worldIn, player.getPosition())), new TranslationTextComponent("item.vanillatweaks.pad")));
             return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
         }
         return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));

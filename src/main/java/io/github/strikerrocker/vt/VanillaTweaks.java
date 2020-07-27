@@ -14,12 +14,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +28,7 @@ import static io.github.strikerrocker.vt.VTModInfo.MODID;
 @Mod(MODID)
 public class VanillaTweaks {
     public static final Logger LOGGER = LogManager.getLogger();
-    private static List<Module> modules = new ArrayList<>();
+    private static final List<Module> modules = new ArrayList<>();
 
     public VanillaTweaks() {
         registerModules();
@@ -45,13 +43,9 @@ public class VanillaTweaks {
         for (Function<ForgeConfigSpec.Builder, Module> function : moduleBuilder) {
             Pair<Module, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(function);
             modules.add(specPair.getLeft());
-
-            File cfgFile = FMLPaths.CONFIGDIR.get().resolve(MODID).resolve(specPair.getLeft().getName() + ".toml").toFile();
-            if (!cfgFile.getParentFile().exists()) {
-                cfgFile.getParentFile().mkdirs();
-            }
+            String cfgStr = "vanillatweaks_" + specPair.getLeft().getName() + ".toml";
             specPair.getLeft().setConfigSpec(specPair.getRight());
-            ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgFile.toString());
+            ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgStr);
         }
     }
 

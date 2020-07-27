@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomingEnchantment extends Enchantment {
-    private AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+    private final AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
 
     HomingEnchantment(String name) {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentType.BOW, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
@@ -52,8 +52,8 @@ public class HomingEnchantment extends Enchantment {
                 }
             }
             if (target != null) {
-                BlockPos arrowPos = arrow.func_233580_cy_();
-                BlockPos targetPos = target.func_233580_cy_();
+                BlockPos arrowPos = arrow.getPosition();
+                BlockPos targetPos = target.getPosition();
                 double x = targetPos.getX() - arrowPos.getX();
                 double y = target.getBoundingBox().minY + target.getHeight() / 2 - (arrowPos.getY() + arrow.getHeight() / 2);
                 double z = targetPos.getZ() - arrowPos.getZ();

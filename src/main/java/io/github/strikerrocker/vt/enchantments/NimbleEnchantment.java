@@ -33,7 +33,7 @@ public class NimbleEnchantment extends Enchantment {
             AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", (float) enchantmentLevel * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
             if (enchantmentLevel > 0) {
                 if (speedAttribute.getModifier(nimbleUUID) == null) {
-                    speedAttribute.func_233767_b_(speedModifier);
+                    speedAttribute.applyPersistentModifier(speedModifier);
                 }
             } else if (speedAttribute.getModifier(nimbleUUID) != null) {
                 speedAttribute.removeModifier(speedModifier);

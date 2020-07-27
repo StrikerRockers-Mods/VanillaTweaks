@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Map;
 
 public class EnchantmentFeature extends Feature {
+    public static Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
     static ForgeConfigSpec.BooleanValue enableBlazing;
     static ForgeConfigSpec.BooleanValue enableHops;
     static ForgeConfigSpec.BooleanValue enableNimble;
@@ -22,7 +23,6 @@ public class EnchantmentFeature extends Feature {
     static ForgeConfigSpec.BooleanValue enableVeteran;
     static ForgeConfigSpec.BooleanValue enableVigor;
     static ForgeConfigSpec.BooleanValue enableHoming;
-    public static Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
 
     static {
         enchantments.put("blazing", new Tuple<>(new BlazingEnchantment("blazing"), "Want to smelt things when you mine them?"));

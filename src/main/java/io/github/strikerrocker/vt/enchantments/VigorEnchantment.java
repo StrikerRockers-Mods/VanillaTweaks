@@ -30,7 +30,7 @@ public class VigorEnchantment extends Enchantment {
             AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "vigor", (float) lvl / 10, AttributeModifier.Operation.MULTIPLY_BASE);
             if (lvl > 0) {
                 if (vigorAttribute.getModifier(vigorUUID) == null) {
-                    vigorAttribute.func_233767_b_(vigorModifier);
+                    vigorAttribute.applyPersistentModifier(vigorModifier);
                 }
             } else {
                 if (vigorAttribute.getModifier(vigorUUID) != null) {
