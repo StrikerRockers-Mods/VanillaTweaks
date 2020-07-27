@@ -35,11 +35,11 @@ public class Blocks extends Feature {
     private static final CharcoalBlock CHARCOAL_BLOCK = new CharcoalBlock("charcoalblock");
     private static final Block SUGAR_BLOCK = new Block(Block.Properties.create(Material.SAND, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
     private static final Block FLINT_BLOCK = new Block(Block.Properties.create(Material.SAND, MaterialColor.BROWN).hardnessAndResistance(1.0f, 10.0f)).setRegistryName("flintblock");
+    private static final Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
     @ObjectHolder(MODID + ":pedestal")
     public static TileEntityType<PedestalTileEntity> PEDESTAL_TYPE;
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
-    private static final Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {

@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.compat;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.InterModComms;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -10,7 +11,7 @@ public class CuriosCompat {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("head").build());
     }
 
-    public static boolean isStackInCuriosSlot(ItemStack stack) {
-        return CuriosApi.getCuriosHelper().getCurio(stack).isPresent();
+    public static boolean isStackInCuriosSlot(LivingEntity entity, ItemStack stack) {
+        return CuriosApi.getCuriosHelper().findEquippedCurio(stack.getItem(), entity).isPresent();
     }
 }

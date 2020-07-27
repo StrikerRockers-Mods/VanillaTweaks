@@ -43,6 +43,7 @@ public class Items extends Feature {
     private static final Item BINOCULARS = new BinocularItem();
     private static final Item LENS = new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName("lens");
     private static final Item FRIED_EGG = new Item(new Item.Properties().food(new Food.Builder().hunger(5).saturation(0.6f).build()).group(ItemGroup.FOOD)).setRegistryName("friedegg");
+    private static final Item SLIME_BUCKET = new SlimeBucketItem();
     public static Item CRAFTING_PAD = new CraftingPadItem();
     public static Item DYNAMITE = new DynamiteItem("dynamite");
     public static ForgeConfigSpec.BooleanValue enablePad;
@@ -50,7 +51,6 @@ public class Items extends Feature {
     static ForgeConfigSpec.BooleanValue enableSlimeBucket;
     static ForgeConfigSpec.DoubleValue binocularZoomAmount;
     static ForgeConfigSpec.BooleanValue enableFriedEgg;
-    private static final Item SLIME_BUCKET = new SlimeBucketItem();
 
     @SubscribeEvent
     public void onFOVChange(FOVUpdateEvent event) {
@@ -59,8 +59,7 @@ public class Items extends Feature {
             if (!helmet.isEmpty() && helmet.getItem() == BINOCULARS) {
                 event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
             } else if (ModList.get().isLoaded("curios")) {
-                //TODO fix curios compat not working
-                if (CuriosCompat.isStackInCuriosSlot(new ItemStack(Items.BINOCULARS))) {
+                if (CuriosCompat.isStackInCuriosSlot(event.getEntity(), new ItemStack(Items.BINOCULARS))) {
                     event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
                 }
             }
