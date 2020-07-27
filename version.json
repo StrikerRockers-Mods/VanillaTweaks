@@ -4,7 +4,7 @@
     "1.12.2-latest": "1.12.2-1.5.3",
     "1.14.4-latest": "1.14.4-1.5.11",
     "1.15.2-latest": "1.15.2-1.5.26",
-    "1.16.1-latest": "1.16.1-1.5.29"
+    "1.16.1-latest": "1.16.1-1.5.30"
   },
   "1.12.2": {
     "1.3.6": "* Arrows which hit ground and are on fire sets the ground to fire\n* TNT placed adjacent to lava and magma block ignites itself",
@@ -39,6 +39,7 @@
     "1.15.2-1.5.28": "Fixed Shift-Right clicking sign with block in hand opens sign text editor instead of placing block in front of it."
   },
   "1.16.1": {
-    "1.16.1-1.5.29": "Port to 1.16"
+    "1.16.1-1.5.29": "Port to 1.16",
+    "1.16.1-1.5.30": "Config now appears in serverconfig folder rather than the config folder. Fixed Curios Compatability."
   }
 }
