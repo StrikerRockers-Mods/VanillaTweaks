@@ -1,5 +1,6 @@
 modLoader="javafml" #mandatory
 loaderVersion="[30,)" #mandatory
+license="MIT"
 issueTrackerURL="http://github.com/strikerrocker/VanillaTweaks/issues/" #optional
 [[mods]] #mandatory
 modId="vanillatweaks" #mandatory
