@@ -11,6 +11,6 @@ jobs:
           java-version: 1.8
       - name: 'Setup Build'
         run: 'chmod 777 gradlew'
-      - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-14
+      - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-8
         with:
           args: build
