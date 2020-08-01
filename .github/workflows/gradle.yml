@@ -11,10 +11,6 @@ jobs:
           java-version: 1.8
       - name: 'Setup Build'
         run: 'chmod 777 gradlew'
-      - name: "Build"
-        uses: eskatos/gradle-command-action@v1
+      - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-14
         with:
-          arguments: build
-          wrapper-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
+          args: build
