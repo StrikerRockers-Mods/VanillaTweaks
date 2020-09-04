@@ -20,11 +20,11 @@ public class PedestalScreen extends ContainerScreen<PedestalContainer> {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         renderBackground(matrixStack);
-        this.drawGuiContainerBackgroundLayer(matrixStack, p_230430_4_, p_230430_2_, p_230430_3_);
-        super.render(matrixStack, p_230430_2_, p_230430_3_, p_230430_4_);
-        this.func_230459_a_(matrixStack, p_230430_2_, p_230430_3_);
+        this.drawGuiContainerBackgroundLayer(matrixStack, partialTicks, mouseX, mouseY);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
