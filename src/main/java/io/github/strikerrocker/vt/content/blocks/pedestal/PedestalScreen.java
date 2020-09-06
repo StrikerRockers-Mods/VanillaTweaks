@@ -35,4 +35,10 @@ public class PedestalScreen extends ContainerScreen<PedestalContainer> {
         int posY = (height - ySize) / 2;
         this.blit(matrixStack, posX, posY, 0, 0, xSize, ySize);
     }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+        this.font.func_243248_b(matrixStack, this.title, this.titleX, this.titleY, 0x404040);
+        this.font.func_243248_b(matrixStack, playerInv.getDisplayName(), 8, 40, 0x404040);
+    }
 }

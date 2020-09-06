@@ -21,7 +21,6 @@ public class ArrowSetFire extends Feature {
                 .comment("Want the fire arrows to set fire on block it landed?")
                 .define("arrowsSetBlockOnFire", true);
     }
-    //TODO Doesnt work
 
     @Override
     public boolean usesEvents() {

@@ -47,7 +47,7 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     protected boolean canApplyTogether(Enchantment ench) {
-        return super.canApplyTogether(ench) && ench != Enchantments.SILK_TOUCH;
+        return super.canApplyTogether(ench) && ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE;
     }
 
     @Override

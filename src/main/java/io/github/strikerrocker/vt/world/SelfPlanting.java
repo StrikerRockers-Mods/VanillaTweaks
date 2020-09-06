@@ -34,8 +34,6 @@ public class SelfPlanting extends Feature {
         return true;
     }
 
-    //TODO check
-
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
         selfPlanting = builder
@@ -45,7 +43,7 @@ public class SelfPlanting extends Feature {
         despawnTime = builder
                 .translation("config.vanillatweaks:despawnTime")
                 .comment("How long a plant should take to despawn (and attempt to plant) Default Minecraft is 6000.")
-                .defineInRange("despawnTime", 1000, 0, Integer.MAX_VALUE);
+                .defineInRange("despawnTime", 6000, 0, Integer.MAX_VALUE);
         chanceToPlant = builder
                 .translation("config.vanillatweaks:chanceToPlant")
                 .comment("Percentage chance to plant")
@@ -59,11 +57,11 @@ public class SelfPlanting extends Feature {
 
     @SubscribeEvent
     public void itemToss(EntityJoinWorldEvent event) {
-        if (!event.getWorld().isRemote && event.getEntity() instanceof ItemEntity) {
+        if (selfPlanting.get() && !event.getWorld().isRemote && event.getEntity() instanceof ItemEntity) {
             ItemEntity itemEntity = (ItemEntity) event.getEntity();
             Item item = itemEntity.getItem().getItem();
             Block block = Block.getBlockFromItem(item);
-            if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
+            if (item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
                 itemEntity.lifespan = despawnTime.get();
             }
         }
