@@ -80,8 +80,8 @@ public class EnchantmentFeature extends Feature {
 
         @SubscribeEvent
         public static void registerModifierSerializers(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-            event.getRegistry().register(new BlazingEnchantment.Serializer().setRegistryName(VTModInfo.MODID, "blazing"));
-            event.getRegistry().register(new SiphonEnchantment.Serializer().setRegistryName(VTModInfo.MODID, "siphon"));
+            event.getRegistry().register(new BlazingModifier.Serializer().setRegistryName(VTModInfo.MODID, "blazing"));
+            event.getRegistry().register(new SiphonModifier.Serializer().setRegistryName(VTModInfo.MODID, "siphon"));
         }
     }
 }

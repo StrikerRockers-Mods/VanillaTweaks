@@ -5,7 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class WorldModule extends Module {
     public WorldModule(ForgeConfigSpec.Builder builder) {
-        super("world", "Dynamic changes in the world", false, builder);
+        super("world", "Dynamic changes in the world", builder);
     }
 
     @Override

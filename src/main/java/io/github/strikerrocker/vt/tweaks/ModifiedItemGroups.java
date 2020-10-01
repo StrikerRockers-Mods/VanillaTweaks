@@ -36,12 +36,13 @@ public class ModifiedItemGroups extends Feature {
         if (event.getConfig().getSpec() == module.getConfigSpec()) {
             for (Item item : Registry.ITEM) {
                 String name = item.getRegistryName().getPath();
-                if (commandBlockInRedstone.get() && name.contains("command_block")) {
+                if (commandBlockInRedstone.get()) {
                     ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK, ItemGroup.REDSTONE, "field_77701_a");
                     ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.CHAIN_COMMAND_BLOCK, ItemGroup.REDSTONE, "field_77701_a");
                     ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.REPEATING_COMMAND_BLOCK, ItemGroup.REDSTONE, "field_77701_a");
                     ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.COMMAND_BLOCK_MINECART, ItemGroup.REDSTONE, "field_77701_a");
-                    ObfuscationReflectionHelper.setPrivateValue(Item.class, item, ItemGroup.REDSTONE, "field_77701_a");
+                    if (name.contains("command_block"))
+                        ObfuscationReflectionHelper.setPrivateValue(Item.class, item, ItemGroup.REDSTONE, "field_77701_a");
                 }
                 if (dragonEggInDecorations.get() && name.contains("dragon_egg")) {
                     ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.DRAGON_EGG, ItemGroup.DECORATIONS, "field_77701_a");

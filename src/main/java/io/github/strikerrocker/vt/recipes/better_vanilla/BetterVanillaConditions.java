@@ -5,7 +5,6 @@ import io.github.strikerrocker.vt.VTModInfo;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
-import net.minecraftforge.fml.ModList;
 
 public class BetterVanillaConditions implements ICondition {
 
@@ -25,7 +24,7 @@ public class BetterVanillaConditions implements ICondition {
     public boolean test() {
         if (object.equals("better_stairs")) return BetterVanillaRecipes.betterStairs.get();
         if (object.equals("better_stone_tools"))
-            return BetterVanillaRecipes.betterStoneTools.get() && !ModList.get().isLoaded("quark");
+            return BetterVanillaRecipes.betterStoneTools.get();//!ModList.get().isLoaded("quark");
         return false;
     }
 

@@ -15,12 +15,11 @@ public abstract class Module {
     private final String comments;
     private ForgeConfigSpec forgeConfigSpec;
 
-    public Module(String name, String comments, boolean requiresMCRestart, ForgeConfigSpec.Builder configBuilder) {
+    public Module(String name, String comments, ForgeConfigSpec.Builder configBuilder) {
         this.name = name;
         this.comments = comments;
         this.configBuilder = configBuilder;
         addFeatures();
-        setupConfig();
     }
 
     public ForgeConfigSpec getConfigSpec() {

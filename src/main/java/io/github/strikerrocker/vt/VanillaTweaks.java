@@ -14,14 +14,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
@@ -38,15 +36,27 @@ public class VanillaTweaks {
     }
 
     private static void registerModules() {
-        List<Function<ForgeConfigSpec.Builder, Module>> moduleBuilder = new ArrayList<>();
-        Collections.addAll(moduleBuilder, ContentModule::new, EnchantmentModule::new, LootModule::new, RecipeModule::new, TweaksModule::new, WorldModule::new);
-        for (Function<ForgeConfigSpec.Builder, Module> function : moduleBuilder) {
+        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        builder.push("VanillaTweaks");
+        Collections.addAll(modules,
+                new ContentModule(builder),
+                new EnchantmentModule(builder),
+                new LootModule(builder),
+                new RecipeModule(builder),
+                new TweaksModule(builder),
+                new WorldModule(builder));
+        modules.forEach(Module::setupConfig);
+        builder.pop();
+        ForgeConfigSpec spec = builder.build();
+        modules.forEach(module -> module.setConfigSpec(spec));
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, spec);
+        /*for (Function<ForgeConfigSpec.Builder, Module> function : moduleBuilder) {
             Pair<Module, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(function);
             modules.add(specPair.getLeft());
             String cfgStr = "vanillatweaks_" + specPair.getLeft().getName() + ".toml";
             specPair.getLeft().setConfigSpec(specPair.getRight());
             ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgStr);
-        }
+        }*/
     }
 
     private void setup(final FMLCommonSetupEvent event) {

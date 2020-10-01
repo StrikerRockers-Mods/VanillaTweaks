@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ContentModule extends Module {
     public ContentModule(ForgeConfigSpec.Builder builder) {
-        super("content", "New items, blocks VanillaTweaks adds.", true, builder);
+        super("content", "New items, blocks VanillaTweaks adds.", builder);
     }
 
     @Override
