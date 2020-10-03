@@ -20,10 +20,6 @@ repositories {
         name = "Curios maven"
         url = "https://maven.theillusivec4.top/"
     }
-    maven {
-        name = "Gigahertz maven/mcp spread sheet"
-        url = "https://www.dogforce-games.com/maven/"
-    }
 }
 
 version = vt_version
@@ -33,7 +29,7 @@ archivesBaseName = 'VanillaTweaks'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200820-1.16.1'
+    mappings channel: 'snapshot', version: '20200916-1.16.2'
 
     runs {
         client {
@@ -50,7 +46,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.3-34.0.0'
+    minecraft 'net.minecraftforge:forge:1.16.3-34.1.1'
     compileOnly fg.deobf("mezz.jei:jei-1.16.3:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.3:${jei_version}")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
