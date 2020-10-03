@@ -20,7 +20,7 @@ public class SquishySponges extends Feature {
 
     private static void turnIntoWater(World worldIn, BlockPos pos) {
         if (worldIn.getBlockState(pos).getMaterial().isReplaceable()) {
-            if (worldIn.func_230315_m_().func_236040_e_()) {
+            if (worldIn.getDimensionType().isUltrawarm()) {
                 worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
             } else {
                 worldIn.setBlockState(pos, Fluids.WATER.getDefaultState().getBlockState(), 11);
