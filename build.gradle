@@ -29,7 +29,7 @@ archivesBaseName = 'VanillaTweaks'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200916-1.16.2'
+    mappings channel: 'snapshot', version: '20201028-1.16.3'
 
     runs {
         client {
@@ -46,7 +46,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.3-34.1.1'
+    minecraft 'net.minecraftforge:forge:1.16.4-35.0.2'
     compileOnly fg.deobf("mezz.jei:jei-1.16.3:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.3:${jei_version}")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
