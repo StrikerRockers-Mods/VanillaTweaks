@@ -106,7 +106,8 @@ public class SilkSpawner extends Feature {
                 if (!spawnerDataNBT.isEmpty()) {
                     DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.read(spawnerDataNBT);
                     Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getCachedEntity();
-                    event.getToolTip().add(ent.getDisplayName());
+                    if (ent != null && ent.getDisplayName() != null)
+                        event.getToolTip().add(ent.getDisplayName());
                 }
             }
         }
