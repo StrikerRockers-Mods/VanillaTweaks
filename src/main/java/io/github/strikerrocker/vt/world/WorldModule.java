@@ -11,7 +11,7 @@ public class WorldModule extends Module {
     @Override
     public void addFeatures() {
         registerFeature("realistic_relationship", new RealisticRelationship());
-        //registerFeature(new NoMoreLavaGen());
+        registerFeature("lava_gen", new NoMoreLavaPocketGen());
         registerFeature("self_planting", new SelfPlanting());
     }
 }
