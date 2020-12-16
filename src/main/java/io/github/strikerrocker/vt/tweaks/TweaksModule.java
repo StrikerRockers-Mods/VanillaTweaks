@@ -23,5 +23,6 @@ public class TweaksModule extends Module {
         registerFeature("item_frame_reverse_rotate", new ItemFrameReverse());
         registerFeature("squishy_sponges", new SquishySponges());
         registerFeature("disable_potion_shift", new NoPotionShift());
+        registerFeature("beehive_tooltips", new BeehiveTooltips());
     }
 }

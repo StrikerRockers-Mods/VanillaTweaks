@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "trapped_chest"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PHP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "H": {
+      "item": "minecraft:tripwire_hook"
+    }
+  },
+  "result": {
+    "item": "minecraft:trapped_chest"
+  }
+}

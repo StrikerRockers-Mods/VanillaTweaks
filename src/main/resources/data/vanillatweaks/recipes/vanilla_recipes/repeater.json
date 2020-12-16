@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "repeater"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "R R",
+    "SRS",
+    "III"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "I": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "item": "minecraft:repeater"
+  }
+}

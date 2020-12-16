@@ -12,6 +12,8 @@ public class VanillaRecipes extends Feature {
     static ForgeConfigSpec.BooleanValue betterChest;
     static ForgeConfigSpec.BooleanValue nametag;
     static ForgeConfigSpec.BooleanValue string;
+    static ForgeConfigSpec.BooleanValue betterRepeater;
+    static ForgeConfigSpec.BooleanValue betterTrappedChestRecipe;
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -27,6 +29,14 @@ public class VanillaRecipes extends Feature {
                 .translation("config.vanillatweaks:string")
                 .comment("Have wool but need string?")
                 .define("string", true);
+        betterRepeater = builder
+                .translation("config.vanillatweaks:betterRepeater")
+                .comment("Want an easier way to craft repeater?")
+                .define("betterRepeater", true);
+        betterTrappedChestRecipe = builder
+                .translation("config.vanillatweaks:betterTrappedChestRecipe")
+                .comment("Wanna easier recipe for trapped chest?")
+                .define("betterTrappedChestRecipe", true);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

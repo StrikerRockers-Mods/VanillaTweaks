@@ -25,6 +25,8 @@ public class VanillaRecipeConditions implements ICondition {
         if (object.equals("chest")) return VanillaRecipes.betterChest.get();
         if (object.equals("nametag")) return VanillaRecipes.nametag.get();
         if (object.equals("string")) return VanillaRecipes.string.get();
+        if (object.equals("trapped_chest")) return VanillaRecipes.betterTrappedChestRecipe.get();
+        if (object.equals("repeater")) return VanillaRecipes.betterRepeater.get();
         return false;
     }
 
