@@ -85,7 +85,7 @@ public class DynamiteEntity extends ProjectileItemEntity {
                     return;
                 } else {
                     BlockPos pos = getPosition();
-                    world.createExplosion(this, pos.getX(), pos.getY(), pos.getZ(), 3F, Explosion.Mode.BREAK);
+                    world.createExplosion(this, pos.getX(), pos.getY(), pos.getZ(), Items.dynamiteExplosionPower.get(), Explosion.Mode.BREAK);
                 }
             }
             this.remove();

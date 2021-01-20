@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.content.items.dynamite;
 
+import io.github.strikerrocker.vt.content.items.Items;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -11,7 +12,7 @@ import net.minecraft.world.World;
 
 public class DynamiteItem extends Item {
     public DynamiteItem(String name) {
-        super(new Item.Properties().group(ItemGroup.MISC).maxStackSize(16));
+        super(new Item.Properties().group(ItemGroup.MISC).maxStackSize(Items.dynamiteStackSize.get()));
         this.setRegistryName(name);
     }
 
@@ -21,7 +22,7 @@ public class DynamiteItem extends Item {
         if (!playerIn.isCreative()) itemstack.shrink(1);
         BlockPos pos = playerIn.getPosition();
         worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
-        playerIn.getCooldownTracker().setCooldown(this, 20);
+        playerIn.getCooldownTracker().setCooldown(this, Items.dynamiteCooldown.get());
         if (!worldIn.isRemote) {
             DynamiteEntity dynamite = new DynamiteEntity(worldIn, playerIn);
             dynamite.setItem(itemstack);

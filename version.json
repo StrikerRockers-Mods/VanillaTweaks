@@ -6,7 +6,7 @@
     "1.15.2-latest": "1.15.2-1.5.26",
     "1.16.1-latest": "1.16.1-1.5.31",
     "1.16.2-latest": "1.16.2-1.5.32",
-    "1.16.4-latest": "1.16.4-1.5.36"
+    "1.16.4-latest": "1.16.4-1.5.38"
   },
   "1.12.2": {
     "1.3.6": "* Arrows which hit ground and are on fire sets the ground to fire\n* TNT placed adjacent to lava and magma block ignites itself",
@@ -49,6 +49,7 @@
     "1.16.2-1.5.32": "Fixed pedestal GUI title appearing not correctly.\nRemoved creeper tnt as it was not balanced.\nRevert the bug which would cause all plant items to despawn in a minute. \nDisabled fortune and blazing being allowed together."
   },
   "1.16.4": {
-    "1.16.4-1.5.36": "Added Beehive tooltips and easier recipe for repeater and trapped chest."
+    "1.16.4-1.5.36": "Added Beehive tooltips and easier recipe for repeater and trapped chest.",
+    "1.16.4-1.5.38": "Added configuration option for dynamite cooldown, stack size and explosion power"
   }
 }

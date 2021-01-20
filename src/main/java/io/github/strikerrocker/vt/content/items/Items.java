@@ -51,6 +51,9 @@ public class Items extends Feature {
     static ForgeConfigSpec.BooleanValue enableSlimeBucket;
     static ForgeConfigSpec.DoubleValue binocularZoomAmount;
     static ForgeConfigSpec.BooleanValue enableFriedEgg;
+    public static ForgeConfigSpec.IntValue dynamiteCooldown;
+    public static ForgeConfigSpec.IntValue dynamiteStackSize;
+    public static ForgeConfigSpec.IntValue dynamiteExplosionPower;
 
     @SubscribeEvent
     public void onFOVChange(FOVUpdateEvent event) {
@@ -80,6 +83,18 @@ public class Items extends Feature {
                 .translation("config.vanillatweaks:enableDynamite")
                 .comment("Want a less effective but throwable TNT?")
                 .define("enableDynamite", true);
+        dynamiteCooldown = builder
+                .translation("config.vanillatweaks:dynamiteCooldown")
+                .comment("Cooldown for the dynamite in ticks")
+                .defineInRange("dynamiteCooldown", 20, 0, Integer.MAX_VALUE);
+        dynamiteStackSize = builder
+                .translation("config.vanillatweaks:dynamiteStackSize")
+                .comment("Stack size for the dynamite")
+                .defineInRange("dynamiteStackSize", 16, 1,64);
+        dynamiteExplosionPower = builder
+                .translation("config.vanillatweaks:dynamiteExplosionPower")
+                .comment("Explosion power for dynamite. TNT has 4, Ender Crystal has 6")
+                .defineInRange("dynamiteExplosionPower",3,0,10);
         enableFriedEgg = builder
                 .translation("config.vanillatweaks:enableFriedEgg")
                 .comment("Want a food which can be obtained with eggs and heals 2.5 hunger?")
