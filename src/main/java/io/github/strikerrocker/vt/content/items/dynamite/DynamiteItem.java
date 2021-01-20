@@ -11,9 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class DynamiteItem extends Item {
-    public DynamiteItem(String name) {
-        super(new Item.Properties().group(ItemGroup.MISC).maxStackSize(Items.dynamiteStackSize.get()));
-        this.setRegistryName(name);
+    public DynamiteItem() {
+        super(new Item.Properties().group(ItemGroup.MISC).maxStackSize(16));
+        this.setRegistryName("dynamite");
     }
 
     @Override
