@@ -27,8 +27,8 @@ class BlazingModifier extends LootModifier {
     }
 
     private static ItemStack smelt(ItemStack stack, LootContext context) {
-        return context.getWorld().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(stack), context.getWorld())
-                .map(FurnaceRecipe::getRecipeOutput)
+        return context.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(stack), context.getLevel())
+                .map(FurnaceRecipe::getResultItem)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount()))
                 .orElse(stack);
@@ -37,8 +37,8 @@ class BlazingModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(context.get(LootParameters.TOOL));
-        if (enchantments.containsKey(Enchantments.FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(context.getParamOrNull(LootParameters.TOOL));
+        if (enchantments.containsKey(Enchantments.BLOCK_FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
             return generatedLoot;
         }
         ArrayList<ItemStack> ret = new ArrayList<>();

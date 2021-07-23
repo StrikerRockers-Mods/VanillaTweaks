@@ -38,27 +38,27 @@ public class MobsBurnInDaylight extends Feature {
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         LivingEntity livingEntity = event.getEntityLiving();
-        if (!livingEntity.world.isRemote) {
-            World world = livingEntity.world;
-            if (((livingEntity instanceof CreeperEntity && creeperBurnInDaylight.get()) || (livingEntity instanceof ZombieEntity && livingEntity.isChild() &&
-                    babyZombieBurnInDaylight.get())) && world.isDaytime()) {
+        if (!livingEntity.level.isClientSide()) {
+            World world = livingEntity.level;
+            if (((livingEntity instanceof CreeperEntity && creeperBurnInDaylight.get()) || (livingEntity instanceof ZombieEntity && livingEntity.isBaby() &&
+                    babyZombieBurnInDaylight.get())) && world.isDay()) {
                 float brightness = livingEntity.getBrightness();
-                Random random = world.rand;
-                BlockPos blockPos = livingEntity.getPosition();
-                if (brightness > 0.5 && random.nextFloat() * 30 < (brightness - 0.4) * 2 && world.canBlockSeeSky(blockPos)) {
-                    ItemStack itemstack = livingEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
+                Random random = world.random;
+                BlockPos blockPos = livingEntity.blockPosition();
+                if (brightness > 0.5 && random.nextFloat() * 30 < (brightness - 0.4) * 2 && world.canSeeSky(blockPos)) {
+                    ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlotType.HEAD);
                     boolean setFire = true;
                     if (!itemstack.isEmpty()) {
                         setFire = true;
-                        if (itemstack.isDamageable()) {
-                            itemstack.setDamage(itemstack.getDamage() + random.nextInt(2));
-                            if (itemstack.getDamage() >= itemstack.getMaxDamage()) {
-                                livingEntity.setItemStackToSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
+                        if (itemstack.isDamageableItem()) {
+                            itemstack.setDamageValue(itemstack.getDamageValue() + random.nextInt(2));
+                            if (itemstack.getDamageValue() >= itemstack.getMaxDamage()) {
+                                livingEntity.setItemSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
                             }
                         }
                     }
                     if (setFire) {
-                        livingEntity.setFire(10);
+                        livingEntity.setSecondsOnFire(10);
                     }
                 }
             }

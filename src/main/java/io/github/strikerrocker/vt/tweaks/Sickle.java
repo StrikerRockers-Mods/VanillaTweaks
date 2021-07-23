@@ -37,8 +37,8 @@ public class Sickle extends Feature {
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
         PlayerEntity player = event.getPlayer();
-        World world = player.getEntityWorld();
-        ItemStack stack = player.getHeldItemMainhand();
+        World world = player.getCommandSenderWorld();
+        ItemStack stack = player.getMainHandItem();
         if (!stack.isEmpty() && stack.getItem() instanceof HoeItem && canHarvest(event.getState()) && hoeActsAsSickle.get()) {
             int range = 1;
             if (stack.getItem() == Items.DIAMOND_HOE)
@@ -49,18 +49,18 @@ public class Sickle extends Feature {
                 for (int k = -range; k < range + 1; k++) {
                     if (i == 0 && k == 0)
                         continue;
-                    BlockPos pos = event.getPos().add(i, 0, k);
+                    BlockPos pos = event.getPos().offset(i, 0, k);
                     BlockState state = world.getBlockState(pos);
                     if (canHarvest(state)) {
                         Block block = state.getBlock();
                         if (block.canHarvestBlock(state, world, pos, player))
-                            block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), stack);
-                        world.setBlockState(pos, Blocks.AIR.getDefaultState());
-                        world.playSound(player, player.getPosition(), state.getSoundType(world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1f, 1f);
+                            block.playerDestroy(world, player, pos, state, world.getBlockEntity(pos), stack);
+                        world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                        world.playSound(player, player.blockPosition(), state.getSoundType(world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1f, 1f);
                     }
                 }
             }
-            stack.damageItem(1, player, playerEntity -> playerEntity.sendBreakAnimation(playerEntity.getActiveHand()));
+            stack.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
         }
     }
 }

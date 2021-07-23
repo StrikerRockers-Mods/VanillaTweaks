@@ -17,13 +17,13 @@ public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTileE
     @Override
     public void render(PedestalTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
         ItemStack stack = tileEntityIn.inventory.getStackInSlot(0);
-        matrixStack.push();
-        double offset = Math.sin((tileEntityIn.getWorld().getGameTime() - tileEntityIn.lastChangeTime + partialTicks) / 8) / 4.0;
+        matrixStack.pushPose();
+        double offset = Math.sin((tileEntityIn.getLevel().getGameTime() - tileEntityIn.lastChangeTime + partialTicks) / 8) / 4.0;
         matrixStack.translate(0.5, 1.25 + offset, 0.5);
-        matrixStack.rotate(Vector3f.YP.rotationDegrees((tileEntityIn.getWorld().getGameTime() + partialTicks) * 4));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees((tileEntityIn.getLevel().getGameTime() + partialTicks) * 4));
         float scale = 1.5f;
         matrixStack.scale(scale, scale, scale);
-        Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.GROUND, i, i1, matrixStack, iRenderTypeBuffer);
-        matrixStack.pop();
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemCameraTransforms.TransformType.GROUND, i, i1, matrixStack, iRenderTypeBuffer);
+        matrixStack.popPose();
     }
 }

@@ -14,12 +14,12 @@ public class DummySpawnerLogic extends AbstractSpawner {
     }
 
     @Override
-    public World getWorld() {
-        return Minecraft.getInstance().world;
+    public World getLevel() {
+        return Minecraft.getInstance().level;
     }
 
     @Override
-    public BlockPos getSpawnerPosition() {
+    public BlockPos getPos() {
         return new BlockPos(0, 0, 0);
     }
 }

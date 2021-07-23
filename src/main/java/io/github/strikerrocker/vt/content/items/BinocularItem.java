@@ -10,8 +10,8 @@ import net.minecraft.util.SoundEvents;
 
 public class BinocularItem extends ArmorItem {
     public BinocularItem() {
-        super(new BasicArmorMaterial(VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, () -> Ingredient.fromItems(net.minecraft.item.Items.IRON_INGOT))
-                , EquipmentSlotType.HEAD, new Item.Properties().maxStackSize(1).group(ItemGroup.TOOLS));
+        super(new BasicArmorMaterial(VTModInfo.MODID + ":binoculars", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_IRON, 0.0f, () -> Ingredient.of(net.minecraft.item.Items.IRON_INGOT))
+                , EquipmentSlotType.HEAD, new Item.Properties().stacksTo(1).tab(ItemGroup.TAB_TOOLS));
         setRegistryName("binoculars");
     }
 }

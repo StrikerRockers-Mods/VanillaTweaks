@@ -20,16 +20,16 @@ public class ShearNameTag extends Feature {
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         PlayerEntity player = event.getPlayer();
         Entity target = event.getTarget();
-        ItemStack heldItem = !player.getHeldItemMainhand().isEmpty() ? player.getHeldItemMainhand() : player.getHeldItemOffhand();
+        ItemStack heldItem = !player.getMainHandItem().isEmpty() ? player.getMainHandItem() : player.getOffhandItem();
         if (shearOffNameTag.get() && !heldItem.isEmpty()) {
-            World world = player.world;
-            if (heldItem.getItem() instanceof ShearsItem && target instanceof LivingEntity && target.hasCustomName() && !world.isRemote) {
-                target.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1, 1);
-                ItemStack nameTag = new ItemStack(Items.NAME_TAG).setDisplayName(target.getCustomName());
+            World world = player.level;
+            if (heldItem.getItem() instanceof ShearsItem && target instanceof LivingEntity && target.hasCustomName() && !world.isClientSide()) {
+                target.playSound(SoundEvents.SHEEP_SHEAR, 1, 1);
+                ItemStack nameTag = new ItemStack(Items.NAME_TAG).setHoverName(target.getCustomName());
                 nameTag.getTag().putInt("RepairCost", 0);
-                target.entityDropItem(nameTag, 0);
+                target.spawnAtLocation(nameTag, 0);
                 target.setCustomName(null);
-                heldItem.damageItem(1, player, playerEntity -> playerEntity.sendBreakAnimation(playerEntity.getActiveHand()));
+                heldItem.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
             }
         }
     }

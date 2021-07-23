@@ -32,9 +32,9 @@ import static io.github.strikerrocker.vt.VTModInfo.MODID;
 
 public class Blocks extends Feature {
     public static final Block PEDESTAL_BLOCK = new PedestalBlock();
-    private static final CharcoalBlock CHARCOAL_BLOCK = new CharcoalBlock("charcoalblock");
-    private static final Block SUGAR_BLOCK = new Block(Block.Properties.create(Material.SAND, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
-    private static final Block FLINT_BLOCK = new Block(Block.Properties.create(Material.SAND, MaterialColor.BROWN).hardnessAndResistance(1.0f, 10.0f)).setRegistryName("flintblock");
+    private static final Block CHARCOAL_BLOCK = new Block(Block.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(5.0f, 10.0f)).setRegistryName("charcoalblock");
+    private static final Block SUGAR_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.TERRACOTTA_WHITE).strength(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
+    private static final Block FLINT_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)).setRegistryName("flintblock");
     private static final Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
     @ObjectHolder(MODID + ":pedestal")
     public static TileEntityType<PedestalTileEntity> PEDESTAL_TYPE;
@@ -71,7 +71,7 @@ public class Blocks extends Feature {
     public static class ClientModBusEvents {
         @SubscribeEvent
         public static void clientSetup(FMLClientSetupEvent event) {
-            ScreenManager.registerFactory(PedestalContainer.TYPE, PedestalScreen::new);
+            ScreenManager.register(PedestalContainer.TYPE, PedestalScreen::new);
             ClientRegistry.bindTileEntityRenderer(PEDESTAL_TYPE, PedestalTileEntityRenderer::new);
         }
     }
@@ -81,7 +81,7 @@ public class Blocks extends Feature {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onRegisterItemBlocks(RegistryEvent.Register<Item> event) {
-            Arrays.stream(blocks).map(block -> new BlockItem(block, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
+            Arrays.stream(blocks).map(block -> new BlockItem(block, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
         }
 
         @SubscribeEvent
@@ -91,7 +91,7 @@ public class Blocks extends Feature {
 
         @SubscribeEvent
         public static void onRegisterTEType(RegistryEvent.Register<TileEntityType<?>> event) {
-            event.getRegistry().register(TileEntityType.Builder.create(PedestalTileEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
+            event.getRegistry().register(TileEntityType.Builder.of(PedestalTileEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
         }
 
         @SubscribeEvent

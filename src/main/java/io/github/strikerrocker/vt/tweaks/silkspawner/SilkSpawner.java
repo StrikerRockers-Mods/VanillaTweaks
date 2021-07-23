@@ -43,10 +43,10 @@ public class SilkSpawner extends Feature {
 
     @SubscribeEvent
     public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
-        if (event.getEntity() instanceof PlayerEntity && ((PlayerEntity) event.getEntity()).getActiveHand() != null) {
+        if (event.getEntity() instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
-            ItemStack mainHand = playerEntity.getHeldItemMainhand();
-            ItemStack offHand = playerEntity.getHeldItemOffhand();
+            ItemStack mainHand = playerEntity.getMainHandItem();
+            ItemStack offHand = playerEntity.getOffhandItem();
             ItemStack stack = null;
             if (mainHand.getItem() == mobSpawnerItem)
                 stack = mainHand;
@@ -57,9 +57,9 @@ public class SilkSpawner extends Feature {
                 assert stackTag != null;
                 CompoundNBT spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
                 if (!spawnerDataNBT.isEmpty()) {
-                    TileEntity tile = event.getWorld().getTileEntity(event.getPos());
+                    TileEntity tile = event.getWorld().getBlockEntity(event.getPos());
                     if (tile instanceof MobSpawnerTileEntity) {
-                        ((MobSpawnerTileEntity) tile).getSpawnerBaseLogic().read(spawnerDataNBT);
+                        ((MobSpawnerTileEntity) tile).getSpawner().save(spawnerDataNBT);
                     }
                 }
             }
@@ -75,20 +75,20 @@ public class SilkSpawner extends Feature {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onBreak(BlockEvent.BreakEvent event) {
         IWorld world = event.getWorld();
-        TileEntity tile = world.getTileEntity(event.getPos());
-        int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, event.getPlayer().getHeldItemMainhand());
-        if (event.getState().getBlock() instanceof SpawnerBlock && !world.isRemote() && tile instanceof MobSpawnerTileEntity && enableSilkSpawner.get() && lvl >= 1) {
+        TileEntity tile = world.getBlockEntity(event.getPos());
+        int lvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, event.getPlayer().getMainHandItem());
+        if (event.getState().getBlock() instanceof SpawnerBlock && !world.isClientSide() && tile instanceof MobSpawnerTileEntity && enableSilkSpawner.get() && lvl >= 1) {
             event.setExpToDrop(0);
             ItemStack drop = new ItemStack(Blocks.SPAWNER);
-            CompoundNBT spawnerData = ((MobSpawnerTileEntity) tile).getSpawnerBaseLogic().write(new CompoundNBT());
+            CompoundNBT spawnerData = ((MobSpawnerTileEntity) tile).getSpawner().save(new CompoundNBT());
             CompoundNBT stackTag = new CompoundNBT();
             spawnerData.remove("Delay");
             stackTag.put(SPAWNER_TAG, spawnerData);
             drop.setTag(stackTag);
 
-            Block.spawnAsEntity(tile.getWorld(), event.getPos(), drop);
+            Block.popResource(tile.getLevel(), event.getPos(), drop);
             //Does this cause problems w/ block protection?
-            tile.getWorld().removeTileEntity(tile.getPos());
+            tile.getLevel().removeBlockEntity(tile.getBlockPos());
             world.destroyBlock(event.getPos(), false);
             event.setCanceled(true);
         }
@@ -104,10 +104,11 @@ public class SilkSpawner extends Feature {
                 assert stackTag != null;
                 CompoundNBT spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
                 if (!spawnerDataNBT.isEmpty()) {
-                    DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.read(spawnerDataNBT);
-                    Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getCachedEntity();
-                    if (ent != null && ent.getDisplayName() != null)
+                    DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.save(spawnerDataNBT);
+                    Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getSpawnerEntity();
+                    if (ent != null) {
                         event.getToolTip().add(ent.getDisplayName());
+                    }
                 }
             }
         }

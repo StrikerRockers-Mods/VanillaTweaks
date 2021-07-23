@@ -41,8 +41,8 @@ public class Items extends Feature {
     @ObjectHolder(MODID + ":dynamite")
     public static final EntityType<DynamiteEntity> DYNAMITE_TYPE = null;
     private static final Item BINOCULARS = new BinocularItem();
-    private static final Item LENS = new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName("lens");
-    private static final Item FRIED_EGG = new Item(new Item.Properties().food(new Food.Builder().hunger(5).saturation(0.6f).build()).group(ItemGroup.FOOD)).setRegistryName("friedegg");
+    private static final Item LENS = new Item(new Item.Properties().tab(ItemGroup.TAB_MISC)).setRegistryName("lens");
+    private static final Item FRIED_EGG = new Item(new Item.Properties().food(new Food.Builder().nutrition(5).saturationMod(0.6f).build()).tab(ItemGroup.TAB_FOOD)).setRegistryName("friedegg");
     private static final Item SLIME_BUCKET = new SlimeBucketItem();
     public static ForgeConfigSpec.IntValue dynamiteCooldown;
     public static ForgeConfigSpec.IntValue dynamiteExplosionPower;
@@ -57,7 +57,7 @@ public class Items extends Feature {
     @SubscribeEvent
     public void onFOVChange(FOVUpdateEvent event) {
         if (event.getEntity() != null && binocularZoomAmount.get() != 0) {
-            ItemStack helmet = event.getEntity().getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack helmet = event.getEntity().getItemBySlot(EquipmentSlotType.HEAD);
             if (!helmet.isEmpty() && helmet.getItem() == BINOCULARS) {
                 event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
             } else if (ModList.get().isLoaded("curios")) {
@@ -107,10 +107,10 @@ public class Items extends Feature {
 
     @Override
     public void setup() {
-        DispenserBlock.registerDispenseBehavior(DYNAMITE, new ProjectileDispenseBehavior() {
+        DispenserBlock.registerBehavior(DYNAMITE, new ProjectileDispenseBehavior() {
             @Override
-            protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
-                return new DynamiteEntity(worldIn, position.getX(), position.getY(), position.getZ());
+            protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
+                return new DynamiteEntity(worldIn, position.x(), position.y(), position.z());
             }
         });
     }
@@ -119,7 +119,7 @@ public class Items extends Feature {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-            event.getRegistry().register(EntityType.Builder.<DynamiteEntity>create(DynamiteEntity::new, EntityClassification.MISC).
+            event.getRegistry().register(EntityType.Builder.<DynamiteEntity>of(DynamiteEntity::new, EntityClassification.MISC).
                     setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "dynamite")));
         }
 

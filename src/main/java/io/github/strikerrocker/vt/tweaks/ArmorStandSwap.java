@@ -10,16 +10,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.Arrays;
-
 public class ArmorStandSwap extends Feature {
     private ForgeConfigSpec.BooleanValue enableArmorStandSwapping;
 
     private static void swapSlot(PlayerEntity player, ArmorStandEntity armorStand, EquipmentSlotType slot) {
-        ItemStack playerItem = player.getItemStackFromSlot(slot);
-        ItemStack armorStandItem = armorStand.getItemStackFromSlot(slot);
-        player.setItemStackToSlot(slot, armorStandItem);
-        armorStand.setItemStackToSlot(slot, playerItem);
+        ItemStack playerItem = player.getItemBySlot(slot);
+        ItemStack armorStandItem = armorStand.getItemBySlot(slot);
+        player.setItemSlot(slot, armorStandItem);
+        armorStand.setItemSlot(slot, playerItem);
     }
 
     @Override
@@ -40,14 +38,16 @@ public class ArmorStandSwap extends Feature {
         PlayerEntity player = event.getPlayer();
         Entity target = event.getTarget();
         if (player.isCrouching() && enableArmorStandSwapping.get()) {
-            if (target.world.isRemote || player.isSpectator() || player.isCreative() || !(target instanceof ArmorStandEntity))
+            if (target.level.isClientSide() || player.isSpectator() || player.isCreative() || !(target instanceof ArmorStandEntity))
                 return;
             event.setCanceled(true);
             ArmorStandEntity armorStand = (ArmorStandEntity) target;
 
-            Arrays.stream(EquipmentSlotType.values()).filter(equipmentSlotType -> equipmentSlotType.getSlotType() == EquipmentSlotType.Group.ARMOR).forEach(equipmentSlotType -> {
-                swapSlot(player, armorStand, equipmentSlotType);
-            });
+            for (EquipmentSlotType equipmentSlotType : EquipmentSlotType.values()) {
+                if (equipmentSlotType.getType() == EquipmentSlotType.Group.ARMOR) {
+                    swapSlot(player, armorStand, equipmentSlotType);
+                }
+            }
         }
     }
 }

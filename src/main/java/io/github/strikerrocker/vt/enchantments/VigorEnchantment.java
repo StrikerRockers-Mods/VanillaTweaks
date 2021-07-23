@@ -25,12 +25,12 @@ public class VigorEnchantment extends Enchantment {
     @SubscribeEvent
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
         if (EnchantmentFeature.enableVigor.get()) {
-            int lvl = EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.CHEST));
+            int lvl = EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlotType.CHEST));
             ModifiableAttributeInstance vigorAttribute = event.getEntityLiving().getAttribute(Attributes.MAX_HEALTH);
             AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "vigor", (float) lvl / 10, AttributeModifier.Operation.MULTIPLY_BASE);
             if (lvl > 0) {
                 if (vigorAttribute.getModifier(vigorUUID) == null) {
-                    vigorAttribute.applyPersistentModifier(vigorModifier);
+                    vigorAttribute.addPermanentModifier(vigorModifier);
                 }
             } else {
                 if (vigorAttribute.getModifier(vigorUUID) != null) {
@@ -43,12 +43,12 @@ public class VigorEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + (enchantmentLevel - 1) * 8;
     }
 
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
+    public int getMaxCost(int enchantmentLevel) {
         return enchantmentLevel * 10 + 51;
     }
 
@@ -58,8 +58,8 @@ public class VigorEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.CHEST) && EnchantmentFeature.enableVigor.get();
+    public boolean canEnchant(ItemStack stack) {
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlotType.CHEST) && EnchantmentFeature.enableVigor.get();
     }
 
     @Override

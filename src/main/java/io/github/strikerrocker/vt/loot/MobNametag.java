@@ -29,12 +29,12 @@ public class MobNametag extends Feature {
     @SubscribeEvent
     public void onLivingDrop(LivingDropsEvent event) {
         Entity entity = event.getEntity();
-        World world = entity.world;
-        if (!world.isRemote && world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && event.getSource().damageType != null && namedMobsDropNameTag.get() && entity.hasCustomName()) {
+        World world = entity.level;
+        if (!world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && namedMobsDropNameTag.get() && entity.hasCustomName()) {
             ItemStack nameTag = new ItemStack(Items.NAME_TAG);
-            nameTag.setDisplayName(entity.getCustomName());
+            nameTag.setHoverName(entity.getCustomName());
             nameTag.getTag().putInt("RepairCost", 0);
-            entity.entityDropItem(nameTag, 0);
+            entity.spawnAtLocation(nameTag, 0);
             entity.setCustomName(null);
         }
     }

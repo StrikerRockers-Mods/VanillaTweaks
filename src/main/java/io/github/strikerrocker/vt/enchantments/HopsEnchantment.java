@@ -23,13 +23,13 @@ public class HopsEnchantment extends Enchantment {
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity entity = event.getEntityLiving();
-        if (EnchantmentFeature.enableHops.get() && !event.getEntity().world.isRemote()) {
-            float lvl = (float) EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET));
+        if (EnchantmentFeature.enableHops.get() && !event.getEntity().level.isClientSide()) {
+            float lvl = (float) EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlotType.FEET));
             if (lvl != 0) {
-                entity.addVelocity(0, lvl / 10D, 0);
+                entity.push(0, lvl / 10D, 0);
                 if (entity instanceof ServerPlayerEntity) {
                     ServerPlayerEntity playerMP = (ServerPlayerEntity) entity;
-                    playerMP.connection.sendPacket(new SEntityVelocityPacket(playerMP));
+                    playerMP.connection.send(new SEntityVelocityPacket(playerMP));
                 }
             }
         }
@@ -37,18 +37,18 @@ public class HopsEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentFeature.enableHops.get() && !event.getEntity().world.isRemote()) {
-            event.setDistance(event.getDistance() - EnchantmentHelper.getEnchantmentLevel(this, event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET)));
+        if (EnchantmentFeature.enableHops.get() && !event.getEntity().level.isClientSide()) {
+            event.setDistance(event.getDistance() - EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlotType.FEET)));
         }
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + (enchantmentLevel - 1) * 8;
     }
 
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
+    public int getMaxCost(int enchantmentLevel) {
         return enchantmentLevel * 10 + 51;
     }
 
@@ -58,8 +58,8 @@ public class HopsEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.enableHops.get();
+    public boolean canEnchant(ItemStack stack) {
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.enableHops.get();
     }
 
     @Override

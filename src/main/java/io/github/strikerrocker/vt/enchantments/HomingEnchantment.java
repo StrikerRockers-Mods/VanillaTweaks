@@ -30,45 +30,45 @@ public class HomingEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.world != null && !event.world.isRemote() && EnchantmentFeature.enableHoming.get()) {
+        if (event.world != null && !event.world.isClientSide() && EnchantmentFeature.enableHoming.get()) {
             ServerWorld world = (ServerWorld) event.world;
-            world.getEntities(EntityType.ARROW, EntityPredicates.IS_ALIVE).forEach(entity -> attemptToMove(entity, world));
+            world.getEntities(EntityType.ARROW, EntityPredicates.ENTITY_STILL_ALIVE).forEach(entity -> attemptToMove(entity, world));
         }
     }
 
     private void attemptToMove(Entity arrowEntity, ServerWorld world) {
         AbstractArrowEntity arrow = (AbstractArrowEntity) arrowEntity;
-        LivingEntity shooter = (LivingEntity) arrow.func_234616_v_();
-        if (shooter != null && EnchantmentHelper.getEnchantmentLevel(this, shooter.getHeldItemMainhand()) > 0) {
-            int homingLevel = EnchantmentHelper.getEnchantmentLevel(this, shooter.getHeldItemMainhand());
+        LivingEntity shooter = (LivingEntity) arrow.getOwner();
+        if (shooter != null && EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem()) > 0) {
+            int homingLevel = EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem());
             double distance = Math.pow(2, (double) homingLevel - 1) * 32;
             List<Entity> livingEntities = world.getEntities().collect(Collectors.toList());
             LivingEntity target = null;
             for (Entity entity : livingEntities) {
-                double distanceToArrow = entity.getDistance(arrow);
-                if (entity instanceof LivingEntity && distanceToArrow < distance && shooter.canEntityBeSeen(entity) && !entity.getUniqueID().equals(shooter.getUniqueID())) {
+                double distanceToArrow = entity.distanceTo(arrow);
+                if (entity instanceof LivingEntity && distanceToArrow < distance && shooter.canSee(entity) && !entity.getUUID().equals(shooter.getUUID())) {
                     distance = distanceToArrow;
                     target = (LivingEntity) entity;
                 }
             }
             if (target != null) {
-                BlockPos arrowPos = arrow.getPosition();
-                BlockPos targetPos = target.getPosition();
+                BlockPos arrowPos = arrow.blockPosition();
+                BlockPos targetPos = target.blockPosition();
                 double x = targetPos.getX() - arrowPos.getX();
-                double y = target.getBoundingBox().minY + target.getHeight() / 2 - (arrowPos.getY() + arrow.getHeight() / 2);
+                double y = target.getBoundingBox().minY + target.getBbHeight() / 2 - (arrowPos.getY() + arrow.getBbHeight() / 2);
                 double z = targetPos.getZ() - arrowPos.getZ();
-                arrow.shoot(x, y, z, (float) Math.sqrt(Math.pow(2, arrow.getMotion().x) + Math.pow(2, arrow.getMotion().y) + Math.pow(2, arrow.getMotion().z)), 0);
+                arrow.shoot(x, y, z, (float) Math.sqrt(Math.pow(2, arrow.getDeltaMovement().x) + Math.pow(2, arrow.getDeltaMovement().y) + Math.pow(2, arrow.getDeltaMovement().z)), 0);
             }
         }
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return (enchantmentLevel - 1) * 10 + 10;
     }
 
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
+    public int getMaxCost(int enchantmentLevel) {
         return enchantmentLevel * 10 + 51;
     }
 
@@ -78,7 +78,7 @@ public class HomingEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canApply(ItemStack stack) {
+    public boolean canEnchant(ItemStack stack) {
         return stack.getItem() instanceof BowItem && EnchantmentFeature.enableHoming.get();
     }
 

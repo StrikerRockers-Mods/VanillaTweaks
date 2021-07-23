@@ -15,17 +15,17 @@ import net.minecraft.world.server.ServerWorld;
 
 public class SlimeBucketItem extends Item {
     SlimeBucketItem() {
-        super(new Item.Properties().group(ItemGroup.MISC).maxStackSize(1));
+        super(new Item.Properties().tab(ItemGroup.TAB_MISC).stacksTo(1));
         this.setRegistryName("slime");
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (!worldIn.isRemote) {
-            ChunkPos chunkpos = new ChunkPos(playerIn.getPosition());
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (!worldIn.isClientSide()) {
+            ChunkPos chunkpos = new ChunkPos(playerIn.blockPosition());
             boolean slime = SharedSeedRandom.seedSlimeChunk(chunkpos.x, chunkpos.z, ((ServerWorld) worldIn).getSeed(), 987234911L).nextInt(10) == 0;
-            playerIn.sendStatusMessage(new TranslationTextComponent(slime ? "slime.chunk" : "slime.chunk.false"), true);
+            playerIn.displayClientMessage(new TranslationTextComponent(slime ? "slime.chunk" : "slime.chunk.false"), true);
         }
-        return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
+        return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
     }
 }

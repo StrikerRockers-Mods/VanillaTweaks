@@ -23,36 +23,36 @@ public class VeteranEnchantment extends Enchantment {
 
     @SubscribeEvent
     public void onTick(TickEvent.WorldTickEvent event) {
-        if (EnchantmentFeature.enableVeteran.get() && event.world != null && !event.world.isRemote()) {
+        if (EnchantmentFeature.enableVeteran.get() && event.world != null && !event.world.isClientSide()) {
             ServerWorld world = (ServerWorld) event.world;
-            world.getEntities(EntityType.EXPERIENCE_ORB, EntityPredicates.IS_ALIVE).forEach(this::attemptToMove);
+            world.getEntities(EntityType.EXPERIENCE_ORB, EntityPredicates.ENTITY_STILL_ALIVE).forEach(this::attemptToMove);
         }
     }
 
     private void attemptToMove(Entity entity) {
         double range = 32;
-        PlayerEntity closestPlayer = entity.world.getClosestPlayer(entity, range);
-        if (closestPlayer != null && EnchantmentHelper.getEnchantmentLevel(this, closestPlayer.getItemStackFromSlot(EquipmentSlotType.HEAD)) > 0) {
-            double xDiff = (closestPlayer.getPosX() - entity.getPosX()) / range;
-            double yDiff = (closestPlayer.getPosY() + closestPlayer.getEyeHeight() - entity.getPosY()) / range;
-            double zDiff = (closestPlayer.getPosZ() - entity.getPosZ()) / range;
+        PlayerEntity closestPlayer = entity.level.getNearestPlayer(entity, range);
+        if (closestPlayer != null && EnchantmentHelper.getItemEnchantmentLevel(this, closestPlayer.getItemBySlot(EquipmentSlotType.HEAD)) > 0) {
+            double xDiff = (closestPlayer.getX() - entity.getX()) / range;
+            double yDiff = (closestPlayer.getY() + closestPlayer.getEyeHeight() - entity.getY()) / range;
+            double zDiff = (closestPlayer.getZ() - entity.getZ()) / range;
             double movementFactor = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
             double invertedMovementFactor = 1 - movementFactor;
             if (invertedMovementFactor > 0) {
                 invertedMovementFactor *= invertedMovementFactor;
-                Vector3d motion = entity.getMotion();
-                entity.setMotion(motion.x + xDiff / movementFactor * invertedMovementFactor * 0.1, motion.y + yDiff / movementFactor * invertedMovementFactor * 0.1, motion.z + zDiff / movementFactor * invertedMovementFactor * 0.1);
+                Vector3d motion = entity.getDeltaMovement();
+                entity.setDeltaMovement(motion.x + xDiff / movementFactor * invertedMovementFactor * 0.1, motion.y + yDiff / movementFactor * invertedMovementFactor * 0.1, motion.z + zDiff / movementFactor * invertedMovementFactor * 0.1);
             }
         }
     }
 
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 10;
     }
 
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
+    public int getMaxCost(int enchantmentLevel) {
         return 40;
     }
 
@@ -62,8 +62,8 @@ public class VeteranEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot().equals(EquipmentSlotType.HEAD) && EnchantmentFeature.enableVeteran.get();
+    public boolean canEnchant(ItemStack stack) {
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlotType.HEAD) && EnchantmentFeature.enableVeteran.get();
     }
 
     @Override

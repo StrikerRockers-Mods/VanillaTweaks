@@ -37,38 +37,38 @@ import javax.annotation.Nullable;
 
 public class PedestalBlock extends Block implements IWaterLoggable {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    private final VoxelShape base = Block.makeCuboidShape(0.5, 0.0, 0.5, 15.5, 1.0, 15.5);
-    private final VoxelShape deco1 = Block.makeCuboidShape(2.0, 1.0, 2.0, 14.0, 2.0, 14.0);
-    private final VoxelShape pillar = Block.makeCuboidShape(4.5, 2.0, 4.5, 11.5, 12.0, 11.5);
-    private final VoxelShape deco2 = Block.makeCuboidShape(2.0, 12.0, 2.0, 14.0, 13.0, 14.0);
-    private final VoxelShape top = Block.makeCuboidShape(1, 13.0, 1, 15.0, 15.0, 15.0);
+    private final VoxelShape base = Block.box(0.5, 0.0, 0.5, 15.5, 1.0, 15.5);
+    private final VoxelShape deco1 = Block.box(2.0, 1.0, 2.0, 14.0, 2.0, 14.0);
+    private final VoxelShape pillar = Block.box(4.5, 2.0, 4.5, 11.5, 12.0, 11.5);
+    private final VoxelShape deco2 = Block.box(2.0, 12.0, 2.0, 14.0, 13.0, 14.0);
+    private final VoxelShape top = Block.box(1, 13.0, 1, 15.0, 15.0, 15.0);
     private final VoxelShape PEDESTAL_VOXEL_SHAPE = VoxelShapes.or(base, deco1, pillar, deco2, top);
 
     public PedestalBlock() {
-        super(Block.Properties.create(Material.ROCK, MaterialColor.GRAY_TERRACOTTA).hardnessAndResistance(2.0f, 10.0f));
-        this.setDefaultState(this.getStateContainer().getBaseState().with(WATERLOGGED, false));
+        super(Block.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_GRAY).strength(2.0f, 10.0f));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(WATERLOGGED, false));
         this.setRegistryName("pedestal");
     }
 
     private static PedestalTileEntity getPedestalTE(IWorldReader world, BlockPos pos) {
-        return (PedestalTileEntity) world.getTileEntity(pos);
+        return (PedestalTileEntity) world.getBlockEntity(pos);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
-            ItemStack heldItem = player.getHeldItem(handIn);
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (!worldIn.isClientSide()) {
+            ItemStack heldItem = player.getItemInHand(handIn);
             PedestalTileEntity tile = getPedestalTE(worldIn, pos);
             if (!player.isCrouching()) {
                 tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
                     if (heldItem.isEmpty()) {
                         ItemStack stack = itemHandler.extractItem(0, 64, false);
-                        player.setHeldItem(handIn, stack);
+                        player.setItemInHand(handIn, stack);
                     } else {
-                        player.setHeldItem(handIn, itemHandler.insertItem(0, heldItem, false));
+                        player.setItemInHand(handIn, itemHandler.insertItem(0, heldItem, false));
                     }
                 });
-                tile.markDirty();
+                tile.setChanged();
                 return ActionResultType.SUCCESS;
             } else {
                 NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), new TranslationTextComponent("block.vanillatweaks.pedestal")), pos);
@@ -79,17 +79,17 @@ public class PedestalBlock extends Block implements IWaterLoggable {
 
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!worldIn.isRemote()) {
+    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!worldIn.isClientSide()) {
             PedestalTileEntity tile = getPedestalTE(worldIn, pos);
             tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).ifPresent(itemHandler -> {
                 ItemStack stack = itemHandler.getStackInSlot(0);
-                if (!stack.isEmpty() && !worldIn.isRemote) {
+                if (!stack.isEmpty()) {
                     ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
-                    worldIn.addEntity(item);
+                    worldIn.addFreshEntity(item);
                 }
             });
-            worldIn.removeTileEntity(pos);
+            worldIn.removeBlockEntity(pos);
         }
     }
 
@@ -110,26 +110,26 @@ public class PedestalBlock extends Block implements IWaterLoggable {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
+        return this.defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if (stateIn.get(WATERLOGGED)) {
-            worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        if (stateIn.getValue(WATERLOGGED)) {
+            worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
         }
-        return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 }

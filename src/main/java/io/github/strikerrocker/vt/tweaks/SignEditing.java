@@ -16,15 +16,15 @@ public class SignEditing extends Feature {
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         PlayerEntity player = event.getPlayer();
         boolean success = false;
-        TileEntity te = event.getWorld().getTileEntity(event.getPos());
-        if (te instanceof SignTileEntity && enableSignEditing.get() && !event.getWorld().isRemote && !player.isSneaking()) {
+        TileEntity te = event.getWorld().getBlockEntity(event.getPos());
+        if (te instanceof SignTileEntity && enableSignEditing.get() && !event.getWorld().isClientSide() && !player.isCrouching()) {
             SignTileEntity sign = (SignTileEntity) te;
-            player.openSignEditor(sign);
+            player.openTextEdit(sign);
             success = true;
         }
         if (success) {
             event.setCanceled(true);
-            event.getPlayer().swingArm(Hand.MAIN_HAND);
+            event.getPlayer().swing(Hand.MAIN_HAND);
         }
     }
 

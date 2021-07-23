@@ -20,10 +20,10 @@ public class SquishySponges extends Feature {
 
     private static void turnIntoWater(World worldIn, BlockPos pos) {
         if (worldIn.getBlockState(pos).getMaterial().isReplaceable()) {
-            if (worldIn.getDimensionType().isUltrawarm()) {
-                worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+            if (worldIn.dimensionType().ultraWarm()) {
+                worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
             } else {
-                worldIn.setBlockState(pos, Fluids.WATER.getDefaultState().getBlockState(), 11);
+                worldIn.setBlock(pos, Fluids.WATER.defaultFluidState().createLegacyBlock(), 11);
                 worldIn.neighborChanged(pos, Blocks.WATER, pos);
             }
         }
@@ -44,12 +44,12 @@ public class SquishySponges extends Feature {
 
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
-        World world = event.getEntity().getEntityWorld();
+        World world = event.getEntity().getCommandSenderWorld();
         LivingEntity entity = event.getEntityLiving();
-        BlockPos pos = entity.getPosition().down();
+        BlockPos pos = entity.blockPosition().below();
         if (entity instanceof PlayerEntity && squishySponge.get() && world.getBlockState(pos).getBlock() instanceof WetSpongeBlock) {
-            turnIntoWater(world, pos.offset(Direction.Plane.HORIZONTAL.random(world.rand)));
-            world.setBlockState(pos, Blocks.SPONGE.getDefaultState());
+            turnIntoWater(world, pos.relative(Direction.Plane.HORIZONTAL.getRandomDirection(world.random)));
+            world.setBlockAndUpdate(pos, Blocks.SPONGE.defaultBlockState());
             event.setCanceled(true);
         }
     }

@@ -22,23 +22,23 @@ public class PedestalScreen extends ContainerScreen<PedestalContainer> {
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         renderBackground(matrixStack);
-        this.drawGuiContainerBackgroundLayer(matrixStack, partialTicks, mouseX, mouseY);
+        this.renderBg(matrixStack, partialTicks, mouseX, mouseY);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderLabels(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1, 1, 1, 1);
-        minecraft.getTextureManager().bindTexture(BG_TEXTURE);
-        int posX = (width - xSize) / 2;
-        int posY = (height - ySize) / 2;
-        this.blit(matrixStack, posX, posY, 0, 0, xSize, ySize);
+        minecraft.getTextureManager().bind(BG_TEXTURE);
+        int posX = (width - getXSize()) / 2;
+        int posY = (height - getYSize()) / 2;
+        this.blit(matrixStack, posX, posY, 0, 0, getXSize(), getYSize());
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
-        this.font.func_243248_b(matrixStack, this.title, this.titleX, this.titleY, 0x404040);
-        this.font.func_243248_b(matrixStack, playerInv.getDisplayName(), 8, 40, 0x404040);
+    protected void renderLabels(MatrixStack matrixStack, int x, int y) {
+        this.font.draw(matrixStack, this.title, this.titleLabelX, this.titleLabelY, 0x404040);
+        this.font.draw(matrixStack, playerInv.getDisplayName(), 8, 40, 0x404040);
     }
 }

@@ -14,16 +14,16 @@ import net.minecraft.world.World;
 
 public class CraftingPadItem extends Item {
     public CraftingPadItem() {
-        super(new Item.Properties().group(ItemGroup.TOOLS).maxStackSize(1));
+        super(new Item.Properties().tab(ItemGroup.TAB_TOOLS).stacksTo(1));
         setRegistryName("pad");
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (!worldIn.isRemote()) {
-            playerIn.openContainer(new SimpleNamedContainerProvider((id, playerInv, player) -> new CraftingPadContainer(id, playerInv, IWorldPosCallable.of(worldIn, player.getPosition())), new TranslationTextComponent("item.vanillatweaks.pad")));
-            return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (!worldIn.isClientSide()) {
+            playerIn.openMenu(new SimpleNamedContainerProvider((id, playerInv, player) -> new CraftingPadContainer(id, playerInv, IWorldPosCallable.create(worldIn, player.blockPosition())), new TranslationTextComponent("item.vanillatweaks.pad")));
+            return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
         }
-        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
     }
 }

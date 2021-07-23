@@ -39,9 +39,9 @@ public class RealisticRelationship extends Feature {
         List<ItemEntity> dropsCopy = new ArrayList<>(event.getDrops());
         for (ItemEntity dropEntity : dropsCopy) {
             ItemStack dropItem = dropEntity.getItem();
-            if (event.getSource().getImmediateSource() != null) {
+            if (event.getSource().getDirectEntity() != null) {
                 Item drop = dropItem.getItem();
-                Entity source = event.getSource().getImmediateSource();
+                Entity source = event.getSource().getDirectEntity();
                 if (realisticRelationship.get() &&
                         ((source instanceof WolfEntity && entity instanceof SheepEntity && (drop == Items.MUTTON || drop == Items.COOKED_MUTTON))
                                 || (source instanceof OcelotEntity && entity instanceof ChickenEntity && (drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN)))) {

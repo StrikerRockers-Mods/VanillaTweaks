@@ -20,8 +20,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class DynamiteEntity extends ProjectileItemEntity {
     private static final int WET_TICKS = 20;
-    private static final DataParameter<Integer> TICKSWET = EntityDataManager.createKey(DynamiteEntity.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> TICKSSINCEWET = EntityDataManager.createKey(DynamiteEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> TICKSWET = EntityDataManager.defineId(DynamiteEntity.class, DataSerializers.INT);
+    private static final DataParameter<Integer> TICKSSINCEWET = EntityDataManager.defineId(DynamiteEntity.class, DataSerializers.INT);
 
     public DynamiteEntity(EntityType<? extends ProjectileItemEntity> type, World world) {
         super(type, world);
@@ -46,46 +46,46 @@ public class DynamiteEntity extends ProjectileItemEntity {
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        dataManager.register(TICKSWET, 0);
-        dataManager.register(TICKSSINCEWET, WET_TICKS);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(TICKSWET, 0);
+        entityData.define(TICKSSINCEWET, WET_TICKS);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!this.world.isRemote) {
-            if (this.isWet()) {
-                this.dataManager.set(TICKSWET, this.dataManager.get(TICKSWET) + 1);
+        if (!this.level.isClientSide()) {
+            if (this.isUnderWater()) {
+                this.entityData.set(TICKSWET, this.entityData.get(TICKSWET) + 1);
             } else
-                this.dataManager.set(TICKSWET, 0);
-            if (this.dataManager.get(TICKSWET) == 0)
-                this.dataManager.set(TICKSSINCEWET, this.dataManager.get(TICKSSINCEWET) + 1);
+                this.entityData.set(TICKSWET, 0);
+            if (this.entityData.get(TICKSWET) == 0)
+                this.entityData.set(TICKSSINCEWET, this.entityData.get(TICKSSINCEWET) + 1);
             else
-                this.dataManager.set(TICKSSINCEWET, 0);
+                this.entityData.set(TICKSSINCEWET, 0);
         }
-        if (this.dataManager.get(TICKSSINCEWET) < WET_TICKS && !this.isInWater())
+        if (this.entityData.get(TICKSSINCEWET) < WET_TICKS && !this.isInWater())
             for (int i = 0; i < 3; ++i) {
-                float xOffset = (rand.nextFloat() * 2 - 1) * getWidth() * 0.5F;
-                float zOffset = (rand.nextFloat() * 2 - 1) * getWidth() * 0.5F;
-                BlockPos pos = getPosition();
-                world.addParticle(ParticleTypes.DRIPPING_WATER, pos.getX() + xOffset, pos.getY(), pos.getZ() + zOffset, getMotion().x, getMotion().y, getMotion().z);
+                float xOffset = (random.nextFloat() * 2 - 1) * getBbWidth() * 0.5F;
+                float zOffset = (random.nextFloat() * 2 - 1) * getBbWidth() * 0.5F;
+                BlockPos pos = blockPosition();
+                level.addParticle(ParticleTypes.DRIPPING_WATER, pos.getX() + xOffset, pos.getY(), pos.getZ() + zOffset, getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z);
             }
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
-        if (!world.isRemote) {
-            if (this.dataManager.get(TICKSSINCEWET) < WET_TICKS) {
-                this.entityDropItem(Items.DYNAMITE);
+    protected void onHit(RayTraceResult result) {
+        if (!level.isClientSide()) {
+            if (this.entityData.get(TICKSSINCEWET) < WET_TICKS) {
+                this.spawnAtLocation(Items.DYNAMITE);
                 this.remove();
             } else {
                 if (result instanceof EntityRayTraceResult && ((EntityRayTraceResult) result).getEntity() instanceof DynamiteEntity) {
                     return;
                 } else {
-                    BlockPos pos = getPosition();
-                    world.createExplosion(this, pos.getX(), pos.getY(), pos.getZ(), Items.dynamiteExplosionPower.get(), Explosion.Mode.BREAK);
+                    BlockPos pos = blockPosition();
+                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), Items.dynamiteExplosionPower.get(), Explosion.Mode.BREAK);
                 }
             }
             this.remove();
@@ -93,7 +93,7 @@ public class DynamiteEntity extends ProjectileItemEntity {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

@@ -21,12 +21,12 @@ public class TNTIgnition extends Feature {
         BlockState blockState = event.getPlacedBlock();
         IWorld world = event.getWorld();
         BlockPos pos = event.getPos();
-        if (!world.isRemote() && blockState.getBlock() instanceof TNTBlock && tntIgnition.get()) {
+        if (!world.isClientSide() && blockState.getBlock() instanceof TNTBlock && tntIgnition.get()) {
             for (Direction f : Direction.values())
-                if (world.getBlockState(pos.offset(f, 1)).getBlock() instanceof MagmaBlock || world.getBlockState(pos.offset(f, 1)).getMaterial() == Material.LAVA) {
+                if (world.getBlockState(pos.relative(f, 1)).getBlock() instanceof MagmaBlock || world.getBlockState(pos.relative(f, 1)).getMaterial() == Material.LAVA) {
                     TNTBlock blockTNT = (TNTBlock) blockState.getBlock();
-                    TNTBlock.explode(event.getEntity().getEntityWorld(), pos);
-                    world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
+                    TNTBlock.explode(event.getEntity().getCommandSenderWorld(), pos);
+                    world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
                 }
         }
     }

@@ -30,13 +30,13 @@ public class ArrowSetFire extends Feature {
     @SubscribeEvent
     public void onArrowImpact(ProjectileImpactEvent.Arrow event) {
         AbstractArrowEntity arrow = event.getArrow();
-        if (!arrow.world.isRemote && arrow.isBurning() && arrowsSetBlockOnFire.get()) {
-            BlockPos pos = arrow.getPosition();
-            Vector3d vec3d = new Vector3d(pos.getX() + arrow.getMotion().x, pos.getY() + arrow.getMotion().y, pos.getZ() + arrow.getMotion().z);
-            RayTraceResult raytraceresult = arrow.world.rayTraceBlocks(new RayTraceContext(arrow.getPositionVec(), vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
-            BlockPos hitPos = new BlockPos(raytraceresult.getHitVec()).up();
-            if (arrow.world.isAirBlock(hitPos)) {
-                arrow.world.setBlockState(hitPos, Blocks.FIRE.getDefaultState());
+        if (!arrow.level.isClientSide() && arrow.isOnFire() && arrowsSetBlockOnFire.get()) {
+            BlockPos pos = arrow.blockPosition();
+            Vector3d vec3d = new Vector3d(pos.getX() + arrow.getDeltaMovement().x, pos.getY() + arrow.getDeltaMovement().y, pos.getZ() + arrow.getDeltaMovement().z);
+            RayTraceResult raytraceresult = arrow.level.clip(new RayTraceContext(arrow.position(), vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
+            BlockPos hitPos = new BlockPos(raytraceresult.getLocation()).above();
+            if (arrow.level.isEmptyBlock(hitPos)) {
+                arrow.level.setBlockAndUpdate(hitPos, Blocks.FIRE.defaultBlockState());
             }
         }
     }

@@ -57,10 +57,10 @@ public class SelfPlanting extends Feature {
 
     @SubscribeEvent
     public void itemToss(EntityJoinWorldEvent event) {
-        if (selfPlanting.get() && !event.getWorld().isRemote && event.getEntity() instanceof ItemEntity) {
+        if (selfPlanting.get() && !event.getWorld().isClientSide() && event.getEntity() instanceof ItemEntity) {
             ItemEntity itemEntity = (ItemEntity) event.getEntity();
             Item item = itemEntity.getItem().getItem();
-            Block block = Block.getBlockFromItem(item);
+            Block block = Block.byItem(item);
             if (item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
                 itemEntity.lifespan = despawnTime.get();
             }
@@ -69,25 +69,25 @@ public class SelfPlanting extends Feature {
 
 
     public void plant(ItemEntity entity) {
-        World world = entity.getEntityWorld();
+        World world = entity.getCommandSenderWorld();
         ItemStack stack = entity.getItem().copy();
         Item item = stack.getItem();
-        Block block = Block.getBlockFromItem(item);
-        BlockPos entityPos = new BlockPos(entity.getPosition());
+        Block block = Block.byItem(item);
+        BlockPos entityPos = new BlockPos(entity.blockPosition());
         if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
-            if (world.rand.nextInt() > chanceToPlant.get()) {
+            if (world.random.nextInt() > chanceToPlant.get()) {
                 FakePlayer player = Utils.getFakePlayer(world);
                 Vector3d entityVec = new Vector3d(entityPos.getX(), entityPos.getY(), entityPos.getZ());
-                BlockRayTraceResult rayTraceResult = entity.world.rayTraceBlocks(
+                BlockRayTraceResult rayTraceResult = entity.level.clip(
                         new RayTraceContext(entityVec.add(0, 2, 0), entityVec.add(0, -1, 0), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity));
-                ActionResultType result = item.onItemUse(new ItemUseContext(player, Hand.MAIN_HAND, rayTraceResult));
+                ActionResultType result = item.useOn(new ItemUseContext(player, Hand.MAIN_HAND, rayTraceResult));
                 if (result == ActionResultType.SUCCESS) {
                     if (stack.getCount() > 0) {
                         stack.shrink(1);
                     }
                 }
                 if (stack.getCount() > 0) {
-                    world.addEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
+                    world.addFreshEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
                 }
             }
         }

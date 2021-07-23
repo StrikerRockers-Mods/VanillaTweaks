@@ -16,7 +16,7 @@ public class ItemFrameReverse extends Feature {
             int rotation = frame.getRotation() - 2;
             if (rotation < 0)
                 rotation = 6;
-            frame.setItemRotation(rotation);
+            frame.setRotation(rotation);
         }
     }
 
