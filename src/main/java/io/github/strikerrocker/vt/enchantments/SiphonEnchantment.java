@@ -1,14 +1,14 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class SiphonEnchantment extends Enchantment {
     SiphonEnchantment(String name) {
-        super(Rarity.UNCOMMON, EnchantmentType.DIGGER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
+        super(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
         this.setRegistryName(name);
     }
 
@@ -29,7 +29,7 @@ public class SiphonEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ToolItem && EnchantmentFeature.enableSiphon.get();
+        return stack.getItem() instanceof DiggerItem && EnchantmentFeature.enableSiphon.get();
     }
 
     @Override

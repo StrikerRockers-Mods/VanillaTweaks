@@ -1,15 +1,15 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -20,7 +20,7 @@ public class NimbleEnchantment extends Enchantment {
     private static final UUID nimbleUUID = UUID.fromString("05b61a62-ae84-492e-8536-f365b7143296");
 
     NimbleEnchantment(String name) {
-        super(Rarity.UNCOMMON, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{EquipmentSlotType.FEET});
+        super(Rarity.UNCOMMON, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[]{EquipmentSlot.FEET});
         this.setRegistryName(name);
     }
 
@@ -28,8 +28,8 @@ public class NimbleEnchantment extends Enchantment {
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
         if (EnchantmentFeature.enableNimble.get()) {
             LivingEntity entity = event.getEntityLiving();
-            int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(this, entity.getItemBySlot(EquipmentSlotType.FEET));
-            ModifiableAttributeInstance speedAttribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
+            int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(this, entity.getItemBySlot(EquipmentSlot.FEET));
+            AttributeInstance speedAttribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", (float) enchantmentLevel * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
             if (enchantmentLevel > 0) {
                 if (speedAttribute.getModifier(nimbleUUID) == null) {
@@ -58,7 +58,7 @@ public class NimbleEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlotType.FEET) && EnchantmentFeature.enableNimble.get();
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlot.FEET) && EnchantmentFeature.enableNimble.get();
     }
 
     @Override

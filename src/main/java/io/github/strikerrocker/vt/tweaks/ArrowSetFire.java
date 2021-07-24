@@ -1,12 +1,12 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,16 +28,16 @@ public class ArrowSetFire extends Feature {
     }
 
     @SubscribeEvent
-    public void onArrowImpact(ProjectileImpactEvent.Arrow event) {
-        AbstractArrowEntity arrow = event.getArrow();
-        if (!arrow.level.isClientSide() && arrow.isOnFire() && arrowsSetBlockOnFire.get()) {
-            BlockPos pos = arrow.blockPosition();
-            Vector3d vec3d = new Vector3d(pos.getX() + arrow.getDeltaMovement().x, pos.getY() + arrow.getDeltaMovement().y, pos.getZ() + arrow.getDeltaMovement().z);
-            RayTraceResult raytraceresult = arrow.level.clip(new RayTraceContext(arrow.position(), vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
-            BlockPos hitPos = new BlockPos(raytraceresult.getLocation()).above();
-            if (arrow.level.isEmptyBlock(hitPos)) {
-                arrow.level.setBlockAndUpdate(hitPos, Blocks.FIRE.defaultBlockState());
+    public void onArrowImpact(ProjectileImpactEvent event) {
+        if (event.getProjectile() instanceof AbstractArrow arrow)
+            if (!arrow.level.isClientSide() && arrow.isOnFire() && arrowsSetBlockOnFire.get()) {
+                BlockPos pos = arrow.blockPosition();
+                Vec3 vec3d = new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(arrow.getDeltaMovement());
+                BlockHitResult blockHitResult = arrow.level.clip(new ClipContext(arrow.position(), vec3d, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, arrow));
+                BlockPos pos1 = pos.relative(blockHitResult.getDirection());
+                if (arrow.level.getBlockState(pos1).isAir()) {
+                    arrow.level.setBlock(pos1, BaseFireBlock.getState(arrow.level, pos1), 11);
+                }
             }
-        }
     }
 }

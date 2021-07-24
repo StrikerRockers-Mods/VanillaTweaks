@@ -3,10 +3,10 @@ package io.github.strikerrocker.vt.world;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Features;
+import net.minecraft.data.worldgen.Features;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,8 +21,8 @@ public class NoMoreLavaPocketGen extends Feature {
         Optional<JsonElement> configuredFeatureJSON1 = ConfiguredFeature.DIRECT_CODEC.encode(configuredFeature1, JsonOps.INSTANCE, JsonOps.INSTANCE.empty()).get().left();
         Optional<JsonElement> configuredFeatureJSON2 = ConfiguredFeature.DIRECT_CODEC.encode(configuredFeature2, JsonOps.INSTANCE, JsonOps.INSTANCE.empty()).get().left();
 
-        // One of the configuredfeatures cannot be serialized
-        if (!configuredFeatureJSON1.isPresent() || !configuredFeatureJSON2.isPresent()) {
+        // One of the configured features cannot be serialized
+        if (configuredFeatureJSON1.isEmpty() || configuredFeatureJSON2.isEmpty()) {
             return false;
         }
 
@@ -45,8 +45,8 @@ public class NoMoreLavaPocketGen extends Feature {
 
     @SubscribeEvent
     public void biomeCreationEvent(BiomeLoadingEvent event) {
-        if (event.getCategory() == Biome.Category.NETHER && disableLavaPocketGen.get()) {
-            event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_DECORATION).removeIf(configuredFeatureSupplier -> serializeAndCompareFeature(Features.SPRING_CLOSED, configuredFeatureSupplier.get()) || serializeAndCompareFeature(Features.SPRING_CLOSED_DOUBLE, configuredFeatureSupplier.get()));
+        if (event.getCategory() == Biome.BiomeCategory.NETHER && disableLavaPocketGen.get()) {
+            event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION).removeIf(configuredFeatureSupplier -> serializeAndCompareFeature(Features.SPRING_CLOSED, configuredFeatureSupplier.get()) || serializeAndCompareFeature(Features.SPRING_CLOSED_DOUBLE, configuredFeatureSupplier.get()));
         }
     }
 }

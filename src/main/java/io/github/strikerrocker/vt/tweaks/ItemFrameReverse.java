@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,8 +11,7 @@ public class ItemFrameReverse extends Feature {
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (itemFrameRotateBackwards.get() && event.getTarget() instanceof ItemFrameEntity && event.getPlayer().isCrouching()) {
-            ItemFrameEntity frame = (ItemFrameEntity) event.getTarget();
+        if (itemFrameRotateBackwards.get() && event.getTarget() instanceof ItemFrame frame && event.getPlayer().isCrouching()) {
             int rotation = frame.getRotation() - 2;
             if (rotation < 0)
                 rotation = 6;

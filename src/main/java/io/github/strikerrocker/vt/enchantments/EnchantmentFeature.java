@@ -1,10 +1,10 @@
 package io.github.strikerrocker.vt.enchantments;
 
 import com.google.common.collect.Maps;
-import io.github.strikerrocker.vt.VTModInfo;
+import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -80,8 +80,8 @@ public class EnchantmentFeature extends Feature {
 
         @SubscribeEvent
         public static void registerModifierSerializers(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-            event.getRegistry().register(new BlazingModifier.Serializer().setRegistryName(VTModInfo.MODID, "blazing"));
-            event.getRegistry().register(new SiphonModifier.Serializer().setRegistryName(VTModInfo.MODID, "siphon"));
+            event.getRegistry().register(new BlazingModifier.Serializer().setRegistryName(VanillaTweaks.MODID, "blazing"));
+            event.getRegistry().register(new SiphonModifier.Serializer().setRegistryName(VanillaTweaks.MODID, "siphon"));
         }
     }
 }

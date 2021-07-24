@@ -1,19 +1,14 @@
 package io.github.strikerrocker.vt.recipes.better_vanilla;
 
 import com.google.gson.JsonObject;
-import io.github.strikerrocker.vt.VTModInfo;
-import net.minecraft.util.ResourceLocation;
+import io.github.strikerrocker.vt.VanillaTweaks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
-public class BetterVanillaConditions implements ICondition {
+public record BetterVanillaConditions(String object) implements ICondition {
 
-    private static final ResourceLocation NAME = new ResourceLocation(VTModInfo.MODID, "better_vanilla");
-    private final String object;
-
-    private BetterVanillaConditions(String object) {
-        this.object = object;
-    }
+    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MODID, "better_vanilla");
 
     @Override
     public ResourceLocation getID() {
@@ -23,8 +18,10 @@ public class BetterVanillaConditions implements ICondition {
     @Override
     public boolean test() {
         if (object.equals("better_stairs")) return BetterVanillaRecipes.betterStairs.get();
-        if (object.equals("better_stone_tools"))
+        if (object.equals("better_stone_tools")) {
+            //TODO not working
             return BetterVanillaRecipes.betterStoneTools.get();//!ModList.get().isLoaded("quark");
+        }
         return false;
     }
 

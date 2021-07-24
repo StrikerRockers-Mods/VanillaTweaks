@@ -1,14 +1,15 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.block.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,7 +19,7 @@ public class Sickle extends Feature {
 
     private static boolean canHarvest(BlockState state) {
         Block block = state.getBlock();
-        return (block instanceof BushBlock && !(block instanceof LilyPadBlock)) || block instanceof SugarCaneBlock;
+        return (block instanceof BushBlock && !(block instanceof WaterlilyBlock)) || block instanceof SugarCaneBlock;
     }
 
     @Override
@@ -36,8 +37,8 @@ public class Sickle extends Feature {
 
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
-        PlayerEntity player = event.getPlayer();
-        World world = player.getCommandSenderWorld();
+        Player player = event.getPlayer();
+        Level world = player.getCommandSenderWorld();
         ItemStack stack = player.getMainHandItem();
         if (!stack.isEmpty() && stack.getItem() instanceof HoeItem && canHarvest(event.getState()) && hoeActsAsSickle.get()) {
             int range = 1;
@@ -56,7 +57,7 @@ public class Sickle extends Feature {
                         if (block.canHarvestBlock(state, world, pos, player))
                             block.playerDestroy(world, player, pos, state, world.getBlockEntity(pos), stack);
                         world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                        world.playSound(player, player.blockPosition(), state.getSoundType(world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 1f, 1f);
+                        world.playSound(player, player.blockPosition(), state.getSoundType(world, pos, player).getBreakSound(), SoundSource.BLOCKS, 1f, 1f);
                     }
                 }
             }

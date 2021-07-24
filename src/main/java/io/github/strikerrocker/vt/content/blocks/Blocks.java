@@ -2,18 +2,19 @@ package io.github.strikerrocker.vt.content.blocks;
 
 import io.github.strikerrocker.vt.base.Feature;
 import io.github.strikerrocker.vt.content.blocks.pedestal.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -21,14 +22,13 @@ import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Arrays;
 
-import static io.github.strikerrocker.vt.VTModInfo.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MODID;
 
 public class Blocks extends Feature {
     public static final Block PEDESTAL_BLOCK = new PedestalBlock();
@@ -37,7 +37,7 @@ public class Blocks extends Feature {
     private static final Block FLINT_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)).setRegistryName("flintblock");
     private static final Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
     @ObjectHolder(MODID + ":pedestal")
-    public static TileEntityType<PedestalTileEntity> PEDESTAL_TYPE;
+    public static BlockEntityType<PedestalBlockEntity> PEDESTAL_TYPE;
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
 
@@ -63,7 +63,7 @@ public class Blocks extends Feature {
         Item item = event.getItemStack().getItem();
         if (item == CHARCOAL_BLOCK.asItem())
             event.setBurnTime(16000);
-        if (item == net.minecraft.block.Blocks.TORCH.asItem())
+        if (item == net.minecraft.world.level.block.Blocks.TORCH.asItem())
             event.setBurnTime(400);
     }
 
@@ -71,27 +71,26 @@ public class Blocks extends Feature {
     public static class ClientModBusEvents {
         @SubscribeEvent
         public static void clientSetup(FMLClientSetupEvent event) {
-            ScreenManager.register(PedestalContainer.TYPE, PedestalScreen::new);
-            ClientRegistry.bindTileEntityRenderer(PEDESTAL_TYPE, PedestalTileEntityRenderer::new);
+            MenuScreens.register(PedestalContainer.TYPE, PedestalScreen::new);
+            BlockEntityRenderers.register(PEDESTAL_TYPE, PedestalRenderer::new);
         }
     }
-
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onRegisterItemBlocks(RegistryEvent.Register<Item> event) {
-            Arrays.stream(blocks).map(block -> new BlockItem(block, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
+            Arrays.stream(blocks).map(block -> new BlockItem(block, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
         }
 
         @SubscribeEvent
-        public static void onRegisterContainers(RegistryEvent.Register<ContainerType<?>> event) {
+        public static void onRegisterContainers(RegistryEvent.Register<MenuType<?>> event) {
             event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))).setRegistryName(MODID, "pedestal"));
         }
 
         @SubscribeEvent
-        public static void onRegisterTEType(RegistryEvent.Register<TileEntityType<?>> event) {
-            event.getRegistry().register(TileEntityType.Builder.of(PedestalTileEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
+        public static void onRegisterTEType(RegistryEvent.Register<BlockEntityType<?>> event) {
+            event.getRegistry().register(BlockEntityType.Builder.of(PedestalBlockEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
         }
 
         @SubscribeEvent
@@ -100,7 +99,7 @@ public class Blocks extends Feature {
         }
 
         @SubscribeEvent
-        public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
             CraftingHelper.register(BlockConditions.Serializer.INSTANCE);
         }
     }

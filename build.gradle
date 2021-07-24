@@ -1,7 +1,6 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
+        maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
     }
     dependencies {
@@ -12,16 +11,11 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 repositories {
     maven {
         name = "JEI maven"
         url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        name = "Curios maven"
-        url = "https://maven.theillusivec4.top/"
     }
 }
 
@@ -29,10 +23,10 @@ version = vt_version
 group = 'io.github.strikerrocker.vt'
 archivesBaseName = 'VanillaTweaks'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 minecraft {
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'official', version: '1.17.1'
     runs {
         client {
             properties 'forge.logging.console.level': 'debug'
@@ -48,16 +42,18 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:${jei_version}")
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+    minecraft 'net.minecraftforge:forge:1.17.1-37.0.2'
+    /*
+        compileOnly fg.deobf("mezz.jei:jei-1.16.5:${jei_version}:api")
+        runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:${jei_version}")
+    */
 }
 
 jar {
-    manifest {
-        attributes([
+    from('/') {
+        include 'LICENSE.txt'
+    }
+    manifest.attributes([
                 "Specification-Title"     : archivesBaseName,
                 "Specification-Vendor"    : "StrikerRocker",
                 "Specification-Version"   : version,
@@ -65,6 +61,5 @@ jar {
                 "Implementation-Version"  : version,
                 "Implementation-Vendor"   : "StrikerRocker",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
+    ])
 }

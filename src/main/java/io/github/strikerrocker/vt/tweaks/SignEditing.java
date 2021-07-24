@@ -1,10 +1,10 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.SignTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,17 +14,16 @@ public class SignEditing extends Feature {
 
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         boolean success = false;
-        TileEntity te = event.getWorld().getBlockEntity(event.getPos());
-        if (te instanceof SignTileEntity && enableSignEditing.get() && !event.getWorld().isClientSide() && !player.isCrouching()) {
-            SignTileEntity sign = (SignTileEntity) te;
+        BlockEntity te = event.getWorld().getBlockEntity(event.getPos());
+        if (te instanceof SignBlockEntity sign && enableSignEditing.get() && !event.getWorld().isClientSide() && !player.isCrouching()) {
             player.openTextEdit(sign);
             success = true;
         }
         if (success) {
             event.setCanceled(true);
-            event.getPlayer().swing(Hand.MAIN_HAND);
+            event.getPlayer().swing(InteractionHand.MAIN_HAND);
         }
     }
 

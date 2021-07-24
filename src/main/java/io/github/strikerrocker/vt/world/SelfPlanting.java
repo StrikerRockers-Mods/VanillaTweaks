@@ -2,20 +2,20 @@ package io.github.strikerrocker.vt.world;
 
 import io.github.strikerrocker.vt.base.Feature;
 import io.github.strikerrocker.vt.misc.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayer;
@@ -52,13 +52,13 @@ public class SelfPlanting extends Feature {
 
     @SubscribeEvent
     public void itemDecay(ItemExpireEvent event) {
-        plant(event.getEntityItem());
+        if (!plant(event.getEntityItem()))
+            event.setExtraLife(6000 - event.getEntityItem().lifespan);
     }
 
     @SubscribeEvent
     public void itemToss(EntityJoinWorldEvent event) {
-        if (selfPlanting.get() && !event.getWorld().isClientSide() && event.getEntity() instanceof ItemEntity) {
-            ItemEntity itemEntity = (ItemEntity) event.getEntity();
+        if (selfPlanting.get() && !event.getWorld().isClientSide() && event.getEntity() instanceof ItemEntity itemEntity) {
             Item item = itemEntity.getItem().getItem();
             Block block = Block.byItem(item);
             if (item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
@@ -67,9 +67,8 @@ public class SelfPlanting extends Feature {
         }
     }
 
-
-    public void plant(ItemEntity entity) {
-        World world = entity.getCommandSenderWorld();
+    public boolean plant(ItemEntity entity) {
+        Level world = entity.getCommandSenderWorld();
         ItemStack stack = entity.getItem().copy();
         Item item = stack.getItem();
         Block block = Block.byItem(item);
@@ -77,19 +76,22 @@ public class SelfPlanting extends Feature {
         if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
             if (world.random.nextInt() > chanceToPlant.get()) {
                 FakePlayer player = Utils.getFakePlayer(world);
-                Vector3d entityVec = new Vector3d(entityPos.getX(), entityPos.getY(), entityPos.getZ());
-                BlockRayTraceResult rayTraceResult = entity.level.clip(
-                        new RayTraceContext(entityVec.add(0, 2, 0), entityVec.add(0, -1, 0), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity));
-                ActionResultType result = item.useOn(new ItemUseContext(player, Hand.MAIN_HAND, rayTraceResult));
-                if (result == ActionResultType.SUCCESS) {
+                Vec3 entityVec = new Vec3(entityPos.getX(), entityPos.getY(), entityPos.getZ());
+                BlockHitResult rayTraceResult = entity.level.clip(
+                        new ClipContext(entityVec.add(0, 2, 0), entityVec.add(0, -1, 0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
+                InteractionResult result = item.useOn(new UseOnContext(player, InteractionHand.MAIN_HAND, rayTraceResult));
+                if (result == InteractionResult.SUCCESS || result == InteractionResult.CONSUME) {
                     if (stack.getCount() > 0) {
                         stack.shrink(1);
                     }
+                    return true;
                 }
                 if (stack.getCount() > 0) {
                     world.addFreshEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
                 }
             }
+            return false;
         }
+        return true;
     }
 }

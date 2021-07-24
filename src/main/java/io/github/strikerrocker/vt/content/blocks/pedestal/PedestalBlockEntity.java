@@ -1,13 +1,14 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
 import io.github.strikerrocker.vt.content.blocks.Blocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -17,7 +18,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class PedestalTileEntity extends TileEntity {
+public class PedestalBlockEntity extends BlockEntity {
     long lastChangeTime;
     public ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
@@ -31,50 +32,49 @@ public class PedestalTileEntity extends TileEntity {
     };
     private final LazyOptional<IItemHandler> holder = LazyOptional.of(() -> inventory);
 
-    public PedestalTileEntity() {
-        super(Blocks.PEDESTAL_TYPE);
+    public PedestalBlockEntity(BlockPos pos, BlockState state) {
+        super(Blocks.PEDESTAL_TYPE, pos, state);
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(getBlockPos(), getBlockPos().offset(1, 2, 1));
+    public AABB getRenderBoundingBox() {
+        return new AABB(getBlockPos(), getBlockPos().offset(1, 2, 1));
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return save(new CompoundTag());
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, 0, getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        handleUpdateTag(getBlockState(), pkt.getTag());
+        handleUpdateTag(pkt.getTag());
     }
 
     @Override
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        load(state, tag);
-        level.sendBlockUpdated(worldPosition, state, state, 2);
+    public void handleUpdateTag(CompoundTag tag) {
+        load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.put("inventory", inventory.serializeNBT());
         compound.putLong("lastChangeTime", lastChangeTime);
         return super.save(compound);
     }
 
     @Override
-    public void load(BlockState stateIn, CompoundNBT nbtIn) {
+    public void load(CompoundTag nbtIn) {
         inventory.deserializeNBT(nbtIn.getCompound("inventory"));
         lastChangeTime = nbtIn.getLong("lastChangeTime");
-        super.load(stateIn, nbtIn);
+        super.load(nbtIn);
     }
 
     @Nonnull

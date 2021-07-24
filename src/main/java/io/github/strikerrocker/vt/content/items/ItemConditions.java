@@ -1,19 +1,14 @@
 package io.github.strikerrocker.vt.content.items;
 
 import com.google.gson.JsonObject;
-import io.github.strikerrocker.vt.VTModInfo;
-import net.minecraft.util.ResourceLocation;
+import io.github.strikerrocker.vt.VanillaTweaks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
-public class ItemConditions implements ICondition {
+public record ItemConditions(String object) implements ICondition {
 
-    private static final ResourceLocation NAME = new ResourceLocation(VTModInfo.MODID, "items");
-    private final String object;
-
-    private ItemConditions(String object) {
-        this.object = object;
-    }
+    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MODID, "items");
 
     @Override
     public ResourceLocation getID() {
@@ -26,7 +21,6 @@ public class ItemConditions implements ICondition {
         if (object.equals("slime_bucket")) return Items.enableSlimeBucket.get();
         if (object.equals("dynamite")) return Items.enableDynamite.get();
         if (object.equals("fried_egg")) return Items.enableFriedEgg.get();
-        if (object.equals("binoculars")) return Items.binocularZoomAmount.get() != 0;
         return false;
     }
 
@@ -35,7 +29,6 @@ public class ItemConditions implements ICondition {
 
         @Override
         public void write(JsonObject json, ItemConditions value) {
-
         }
 
         @Override

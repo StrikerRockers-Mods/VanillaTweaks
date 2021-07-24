@@ -1,41 +1,33 @@
-modLoader="javafml" #mandatory
-loaderVersion="[30,)" #mandatory
-license="MIT"
-issueTrackerURL="http://github.com/strikerrocker/VanillaTweaks/issues/" #optional
-[[mods]] #mandatory
-modId="vanillatweaks" #mandatory
-version="${file.jarVersion}" #mandatory
-displayName="VanillaTweaks" #mandatory
-updateJSONURL="https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.16/version.json" #optional
-displayURL="http://strikerrocker.github.io/vanillatweaks" #optional
-# A file name (in the root of the mod JAR) containing a logo for display
-logoFile="logo.png" #optional
-# A text field displayed in the mod UI
-credits="Thanks to Anon10w1z for creating the mod , Subaraki for the textures." #optional
-authors="StrikerRocker" #optional
-# The description text for the mod (multi line!) (#mandatory)
-description='''VanillaTweaks is a Minecraft mod designed to enhance vanilla Minecraft without going overboard. It is designed to be minimally invasive and configurable to create a user experience like none others.'''
+modLoader = "javafml"
+loaderVersion = "[37,)"
+license = "MIT"
+issueTrackerURL = "http://github.com/strikerrocker/VanillaTweaks/issues/"
+
+[[mods]]
+modId = "vanillatweaks"
+version = "${file.jarVersion}"
+displayName = "VanillaTweaks"
+updateJSONURL = "https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.17/version.json"
+displayURL = "http://strikerrocker.github.io/vanillatweaks"
+logoFile = "logo.png"
+credits = "Thanks to Anon10w1z for creating the mod , Subaraki for the textures."
+authors = "StrikerRocker"
+description = '''VanillaTweaks is a Minecraft mod designed to enhance vanilla Minecraft without going overboard. It is designed to be minimally invasive and configurable to create a user experience like none others.'''
 [[dependencies.vanillatweaks]]
-    modId="forge"
-    mandatory=true
-    versionRange="[31.1.18,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[37.0.1,)"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.vanillatweaks]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.15.2,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.17.1,)"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.vanillatweaks]]
-    modId="jei"
-    mandatory=false
-    versionRange="[6,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.angelring]]
-    modId="curios"
-    mandatory=false
-    versionRange="[FORGE-1.15.2-2.0-beta2,]"
-    ordering="AFTER"
-    side="BOTH"
+modId = "jei"
+mandatory = false
+versionRange = "[6,)"
+ordering = "NONE"
+side = "BOTH"

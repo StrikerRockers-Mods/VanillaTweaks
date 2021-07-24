@@ -1,19 +1,14 @@
 package io.github.strikerrocker.vt.recipes.vanilla;
 
 import com.google.gson.JsonObject;
-import io.github.strikerrocker.vt.VTModInfo;
-import net.minecraft.util.ResourceLocation;
+import io.github.strikerrocker.vt.VanillaTweaks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
-public class VanillaRecipeConditions implements ICondition {
+public record VanillaRecipeConditions(String object) implements ICondition {
 
-    private static final ResourceLocation NAME = new ResourceLocation(VTModInfo.MODID, "vanilla");
-    private final String object;
-
-    private VanillaRecipeConditions(String object) {
-        this.object = object;
-    }
+    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MODID, "vanilla");
 
     @Override
     public ResourceLocation getID() {

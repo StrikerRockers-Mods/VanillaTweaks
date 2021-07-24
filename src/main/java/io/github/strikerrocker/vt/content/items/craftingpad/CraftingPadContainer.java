@@ -1,18 +1,18 @@
 package io.github.strikerrocker.vt.content.items.craftingpad;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.WorkbenchContainer;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.CraftingMenu;
 
-public class CraftingPadContainer extends WorkbenchContainer {
+public class CraftingPadContainer extends CraftingMenu {
 
-    CraftingPadContainer(int id, PlayerInventory playerInventory, IWorldPosCallable worldPosCallable) {
+    CraftingPadContainer(int id, Inventory playerInventory, ContainerLevelAccess worldPosCallable) {
         super(id, playerInventory, worldPosCallable);
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return true;
     }
 }

@@ -1,11 +1,10 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ArmorStandEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ArmorStandSwap extends Feature {
     private ForgeConfigSpec.BooleanValue enableArmorStandSwapping;
 
-    private static void swapSlot(PlayerEntity player, ArmorStandEntity armorStand, EquipmentSlotType slot) {
+    private static void swapSlot(Player player, ArmorStand armorStand, EquipmentSlot slot) {
         ItemStack playerItem = player.getItemBySlot(slot);
         ItemStack armorStandItem = armorStand.getItemBySlot(slot);
         player.setItemSlot(slot, armorStandItem);
@@ -35,16 +34,13 @@ public class ArmorStandSwap extends Feature {
 
     @SubscribeEvent
     public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        PlayerEntity player = event.getPlayer();
-        Entity target = event.getTarget();
-        if (player.isCrouching() && enableArmorStandSwapping.get()) {
-            if (target.level.isClientSide() || player.isSpectator() || player.isCreative() || !(target instanceof ArmorStandEntity))
-                return;
+        //TODO Not working due to the event not being fired in server by forge.
+        Player player = event.getPlayer();
+        if (player.isCrouching() && enableArmorStandSwapping.get() && !player.level.isClientSide() && !player.isSpectator()
+                && !player.isCreative() && event.getTarget() instanceof ArmorStand armorStand) {
             event.setCanceled(true);
-            ArmorStandEntity armorStand = (ArmorStandEntity) target;
-
-            for (EquipmentSlotType equipmentSlotType : EquipmentSlotType.values()) {
-                if (equipmentSlotType.getType() == EquipmentSlotType.Group.ARMOR) {
+            for (EquipmentSlot equipmentSlotType : EquipmentSlot.values()) {
+                if (equipmentSlotType.getType() == EquipmentSlot.Type.ARMOR) {
                     swapSlot(player, armorStand, equipmentSlotType);
                 }
             }

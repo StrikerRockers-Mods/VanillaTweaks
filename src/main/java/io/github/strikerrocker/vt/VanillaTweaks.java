@@ -12,6 +12,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -21,11 +22,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static io.github.strikerrocker.vt.VTModInfo.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MODID;
 
 @Mod(MODID)
 public class VanillaTweaks {
     public static final Logger LOGGER = LogManager.getLogger();
+    /**
+     * Vanilla Tweaks's mod ID
+     */
+    public static final String MODID = "vanillatweaks";
     private static final List<Module> modules = new ArrayList<>();
 
     public VanillaTweaks() {
@@ -64,7 +69,7 @@ public class VanillaTweaks {
         LOGGER.info("Setup Complete");
     }
 
-    private void configChanged(final ModConfig.ModConfigEvent event) {
+    private void configChanged(final ModConfigEvent event) {
         modules.forEach(module -> module.configChanged(event));
     }
 }

@@ -1,17 +1,17 @@
 package io.github.strikerrocker.vt.enchantments;
 
 import com.google.gson.JsonObject;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 class BlazingModifier extends LootModifier {
-    public BlazingModifier(ILootCondition[] conditionsIn) {
+    public BlazingModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
     private static ItemStack smelt(ItemStack stack, LootContext context) {
-        return context.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(stack), context.getLevel())
-                .map(FurnaceRecipe::getResultItem)
+        return context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel())
+                .map(SmeltingRecipe::getResultItem)
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount()))
                 .orElse(stack);
@@ -37,7 +37,7 @@ class BlazingModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(context.getParamOrNull(LootParameters.TOOL));
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(context.getParamOrNull(LootContextParams.TOOL));
         if (enchantments.containsKey(Enchantments.BLOCK_FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
             return generatedLoot;
         }
@@ -48,7 +48,7 @@ class BlazingModifier extends LootModifier {
 
     public static class Serializer extends GlobalLootModifierSerializer<BlazingModifier> {
         @Override
-        public BlazingModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn) {
+        public BlazingModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn) {
             return new BlazingModifier(conditionsIn);
         }
 

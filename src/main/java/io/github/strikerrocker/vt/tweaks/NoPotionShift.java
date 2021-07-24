@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.tweaks;
 
-import io.github.strikerrocker.vt.VTModInfo;
+import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -24,7 +24,7 @@ public class NoPotionShift extends Feature {
                 .define("disablePotionShift", true);
     }
 
-    @Mod.EventBusSubscriber(modid = VTModInfo.MODID, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = VanillaTweaks.MODID, value = Dist.CLIENT)
     public static class ClientEvent {
         @SubscribeEvent
         public static void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {

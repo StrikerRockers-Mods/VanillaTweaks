@@ -2,47 +2,39 @@ package io.github.strikerrocker.vt.content.items;
 
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.compat.CuriosCompat;
 import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadItem;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteEntity;
 import io.github.strikerrocker.vt.content.items.dynamite.DynamiteItem;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.dispenser.ProjectileDispenseBehavior;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
-import static io.github.strikerrocker.vt.VTModInfo.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MODID;
 
 public class Items extends Feature {
     @ObjectHolder(MODID + ":dynamite")
     public static final EntityType<DynamiteEntity> DYNAMITE_TYPE = null;
-    private static final Item BINOCULARS = new BinocularItem();
-    private static final Item LENS = new Item(new Item.Properties().tab(ItemGroup.TAB_MISC)).setRegistryName("lens");
-    private static final Item FRIED_EGG = new Item(new Item.Properties().food(new Food.Builder().nutrition(5).saturationMod(0.6f).build()).tab(ItemGroup.TAB_FOOD)).setRegistryName("friedegg");
+    private static final Item FRIED_EGG = new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.6f).build()).tab(CreativeModeTab.TAB_FOOD)).setRegistryName("friedegg");
     private static final Item SLIME_BUCKET = new SlimeBucketItem();
     public static ForgeConfigSpec.IntValue dynamiteCooldown;
     public static ForgeConfigSpec.IntValue dynamiteExplosionPower;
@@ -51,22 +43,7 @@ public class Items extends Feature {
     public static ForgeConfigSpec.BooleanValue enablePad;
     static ForgeConfigSpec.BooleanValue enableDynamite;
     static ForgeConfigSpec.BooleanValue enableSlimeBucket;
-    static ForgeConfigSpec.DoubleValue binocularZoomAmount;
     static ForgeConfigSpec.BooleanValue enableFriedEgg;
-
-    @SubscribeEvent
-    public void onFOVChange(FOVUpdateEvent event) {
-        if (event.getEntity() != null && binocularZoomAmount.get() != 0) {
-            ItemStack helmet = event.getEntity().getItemBySlot(EquipmentSlotType.HEAD);
-            if (!helmet.isEmpty() && helmet.getItem() == BINOCULARS) {
-                event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
-            } else if (ModList.get().isLoaded("curios")) {
-                if (CuriosCompat.isStackInCuriosSlot(event.getEntity(), new ItemStack(Items.BINOCULARS))) {
-                    event.setNewfov((float) (event.getFov() / binocularZoomAmount.get()));
-                }
-            }
-        }
-    }
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -94,10 +71,6 @@ public class Items extends Feature {
                 .translation("config.vanillatweaks:enableFriedEgg")
                 .comment("Want a food which can be obtained with eggs and heals 2.5 hunger?")
                 .define("enableFriedEgg", true);
-        binocularZoomAmount = builder
-                .translation("config.vanillatweaks:binocularZoomAmount")
-                .comment("How much do you want the binoculars to zoom? ( 0 = disabled)")
-                .defineInRange("binocularZoomAmount", 4, 0, Double.MAX_VALUE);
     }
 
     @Override
@@ -107,9 +80,9 @@ public class Items extends Feature {
 
     @Override
     public void setup() {
-        DispenserBlock.registerBehavior(DYNAMITE, new ProjectileDispenseBehavior() {
+        DispenserBlock.registerBehavior(DYNAMITE, new AbstractProjectileDispenseBehavior() {
             @Override
-            protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
+            protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
                 return new DynamiteEntity(worldIn, position.x(), position.y(), position.z());
             }
         });
@@ -119,25 +92,19 @@ public class Items extends Feature {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-            event.getRegistry().register(EntityType.Builder.<DynamiteEntity>of(DynamiteEntity::new, EntityClassification.MISC).
+            event.getRegistry().register(EntityType.Builder.<DynamiteEntity>of(DynamiteEntity::new, MobCategory.MISC).
                     setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "dynamite")));
         }
 
         @SubscribeEvent
-        public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
             CraftingHelper.register(ItemConditions.Serializer.INSTANCE);
         }
 
         @SubscribeEvent
         public static void onRegisterItems(RegistryEvent.Register<Item> event) {
             VanillaTweaks.LOGGER.info("Registering Items");
-            event.getRegistry().registerAll(CRAFTING_PAD, SLIME_BUCKET, DYNAMITE, BINOCULARS, LENS, FRIED_EGG);
-        }
-
-        @SubscribeEvent
-        public static void sendImc(InterModEnqueueEvent event) {
-            if (ModList.get().isLoaded("curios"))
-                CuriosCompat.sendImc();
+            event.getRegistry().registerAll(CRAFTING_PAD, SLIME_BUCKET, DYNAMITE, FRIED_EGG);
         }
     }
 
@@ -145,8 +112,8 @@ public class Items extends Feature {
     public static class ClientEvents {
         @SubscribeEvent
         public static void onModelRegister(ModelRegistryEvent event) {
-            RenderingRegistry.registerEntityRenderingHandler(DYNAMITE_TYPE,
-                    manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
+            //TODO change to when possible RenderingRegistry.registerEntityRenderingHandler(DYNAMITE_TYPE, ThrownItemRenderer::new);
+            EntityRenderers.register(DYNAMITE_TYPE, ThrownItemRenderer::new);
         }
     }
 }

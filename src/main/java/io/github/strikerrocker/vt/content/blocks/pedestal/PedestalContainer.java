@@ -1,23 +1,23 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class PedestalContainer extends Container {
+public class PedestalContainer extends AbstractContainerMenu {
     @ObjectHolder("vanillatweaks:pedestal")
-    public static ContainerType<PedestalContainer> TYPE;
+    public static MenuType<PedestalContainer> TYPE;
 
-    public PedestalContainer(int id, PlayerInventory playerInv, BlockPos pos) {
+    public PedestalContainer(int id, Inventory playerInv, BlockPos pos) {
         super(TYPE, id);
-        PedestalTileEntity pedestal = (PedestalTileEntity) playerInv.player.level.getBlockEntity(pos);
+        PedestalBlockEntity pedestal = (PedestalBlockEntity) playerInv.player.level.getBlockEntity(pos);
         pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
                 .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 20) {
                     @Override
@@ -39,15 +39,15 @@ public class PedestalContainer extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
 
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            int containerSlots = slots.size() - player.inventory.items.size();
+            int containerSlots = slots.size() - player.getInventory().items.size();
 
             if (index < containerSlots) {
                 if (!this.moveItemStackTo(itemstack1, containerSlots, slots.size(), true)) {
@@ -74,7 +74,7 @@ public class PedestalContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return true;
     }
 }

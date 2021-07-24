@@ -1,15 +1,15 @@
 package io.github.strikerrocker.vt.world;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.ChickenEntity;
-import net.minecraft.entity.passive.OcelotEntity;
-import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.entity.passive.WolfEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -43,8 +43,8 @@ public class RealisticRelationship extends Feature {
                 Item drop = dropItem.getItem();
                 Entity source = event.getSource().getDirectEntity();
                 if (realisticRelationship.get() &&
-                        ((source instanceof WolfEntity && entity instanceof SheepEntity && (drop == Items.MUTTON || drop == Items.COOKED_MUTTON))
-                                || (source instanceof OcelotEntity && entity instanceof ChickenEntity && (drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN)))) {
+                        ((source instanceof Wolf && entity instanceof Sheep && (drop == Items.MUTTON || drop == Items.COOKED_MUTTON))
+                                || (source instanceof Ocelot && entity instanceof Chicken && (drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN)))) {
                     event.getDrops().remove(dropEntity);
                 }
             }

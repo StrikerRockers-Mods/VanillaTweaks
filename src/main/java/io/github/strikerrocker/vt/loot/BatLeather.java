@@ -1,12 +1,12 @@
 package io.github.strikerrocker.vt.loot;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ambient.Bat;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,8 +30,8 @@ public class BatLeather extends Feature {
     @SubscribeEvent
     public void onLivingDrop(LivingDropsEvent event) {
         Entity entity = event.getEntity();
-        World world = entity.level;
-        if (!world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && event.getSource().getEntity() instanceof PlayerEntity && entity instanceof BatEntity && batLeatherDropChance.get() / 10 > Math.random()) {
+        Level world = entity.level;
+        if (!world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && event.getSource().getEntity() instanceof Player && entity instanceof Bat && batLeatherDropChance.get() / 10 > Math.random()) {
             entity.spawnAtLocation(Items.LEATHER);
         }
     }

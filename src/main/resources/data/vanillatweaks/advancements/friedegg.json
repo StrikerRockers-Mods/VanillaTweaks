@@ -12,7 +12,7 @@
   },
   "parent": "vanillatweaks:pad",
   "criteria": {
-    "sugar_in_inventory": {
+    "fried_egg_in_inventory": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [

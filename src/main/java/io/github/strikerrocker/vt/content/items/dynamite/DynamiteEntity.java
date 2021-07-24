@@ -1,37 +1,37 @@
 package io.github.strikerrocker.vt.content.items.dynamite;
 
 import io.github.strikerrocker.vt.content.items.Items;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class DynamiteEntity extends ProjectileItemEntity {
+public class DynamiteEntity extends ThrowableItemProjectile {
     private static final int WET_TICKS = 20;
-    private static final DataParameter<Integer> TICKSWET = EntityDataManager.defineId(DynamiteEntity.class, DataSerializers.INT);
-    private static final DataParameter<Integer> TICKSSINCEWET = EntityDataManager.defineId(DynamiteEntity.class, DataSerializers.INT);
+    private static final EntityDataAccessor<Integer> TICKSWET = SynchedEntityData.defineId(DynamiteEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> TICKSSINCEWET = SynchedEntityData.defineId(DynamiteEntity.class, EntityDataSerializers.INT);
 
-    public DynamiteEntity(EntityType<? extends ProjectileItemEntity> type, World world) {
+    public DynamiteEntity(EntityType<? extends ThrowableItemProjectile> type, Level world) {
         super(type, world);
     }
 
-    public DynamiteEntity(World world, double x, double y, double z) {
+    public DynamiteEntity(Level world, double x, double y, double z) {
         super(Items.DYNAMITE_TYPE, x, y, z, world);
     }
 
-    DynamiteEntity(World world, LivingEntity entityLivingBase) {
+    DynamiteEntity(Level world, LivingEntity entityLivingBase) {
         super(Items.DYNAMITE_TYPE, entityLivingBase, world);
     }
 
@@ -75,25 +75,25 @@ public class DynamiteEntity extends ProjectileItemEntity {
     }
 
     @Override
-    protected void onHit(RayTraceResult result) {
+    protected void onHit(HitResult result) {
         if (!level.isClientSide()) {
             if (this.entityData.get(TICKSSINCEWET) < WET_TICKS) {
                 this.spawnAtLocation(Items.DYNAMITE);
-                this.remove();
+                this.remove(RemovalReason.KILLED);
             } else {
-                if (result instanceof EntityRayTraceResult && ((EntityRayTraceResult) result).getEntity() instanceof DynamiteEntity) {
+                if (result instanceof EntityHitResult && ((EntityHitResult) result).getEntity() instanceof DynamiteEntity) {
                     return;
                 } else {
                     BlockPos pos = blockPosition();
-                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), Items.dynamiteExplosionPower.get(), Explosion.Mode.BREAK);
+                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), Items.dynamiteExplosionPower.get(), Explosion.BlockInteraction.BREAK);
                 }
             }
-            this.remove();
+            this.remove(RemovalReason.KILLED);
         }
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

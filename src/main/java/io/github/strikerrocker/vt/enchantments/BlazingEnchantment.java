@@ -1,15 +1,15 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
 
 public class BlazingEnchantment extends Enchantment {
     BlazingEnchantment(String name) {
-        super(Rarity.VERY_RARE, EnchantmentType.DIGGER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
+        super(Rarity.VERY_RARE, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
         this.setRegistryName(name);
     }
 
@@ -35,7 +35,7 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ToolItem && EnchantmentFeature.enableBlazing.get();
+        return stack.getItem() instanceof DiggerItem && EnchantmentFeature.enableBlazing.get();
     }
 
     @Override

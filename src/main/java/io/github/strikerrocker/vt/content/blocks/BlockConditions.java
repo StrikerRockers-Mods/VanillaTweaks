@@ -1,19 +1,14 @@
 package io.github.strikerrocker.vt.content.blocks;
 
 import com.google.gson.JsonObject;
-import io.github.strikerrocker.vt.VTModInfo;
-import net.minecraft.util.ResourceLocation;
+import io.github.strikerrocker.vt.VanillaTweaks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
-public class BlockConditions implements ICondition {
+public record BlockConditions(String object) implements ICondition {
 
-    private static final ResourceLocation NAME = new ResourceLocation(VTModInfo.MODID, "blocks");
-    private final String object;
-
-    private BlockConditions(String object) {
-        this.object = object;
-    }
+    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MODID, "blocks");
 
     @Override
     public ResourceLocation getID() {
