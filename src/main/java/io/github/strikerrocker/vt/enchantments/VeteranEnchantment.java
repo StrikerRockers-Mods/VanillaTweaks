@@ -16,9 +16,9 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class VeteranEnchantment extends Enchantment {
-    VeteranEnchantment(String name) {
+    VeteranEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_HEAD, new EquipmentSlot[]{EquipmentSlot.HEAD});
-        this.setRegistryName(name);
+        this.setRegistryName("veteran");
     }
 
     @SubscribeEvent

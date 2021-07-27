@@ -17,9 +17,9 @@ import java.util.UUID;
 public class VigorEnchantment extends Enchantment {
     private static final UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
 
-    VigorEnchantment(String name) {
+    VigorEnchantment() {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
-        this.setRegistryName(name);
+        this.setRegistryName("vigor");
     }
 
     @SubscribeEvent

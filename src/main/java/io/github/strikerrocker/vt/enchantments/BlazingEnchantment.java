@@ -8,9 +8,9 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 public class BlazingEnchantment extends Enchantment {
-    BlazingEnchantment(String name) {
+    BlazingEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-        this.setRegistryName(name);
+        this.setRegistryName("blazing");
     }
 
     @Override
@@ -29,8 +29,8 @@ public class BlazingEnchantment extends Enchantment {
     }
 
     @Override
-    protected boolean checkCompatibility(Enchantment ench) {
-        return super.checkCompatibility(ench) && ench != Enchantments.SILK_TOUCH && ench != Enchantments.BLOCK_FORTUNE;
+    protected boolean checkCompatibility(Enchantment enchantment) {
+        return super.checkCompatibility(enchantment) && enchantment != Enchantments.SILK_TOUCH && enchantment != Enchantments.BLOCK_FORTUNE;
     }
 
     @Override

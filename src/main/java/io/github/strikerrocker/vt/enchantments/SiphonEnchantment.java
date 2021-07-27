@@ -7,9 +7,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class SiphonEnchantment extends Enchantment {
-    SiphonEnchantment(String name) {
+    SiphonEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-        this.setRegistryName(name);
+        this.setRegistryName("siphon");
     }
 
     @Override

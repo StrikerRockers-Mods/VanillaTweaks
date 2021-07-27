@@ -19,9 +19,9 @@ import java.util.List;
 public class HomingEnchantment extends Enchantment {
     private final AABB ZERO_AABB = new AABB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
 
-    HomingEnchantment(String name) {
+    HomingEnchantment() {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-        this.setRegistryName(name);
+        this.setRegistryName("homing");
     }
 
     @SubscribeEvent

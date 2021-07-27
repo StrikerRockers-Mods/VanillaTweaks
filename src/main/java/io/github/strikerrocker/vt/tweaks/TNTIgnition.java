@@ -24,7 +24,6 @@ public class TNTIgnition extends Feature {
         if (!world.isClientSide() && blockState.getBlock() instanceof TntBlock && tntIgnition.get()) {
             for (Direction f : Direction.values())
                 if (world.getBlockState(pos.relative(f, 1)).getBlock() instanceof MagmaBlock || world.getBlockState(pos.relative(f, 1)).getMaterial() == Material.LAVA) {
-                    TntBlock blockTNT = (TntBlock) blockState.getBlock();
                     TntBlock.explode(event.getEntity().getCommandSenderWorld(), pos);
                     world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
                 }

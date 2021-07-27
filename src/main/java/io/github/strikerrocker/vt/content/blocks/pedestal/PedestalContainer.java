@@ -26,13 +26,13 @@ public class PedestalContainer extends AbstractContainerMenu {
                         pedestal.setChanged();
                     }
                 }));
-        // Add player inv
+        // Add player inv slots
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 51 + i * 18));
             }
         }
-        // Add player hotbar
+        // Add player hotbar slots
         for (int k = 0; k < 9; k++) {
             addSlot(new Slot(playerInv, k, 8 + k * 18, 109));
         }

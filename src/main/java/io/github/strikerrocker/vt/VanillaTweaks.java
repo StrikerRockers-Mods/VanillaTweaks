@@ -12,7 +12,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +36,6 @@ public class VanillaTweaks {
         registerModules();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
-        modEventBus.addListener(this::configChanged);
     }
 
     private static void registerModules() {
@@ -55,21 +53,10 @@ public class VanillaTweaks {
         ForgeConfigSpec spec = builder.build();
         modules.forEach(module -> module.setConfigSpec(spec));
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, spec);
-        /*for (Function<ForgeConfigSpec.Builder, Module> function : moduleBuilder) {
-            Pair<Module, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(function);
-            modules.add(specPair.getLeft());
-            String cfgStr = "vanillatweaks_" + specPair.getLeft().getName() + ".toml";
-            specPair.getLeft().setConfigSpec(specPair.getRight());
-            ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, specPair.getRight(), cfgStr);
-        }*/
     }
 
     private void setup(final FMLCommonSetupEvent event) {
         modules.forEach(Module::setup);
         LOGGER.info("Setup Complete");
-    }
-
-    private void configChanged(final ModConfigEvent event) {
-        modules.forEach(module -> module.configChanged(event));
     }
 }
