@@ -20,6 +20,11 @@ public class HopsEnchantment extends Enchantment {
         this.setRegistryName("hops");
     }
 
+    /**
+     * Handles the jumping logic of Hops enchantment
+     *
+     * @param event LivingJumpEvent
+     */
     @SubscribeEvent
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity entity = event.getEntityLiving();
@@ -34,6 +39,11 @@ public class HopsEnchantment extends Enchantment {
         }
     }
 
+    /**
+     * Handles the falling logic of Hops enchantment
+     *
+     * @param event LivingFallEvent
+     */
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
         if (EnchantmentFeature.enableHops.get() && !event.getEntity().level.isClientSide()) {

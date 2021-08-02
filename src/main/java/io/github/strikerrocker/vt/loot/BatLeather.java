@@ -27,6 +27,9 @@ public class BatLeather extends Feature {
         return true;
     }
 
+    /**
+     * Adds the chance of leather dropping when bat is killed
+     */
     @SubscribeEvent
     public void onLivingDrop(LivingDropsEvent event) {
         Entity entity = event.getEntity();

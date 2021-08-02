@@ -1,7 +1,10 @@
 package io.github.strikerrocker.vt.compat;
 
+/**
+ * Handles JustEnoughItems compatibility
+ */
 //@mezz.jei.api.JeiPlugin
-public class JeiPlugin /*implements IModPlugin*/ {
+public class JEIPlugin /*implements IModPlugin*/ {
     /*TODO Update when JEI is updated
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {

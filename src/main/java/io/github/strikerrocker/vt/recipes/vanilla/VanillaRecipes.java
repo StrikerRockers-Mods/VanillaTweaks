@@ -1,12 +1,7 @@
 package io.github.strikerrocker.vt.recipes.vanilla;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 public class VanillaRecipes extends Feature {
     static ForgeConfigSpec.BooleanValue betterChest;
@@ -39,11 +34,4 @@ public class VanillaRecipes extends Feature {
                 .define("betterTrappedChestRecipe", true);
     }
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
-            CraftingHelper.register(VanillaRecipeConditions.Serializer.INSTANCE);
-        }
-    }
 }

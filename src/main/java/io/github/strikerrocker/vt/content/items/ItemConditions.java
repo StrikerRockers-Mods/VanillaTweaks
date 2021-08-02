@@ -6,9 +6,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
+/**
+ * Adds conditions for item recipes
+ */
 public record ItemConditions(String object) implements ICondition {
 
-    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MODID, "items");
+    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MOD_ID, "items");
 
     @Override
     public ResourceLocation getID() {

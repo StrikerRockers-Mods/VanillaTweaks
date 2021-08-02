@@ -42,7 +42,7 @@ public class SelfPlanting extends Feature {
                 .define("selfPlanting", true);
         despawnTime = builder
                 .translation("config.vanillatweaks:despawnTime")
-                .comment("How long a plant should take to despawn (and attempt to plant) Default Minecraft is 6000.")
+                .comment("How long a plant item should take to despawn (and attempt to plant) Default Minecraft is 6000.")
                 .defineInRange("despawnTime", 6000, 0, Integer.MAX_VALUE);
         chanceToPlant = builder
                 .translation("config.vanillatweaks:chanceToPlant")
@@ -50,12 +50,18 @@ public class SelfPlanting extends Feature {
                 .defineInRange("chanceToPlant", 100, 0, 100);
     }
 
+    /**
+     * Check if the despawning item can plant if not restore default lifespan of the item
+     */
     @SubscribeEvent
     public void itemDecay(ItemExpireEvent event) {
         if (!plant(event.getEntityItem()))
             event.setExtraLife(6000 - event.getEntityItem().lifespan);
     }
 
+    /**
+     * If item is of plantable then change the lifespan
+     */
     @SubscribeEvent
     public void itemToss(EntityJoinWorldEvent event) {
         if (selfPlanting.get() && !event.getWorld().isClientSide() && event.getEntity() instanceof ItemEntity itemEntity) {
@@ -67,6 +73,12 @@ public class SelfPlanting extends Feature {
         }
     }
 
+    /**
+     * Handles the planting logic
+     *
+     * @param entity The item entity to be planted
+     * @return if the item lifespan is to be set as default
+     */
     public boolean plant(ItemEntity entity) {
         Level world = entity.getCommandSenderWorld();
         ItemStack stack = entity.getItem().copy();

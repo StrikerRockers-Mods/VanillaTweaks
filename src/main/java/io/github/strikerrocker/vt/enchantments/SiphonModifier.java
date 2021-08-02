@@ -14,6 +14,9 @@ import net.minecraftforge.common.loot.LootModifier;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+/**
+ * Handles the functionality of Siphon enchantment
+ */
 class SiphonModifier extends LootModifier {
     public SiphonModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);

@@ -21,15 +21,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static io.github.strikerrocker.vt.VanillaTweaks.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
-@Mod(MODID)
+@Mod(MOD_ID)
 public class VanillaTweaks {
     public static final Logger LOGGER = LogManager.getLogger();
     /**
-     * Vanilla Tweaks's mod ID
+     * Vanilla Tweaks mod ID
      */
-    public static final String MODID = "vanillatweaks";
+    public static final String MOD_ID = "vanillatweaks";
     private static final List<Module> modules = new ArrayList<>();
 
     public VanillaTweaks() {
@@ -51,12 +51,11 @@ public class VanillaTweaks {
         modules.forEach(Module::setupConfig);
         builder.pop();
         ForgeConfigSpec spec = builder.build();
-        modules.forEach(module -> module.setConfigSpec(spec));
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, spec);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        modules.forEach(Module::setup);
+        modules.forEach(module -> module.setup(event));
         LOGGER.info("Setup Complete");
     }
 }

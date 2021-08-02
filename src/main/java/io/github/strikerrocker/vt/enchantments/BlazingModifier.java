@@ -21,11 +21,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Handles the functionality of Blazing enchantment
+ */
 class BlazingModifier extends LootModifier {
     public BlazingModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
+    /**
+     * Returns the result of the smelting recipe
+     *
+     * @param stack   The input stack
+     * @param context The loot context
+     * @return The output stack or the input stack if an recipe doesn't exist
+     */
     private static ItemStack smelt(ItemStack stack, LootContext context) {
         return context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel())
                 .map(SmeltingRecipe::getResultItem)
@@ -37,6 +47,7 @@ class BlazingModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+        if (context.getParamOrNull(LootContextParams.TOOL) == null) return generatedLoot;
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(context.getParamOrNull(LootContextParams.TOOL));
         if (enchantments.containsKey(Enchantments.BLOCK_FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
             return generatedLoot;

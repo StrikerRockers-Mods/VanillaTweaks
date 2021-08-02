@@ -23,6 +23,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class SilkSpawner extends Feature {
     private static final String SPAWNER_TAG = "SilkSpawnerData";
@@ -42,6 +43,9 @@ public class SilkSpawner extends Feature {
         return true;
     }
 
+    /**
+     * Handles spawner block entity placement
+     */
     @SubscribeEvent
     public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
         if (event.getEntity() instanceof Player player) {
@@ -67,10 +71,13 @@ public class SilkSpawner extends Feature {
     }
 
     @Override
-    public void setup() {
+    public void setup(FMLCommonSetupEvent event) {
         mobSpawnerItem = Blocks.SPAWNER.asItem();
     }
 
+    /**
+     * Handles Spawner break logic
+     */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onBreak(BlockEvent.BreakEvent event) {
         LevelAccessor world = event.getWorld();
@@ -93,8 +100,11 @@ public class SilkSpawner extends Feature {
         }
     }
 
-    @Mod.EventBusSubscriber(modid = VanillaTweaks.MODID, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = VanillaTweaks.MOD_ID, value = Dist.CLIENT)
     public static class ClientEvents {
+        /**
+         * Shows the name of the mob in tooltip
+         */
         @SubscribeEvent
         public static void onToolTipEvent(ItemTooltipEvent event) {
             ItemStack stack = event.getItemStack();

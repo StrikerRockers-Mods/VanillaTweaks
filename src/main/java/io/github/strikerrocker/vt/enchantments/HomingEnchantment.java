@@ -27,12 +27,18 @@ public class HomingEnchantment extends Enchantment {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.world != null && !event.world.isClientSide() && EnchantmentFeature.enableHoming.get()) {
-            ServerLevel world = (ServerLevel) event.world;
-            world.getEntities(EntityType.ARROW, EntitySelector.ENTITY_STILL_ALIVE).forEach(entity -> attemptToMove(entity, world));
+            ServerLevel serverLevel = (ServerLevel) event.world;
+            serverLevel.getEntities(EntityType.ARROW, EntitySelector.ENTITY_STILL_ALIVE).forEach(entity -> attemptToMove(entity, serverLevel));
         }
     }
 
-    private void attemptToMove(Entity arrowEntity, ServerLevel world) {
+    /**
+     * Handles the logic of Homing enchantment
+     *
+     * @param arrowEntity The arrow entity
+     * @param level       The server level
+     */
+    private void attemptToMove(Entity arrowEntity, ServerLevel level) {
         AbstractArrow arrow = (AbstractArrow) arrowEntity;
         LivingEntity shooter = (LivingEntity) arrow.getOwner();
         if (shooter != null && EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem()) > 0) {
@@ -40,7 +46,7 @@ public class HomingEnchantment extends Enchantment {
             double distance = Math.pow(2, (double) homingLevel - 1) * 32;
             LivingEntity target = null;
             List<Entity> livingEntities = new ArrayList<>();
-            world.getEntities().getAll().forEach(livingEntities::add);
+            level.getEntities().getAll().forEach(livingEntities::add);
             for (Entity entity : livingEntities) {
                 double distanceToArrow = entity.distanceTo(arrow);
                 if (entity instanceof LivingEntity && distanceToArrow < distance && shooter.hasLineOfSight(entity) && !entity.getUUID().equals(shooter.getUUID())) {

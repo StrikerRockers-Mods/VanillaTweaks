@@ -6,9 +6,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
+/**
+ * Adds conditions for changing vanilla recipes
+ */
 public record BetterVanillaConditions(String object) implements ICondition {
 
-    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MODID, "better_vanilla");
+    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MOD_ID, "better_vanilla");
 
     @Override
     public ResourceLocation getID() {
@@ -20,13 +23,13 @@ public record BetterVanillaConditions(String object) implements ICondition {
         if (object.equals("better_stairs")) return BetterVanillaRecipes.betterStairs.get();
         if (object.equals("better_stone_tools")) {
             //TODO not working
-            return BetterVanillaRecipes.betterStoneTools.get();//!ModList.get().isLoaded("quark");
+            return BetterVanillaRecipes.betterStoneTools.get();
         }
         return false;
     }
 
     public static class Serializer implements IConditionSerializer<BetterVanillaConditions> {
-        static final BetterVanillaConditions.Serializer INSTANCE = new BetterVanillaConditions.Serializer();
+        public static final BetterVanillaConditions.Serializer INSTANCE = new BetterVanillaConditions.Serializer();
 
         @Override
         public void write(JsonObject json, BetterVanillaConditions value) {

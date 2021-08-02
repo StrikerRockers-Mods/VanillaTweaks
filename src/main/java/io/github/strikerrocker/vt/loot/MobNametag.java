@@ -26,6 +26,9 @@ public class MobNametag extends Feature {
         return true;
     }
 
+    /**
+     * Makes named mob drop nametag when killed
+     */
     @SubscribeEvent
     public void onLivingDrop(LivingDropsEvent event) {
         Entity entity = event.getEntity();

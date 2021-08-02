@@ -28,15 +28,18 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Arrays;
 
-import static io.github.strikerrocker.vt.VanillaTweaks.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
+/**
+ * Handles everything related to blocks
+ */
 public class Blocks extends Feature {
     public static final Block PEDESTAL_BLOCK = new PedestalBlock();
     private static final Block CHARCOAL_BLOCK = new Block(Block.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(5.0f, 10.0f)).setRegistryName("charcoalblock");
     private static final Block SUGAR_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.TERRACOTTA_WHITE).strength(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
     private static final Block FLINT_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)).setRegistryName("flintblock");
     private static final Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
-    @ObjectHolder(MODID + ":pedestal")
+    @ObjectHolder(MOD_ID + ":pedestal")
     public static BlockEntityType<PedestalBlockEntity> PEDESTAL_TYPE;
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
@@ -58,6 +61,11 @@ public class Blocks extends Feature {
         return true;
     }
 
+    /**
+     * Adds Charcoal block and torch as fuel source
+     *
+     * @param event FurnaceFuelBurnTimeEvent
+     */
     @SubscribeEvent
     public void onFurnaceFuelBurnTimeEvent(FurnaceFuelBurnTimeEvent event) {
         Item item = event.getItemStack().getItem();
@@ -66,6 +74,7 @@ public class Blocks extends Feature {
         if (item == net.minecraft.world.level.block.Blocks.TORCH.asItem())
             event.setBurnTime(400);
     }
+
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModBusEvents {
@@ -78,26 +87,51 @@ public class Blocks extends Feature {
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
+        /**
+         * Registers ItemBlock's for all the blocks
+         *
+         * @param event Registry event for Item
+         */
         @SubscribeEvent
         public static void onRegisterItemBlocks(RegistryEvent.Register<Item> event) {
             Arrays.stream(blocks).map(block -> new BlockItem(block, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
         }
 
+        /**
+         * Registers MenuType
+         *
+         * @param event Registry event for MenuType
+         */
         @SubscribeEvent
         public static void onRegisterContainers(RegistryEvent.Register<MenuType<?>> event) {
-            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))).setRegistryName(MODID, "pedestal"));
+            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))).setRegistryName(MOD_ID, "pedestal"));
         }
 
+        /**
+         * Registers BlockEntityType
+         *
+         * @param event Registry event for BlockEntityType
+         */
         @SubscribeEvent
         public static void onRegisterTEType(RegistryEvent.Register<BlockEntityType<?>> event) {
-            event.getRegistry().register(BlockEntityType.Builder.of(PedestalBlockEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
+            event.getRegistry().register(BlockEntityType.Builder.of(PedestalBlockEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MOD_ID, "pedestal")));
         }
 
+        /**
+         * Registers blocks
+         *
+         * @param event Registry event for Block
+         */
         @SubscribeEvent
         public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
             event.getRegistry().registerAll(blocks);
         }
 
+        /**
+         * Registers RecipeSerializer for item blocks
+         *
+         * @param event Registry event for RecipeSerializer
+         */
         @SubscribeEvent
         public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
             CraftingHelper.register(BlockConditions.Serializer.INSTANCE);

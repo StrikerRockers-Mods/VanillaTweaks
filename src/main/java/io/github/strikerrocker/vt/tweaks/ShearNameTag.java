@@ -16,11 +16,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ShearNameTag extends Feature {
     private ForgeConfigSpec.BooleanValue shearOffNameTag;
 
+    /**
+     * Make the nametag shear-able
+     */
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         Player player = event.getPlayer();
         Entity target = event.getTarget();
-        ItemStack heldItem = !player.getMainHandItem().isEmpty() ? player.getMainHandItem() : player.getOffhandItem();
+        ItemStack heldItem = player.getUseItem();
         if (shearOffNameTag.get() && !heldItem.isEmpty()) {
             Level world = player.level;
             if (heldItem.getItem() instanceof ShearsItem && target instanceof LivingEntity && target.hasCustomName() && !world.isClientSide()) {

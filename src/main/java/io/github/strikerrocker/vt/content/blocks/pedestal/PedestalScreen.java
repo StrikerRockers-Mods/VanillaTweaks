@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class PedestalScreen extends AbstractContainerScreen<PedestalContainer> {
 
-    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(VanillaTweaks.MODID, "textures/gui/pedestal.png");
+    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(VanillaTweaks.MOD_ID, "textures/gui/pedestal.png");
 
     private final Inventory playerInv;
 

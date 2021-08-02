@@ -6,9 +6,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
+/**
+ * Adds conditions for adding vanilla-isque recipes
+ */
 public record VanillaRecipeConditions(String object) implements ICondition {
 
-    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MODID, "vanilla");
+    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MOD_ID, "vanilla");
 
     @Override
     public ResourceLocation getID() {
@@ -26,7 +29,7 @@ public record VanillaRecipeConditions(String object) implements ICondition {
     }
 
     public static class Serializer implements IConditionSerializer<VanillaRecipeConditions> {
-        static final VanillaRecipeConditions.Serializer INSTANCE = new VanillaRecipeConditions.Serializer();
+        public static final VanillaRecipeConditions.Serializer INSTANCE = new VanillaRecipeConditions.Serializer();
 
         @Override
         public void write(JsonObject json, VanillaRecipeConditions value) {

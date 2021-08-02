@@ -22,6 +22,11 @@ public class VigorEnchantment extends Enchantment {
         this.setRegistryName("vigor");
     }
 
+    /**
+     * Handles the logic of Vigor enchantment
+     *
+     * @param event LivingEquipmentChangeEvent
+     */
     @SubscribeEvent
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
         if (EnchantmentFeature.enableVigor.get()) {

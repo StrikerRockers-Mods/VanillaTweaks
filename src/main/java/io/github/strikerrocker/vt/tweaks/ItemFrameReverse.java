@@ -9,6 +9,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ItemFrameReverse extends Feature {
     private ForgeConfigSpec.BooleanValue itemFrameRotateBackwards;
 
+    /**
+     * Rotates the item frame in reverse when shift right clicked
+     */
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         if (itemFrameRotateBackwards.get() && event.getTarget() instanceof ItemFrame frame && event.getPlayer().isCrouching()) {

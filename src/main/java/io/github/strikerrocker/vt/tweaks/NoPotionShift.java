@@ -24,8 +24,11 @@ public class NoPotionShift extends Feature {
                 .define("disablePotionShift", true);
     }
 
-    @Mod.EventBusSubscriber(modid = VanillaTweaks.MODID, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = VanillaTweaks.MOD_ID, value = Dist.CLIENT)
     public static class ClientEvent {
+        /**
+         * Disable Potion GUI shifting based on config
+         */
         @SubscribeEvent
         public static void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
             if (NoPotionShift.INSTANCE.disablePotionShift.get())

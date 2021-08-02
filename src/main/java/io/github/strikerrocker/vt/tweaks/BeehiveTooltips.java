@@ -30,6 +30,9 @@ public class BeehiveTooltips extends Feature {
         return true;
     }
 
+    /**
+     * Shows the number of bees and honey level of bee hives
+     */
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void onToolTipEvent(ItemTooltipEvent event) {

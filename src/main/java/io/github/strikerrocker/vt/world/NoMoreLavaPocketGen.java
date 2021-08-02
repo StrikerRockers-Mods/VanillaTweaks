@@ -16,6 +16,9 @@ import java.util.Optional;
 public class NoMoreLavaPocketGen extends Feature {
     private ForgeConfigSpec.BooleanValue disableLavaPocketGen;
 
+    /**
+     * Serializes the given features and then compares them
+     */
     private static boolean serializeAndCompareFeature(ConfiguredFeature<?, ?> configuredFeature1, ConfiguredFeature<?, ?> configuredFeature2) {
 
         Optional<JsonElement> configuredFeatureJSON1 = ConfiguredFeature.DIRECT_CODEC.encode(configuredFeature1, JsonOps.INSTANCE, JsonOps.INSTANCE.empty()).get().left();
@@ -43,6 +46,9 @@ public class NoMoreLavaPocketGen extends Feature {
                 .define("disableLavaPocketGen", true);
     }
 
+    /**
+     * Remove lava pocket feature if enabled
+     */
     @SubscribeEvent
     public void biomeCreationEvent(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.BiomeCategory.NETHER && disableLavaPocketGen.get()) {

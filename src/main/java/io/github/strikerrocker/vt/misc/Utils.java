@@ -9,6 +9,9 @@ public class Utils {
     private Utils() {
     }
 
+    /**
+     * Returns an FakePlayer for the given Level
+     */
     public static FakePlayer getFakePlayer(Level world) {
         if (world instanceof ServerLevel)
             return FakePlayerFactory.getMinecraft((ServerLevel) world);

@@ -17,6 +17,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class Sickle extends Feature {
     private ForgeConfigSpec.BooleanValue hoeActsAsSickle;
 
+    /**
+     * Returns whether the given BlockState is considered for sickle feature
+     */
     private static boolean canHarvest(BlockState state) {
         Block block = state.getBlock();
         return (block instanceof BushBlock && !(block instanceof WaterlilyBlock)) || block instanceof SugarCaneBlock;
@@ -35,6 +38,9 @@ public class Sickle extends Feature {
         return true;
     }
 
+    /**
+     * Handles crop harvesting more than one block when using hoe
+     */
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();

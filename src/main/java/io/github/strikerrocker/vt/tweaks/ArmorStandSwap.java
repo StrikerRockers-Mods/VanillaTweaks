@@ -12,6 +12,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ArmorStandSwap extends Feature {
     private ForgeConfigSpec.BooleanValue enableArmorStandSwapping;
 
+    /**
+     * Swaps the items in given slot of Player and ArmorStand
+     */
     private static void swapSlot(Player player, ArmorStand armorStand, EquipmentSlot slot) {
         ItemStack playerItem = player.getItemBySlot(slot);
         ItemStack armorStandItem = armorStand.getItemBySlot(slot);
@@ -32,6 +35,9 @@ public class ArmorStandSwap extends Feature {
         return true;
     }
 
+    /**
+     * Swaps all the armor slots of armor stand and player when shift right clicked
+     */
     @SubscribeEvent
     public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
         //TODO Not working due to the event not being fired in server by forge.

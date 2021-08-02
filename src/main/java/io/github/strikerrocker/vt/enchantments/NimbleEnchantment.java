@@ -24,6 +24,11 @@ public class NimbleEnchantment extends Enchantment {
         this.setRegistryName("nimble");
     }
 
+    /**
+     * Handles the logic of Nimble enchantment
+     *
+     * @param event LivingEquipmentChangeEvent
+     */
     @SubscribeEvent
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
         if (EnchantmentFeature.enableNimble.get()) {

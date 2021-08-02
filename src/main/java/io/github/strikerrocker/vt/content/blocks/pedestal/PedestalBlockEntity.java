@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 public class PedestalBlockEntity extends BlockEntity {
     long lastChangeTime;
-    public ItemStackHandler inventory = new ItemStackHandler(1) {
+    public final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             if (level != null && !level.isClientSide()) {

@@ -33,6 +33,9 @@ public class RealisticRelationship extends Feature {
                 .define("realisticRelationship", true);
     }
 
+    /**
+     * Removes meat drops if killed by the predator
+     */
     @SubscribeEvent
     public void onLivingDrop(LivingDropsEvent event) {
         Entity entity = event.getEntity();

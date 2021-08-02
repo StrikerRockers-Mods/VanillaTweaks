@@ -27,6 +27,9 @@ public class ArrowSetFire extends Feature {
         return true;
     }
 
+    /**
+     * Sets the block on which an burning arrow lands on
+     */
     @SubscribeEvent
     public void onArrowImpact(ProjectileImpactEvent event) {
         if (event.getProjectile() instanceof AbstractArrow arrow)

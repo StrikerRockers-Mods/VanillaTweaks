@@ -12,6 +12,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class SignEditing extends Feature {
     private ForgeConfigSpec.BooleanValue enableSignEditing;
 
+    /**
+     * Open sign editor even when its already placed
+     */
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getPlayer();
@@ -31,7 +34,7 @@ public class SignEditing extends Feature {
     public void setupConfig(ForgeConfigSpec.Builder builder) {
         enableSignEditing = builder
                 .translation("config.vanillatweaks:enableSignEditing")
-                .comment("Want a way to clear text in signs?")
+                .comment("Want a way to change text in signs without breaking them?")
                 .define("enableSignEditing", true);
     }
 

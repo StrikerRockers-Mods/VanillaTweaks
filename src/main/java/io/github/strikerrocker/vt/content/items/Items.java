@@ -26,12 +26,16 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
-import static io.github.strikerrocker.vt.VanillaTweaks.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
+/**
+ * Handles everything related to items
+ */
 public class Items extends Feature {
-    @ObjectHolder(MODID + ":dynamite")
+    @ObjectHolder(MOD_ID + ":dynamite")
     public static final EntityType<DynamiteEntity> DYNAMITE_TYPE = null;
     public static final Item CRAFTING_PAD = new CraftingPadItem();
     public static final Item DYNAMITE = new DynamiteItem();
@@ -78,28 +82,44 @@ public class Items extends Feature {
     }
 
     @Override
-    public void setup() {
-        DispenserBlock.registerBehavior(DYNAMITE, new AbstractProjectileDispenseBehavior() {
-            @Override
-            protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
-                return new DynamiteEntity(worldIn, position.x(), position.y(), position.z());
-            }
-        });
+    public void setup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() ->
+                DispenserBlock.registerBehavior(DYNAMITE, new AbstractProjectileDispenseBehavior() {
+                    @Override
+                    protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
+                        return new DynamiteEntity(worldIn, position.x(), position.y(), position.z());
+                    }
+                }));
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
+        /**
+         * Registers EntityType
+         *
+         * @param event Registry event for EntityType
+         */
         @SubscribeEvent
         public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
             event.getRegistry().register(EntityType.Builder.<DynamiteEntity>of(DynamiteEntity::new, MobCategory.MISC).
-                    setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "dynamite")));
+                    setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MOD_ID + ":dynamite").setRegistryName(new ResourceLocation(MOD_ID, "dynamite")));
         }
 
+        /**
+         * Registers RecipeSerializer for blocks
+         *
+         * @param event Registry event for RecipeSerializer
+         */
         @SubscribeEvent
         public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
             CraftingHelper.register(ItemConditions.Serializer.INSTANCE);
         }
 
+        /**
+         * Registers items
+         *
+         * @param event Registry event for Item
+         */
         @SubscribeEvent
         public static void onRegisterItems(RegistryEvent.Register<Item> event) {
             VanillaTweaks.LOGGER.info("Registering Items");
@@ -107,8 +127,13 @@ public class Items extends Feature {
         }
     }
 
-    @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientEvents {
+        /**
+         * Registers entity renderer
+         *
+         * @param event Registry event for Renderers
+         */
         @SubscribeEvent
         public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(DYNAMITE_TYPE, ThrownItemRenderer::new);
