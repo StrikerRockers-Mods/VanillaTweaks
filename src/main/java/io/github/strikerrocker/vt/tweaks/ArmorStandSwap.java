@@ -40,7 +40,6 @@ public class ArmorStandSwap extends Feature {
      */
     @SubscribeEvent
     public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        //TODO Not working due to the event not being fired in server by forge.
         Player player = event.getPlayer();
         if (player.isCrouching() && enableArmorStandSwapping.get() && !player.level.isClientSide() && !player.isSpectator()
                 && !player.isCreative() && event.getTarget() instanceof ArmorStand armorStand) {
