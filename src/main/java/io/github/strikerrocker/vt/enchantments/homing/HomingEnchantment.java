@@ -1,8 +1,12 @@
-package io.github.strikerrocker.vt.enchantments;
+package io.github.strikerrocker.vt.enchantments.homing;
 
+import com.google.common.collect.Lists;
+import io.github.strikerrocker.vt.enchantments.EnchantmentFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
@@ -10,57 +14,56 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomingEnchantment extends Enchantment {
-    private final AABB ZERO_AABB = new AABB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
 
-    HomingEnchantment() {
+    public HomingEnchantment() {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
         this.setRegistryName("homing");
     }
 
     @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.world != null && !event.world.isClientSide() && EnchantmentFeature.enableHoming.get()) {
-            ServerLevel serverLevel = (ServerLevel) event.world;
-            serverLevel.getEntities(EntityType.ARROW, EntitySelector.ENTITY_STILL_ALIVE).forEach(entity -> attemptToMove(entity, serverLevel));
+    public void entityJoin(EntityJoinWorldEvent event) {
+        if (!event.getWorld().isClientSide() && EnchantmentFeature.enableHoming.get() && event.getEntity() instanceof AbstractArrow arrow) {
+            onArrowJoinWorld(arrow, (ServerLevel) event.getWorld());
         }
     }
 
     /**
      * Handles the logic of Homing enchantment
      *
-     * @param arrowEntity The arrow entity
-     * @param level       The server level
+     * @param arrow The arrow entity
+     * @param level The server level
      */
-    private void attemptToMove(Entity arrowEntity, ServerLevel level) {
-        AbstractArrow arrow = (AbstractArrow) arrowEntity;
+    private void onArrowJoinWorld(AbstractArrow arrow, ServerLevel level) {
         LivingEntity shooter = (LivingEntity) arrow.getOwner();
         if (shooter != null && EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem()) > 0) {
             int homingLevel = EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem());
-            double distance = Math.pow(2, (double) homingLevel - 1) * 32;
             LivingEntity target = null;
-            List<Entity> livingEntities = new ArrayList<>();
-            level.getEntities().getAll().forEach(livingEntities::add);
+            AABB coneBound = ConeShape.getConeBounds(shooter, homingLevel);
+            List<Entity> livingEntities = Lists.newArrayList();
+            level.getEntities().get(coneBound, (entity -> {
+                if (!entity.getUUID().equals(shooter.getUUID())) {
+                    livingEntities.add(entity);
+                }
+            }));
             for (Entity entity : livingEntities) {
-                double distanceToArrow = entity.distanceTo(arrow);
-                if (entity instanceof LivingEntity && distanceToArrow < distance && shooter.hasLineOfSight(entity) && !entity.getUUID().equals(shooter.getUUID())) {
-                    distance = distanceToArrow;
+                if (entity instanceof LivingEntity && shooter.hasLineOfSight(entity)) {
                     target = (LivingEntity) entity;
                 }
             }
+            System.out.println(target);
             if (target != null) {
                 BlockPos arrowPos = arrow.blockPosition();
                 BlockPos targetPos = target.blockPosition();
                 double x = targetPos.getX() - arrowPos.getX();
-                double y = target.getBoundingBox().minY + target.getBbHeight() / 2 - (arrowPos.getY() + arrow.getBbHeight() / 2);
+                double y = target.getEyeY() - arrowPos.getY();
                 double z = targetPos.getZ() - arrowPos.getZ();
-                arrow.shoot(x, y, z, (float) Math.sqrt(Math.pow(2, arrow.getDeltaMovement().x) + Math.pow(2, arrow.getDeltaMovement().y) + Math.pow(2, arrow.getDeltaMovement().z)), 0);
+                arrow.shoot(x, y, z, (float) Math.sqrt(Math.pow(arrow.getDeltaMovement().x, 2) + Math.pow(arrow.getDeltaMovement().y, 2) + Math.pow(arrow.getDeltaMovement().z, 2)), 0);
             }
         }
     }

@@ -3,6 +3,7 @@ package io.github.strikerrocker.vt.enchantments;
 import com.google.common.collect.Maps;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
+import io.github.strikerrocker.vt.enchantments.homing.HomingEnchantment;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -16,13 +17,13 @@ import java.util.Map;
 
 public class EnchantmentFeature extends Feature {
     public static final Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
-    static ForgeConfigSpec.BooleanValue enableBlazing;
-    static ForgeConfigSpec.BooleanValue enableHops;
-    static ForgeConfigSpec.BooleanValue enableNimble;
-    static ForgeConfigSpec.BooleanValue enableSiphon;
-    static ForgeConfigSpec.BooleanValue enableVeteran;
-    static ForgeConfigSpec.BooleanValue enableVigor;
-    static ForgeConfigSpec.BooleanValue enableHoming;
+    public static ForgeConfigSpec.BooleanValue enableBlazing;
+    public static ForgeConfigSpec.BooleanValue enableHops;
+    public static ForgeConfigSpec.BooleanValue enableNimble;
+    public static ForgeConfigSpec.BooleanValue enableSiphon;
+    public static ForgeConfigSpec.BooleanValue enableVeteran;
+    public static ForgeConfigSpec.BooleanValue enableVigor;
+    public static ForgeConfigSpec.BooleanValue enableHoming;
 
     static {
         enchantments.put("blazing", new Tuple<>(new BlazingEnchantment(), "Want to smelt things when you mine them?"));
