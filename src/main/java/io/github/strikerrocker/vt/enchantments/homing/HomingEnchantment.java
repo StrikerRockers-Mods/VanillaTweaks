@@ -56,14 +56,13 @@ public class HomingEnchantment extends Enchantment {
                     target = (LivingEntity) entity;
                 }
             }
-            System.out.println(target);
             if (target != null) {
                 BlockPos arrowPos = arrow.blockPosition();
                 BlockPos targetPos = target.blockPosition();
                 double x = targetPos.getX() - arrowPos.getX();
                 double y = target.getEyeY() - arrowPos.getY();
                 double z = targetPos.getZ() - arrowPos.getZ();
-                arrow.shoot(x, y, z, (float) Math.sqrt(Math.pow(arrow.getDeltaMovement().x, 2) + Math.pow(arrow.getDeltaMovement().y, 2) + Math.pow(arrow.getDeltaMovement().z, 2)), 0);
+                arrow.shoot(x, y, z, (float) arrow.getDeltaMovement().length(), 0);
             }
         }
     }

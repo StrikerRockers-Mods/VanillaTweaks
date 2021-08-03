@@ -54,6 +54,7 @@
     "1.16.4-1.5.39": "Added configuration option for dynamite cool down and explosion power"
   },
   "1.17.1": {
-    "1.17.1-1.5.40": "Update to 1.17.1"
+    "1.17.1-1.5.40": "Update to 1.17.1",
+    "1.17.1-1.5.41": "Rewrite homing enchantment.\n Fix armor swapping not working."
   }
 }
