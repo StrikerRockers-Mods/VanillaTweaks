@@ -1,12 +1,7 @@
 package io.github.strikerrocker.vt.recipes.better_vanilla;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 public class BetterVanillaRecipes extends Feature {
     static ForgeConfigSpec.BooleanValue betterStairs;
@@ -22,13 +17,5 @@ public class BetterVanillaRecipes extends Feature {
                 .translation("config.vanillatweaks:betterStoneTools")
                 .comment("Cobblestone used in stone tools doesn't make sense?")
                 .define("betterStoneTools", true);
-    }
-
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-            CraftingHelper.register(BetterVanillaConditions.Serializer.INSTANCE);
-        }
     }
 }

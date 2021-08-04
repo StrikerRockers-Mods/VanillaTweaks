@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class SquishySponges extends Feature {
     private ForgeConfigSpec.BooleanValue squishySponge;
 
-    //TODO DOesnt work
+    //TODO Doesn't work
 
     private static void turnIntoWater(World worldIn, BlockPos pos) {
         if (worldIn.getBlockState(pos).getMaterial().isReplaceable()) {

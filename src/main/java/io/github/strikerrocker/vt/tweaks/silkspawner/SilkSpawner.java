@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.tweaks.silkspawner;
 
-import io.github.strikerrocker.vt.VTModInfo;
+import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -22,6 +22,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class SilkSpawner extends Feature {
     private static final String SPAWNER_TAG = "SilkSpawnerData";
@@ -67,7 +68,7 @@ public class SilkSpawner extends Feature {
     }
 
     @Override
-    public void setup() {
+    public void setup(FMLCommonSetupEvent event) {
         mobSpawnerItem = Blocks.SPAWNER.asItem();
 
     }
@@ -94,7 +95,7 @@ public class SilkSpawner extends Feature {
         }
     }
 
-    @Mod.EventBusSubscriber(modid = VTModInfo.MODID, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = VanillaTweaks.MOD_ID, value = Dist.CLIENT)
     public static class ClientEvents {
         @SubscribeEvent
         public static void onToolTipEvent(ItemTooltipEvent event) {

@@ -4,6 +4,7 @@ import io.github.strikerrocker.vt.VanillaTweaks;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,12 +33,12 @@ public abstract class Module {
 
     public abstract void addFeatures();
 
-    public void setup() {
+    public void setup(FMLCommonSetupEvent event) {
         features.values().stream().filter(Feature::usesEvents).forEach(feature -> {
             MinecraftForge.EVENT_BUS.register(feature);
             VanillaTweaks.LOGGER.debug("Registered Event Handler for class " + feature.getClass().getName());
         });
-        features.values().forEach(Feature::setup);
+        features.values().forEach(feature -> feature.setup(event));
     }
 
     public void configChanged(ModConfig.ModConfigEvent event) {

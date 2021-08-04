@@ -4,8 +4,6 @@ import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.ZombieEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -46,20 +44,7 @@ public class MobsBurnInDaylight extends Feature {
                 Random random = world.random;
                 BlockPos blockPos = livingEntity.blockPosition();
                 if (brightness > 0.5 && random.nextFloat() * 30 < (brightness - 0.4) * 2 && world.canSeeSky(blockPos)) {
-                    ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlotType.HEAD);
-                    boolean setFire = true;
-                    if (!itemstack.isEmpty()) {
-                        setFire = true;
-                        if (itemstack.isDamageableItem()) {
-                            itemstack.setDamageValue(itemstack.getDamageValue() + random.nextInt(2));
-                            if (itemstack.getDamageValue() >= itemstack.getMaxDamage()) {
-                                livingEntity.setItemSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
-                            }
-                        }
-                    }
-                    if (setFire) {
-                        livingEntity.setSecondsOnFire(10);
-                    }
+                    livingEntity.setSecondsOnFire(10);
                 }
             }
         }

@@ -28,7 +28,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Arrays;
 
-import static io.github.strikerrocker.vt.VTModInfo.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
 public class Blocks extends Feature {
     public static final Block PEDESTAL_BLOCK = new PedestalBlock();
@@ -36,7 +36,7 @@ public class Blocks extends Feature {
     private static final Block SUGAR_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.TERRACOTTA_WHITE).strength(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
     private static final Block FLINT_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)).setRegistryName("flintblock");
     private static final Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
-    @ObjectHolder(MODID + ":pedestal")
+    @ObjectHolder(MOD_ID + ":pedestal")
     public static TileEntityType<PedestalTileEntity> PEDESTAL_TYPE;
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
@@ -86,12 +86,12 @@ public class Blocks extends Feature {
 
         @SubscribeEvent
         public static void onRegisterContainers(RegistryEvent.Register<ContainerType<?>> event) {
-            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))).setRegistryName(MODID, "pedestal"));
+            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))).setRegistryName(MOD_ID, "pedestal"));
         }
 
         @SubscribeEvent
         public static void onRegisterTEType(RegistryEvent.Register<TileEntityType<?>> event) {
-            event.getRegistry().register(TileEntityType.Builder.of(PedestalTileEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MODID, "pedestal")));
+            event.getRegistry().register(TileEntityType.Builder.of(PedestalTileEntity::new, PEDESTAL_BLOCK).build(null).setRegistryName(new ResourceLocation(MOD_ID, "pedestal")));
         }
 
         @SubscribeEvent

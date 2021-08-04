@@ -31,8 +31,7 @@ public class ArrowSetFire extends Feature {
     public void onArrowImpact(ProjectileImpactEvent.Arrow event) {
         AbstractArrowEntity arrow = event.getArrow();
         if (!arrow.level.isClientSide() && arrow.isOnFire() && arrowsSetBlockOnFire.get()) {
-            BlockPos pos = arrow.blockPosition();
-            Vector3d vec3d = new Vector3d(pos.getX() + arrow.getDeltaMovement().x, pos.getY() + arrow.getDeltaMovement().y, pos.getZ() + arrow.getDeltaMovement().z);
+            Vector3d vec3d = arrow.position().add(arrow.getDeltaMovement());
             RayTraceResult raytraceresult = arrow.level.clip(new RayTraceContext(arrow.position(), vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
             BlockPos hitPos = new BlockPos(raytraceresult.getLocation()).above();
             if (arrow.level.isEmptyBlock(hitPos)) {

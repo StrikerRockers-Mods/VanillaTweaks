@@ -6,6 +6,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.MagmaBlock;
 import net.minecraft.block.TNTBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -21,13 +23,29 @@ public class TNTIgnition extends Feature {
         BlockState blockState = event.getPlacedBlock();
         IWorld world = event.getWorld();
         BlockPos pos = event.getPos();
-        if (!world.isClientSide() && blockState.getBlock() instanceof TNTBlock && tntIgnition.get()) {
-            for (Direction f : Direction.values())
-                if (world.getBlockState(pos.relative(f, 1)).getBlock() instanceof MagmaBlock || world.getBlockState(pos.relative(f, 1)).getMaterial() == Material.LAVA) {
-                    TNTBlock blockTNT = (TNTBlock) blockState.getBlock();
-                    TNTBlock.explode(event.getEntity().getCommandSenderWorld(), pos);
-                    world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
+        if (!world.isClientSide() && tntIgnition.get() && event.getEntity() != null) {
+            if (blockState.getBlock() instanceof TNTBlock) {
+                for (Direction f : Direction.values()) {
+                    BlockState state = world.getBlockState(pos.relative(f));
+                    if (state.getBlock() instanceof MagmaBlock || state.getMaterial() == Material.LAVA) {
+                        blockState.getBlock().catchFire(blockState, event.getEntity().level, pos, f,
+                                event.getEntity() instanceof LivingEntity ? (LivingEntity) event.getEntity() :
+                                        null);
+                        world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
+                    }
                 }
+            } else if (blockState.getBlock() instanceof MagmaBlock || blockState.getFluidState().getType() == Fluids.LAVA || blockState.getFluidState().getType() == Fluids.FLOWING_LAVA) {
+                for (Direction f : Direction.values()) {
+                    BlockState state = world.getBlockState(pos.relative(f));
+                    if (state.getBlock() instanceof TNTBlock) {
+                        BlockPos relativePos = pos.relative(f);
+                        state.getBlock().catchFire(blockState, event.getEntity().level, relativePos, f.getOpposite(),
+                                event.getEntity() instanceof LivingEntity ? (LivingEntity) event.getEntity() :
+                                        null);
+                        world.setBlock(relativePos, Blocks.AIR.defaultBlockState(), 11);
+                    }
+                }
+            }
         }
     }
 

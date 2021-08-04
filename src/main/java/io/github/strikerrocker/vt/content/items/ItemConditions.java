@@ -1,14 +1,14 @@
 package io.github.strikerrocker.vt.content.items;
 
 import com.google.gson.JsonObject;
-import io.github.strikerrocker.vt.VTModInfo;
+import io.github.strikerrocker.vt.VanillaTweaks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
 public class ItemConditions implements ICondition {
 
-    private static final ResourceLocation NAME = new ResourceLocation(VTModInfo.MODID, "items");
+    private static final ResourceLocation NAME = new ResourceLocation(VanillaTweaks.MOD_ID, "items");
     private final String object;
 
     private ItemConditions(String object) {

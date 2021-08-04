@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 
 public class SiphonEnchantment extends Enchantment {
-    SiphonEnchantment(String name) {
+    SiphonEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentType.DIGGER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
-        this.setRegistryName(name);
+        this.setRegistryName("siphon");
     }
 
     @Override

@@ -2,7 +2,7 @@ package io.github.strikerrocker.vt.content.blocks.pedestal;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import io.github.strikerrocker.vt.VTModInfo;
+import io.github.strikerrocker.vt.VanillaTweaks;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -10,7 +10,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class PedestalScreen extends ContainerScreen<PedestalContainer> {
 
-    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(VTModInfo.MODID, "textures/gui/pedestal.png");
+    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(VanillaTweaks.MOD_ID, "textures/gui/pedestal.png");
 
     private final PlayerInventory playerInv;
 

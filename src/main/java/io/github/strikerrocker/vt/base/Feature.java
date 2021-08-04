@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt.base;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public abstract class Feature {
     protected Module module;
@@ -15,7 +16,7 @@ public abstract class Feature {
         this.name = name;
     }
 
-    public void setup() {
+    public void setup(FMLCommonSetupEvent event) {
     }
 
     public void configChanged(ModConfig.ModConfigEvent event) {

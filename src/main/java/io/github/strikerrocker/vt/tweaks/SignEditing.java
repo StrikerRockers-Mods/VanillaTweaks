@@ -32,7 +32,7 @@ public class SignEditing extends Feature {
     public void setupConfig(ForgeConfigSpec.Builder builder) {
         enableSignEditing = builder
                 .translation("config.vanillatweaks:enableSignEditing")
-                .comment("Want a way to clear text in signs?")
+                .comment("Want a way to change text in signs without breaking them?")
                 .define("enableSignEditing", true);
     }
 

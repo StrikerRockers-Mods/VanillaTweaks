@@ -20,13 +20,15 @@ public class ShearNameTag extends Feature {
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         PlayerEntity player = event.getPlayer();
         Entity target = event.getTarget();
-        ItemStack heldItem = !player.getMainHandItem().isEmpty() ? player.getMainHandItem() : player.getOffhandItem();
+        ItemStack heldItem = player.getUseItem();
         if (shearOffNameTag.get() && !heldItem.isEmpty()) {
             World world = player.level;
             if (heldItem.getItem() instanceof ShearsItem && target instanceof LivingEntity && target.hasCustomName() && !world.isClientSide()) {
                 target.playSound(SoundEvents.SHEEP_SHEAR, 1, 1);
                 ItemStack nameTag = new ItemStack(Items.NAME_TAG).setHoverName(target.getCustomName());
-                nameTag.getTag().putInt("RepairCost", 0);
+                if (nameTag.getTag() != null) {
+                    nameTag.getTag().putInt("RepairCost", 0);
+                }
                 target.spawnAtLocation(nameTag, 0);
                 target.setCustomName(null);
                 heldItem.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(playerEntity.getUsedItemHand()));

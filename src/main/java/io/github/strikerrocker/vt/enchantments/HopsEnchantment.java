@@ -15,9 +15,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class HopsEnchantment extends Enchantment {
 
-    HopsEnchantment(String name) {
+    HopsEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{EquipmentSlotType.FEET});
-        this.setRegistryName(name);
+        this.setRegistryName("hops");
     }
 
     @SubscribeEvent

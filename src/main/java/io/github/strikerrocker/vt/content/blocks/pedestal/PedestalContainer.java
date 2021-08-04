@@ -18,14 +18,16 @@ public class PedestalContainer extends Container {
     public PedestalContainer(int id, PlayerInventory playerInv, BlockPos pos) {
         super(TYPE, id);
         PedestalTileEntity pedestal = (PedestalTileEntity) playerInv.player.level.getBlockEntity(pos);
-        pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-                .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 20) {
-                    @Override
-                    public void setChanged() {
-                        super.setChanged();
-                        pedestal.setChanged();
-                    }
-                }));
+        if (pedestal != null) {
+            pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+                    .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 20) {
+                        @Override
+                        public void setChanged() {
+                            super.setChanged();
+                            pedestal.setChanged();
+                        }
+                    }));
+        }
         // Add player inv
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {

@@ -32,22 +32,23 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
-import static io.github.strikerrocker.vt.VTModInfo.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
 public class Items extends Feature {
-    @ObjectHolder(MODID + ":dynamite")
+    @ObjectHolder(MOD_ID + ":dynamite")
     public static final EntityType<DynamiteEntity> DYNAMITE_TYPE = null;
+    public static final Item CRAFTING_PAD = new CraftingPadItem();
+    public static final Item DYNAMITE = new DynamiteItem();
     private static final Item BINOCULARS = new BinocularItem();
     private static final Item LENS = new Item(new Item.Properties().tab(ItemGroup.TAB_MISC)).setRegistryName("lens");
     private static final Item FRIED_EGG = new Item(new Item.Properties().food(new Food.Builder().nutrition(5).saturationMod(0.6f).build()).tab(ItemGroup.TAB_FOOD)).setRegistryName("friedegg");
     private static final Item SLIME_BUCKET = new SlimeBucketItem();
     public static ForgeConfigSpec.IntValue dynamiteCooldown;
     public static ForgeConfigSpec.IntValue dynamiteExplosionPower;
-    public static Item CRAFTING_PAD = new CraftingPadItem();
-    public static Item DYNAMITE = new DynamiteItem();
     public static ForgeConfigSpec.BooleanValue enablePad;
     static ForgeConfigSpec.BooleanValue enableDynamite;
     static ForgeConfigSpec.BooleanValue enableSlimeBucket;
@@ -106,13 +107,13 @@ public class Items extends Feature {
     }
 
     @Override
-    public void setup() {
-        DispenserBlock.registerBehavior(DYNAMITE, new ProjectileDispenseBehavior() {
+    public void setup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> DispenserBlock.registerBehavior(DYNAMITE, new ProjectileDispenseBehavior() {
             @Override
             protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
                 return new DynamiteEntity(worldIn, position.x(), position.y(), position.z());
             }
-        });
+        }));
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -120,7 +121,7 @@ public class Items extends Feature {
         @SubscribeEvent
         public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
             event.getRegistry().register(EntityType.Builder.<DynamiteEntity>of(DynamiteEntity::new, EntityClassification.MISC).
-                    setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MODID + ":dynamite").setRegistryName(new ResourceLocation(MODID, "dynamite")));
+                    setCustomClientFactory((spawnEntity, world) -> DYNAMITE_TYPE.create(world)).setTrackingRange(64).setUpdateInterval(20).build(MOD_ID + ":dynamite").setRegistryName(new ResourceLocation(MOD_ID, "dynamite")));
         }
 
         @SubscribeEvent
@@ -141,7 +142,7 @@ public class Items extends Feature {
         }
     }
 
-    @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientEvents {
         @SubscribeEvent
         public static void onModelRegister(ModelRegistryEvent event) {

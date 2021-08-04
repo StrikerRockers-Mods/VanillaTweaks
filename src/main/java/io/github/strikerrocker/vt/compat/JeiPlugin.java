@@ -9,7 +9,7 @@ import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import static io.github.strikerrocker.vt.VTModInfo.MODID;
+import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
 @mezz.jei.api.JeiPlugin
 public class JeiPlugin implements IModPlugin {
@@ -26,6 +26,6 @@ public class JeiPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(MODID, MODID);
+        return new ResourceLocation(MOD_ID, MOD_ID);
     }
 }

@@ -42,7 +42,7 @@ public class SelfPlanting extends Feature {
                 .define("selfPlanting", true);
         despawnTime = builder
                 .translation("config.vanillatweaks:despawnTime")
-                .comment("How long a plant should take to despawn (and attempt to plant) Default Minecraft is 6000.")
+                .comment("How long a plant item should take to despawn (and attempt to plant) Default Minecraft is 6000.")
                 .defineInRange("despawnTime", 6000, 0, Integer.MAX_VALUE);
         chanceToPlant = builder
                 .translation("config.vanillatweaks:chanceToPlant")

@@ -16,9 +16,9 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class VeteranEnchantment extends Enchantment {
-    VeteranEnchantment(String name) {
+    VeteranEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentType.ARMOR_HEAD, new EquipmentSlotType[]{EquipmentSlotType.HEAD});
-        this.setRegistryName(name);
+        this.setRegistryName("veteran");
     }
 
     @SubscribeEvent
@@ -29,19 +29,19 @@ public class VeteranEnchantment extends Enchantment {
         }
     }
 
-    private void attemptToMove(Entity entity) {
+    private void attemptToMove(Entity xpEntity) {
         double range = 32;
-        PlayerEntity closestPlayer = entity.level.getNearestPlayer(entity, range);
+        PlayerEntity closestPlayer = xpEntity.level.getNearestPlayer(xpEntity, range);
         if (closestPlayer != null && EnchantmentHelper.getItemEnchantmentLevel(this, closestPlayer.getItemBySlot(EquipmentSlotType.HEAD)) > 0) {
-            double xDiff = (closestPlayer.getX() - entity.getX()) / range;
-            double yDiff = (closestPlayer.getY() + closestPlayer.getEyeHeight() - entity.getY()) / range;
-            double zDiff = (closestPlayer.getZ() - entity.getZ()) / range;
+            double xDiff = (closestPlayer.getX() - xpEntity.getX()) / range;
+            double yDiff = (closestPlayer.getY() + closestPlayer.getEyeHeight() - xpEntity.getY()) / range;
+            double zDiff = (closestPlayer.getZ() - xpEntity.getZ()) / range;
             double movementFactor = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
             double invertedMovementFactor = 1 - movementFactor;
             if (invertedMovementFactor > 0) {
                 invertedMovementFactor *= invertedMovementFactor;
-                Vector3d motion = entity.getDeltaMovement();
-                entity.setDeltaMovement(motion.x + xDiff / movementFactor * invertedMovementFactor * 0.1, motion.y + yDiff / movementFactor * invertedMovementFactor * 0.1, motion.z + zDiff / movementFactor * invertedMovementFactor * 0.1);
+                Vector3d motion = xpEntity.getDeltaMovement();
+                xpEntity.setDeltaMovement(motion.x + xDiff / movementFactor * invertedMovementFactor * 0.1, motion.y + yDiff / movementFactor * invertedMovementFactor * 0.1, motion.z + zDiff / movementFactor * invertedMovementFactor * 0.1);
             }
         }
     }

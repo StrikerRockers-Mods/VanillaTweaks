@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.enchantments;
 
 import com.google.common.collect.Maps;
-import io.github.strikerrocker.vt.VTModInfo;
+import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.Tuple;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Map;
 
 public class EnchantmentFeature extends Feature {
-    public static Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
+    public static final Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
     static ForgeConfigSpec.BooleanValue enableBlazing;
     static ForgeConfigSpec.BooleanValue enableHops;
     static ForgeConfigSpec.BooleanValue enableNimble;
@@ -25,13 +25,13 @@ public class EnchantmentFeature extends Feature {
     static ForgeConfigSpec.BooleanValue enableHoming;
 
     static {
-        enchantments.put("blazing", new Tuple<>(new BlazingEnchantment("blazing"), "Want to smelt things when you mine them?"));
-        enchantments.put("hops", new Tuple<>(new HopsEnchantment("hops"), "Want to jump more than a block high with an enchantment?"));
-        enchantments.put("nimble", new Tuple<>(new NimbleEnchantment("nimble"), "Want more speed with an enchantment?"));
-        enchantments.put("siphon", new Tuple<>(new SiphonEnchantment("siphon"), "Don't want the zombies stealing your items when you are mining?"));
-        enchantments.put("veteran", new Tuple<>(new VeteranEnchantment("veteran"), "Want all the experience in the nearby area?"));
-        enchantments.put("vigor", new Tuple<>(new VigorEnchantment("vigor"), "Want more health with an enchant?"));
-        enchantments.put("homing", new Tuple<>(new HomingEnchantment("homing"), "Don't want to aim but love shooting arrows?"));
+        enchantments.put("blazing", new Tuple<>(new BlazingEnchantment(), "Want to smelt things when you mine them?"));
+        enchantments.put("hops", new Tuple<>(new HopsEnchantment(), "Want to jump more than a block high with an enchantment?"));
+        enchantments.put("nimble", new Tuple<>(new NimbleEnchantment(), "Want more speed with an enchantment?"));
+        enchantments.put("siphon", new Tuple<>(new SiphonEnchantment(), "Don't want the zombies stealing your items when you are mining?"));
+        enchantments.put("veteran", new Tuple<>(new VeteranEnchantment(), "Want all the experience in the nearby area?"));
+        enchantments.put("vigor", new Tuple<>(new VigorEnchantment(), "Want more health with an enchant?"));
+        enchantments.put("homing", new Tuple<>(new HomingEnchantment(), "Don't want to aim but love shooting arrows?"));
         enchantments.forEach((name, tuple) -> MinecraftForge.EVENT_BUS.register(tuple.getA()));
     }
 
@@ -80,8 +80,8 @@ public class EnchantmentFeature extends Feature {
 
         @SubscribeEvent
         public static void registerModifierSerializers(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-            event.getRegistry().register(new BlazingModifier.Serializer().setRegistryName(VTModInfo.MODID, "blazing"));
-            event.getRegistry().register(new SiphonModifier.Serializer().setRegistryName(VTModInfo.MODID, "siphon"));
+            event.getRegistry().register(new BlazingModifier.Serializer().setRegistryName(VanillaTweaks.MOD_ID, "blazing"));
+            event.getRegistry().register(new SiphonModifier.Serializer().setRegistryName(VanillaTweaks.MOD_ID, "siphon"));
         }
     }
 }

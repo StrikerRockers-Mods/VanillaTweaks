@@ -19,9 +19,9 @@ public class NimbleEnchantment extends Enchantment {
 
     private static final UUID nimbleUUID = UUID.fromString("05b61a62-ae84-492e-8536-f365b7143296");
 
-    NimbleEnchantment(String name) {
+    NimbleEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{EquipmentSlotType.FEET});
-        this.setRegistryName(name);
+        this.setRegistryName("nimble");
     }
 
     @SubscribeEvent

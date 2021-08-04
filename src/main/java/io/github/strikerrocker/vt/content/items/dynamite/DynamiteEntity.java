@@ -20,8 +20,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class DynamiteEntity extends ProjectileItemEntity {
     private static final int WET_TICKS = 20;
-    private static final DataParameter<Integer> TICKSWET = EntityDataManager.defineId(DynamiteEntity.class, DataSerializers.INT);
-    private static final DataParameter<Integer> TICKSSINCEWET = EntityDataManager.defineId(DynamiteEntity.class, DataSerializers.INT);
+    private static final DataParameter<Integer> TICKS_WET = EntityDataManager.defineId(DynamiteEntity.class, DataSerializers.INT);
+    private static final DataParameter<Integer> TICKS_SINCE_WET = EntityDataManager.defineId(DynamiteEntity.class, DataSerializers.INT);
 
     public DynamiteEntity(EntityType<? extends ProjectileItemEntity> type, World world) {
         super(type, world);
@@ -31,8 +31,8 @@ public class DynamiteEntity extends ProjectileItemEntity {
         super(Items.DYNAMITE_TYPE, x, y, z, world);
     }
 
-    DynamiteEntity(World world, LivingEntity entityLivingBase) {
-        super(Items.DYNAMITE_TYPE, entityLivingBase, world);
+    DynamiteEntity(World world, LivingEntity shooter) {
+        super(Items.DYNAMITE_TYPE, shooter, world);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class DynamiteEntity extends ProjectileItemEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(TICKSWET, 0);
-        entityData.define(TICKSSINCEWET, WET_TICKS);
+        entityData.define(TICKS_WET, 0);
+        entityData.define(TICKS_SINCE_WET, WET_TICKS);
     }
 
     @Override
@@ -57,15 +57,15 @@ public class DynamiteEntity extends ProjectileItemEntity {
         super.tick();
         if (!this.level.isClientSide()) {
             if (this.isUnderWater()) {
-                this.entityData.set(TICKSWET, this.entityData.get(TICKSWET) + 1);
+                this.entityData.set(TICKS_WET, this.entityData.get(TICKS_WET) + 1);
             } else
-                this.entityData.set(TICKSWET, 0);
-            if (this.entityData.get(TICKSWET) == 0)
-                this.entityData.set(TICKSSINCEWET, this.entityData.get(TICKSSINCEWET) + 1);
+                this.entityData.set(TICKS_WET, 0);
+            if (this.entityData.get(TICKS_WET) == 0)
+                this.entityData.set(TICKS_SINCE_WET, this.entityData.get(TICKS_SINCE_WET) + 1);
             else
-                this.entityData.set(TICKSSINCEWET, 0);
+                this.entityData.set(TICKS_SINCE_WET, 0);
         }
-        if (this.entityData.get(TICKSSINCEWET) < WET_TICKS && !this.isInWater())
+        if (this.entityData.get(TICKS_SINCE_WET) < WET_TICKS && !this.isInWater())
             for (int i = 0; i < 3; ++i) {
                 float xOffset = (random.nextFloat() * 2 - 1) * getBbWidth() * 0.5F;
                 float zOffset = (random.nextFloat() * 2 - 1) * getBbWidth() * 0.5F;
@@ -77,7 +77,7 @@ public class DynamiteEntity extends ProjectileItemEntity {
     @Override
     protected void onHit(RayTraceResult result) {
         if (!level.isClientSide()) {
-            if (this.entityData.get(TICKSSINCEWET) < WET_TICKS) {
+            if (this.entityData.get(TICKS_SINCE_WET) < WET_TICKS) {
                 this.spawnAtLocation(Items.DYNAMITE);
                 this.remove();
             } else {
