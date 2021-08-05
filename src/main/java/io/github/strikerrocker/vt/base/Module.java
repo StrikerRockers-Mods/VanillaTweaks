@@ -17,7 +17,7 @@ public abstract class Module {
     private final String name;
     private final String comments;
 
-    public Module(String name, String comments, ForgeConfigSpec.Builder configBuilder) {
+    protected Module(String name, String comments, ForgeConfigSpec.Builder configBuilder) {
         this.name = name;
         this.comments = comments;
         this.configBuilder = configBuilder;
@@ -35,7 +35,7 @@ public abstract class Module {
     public void setup(FMLCommonSetupEvent event) {
         features.values().stream().filter(Feature::usesEvents).forEach(feature -> {
             MinecraftForge.EVENT_BUS.register(feature);
-            VanillaTweaks.LOGGER.debug("Registered Event Handler for class " + feature.getClass().getName());
+            VanillaTweaks.LOGGER.debug("Registered Event Handler for class {}", feature.getClass().getName());
         });
         features.values().forEach(feature -> feature.setup(event));
     }

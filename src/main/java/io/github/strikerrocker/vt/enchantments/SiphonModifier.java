@@ -26,8 +26,8 @@ class SiphonModifier extends LootModifier {
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
         Entity e = context.getParamOrNull(LootContextParams.THIS_ENTITY);
-        if (e instanceof Player)
-            generatedLoot.removeIf(((Player) e)::addItem);
+        if (e instanceof Player player)
+            generatedLoot.removeIf(player::addItem);
         return generatedLoot;
     }
 

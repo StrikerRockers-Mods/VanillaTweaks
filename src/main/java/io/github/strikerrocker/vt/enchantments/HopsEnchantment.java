@@ -29,11 +29,11 @@ public class HopsEnchantment extends Enchantment {
     public void onLivingJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity entity = event.getEntityLiving();
         if (EnchantmentFeature.enableHops.get() && !event.getEntity().level.isClientSide()) {
-            float lvl = (float) EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET));
+            float lvl = EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET));
             if (lvl != 0) {
                 entity.push(0, lvl / 10D, 0);
-                if (entity instanceof ServerPlayer playerMP) {
-                    playerMP.connection.send(new ClientboundSetEntityMotionPacket(playerMP));
+                if (entity instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer));
                 }
             }
         }
@@ -68,7 +68,7 @@ public class HopsEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlot.FEET) && EnchantmentFeature.enableHops.get();
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.FEET) && EnchantmentFeature.enableHops.get();
     }
 
     @Override

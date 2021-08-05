@@ -42,7 +42,6 @@
   "key.vt:zoom": "Inzoem Toets",
 
   "_comment": "misc",
-  "vt:portal_destroyed": "§cJe terugkeerportaal is vernietiged.",
   "entity.dynamite": "Dynamiet",
   "tooltip.entity": "Brengt voort: %s"
 }

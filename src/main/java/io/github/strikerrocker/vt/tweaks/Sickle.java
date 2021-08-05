@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -45,13 +46,9 @@ public class Sickle extends Feature {
     public void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
         Level world = player.getCommandSenderWorld();
-        ItemStack stack = player.getMainHandItem();
+        ItemStack stack = player.getUseItem();
         if (!stack.isEmpty() && stack.getItem() instanceof HoeItem && canHarvest(event.getState()) && hoeActsAsSickle.get()) {
-            int range = 1;
-            if (stack.getItem() == Items.DIAMOND_HOE)
-                range++;
-            if (stack.getItem() == Items.NETHERITE_HOE)
-                range += 2;
+            int range = getRange(stack.getItem());
             for (int i = -range; i < range + 1; i++) {
                 for (int k = -range; k < range + 1; k++) {
                     if (i == 0 && k == 0)
@@ -69,5 +66,13 @@ public class Sickle extends Feature {
             }
             stack.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
         }
+    }
+
+    private int getRange(Item item) {
+        if (item == Items.DIAMOND_HOE)
+            return 2;
+        else if (item == Items.NETHERITE_HOE)
+            return 3;
+        else return 1;
     }
 }

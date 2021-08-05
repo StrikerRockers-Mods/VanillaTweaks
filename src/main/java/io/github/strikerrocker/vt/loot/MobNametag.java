@@ -36,7 +36,9 @@ public class MobNametag extends Feature {
         if (!world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && namedMobsDropNameTag.get() && entity.hasCustomName()) {
             ItemStack nameTag = new ItemStack(Items.NAME_TAG);
             nameTag.setHoverName(entity.getCustomName());
-            nameTag.getTag().putInt("RepairCost", 0);
+            if (nameTag.getTag() != null) {
+                nameTag.getTag().putInt("RepairCost", 0);
+            }
             entity.spawnAtLocation(nameTag, 0);
             entity.setCustomName(null);
         }

@@ -47,13 +47,14 @@ class BlazingModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        if (context.getParamOrNull(LootContextParams.TOOL) == null) return generatedLoot;
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(context.getParamOrNull(LootContextParams.TOOL));
+        ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
+        if (tool == null) return generatedLoot;
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(tool);
         if (enchantments.containsKey(Enchantments.BLOCK_FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
             return generatedLoot;
         }
         ArrayList<ItemStack> ret = new ArrayList<>();
-        generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
+        generatedLoot.forEach(stack -> ret.add(smelt(stack, context)));
         return ret;
     }
 

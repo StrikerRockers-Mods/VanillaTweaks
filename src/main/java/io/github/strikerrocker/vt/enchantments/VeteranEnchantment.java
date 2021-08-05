@@ -68,7 +68,7 @@ public class VeteranEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlot.HEAD) && EnchantmentFeature.enableVeteran.get();
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.HEAD) && EnchantmentFeature.enableVeteran.get();
     }
 
     @Override

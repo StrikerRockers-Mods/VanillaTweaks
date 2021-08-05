@@ -42,7 +42,6 @@
   "key.vt:zoom": "Zoom Key",
 
   "_comment": "misc",
-  "vt:portal_destroyed": "§cYour return portal has been destroyed.",
   "entity.dynamite": "Dynamite",
   "tooltip.entity": "Spawns: %s"
 }

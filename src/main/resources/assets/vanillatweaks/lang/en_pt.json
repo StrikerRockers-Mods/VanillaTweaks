@@ -20,29 +20,24 @@
   "advancements.vt.zoom": "Zoom",
   "advancements.vt.boom": "Boom!!",
   "advancements.vt.friedegg": "Fried Egg!!",
-
   "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Craft the storage block",
   "advancements.vt.pad.desc": "Craft an Crafting Pad",
   "advancements.vt.zoom.desc": "Craft an Binoculars",
   "advancements.vt.boom.desc": "Craft an Dynamite",
   "advancements.vt.friedegg.desc": "Smelt an Egg",
-
   "_comment": "enchantments",
-  "enchantment.vanillatweaksnimble": "Nimble",
-  "enchantment.vanillatweakshops": "Hops",
-  "enchantment.vanillatweaksvigor": "Vigor",
-  "enchantment.vanillatweaksveteran": "Veteran",
-  "enchantment.vanillatweaksblazing": "Blazin'",
-  "enchantment.vanillatweakssiphon": "Siphon",
-  "enchantment.vanillatweakshoming": "Homin'",
-
+  "enchantment.vanillatweaks.nimble": "Nimble",
+  "enchantment.vanillatweaks.hops": "Hops",
+  "enchantment.vanillatweaks.vigor": "Vigor",
+  "enchantment.vanillatweaks.veteran": "Veteran",
+  "enchantment.vanillatweaks.blazing": "Blazin'",
+  "enchantment.vanillatweaks.siphon": "Siphon",
+  "enchantment.vanillatweaks.homing": "Homin'",
   "_comment": "keybinds",
   "key.category.vt": "VanillaTweaks",
   "key.vt:zoom": "Zoom Key",
-
   "_comment": "misc",
-  "vt:portal_destroyed": "§cYour return portal has been destroyed.",
   "entity.dynamite": "Dynamite",
   "tooltip.entity": "Spawns: %s"
 }

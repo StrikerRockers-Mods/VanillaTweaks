@@ -46,7 +46,7 @@ public class PedestalBlock extends Block implements SimpleWaterloggedBlock, Enti
     private final VoxelShape PEDESTAL_VOXEL_SHAPE = Shapes.or(base, deco1, pillar, deco2, top);
 
     public PedestalBlock() {
-        super(Block.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_GRAY).strength(2.0f, 10.0f));
+        super(Properties.of(Material.STONE, MaterialColor.TERRACOTTA_GRAY).strength(2.0f, 10.0f));
         this.registerDefaultState(this.getStateDefinition().any().setValue(WATERLOGGED, false));
         this.setRegistryName("pedestal");
     }
@@ -95,7 +95,7 @@ public class PedestalBlock extends Block implements SimpleWaterloggedBlock, Enti
     }
 
     @Override
-    public VoxelShape getShape(BlockState p_220053_1_, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
+    public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         return PEDESTAL_VOXEL_SHAPE;
     }
 

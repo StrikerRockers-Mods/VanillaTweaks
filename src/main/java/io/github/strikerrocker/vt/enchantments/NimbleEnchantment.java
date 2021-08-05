@@ -35,13 +35,15 @@ public class NimbleEnchantment extends Enchantment {
             LivingEntity entity = event.getEntityLiving();
             int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(this, entity.getItemBySlot(EquipmentSlot.FEET));
             AttributeInstance speedAttribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
-            AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", (float) enchantmentLevel * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
-            if (enchantmentLevel > 0) {
-                if (speedAttribute.getModifier(nimbleUUID) == null) {
-                    speedAttribute.addPermanentModifier(speedModifier);
+            AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", enchantmentLevel * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
+            if (speedAttribute != null) {
+                if (enchantmentLevel > 0) {
+                    if (speedAttribute.getModifier(nimbleUUID) == null) {
+                        speedAttribute.addPermanentModifier(speedModifier);
+                    }
+                } else if (speedAttribute.getModifier(nimbleUUID) != null) {
+                    speedAttribute.removeModifier(speedModifier);
                 }
-            } else if (speedAttribute.getModifier(nimbleUUID) != null) {
-                speedAttribute.removeModifier(speedModifier);
             }
         }
     }
@@ -63,7 +65,7 @@ public class NimbleEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlot.FEET) && EnchantmentFeature.enableNimble.get();
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.FEET) && EnchantmentFeature.enableNimble.get();
     }
 
     @Override

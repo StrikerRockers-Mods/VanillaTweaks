@@ -9,12 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 public class NoPotionShift extends Feature {
-    protected static NoPotionShift INSTANCE;
-    private ForgeConfigSpec.BooleanValue disablePotionShift;
-
-    NoPotionShift() {
-        INSTANCE = this;
-    }
+    static ForgeConfigSpec.BooleanValue disablePotionShift;
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -31,7 +26,7 @@ public class NoPotionShift extends Feature {
          */
         @SubscribeEvent
         public static void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
-            if (NoPotionShift.INSTANCE.disablePotionShift.get())
+            if (NoPotionShift.disablePotionShift.get())
                 event.setCanceled(true);
         }
     }

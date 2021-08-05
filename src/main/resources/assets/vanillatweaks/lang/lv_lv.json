@@ -42,7 +42,6 @@
   "key.category.vt": "VanillaTweaks",
 
   "_comment": "misc",
-  "vt:portal_destroyed": "§cTavs atgriešanās portāls ir iznīcināts.",
   "entity.dynamite": "Dinamīts",
   "tooltip.entity": "Rodas: %s"
 }

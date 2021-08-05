@@ -33,15 +33,17 @@ public class VigorEnchantment extends Enchantment {
             int lvl = EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlot.CHEST));
             AttributeInstance vigorAttribute = event.getEntityLiving().getAttribute(Attributes.MAX_HEALTH);
             AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "vigor", (float) lvl / 10, AttributeModifier.Operation.MULTIPLY_BASE);
-            if (lvl > 0) {
-                if (vigorAttribute.getModifier(vigorUUID) == null) {
-                    vigorAttribute.addPermanentModifier(vigorModifier);
-                }
-            } else {
-                if (vigorAttribute.getModifier(vigorUUID) != null) {
-                    vigorAttribute.removeModifier(vigorModifier);
-                    if (event.getEntityLiving().getHealth() > event.getEntityLiving().getMaxHealth())
-                        event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
+            if (vigorAttribute != null) {
+                if (lvl > 0) {
+                    if (vigorAttribute.getModifier(vigorUUID) == null) {
+                        vigorAttribute.addPermanentModifier(vigorModifier);
+                    }
+                } else {
+                    if (vigorAttribute.getModifier(vigorUUID) != null) {
+                        vigorAttribute.removeModifier(vigorModifier);
+                        if (event.getEntityLiving().getHealth() > event.getEntityLiving().getMaxHealth())
+                            event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
+                    }
                 }
             }
         }
@@ -64,7 +66,7 @@ public class VigorEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot().equals(EquipmentSlot.CHEST) && EnchantmentFeature.enableVigor.get();
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.CHEST) && EnchantmentFeature.enableVigor.get();
     }
 
     @Override

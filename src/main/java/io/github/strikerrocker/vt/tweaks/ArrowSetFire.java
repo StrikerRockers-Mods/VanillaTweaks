@@ -32,15 +32,15 @@ public class ArrowSetFire extends Feature {
      */
     @SubscribeEvent
     public void onArrowImpact(ProjectileImpactEvent event) {
-        if (event.getProjectile() instanceof AbstractArrow arrow)
-            if (!arrow.level.isClientSide() && arrow.isOnFire() && arrowsSetBlockOnFire.get()) {
-                BlockPos pos = arrow.blockPosition();
-                Vec3 vec3d = new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(arrow.getDeltaMovement());
-                BlockHitResult blockHitResult = arrow.level.clip(new ClipContext(arrow.position(), vec3d, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, arrow));
-                BlockPos pos1 = pos.relative(blockHitResult.getDirection());
-                if (arrow.level.getBlockState(pos1).isAir()) {
-                    arrow.level.setBlock(pos1, BaseFireBlock.getState(arrow.level, pos1), 11);
-                }
+        if (event.getProjectile() instanceof AbstractArrow arrow &&
+                !arrow.level.isClientSide() && arrow.isOnFire() && arrowsSetBlockOnFire.get()) {
+            BlockPos pos = arrow.blockPosition();
+            Vec3 vec3d = new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(arrow.getDeltaMovement());
+            BlockHitResult blockHitResult = arrow.level.clip(new ClipContext(arrow.position(), vec3d, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, arrow));
+            BlockPos pos1 = pos.relative(blockHitResult.getDirection());
+            if (arrow.level.getBlockState(pos1).isAir()) {
+                arrow.level.setBlock(pos1, BaseFireBlock.getState(arrow.level, pos1), 11);
             }
+        }
     }
 }

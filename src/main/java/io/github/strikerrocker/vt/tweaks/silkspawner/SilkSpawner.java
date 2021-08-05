@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -23,11 +22,9 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class SilkSpawner extends Feature {
     private static final String SPAWNER_TAG = "SilkSpawnerData";
-    private static Item mobSpawnerItem = null;
     private ForgeConfigSpec.BooleanValue enableSilkSpawner;
 
     @Override
@@ -49,30 +46,20 @@ public class SilkSpawner extends Feature {
     @SubscribeEvent
     public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
         if (event.getEntity() instanceof Player player) {
-            ItemStack mainHand = player.getMainHandItem();
-            ItemStack offHand = player.getOffhandItem();
-            ItemStack stack = null;
-            if (mainHand.getItem() == mobSpawnerItem)
-                stack = mainHand;
-            else if (offHand.getItem() == mobSpawnerItem)
-                stack = offHand;
-            if (enableSilkSpawner.get() && stack != null && stack.hasTag()) {
+            ItemStack stack = player.getUseItem();
+            if (enableSilkSpawner.get() && !stack.isEmpty() && stack.hasTag()) {
                 CompoundTag stackTag = stack.getTag();
-                assert stackTag != null;
-                CompoundTag spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
-                if (!spawnerDataNBT.isEmpty()) {
-                    BlockEntity tile = event.getWorld().getBlockEntity(event.getPos());
-                    if (tile instanceof SpawnerBlockEntity) {
-                        ((SpawnerBlockEntity) tile).getSpawner().load(player.level, event.getPos(), spawnerDataNBT);
+                if (stackTag != null) {
+                    CompoundTag spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
+                    if (!spawnerDataNBT.isEmpty()) {
+                        BlockEntity tile = event.getWorld().getBlockEntity(event.getPos());
+                        if (tile instanceof SpawnerBlockEntity spawnerBlockEntity) {
+                            spawnerBlockEntity.getSpawner().load(player.level, event.getPos(), spawnerDataNBT);
+                        }
                     }
                 }
             }
         }
-    }
-
-    @Override
-    public void setup(FMLCommonSetupEvent event) {
-        mobSpawnerItem = Blocks.SPAWNER.asItem();
     }
 
     /**
@@ -92,9 +79,9 @@ public class SilkSpawner extends Feature {
             stackTag.put(SPAWNER_TAG, spawnerData);
             drop.setTag(stackTag);
 
-            Block.popResource(blockEntity.getLevel(), event.getPos(), drop);
+            Block.popResource(event.getPlayer().level, event.getPos(), drop);
             //Does this cause problems w/ block protection?
-            blockEntity.getLevel().removeBlockEntity(blockEntity.getBlockPos());
+            event.getPlayer().level.removeBlockEntity(blockEntity.getBlockPos());
             world.destroyBlock(event.getPos(), false);
             event.setCanceled(true);
         }
@@ -110,13 +97,14 @@ public class SilkSpawner extends Feature {
             ItemStack stack = event.getItemStack();
             if (stack.hasTag()) {
                 CompoundTag stackTag = stack.getTag();
-                assert stackTag != null;
-                CompoundTag spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
-                if (!spawnerDataNBT.isEmpty()) {
-                    DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.load(event.getEntity().level, new BlockPos(0, 0, 0), spawnerDataNBT);
-                    Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getOrCreateDisplayEntity(event.getEntity().level);
-                    if (ent != null) {
-                        event.getToolTip().add(ent.getDisplayName());
+                if (stackTag != null) {
+                    CompoundTag spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
+                    if (!spawnerDataNBT.isEmpty()) {
+                        DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.load(event.getEntity().level, new BlockPos(0, 0, 0), spawnerDataNBT);
+                        Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getOrCreateDisplayEntity(event.getEntity().level);
+                        if (ent != null) {
+                            event.getToolTip().add(ent.getDisplayName());
+                        }
                     }
                 }
             }

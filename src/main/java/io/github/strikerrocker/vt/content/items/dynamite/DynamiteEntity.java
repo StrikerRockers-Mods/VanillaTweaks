@@ -81,7 +81,7 @@ public class DynamiteEntity extends ThrowableItemProjectile {
                 this.spawnAtLocation(Items.DYNAMITE);
                 this.remove(RemovalReason.KILLED);
             } else {
-                if (result instanceof EntityHitResult && ((EntityHitResult) result).getEntity() instanceof DynamiteEntity) {
+                if (result instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof DynamiteEntity) {
                     return;
                 } else {
                     BlockPos pos = blockPosition();

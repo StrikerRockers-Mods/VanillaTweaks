@@ -27,7 +27,7 @@ public class SelfPlanting extends Feature {
 
     private ForgeConfigSpec.IntValue despawnTime;
     private ForgeConfigSpec.IntValue chanceToPlant;
-    private ForgeConfigSpec.BooleanValue selfPlanting;
+    private ForgeConfigSpec.BooleanValue enableSelfPlanting;
 
     @Override
     public boolean usesEvents() {
@@ -36,7 +36,7 @@ public class SelfPlanting extends Feature {
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
-        selfPlanting = builder
+        enableSelfPlanting = builder
                 .translation("config.vanillatweaks:selfPlanting")
                 .comment("Want seeds to auto-plant themselves when broken?")
                 .define("selfPlanting", true);
@@ -64,7 +64,7 @@ public class SelfPlanting extends Feature {
      */
     @SubscribeEvent
     public void itemToss(EntityJoinWorldEvent event) {
-        if (selfPlanting.get() && !event.getWorld().isClientSide() && event.getEntity() instanceof ItemEntity itemEntity) {
+        if (enableSelfPlanting.get() && !event.getWorld().isClientSide() && event.getEntity() instanceof ItemEntity itemEntity) {
             Item item = itemEntity.getItem().getItem();
             Block block = Block.byItem(item);
             if (item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
@@ -85,7 +85,7 @@ public class SelfPlanting extends Feature {
         Item item = stack.getItem();
         Block block = Block.byItem(item);
         BlockPos entityPos = new BlockPos(entity.blockPosition());
-        if (selfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
+        if (enableSelfPlanting.get() && item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {
             if (world.random.nextInt() > chanceToPlant.get()) {
                 FakePlayer player = Utils.getFakePlayer(world);
                 Vec3 entityVec = new Vec3(entityPos.getX(), entityPos.getY(), entityPos.getZ());
@@ -99,7 +99,7 @@ public class SelfPlanting extends Feature {
                     return true;
                 }
                 if (stack.getCount() > 0) {
-                    world.addFreshEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY() + 1, entityPos.getZ(), stack));
+                    world.addFreshEntity(new ItemEntity(world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), stack));
                 }
             }
             return false;

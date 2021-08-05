@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RealisticRelationship extends Feature {
-    private ForgeConfigSpec.BooleanValue realisticRelationship;
+    private ForgeConfigSpec.BooleanValue enableRealisticRelationship;
 
     @Override
     public boolean usesEvents() {
@@ -27,7 +27,7 @@ public class RealisticRelationship extends Feature {
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
-        realisticRelationship = builder
+        enableRealisticRelationship = builder
                 .translation("config.vanillatweaks:realisticRelationship")
                 .comment("Is realistic predator/prey relationships activated?")
                 .define("realisticRelationship", true);
@@ -45,7 +45,7 @@ public class RealisticRelationship extends Feature {
             if (event.getSource().getDirectEntity() != null) {
                 Item drop = dropItem.getItem();
                 Entity source = event.getSource().getDirectEntity();
-                if (realisticRelationship.get() &&
+                if (enableRealisticRelationship.get() &&
                         ((source instanceof Wolf && entity instanceof Sheep && (drop == Items.MUTTON || drop == Items.COOKED_MUTTON))
                                 || (source instanceof Ocelot && entity instanceof Chicken && (drop == Items.CHICKEN || drop == Items.COOKED_CHICKEN)))) {
                     event.getDrops().remove(dropEntity);

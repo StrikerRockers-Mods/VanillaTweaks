@@ -52,8 +52,8 @@ public class HomingEnchantment extends Enchantment {
                 }
             }));
             for (Entity entity : livingEntities) {
-                if (entity instanceof LivingEntity && shooter.hasLineOfSight(entity)) {
-                    target = (LivingEntity) entity;
+                if (entity instanceof LivingEntity livingEntity && shooter.hasLineOfSight(entity)) {
+                    target = livingEntity;
                 }
             }
             if (target != null) {

@@ -13,6 +13,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,12 +36,12 @@ import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
  */
 public class Blocks extends Feature {
     public static final Block PEDESTAL_BLOCK = new PedestalBlock();
-    private static final Block CHARCOAL_BLOCK = new Block(Block.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(5.0f, 10.0f)).setRegistryName("charcoalblock");
-    private static final Block SUGAR_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.TERRACOTTA_WHITE).strength(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
-    private static final Block FLINT_BLOCK = new Block(Block.Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)).setRegistryName("flintblock");
-    private static final Block[] blocks = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
     @ObjectHolder(MOD_ID + ":pedestal")
-    public static BlockEntityType<PedestalBlockEntity> PEDESTAL_TYPE;
+    public static final BlockEntityType<PedestalBlockEntity> PEDESTAL_TYPE = null;
+    private static final Block CHARCOAL_BLOCK = new Block(Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(5.0f, 10.0f)).setRegistryName("charcoalblock");
+    private static final Block SUGAR_BLOCK = new Block(Properties.of(Material.SAND, MaterialColor.TERRACOTTA_WHITE).strength(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
+    private static final Block FLINT_BLOCK = new Block(Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)).setRegistryName("flintblock");
+    private static final Block[] BLOCKS = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
 
@@ -94,7 +95,7 @@ public class Blocks extends Feature {
          */
         @SubscribeEvent
         public static void onRegisterItemBlocks(RegistryEvent.Register<Item> event) {
-            Arrays.stream(blocks).map(block -> new BlockItem(block, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
+            Arrays.stream(BLOCKS).map(block -> new BlockItem(block, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
         }
 
         /**
@@ -124,7 +125,7 @@ public class Blocks extends Feature {
          */
         @SubscribeEvent
         public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
-            event.getRegistry().registerAll(blocks);
+            event.getRegistry().registerAll(BLOCKS);
         }
 
         /**

@@ -13,19 +13,21 @@ import net.minecraftforge.registries.ObjectHolder;
 
 public class PedestalContainer extends AbstractContainerMenu {
     @ObjectHolder("vanillatweaks:pedestal")
-    public static MenuType<PedestalContainer> TYPE;
+    public static final MenuType<PedestalContainer> TYPE = null;
 
     public PedestalContainer(int id, Inventory playerInv, BlockPos pos) {
         super(TYPE, id);
         PedestalBlockEntity pedestal = (PedestalBlockEntity) playerInv.player.level.getBlockEntity(pos);
-        pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-                .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 20) {
-                    @Override
-                    public void setChanged() {
-                        super.setChanged();
-                        pedestal.setChanged();
-                    }
-                }));
+        if (pedestal != null) {
+            pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+                    .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 20) {
+                        @Override
+                        public void setChanged() {
+                            super.setChanged();
+                            pedestal.setChanged();
+                        }
+                    }));
+        }
         // Add player inv slots
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {

@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Map;
 
 public class EnchantmentFeature extends Feature {
-    public static final Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
+    protected static final Map<String, Tuple<Enchantment, String>> enchantments = Maps.newHashMap();
     public static ForgeConfigSpec.BooleanValue enableBlazing;
     public static ForgeConfigSpec.BooleanValue enableHops;
     public static ForgeConfigSpec.BooleanValue enableNimble;
