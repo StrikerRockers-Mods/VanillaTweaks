@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.enchantments.homing;
+package io.github.strikerrocker.vt.misc;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;

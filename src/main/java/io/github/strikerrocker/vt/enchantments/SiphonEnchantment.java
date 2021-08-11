@@ -33,8 +33,7 @@ public class SiphonEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean isAllowedOnBooks() {
+    public boolean isDiscoverable() {
         return EnchantmentFeature.enableSiphon.get();
     }
-
 }

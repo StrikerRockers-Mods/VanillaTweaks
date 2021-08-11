@@ -21,7 +21,9 @@ public class CraftingPadItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (!worldIn.isClientSide()) {
-            playerIn.openMenu(new SimpleMenuProvider((id, playerInv, player) -> new CraftingPadContainer(id, playerInv, ContainerLevelAccess.create(worldIn, player.blockPosition())), new TranslatableComponent("item.vanillatweaks.pad")));
+            playerIn.openMenu(new SimpleMenuProvider((id, playerInv, player) ->
+                    new CraftingPadContainer(id, playerInv, ContainerLevelAccess.create(worldIn, player.blockPosition())),
+                    new TranslatableComponent("item.vanillatweaks.pad")));
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));

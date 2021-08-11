@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -9,8 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class HopsEnchantment extends Enchantment {
@@ -21,33 +20,24 @@ public class HopsEnchantment extends Enchantment {
     }
 
     /**
-     * Handles the jumping logic of Hops enchantment
+     * Handles the logic of Hops enchantment
      *
-     * @param event LivingJumpEvent
+     * @param event LivingEquipmentChangeEvent
      */
     @SubscribeEvent
-    public void onLivingJump(LivingEvent.LivingJumpEvent event) {
+    public void onEquipmentChange(LivingEquipmentChangeEvent event) {
         LivingEntity entity = event.getEntityLiving();
         if (EnchantmentFeature.enableHops.get() && !event.getEntity().level.isClientSide()) {
-            float lvl = EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET));
-            if (lvl != 0) {
-                entity.push(0, lvl / 10D, 0);
-                if (entity instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer));
+            int lvl = EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET));
+            if (lvl > 0) {
+                if (!entity.hasEffect(MobEffects.JUMP)) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.JUMP, Integer.MAX_VALUE, lvl, true, false, false));
+                }
+            } else {
+                if (entity.hasEffect(MobEffects.JUMP)) {
+                    entity.removeEffect(MobEffects.JUMP);
                 }
             }
-        }
-    }
-
-    /**
-     * Handles the falling logic of Hops enchantment
-     *
-     * @param event LivingFallEvent
-     */
-    @SubscribeEvent
-    public void onLivingFall(LivingFallEvent event) {
-        if (EnchantmentFeature.enableHops.get() && !event.getEntity().level.isClientSide()) {
-            event.setDistance(event.getDistance() - EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET)));
         }
     }
 
@@ -72,7 +62,7 @@ public class HopsEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean isAllowedOnBooks() {
+    public boolean isDiscoverable() {
         return EnchantmentFeature.enableHops.get();
     }
 }

@@ -46,7 +46,9 @@ public class VeteranEnchantment extends Enchantment {
             if (invertedMovementFactor > 0) {
                 invertedMovementFactor *= invertedMovementFactor;
                 Vec3 motion = xpEntity.getDeltaMovement();
-                xpEntity.setDeltaMovement(motion.x + xDiff / movementFactor * invertedMovementFactor * 0.1, motion.y + yDiff / movementFactor * invertedMovementFactor * 0.1, motion.z + zDiff / movementFactor * invertedMovementFactor * 0.1);
+                xpEntity.setDeltaMovement(motion.x + xDiff / movementFactor * invertedMovementFactor * 0.3,
+                        motion.y + yDiff / movementFactor * invertedMovementFactor * 0.3,
+                        motion.z + zDiff / movementFactor * invertedMovementFactor * 0.3);
             }
         }
     }
@@ -68,11 +70,12 @@ public class VeteranEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.HEAD) && EnchantmentFeature.enableVeteran.get();
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.HEAD) &&
+                EnchantmentFeature.enableVeteran.get();
     }
 
     @Override
-    public boolean isAllowedOnBooks() {
+    public boolean isDiscoverable() {
         return EnchantmentFeature.enableVeteran.get();
     }
 }

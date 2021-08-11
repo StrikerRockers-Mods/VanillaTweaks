@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.LevelAccessor;
@@ -46,16 +47,13 @@ public class SilkSpawner extends Feature {
     @SubscribeEvent
     public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
         if (event.getEntity() instanceof Player player) {
-            ItemStack stack = player.getUseItem();
-            if (enableSilkSpawner.get() && !stack.isEmpty() && stack.hasTag()) {
-                CompoundTag stackTag = stack.getTag();
-                if (stackTag != null) {
-                    CompoundTag spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
-                    if (!spawnerDataNBT.isEmpty()) {
-                        BlockEntity tile = event.getWorld().getBlockEntity(event.getPos());
-                        if (tile instanceof SpawnerBlockEntity spawnerBlockEntity) {
-                            spawnerBlockEntity.getSpawner().load(player.level, event.getPos(), spawnerDataNBT);
-                        }
+            ItemStack stack = player.getItemInHand(player.getUsedItemHand());
+            if (enableSilkSpawner.get() && !stack.isEmpty() && stack.hasTag() && stack.getItem() == Items.SPAWNER) {
+                CompoundTag spawnerDataNBT = stack.getOrCreateTag().getCompound(SPAWNER_TAG);
+                if (!spawnerDataNBT.isEmpty()) {
+                    BlockEntity tile = event.getWorld().getBlockEntity(event.getPos());
+                    if (tile instanceof SpawnerBlockEntity spawnerBlockEntity) {
+                        spawnerBlockEntity.getSpawner().load(player.level, event.getPos(), spawnerDataNBT);
                     }
                 }
             }
@@ -96,15 +94,12 @@ public class SilkSpawner extends Feature {
         public static void onToolTipEvent(ItemTooltipEvent event) {
             ItemStack stack = event.getItemStack();
             if (stack.hasTag()) {
-                CompoundTag stackTag = stack.getTag();
-                if (stackTag != null) {
-                    CompoundTag spawnerDataNBT = stackTag.getCompound(SPAWNER_TAG);
-                    if (!spawnerDataNBT.isEmpty()) {
-                        DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.load(event.getEntity().level, new BlockPos(0, 0, 0), spawnerDataNBT);
-                        Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getOrCreateDisplayEntity(event.getEntity().level);
-                        if (ent != null) {
-                            event.getToolTip().add(ent.getDisplayName());
-                        }
+                CompoundTag spawnerDataNBT = stack.getOrCreateTag().getCompound(SPAWNER_TAG);
+                if (!spawnerDataNBT.isEmpty()) {
+                    DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.load(event.getEntity().level, BlockPos.ZERO, spawnerDataNBT);
+                    Entity ent = DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.getOrCreateDisplayEntity(event.getEntity().level);
+                    if (ent != null) {
+                        event.getToolTip().add(ent.getDisplayName());
                     }
                 }
             }

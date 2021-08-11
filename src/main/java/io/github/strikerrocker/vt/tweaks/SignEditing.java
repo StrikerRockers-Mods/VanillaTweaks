@@ -18,14 +18,10 @@ public class SignEditing extends Feature {
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getPlayer();
-        boolean success = false;
-        BlockEntity te = event.getWorld().getBlockEntity(event.getPos());
-        if (te instanceof SignBlockEntity sign && enableSignEditing.get() && !event.getWorld().isClientSide() && !player.isCrouching()) {
+        BlockEntity be = event.getWorld().getBlockEntity(event.getPos());
+        if (be instanceof SignBlockEntity sign && enableSignEditing.get() && !event.getWorld().isClientSide() && player.isCrouching()) {
+            sign.setEditable(true);
             player.openTextEdit(sign);
-            success = true;
-        }
-        if (success) {
-            event.setCanceled(true);
             event.getPlayer().swing(InteractionHand.MAIN_HAND);
         }
     }

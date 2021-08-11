@@ -20,15 +20,16 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 public class DynamiteEntity extends ThrowableItemProjectile {
     private static final int WET_TICKS = 20;
-    private static final EntityDataAccessor<Integer> TICKS_WET = SynchedEntityData.defineId(DynamiteEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> TICKS_SINCE_WET = SynchedEntityData.defineId(DynamiteEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> TICKS_WET;
+    private static final EntityDataAccessor<Integer> TICKS_SINCE_WET;
+
+    static {
+        TICKS_WET = SynchedEntityData.defineId(DynamiteEntity.class, EntityDataSerializers.INT);
+        TICKS_SINCE_WET = SynchedEntityData.defineId(DynamiteEntity.class, EntityDataSerializers.INT);
+    }
 
     public DynamiteEntity(EntityType<? extends ThrowableItemProjectile> type, Level world) {
         super(type, world);
-    }
-
-    public DynamiteEntity(Level world, double x, double y, double z) {
-        super(Items.DYNAMITE_TYPE, x, y, z, world);
     }
 
     DynamiteEntity(Level world, LivingEntity shooter) {
@@ -56,9 +57,9 @@ public class DynamiteEntity extends ThrowableItemProjectile {
     public void tick() {
         super.tick();
         if (!this.level.isClientSide()) {
-            if (this.isUnderWater()) {
+            if (this.isUnderWater())
                 this.entityData.set(TICKS_WET, this.entityData.get(TICKS_WET) + 1);
-            } else
+            else
                 this.entityData.set(TICKS_WET, 0);
             if (this.entityData.get(TICKS_WET) == 0)
                 this.entityData.set(TICKS_SINCE_WET, this.entityData.get(TICKS_SINCE_WET) + 1);

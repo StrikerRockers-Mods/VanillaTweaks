@@ -3,7 +3,6 @@ package io.github.strikerrocker.vt.enchantments;
 import com.google.common.collect.Maps;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.enchantments.homing.HomingEnchantment;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.ForgeConfigSpec;

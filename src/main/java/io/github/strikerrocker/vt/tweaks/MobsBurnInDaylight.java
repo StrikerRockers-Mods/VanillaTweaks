@@ -1,16 +1,15 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.Random;
 
 public class MobsBurnInDaylight extends Feature {
     private ForgeConfigSpec.BooleanValue babyZombieBurnInDaylight;
@@ -38,18 +37,40 @@ public class MobsBurnInDaylight extends Feature {
      */
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        if (!livingEntity.level.isClientSide()) {
-            Level world = livingEntity.level;
-            if (((livingEntity instanceof Creeper && creeperBurnInDaylight.get()) || (livingEntity instanceof Zombie && livingEntity.isBaby() &&
-                    babyZombieBurnInDaylight.get())) && world.isDay()) {
-                float brightness = livingEntity.getBrightness();
-                Random random = world.random;
-                BlockPos blockPos = livingEntity.blockPosition();
-                if (brightness > 0.5 && random.nextFloat() * 30 < (brightness - 0.4) * 2 && world.canSeeSky(blockPos)) {
-                    livingEntity.setSecondsOnFire(10);
+        LivingEntity entity = event.getEntityLiving();
+        if (entity instanceof Creeper && creeperBurnInDaylight.get() ||
+                entity instanceof Zombie && entity.isBaby() && babyZombieBurnInDaylight.get()) {
+            boolean flag = canBurn(entity);
+            if (flag) {
+                ItemStack itemstack = entity.getItemBySlot(EquipmentSlot.HEAD);
+                // Damages the helmet if its present
+                if (!itemstack.isEmpty()) {
+                    if (itemstack.isDamageableItem()) {
+                        itemstack.setDamageValue(itemstack.getDamageValue() + entity.getRandom().nextInt(2));
+                        if (itemstack.getDamageValue() >= itemstack.getMaxDamage()) {
+                            entity.broadcastBreakEvent(EquipmentSlot.HEAD);
+                            entity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                        }
+                    }
+                    flag = false;
+                }
+                if (flag) {
+                    entity.setSecondsOnFire(8);
                 }
             }
         }
+    }
+
+    /**
+     * Returns if entity can burn
+     */
+    boolean canBurn(LivingEntity entity) {
+        Level level = entity.level;
+        if (level.isDay() && !level.isClientSide) {
+            float f = entity.getBrightness();
+            boolean flag = entity.isInWaterRainOrBubble() || entity.isInPowderSnow || entity.wasInPowderSnow;
+            return f > 0.5F && entity.getRandom().nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && level.canSeeSky(entity.blockPosition());
+        }
+        return false;
     }
 }

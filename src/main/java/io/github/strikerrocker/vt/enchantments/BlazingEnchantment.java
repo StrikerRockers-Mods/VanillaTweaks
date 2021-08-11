@@ -30,7 +30,7 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     protected boolean checkCompatibility(Enchantment enchantment) {
-        return super.checkCompatibility(enchantment) && enchantment != Enchantments.SILK_TOUCH && enchantment != Enchantments.BLOCK_FORTUNE;
+        return super.checkCompatibility(enchantment) && enchantment != Enchantments.SILK_TOUCH;
     }
 
     @Override

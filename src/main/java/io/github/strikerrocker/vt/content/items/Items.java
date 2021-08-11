@@ -13,6 +13,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +30,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
+import java.util.Arrays;
+
 import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
+import static io.github.strikerrocker.vt.content.blocks.Blocks.BLOCKS;
 
 /**
  * Handles everything related to items
@@ -39,8 +43,8 @@ public class Items extends Feature {
     public static final EntityType<DynamiteEntity> DYNAMITE_TYPE = null;
     public static final Item CRAFTING_PAD = new CraftingPadItem();
     public static final Item DYNAMITE = new DynamiteItem();
-    private static final Item FRIED_EGG = new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.6f).build()).tab(CreativeModeTab.TAB_FOOD)).setRegistryName("friedegg");
     private static final Item SLIME_BUCKET = new SlimeBucketItem();
+    private static final Item FRIED_EGG = new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.6f).build()).tab(CreativeModeTab.TAB_FOOD)).setRegistryName("friedegg");
     public static ForgeConfigSpec.IntValue dynamiteCooldown;
     public static ForgeConfigSpec.IntValue dynamiteExplosionPower;
     public static ForgeConfigSpec.BooleanValue enablePad;
@@ -77,17 +81,12 @@ public class Items extends Feature {
     }
 
     @Override
-    public boolean usesEvents() {
-        return true;
-    }
-
-    @Override
     public void setup(FMLCommonSetupEvent event) {
         event.enqueueWork(() ->
                 DispenserBlock.registerBehavior(DYNAMITE, new AbstractProjectileDispenseBehavior() {
                     @Override
                     protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
-                        return new DynamiteEntity(worldIn, position.x(), position.y(), position.z());
+                        return new DynamiteEntity(DYNAMITE_TYPE, worldIn);
                     }
                 }));
     }
@@ -116,7 +115,7 @@ public class Items extends Feature {
         }
 
         /**
-         * Registers items
+         * Register ItemBlocks and Items
          *
          * @param event Registry event for Item
          */
@@ -124,6 +123,7 @@ public class Items extends Feature {
         public static void onRegisterItems(RegistryEvent.Register<Item> event) {
             VanillaTweaks.LOGGER.info("Registering Items");
             event.getRegistry().registerAll(CRAFTING_PAD, SLIME_BUCKET, DYNAMITE, FRIED_EGG);
+            Arrays.stream(BLOCKS).map(block -> new BlockItem(block, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
         }
     }
 

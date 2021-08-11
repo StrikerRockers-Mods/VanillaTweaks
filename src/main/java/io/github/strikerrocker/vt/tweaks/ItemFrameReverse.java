@@ -17,7 +17,7 @@ public class ItemFrameReverse extends Feature {
         if (itemFrameRotateBackwards.get() && event.getTarget() instanceof ItemFrame frame && event.getPlayer().isCrouching()) {
             int rotation = frame.getRotation() - 2;
             if (rotation < 0)
-                rotation = 6;
+                rotation = 7;
             frame.setRotation(rotation);
         }
     }

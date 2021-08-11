@@ -8,7 +8,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BatLeather extends Feature {
@@ -31,10 +31,11 @@ public class BatLeather extends Feature {
      * Adds the chance of leather dropping when bat is killed
      */
     @SubscribeEvent
-    public void onLivingDrop(LivingDropsEvent event) {
+    public void onLivingDrop(LivingDeathEvent event) {
         Entity entity = event.getEntity();
         Level world = entity.level;
-        if (!world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && event.getSource().getEntity() instanceof Player && entity instanceof Bat && batLeatherDropChance.get() / 10 > Math.random()) {
+        if (!world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && event.getSource().getEntity() instanceof Player &&
+                entity instanceof Bat && batLeatherDropChance.get() / 10 > Math.random()) {
             entity.spawnAtLocation(Items.LEATHER);
         }
     }

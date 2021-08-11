@@ -18,7 +18,7 @@ public class TNTIgnition extends Feature {
     private ForgeConfigSpec.BooleanValue enableTNTIgnition;
 
     /**
-     * Explode Tnt when it is beside lava or magma block
+     * Explode TNT when it is beside lava or magma block
      */
     @SubscribeEvent
     public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {

@@ -12,7 +12,7 @@
   },
   "parent": "vanillatweaks:pad",
   "criteria": {
-    "sugar_block__in_inventory": {
+    "has_sugar_block": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -22,7 +22,7 @@
         ]
       }
     },
-    "charcoal_block__in_inventory": {
+    "has_charcoal_block": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -32,7 +32,7 @@
         ]
       }
     },
-    "flint_block__in_inventory": {
+    "has_flint_block": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [

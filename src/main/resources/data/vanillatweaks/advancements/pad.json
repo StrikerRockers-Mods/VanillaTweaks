@@ -12,7 +12,7 @@
     "background": "vanillatweaks:textures/blocks/sugarblock.png"
   },
   "criteria": {
-    "pad_in_inventory": {
+    "has_pad": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [

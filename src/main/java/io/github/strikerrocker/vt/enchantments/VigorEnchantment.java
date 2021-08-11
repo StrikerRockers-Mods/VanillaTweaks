@@ -51,7 +51,7 @@ public class VigorEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int enchantmentLevel) {
-        return 5 + (enchantmentLevel - 1) * 8;
+        return 10 + (enchantmentLevel - 1) * 10;
     }
 
     @Override
@@ -66,11 +66,12 @@ public class VigorEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.CHEST) && EnchantmentFeature.enableVigor.get();
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.CHEST) &&
+                EnchantmentFeature.enableVigor.get();
     }
 
     @Override
-    public boolean isAllowedOnBooks() {
+    public boolean isDiscoverable() {
         return EnchantmentFeature.enableVigor.get();
     }
 }

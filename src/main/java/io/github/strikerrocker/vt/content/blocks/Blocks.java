@@ -6,8 +6,6 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
@@ -27,8 +25,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
-import java.util.Arrays;
-
 import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
 /**
@@ -41,7 +37,7 @@ public class Blocks extends Feature {
     private static final Block CHARCOAL_BLOCK = new Block(Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(5.0f, 10.0f)).setRegistryName("charcoalblock");
     private static final Block SUGAR_BLOCK = new Block(Properties.of(Material.SAND, MaterialColor.TERRACOTTA_WHITE).strength(0.5f).sound(SoundType.SAND)).setRegistryName("sugarblock");
     private static final Block FLINT_BLOCK = new Block(Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)).setRegistryName("flintblock");
-    private static final Block[] BLOCKS = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
+    public static final Block[] BLOCKS = new Block[]{CHARCOAL_BLOCK, SUGAR_BLOCK, FLINT_BLOCK, PEDESTAL_BLOCK};
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
 
@@ -76,7 +72,6 @@ public class Blocks extends Feature {
             event.setBurnTime(400);
     }
 
-
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModBusEvents {
         @SubscribeEvent
@@ -88,16 +83,6 @@ public class Blocks extends Feature {
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
-        /**
-         * Registers ItemBlock's for all the blocks
-         *
-         * @param event Registry event for Item
-         */
-        @SubscribeEvent
-        public static void onRegisterItemBlocks(RegistryEvent.Register<Item> event) {
-            Arrays.stream(BLOCKS).map(block -> new BlockItem(block, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName(block.getRegistryName())).forEach(item -> event.getRegistry().register(item));
-        }
-
         /**
          * Registers MenuType
          *
@@ -125,7 +110,9 @@ public class Blocks extends Feature {
          */
         @SubscribeEvent
         public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
-            event.getRegistry().registerAll(BLOCKS);
+            event.getRegistry().register(CHARCOAL_BLOCK);
+            event.getRegistry().register(SUGAR_BLOCK);
+            event.getRegistry().register(FLINT_BLOCK);
         }
 
         /**

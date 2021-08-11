@@ -23,7 +23,8 @@ public class DynamiteItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
-        if (!playerIn.isCreative()) itemstack.shrink(1);
+        if (!playerIn.isCreative())
+            itemstack.shrink(1);
         BlockPos pos = playerIn.blockPosition();
         worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
         playerIn.getCooldowns().addCooldown(this, Items.dynamiteCooldown.get());

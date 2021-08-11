@@ -12,7 +12,7 @@
   },
   "parent": "vanillatweaks:pad",
   "criteria": {
-    "dynamite_in_inventory": {
+    "has_dynamite": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [

@@ -42,7 +42,7 @@ public class ArmorStandSwap extends Feature {
     public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
         Player player = event.getPlayer();
         if (player.isCrouching() && enableArmorStandSwapping.get() && !player.level.isClientSide() && !player.isSpectator()
-                && !player.isCreative() && event.getTarget() instanceof ArmorStand armorStand) {
+                && event.getTarget() instanceof ArmorStand armorStand) {
             event.setCanceled(true);
             for (EquipmentSlot equipmentSlotType : EquipmentSlot.values()) {
                 if (equipmentSlotType.getType() == EquipmentSlot.Type.ARMOR) {

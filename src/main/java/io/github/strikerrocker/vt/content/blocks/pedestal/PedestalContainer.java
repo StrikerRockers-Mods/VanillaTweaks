@@ -28,7 +28,7 @@ public class PedestalContainer extends AbstractContainerMenu {
                         }
                     }));
         }
-        // Add player inv slots
+        // Add player inventory slots
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 51 + i * 18));
@@ -42,37 +42,30 @@ public class PedestalContainer extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack newStack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
-
         if (slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-
+            ItemStack originalStack = slot.getItem();
+            newStack = originalStack.copy();
             int containerSlots = slots.size() - player.getInventory().items.size();
-
             if (index < containerSlots) {
-                if (!this.moveItemStackTo(itemstack1, containerSlots, slots.size(), true)) {
+                if (!this.moveItemStackTo(originalStack, containerSlots, slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, containerSlots, false)) {
+            } else if (!this.moveItemStackTo(originalStack, 0, containerSlots, false)) {
                 return ItemStack.EMPTY;
             }
-
-            if (itemstack1.getCount() == 0) {
+            if (originalStack.getCount() == 0) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-
-            if (itemstack1.getCount() == itemstack.getCount()) {
+            if (originalStack.getCount() == newStack.getCount()) {
                 return ItemStack.EMPTY;
             }
-
-            slot.onTake(player, itemstack1);
+            slot.onTake(player, originalStack);
         }
-
-        return itemstack;
+        return newStack;
     }
 
     @Override

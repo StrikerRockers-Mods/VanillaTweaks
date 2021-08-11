@@ -15,9 +15,9 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
 
     @Override
     public void render(PedestalBlockEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int i, int i1) {
-        ItemStack stack = tileEntityIn.inventory.getStackInSlot(0);
         matrixStack.pushPose();
-        double offset = Math.sin((tileEntityIn.getLevel().getGameTime() - tileEntityIn.lastChangeTime + partialTicks) / 8) / 4.0;
+        ItemStack stack = tileEntityIn.inventory.getStackInSlot(0);
+        double offset = Math.sin((tileEntityIn.getLevel().getGameTime() + partialTicks) / 8) / 4.0;
         matrixStack.translate(0.5, 1.25 + offset, 0.5);
         matrixStack.mulPose(Vector3f.YP.rotationDegrees((tileEntityIn.getLevel().getGameTime() + partialTicks) * 4));
         float scale = 1.5f;

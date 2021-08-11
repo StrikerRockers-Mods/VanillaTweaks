@@ -26,6 +26,17 @@ public class Sickle extends Feature {
         return (block instanceof BushBlock && !(block instanceof WaterlilyBlock)) || block instanceof SugarCaneBlock;
     }
 
+    /**
+     * Get the range for sickle harvesting based on type of hoe
+     */
+    private int getRange(Item item) {
+        if (item == Items.DIAMOND_HOE)
+            return 2;
+        else if (item == Items.NETHERITE_HOE)
+            return 3;
+        else return 1;
+    }
+
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
         hoeActsAsSickle = builder
@@ -66,13 +77,5 @@ public class Sickle extends Feature {
             }
             stack.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
         }
-    }
-
-    private int getRange(Item item) {
-        if (item == Items.DIAMOND_HOE)
-            return 2;
-        else if (item == Items.NETHERITE_HOE)
-            return 3;
-        else return 1;
     }
 }
