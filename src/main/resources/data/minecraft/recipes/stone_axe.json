@@ -16,7 +16,7 @@
       "tag": "forge:rods/wooden"
     },
     "X": {
-      "item": "minecraft:stone"
+      "tag": "forge:stone"
     }
   },
   "result": {
