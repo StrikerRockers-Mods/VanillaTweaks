@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.recipes.vanilla;
+package io.github.strikerrocker.vt.recipes;
 
 import com.google.gson.JsonObject;
 import io.github.strikerrocker.vt.VanillaTweaks;

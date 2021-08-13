@@ -1,10 +1,6 @@
 package io.github.strikerrocker.vt.recipes;
 
 import io.github.strikerrocker.vt.base.Module;
-import io.github.strikerrocker.vt.recipes.better_vanilla.BetterVanillaConditions;
-import io.github.strikerrocker.vt.recipes.better_vanilla.BetterVanillaRecipes;
-import io.github.strikerrocker.vt.recipes.vanilla.VanillaRecipeConditions;
-import io.github.strikerrocker.vt.recipes.vanilla.VanillaRecipes;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -20,7 +16,6 @@ public class RecipeModule extends Module {
     @Override
     public void addFeatures() {
         registerFeature("vanilla_recipes", new VanillaRecipes());
-        registerFeature("better_recipes", new BetterVanillaRecipes());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -28,7 +23,6 @@ public class RecipeModule extends Module {
         @SubscribeEvent
         public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
             CraftingHelper.register(VanillaRecipeConditions.Serializer.INSTANCE);
-            CraftingHelper.register(BetterVanillaConditions.Serializer.INSTANCE);
         }
     }
 }

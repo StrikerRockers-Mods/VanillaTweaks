@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.recipes.vanilla;
+package io.github.strikerrocker.vt.recipes;
 
 import io.github.strikerrocker.vt.base.Feature;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -33,5 +33,4 @@ public class VanillaRecipes extends Feature {
                 .comment("Wanna easier recipe for trapped chest?")
                 .define("betterTrappedChestRecipe", true);
     }
-
 }
