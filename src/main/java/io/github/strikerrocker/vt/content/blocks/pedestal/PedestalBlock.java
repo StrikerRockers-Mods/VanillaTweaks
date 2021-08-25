@@ -48,7 +48,6 @@ public class PedestalBlock extends Block implements SimpleWaterloggedBlock, Enti
     public PedestalBlock() {
         super(Properties.of(Material.STONE, MaterialColor.TERRACOTTA_GRAY).strength(2.0f, 10.0f));
         this.registerDefaultState(this.getStateDefinition().any().setValue(WATERLOGGED, false));
-        this.setRegistryName("pedestal");
     }
 
     private static PedestalBlockEntity getPedestalTE(LevelReader world, BlockPos pos) {

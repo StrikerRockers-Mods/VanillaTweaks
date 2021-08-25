@@ -14,18 +14,19 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber
 public class VeteranEnchantment extends Enchantment {
     VeteranEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_HEAD, new EquipmentSlot[]{EquipmentSlot.HEAD});
-        this.setRegistryName("veteran");
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent.WorldTickEvent event) {
-        if (EnchantmentFeature.enableVeteran.get() && event.world != null && !event.world.isClientSide()) {
+    public static void onTick(TickEvent.WorldTickEvent event) {
+        if (EnchantmentInit.enableVeteran.get() && event.world != null && !event.world.isClientSide()) {
             ServerLevel world = (ServerLevel) event.world;
-            world.getEntities(EntityType.EXPERIENCE_ORB, EntitySelector.ENTITY_STILL_ALIVE).forEach(this::attemptToMove);
+            world.getEntities(EntityType.EXPERIENCE_ORB, EntitySelector.ENTITY_STILL_ALIVE).forEach(VeteranEnchantment::attemptToMove);
         }
     }
 
@@ -34,10 +35,10 @@ public class VeteranEnchantment extends Enchantment {
      *
      * @param xpEntity The Experience Orb Entity
      */
-    private void attemptToMove(Entity xpEntity) {
+    private static void attemptToMove(Entity xpEntity) {
         double range = 32;
         Player closestPlayer = xpEntity.level.getNearestPlayer(xpEntity, range);
-        if (closestPlayer != null && EnchantmentHelper.getItemEnchantmentLevel(this, closestPlayer.getItemBySlot(EquipmentSlot.HEAD)) > 0) {
+        if (closestPlayer != null && EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.VETERAN.get(), closestPlayer.getItemBySlot(EquipmentSlot.HEAD)) > 0) {
             double xDiff = (closestPlayer.getX() - xpEntity.getX()) / range;
             double yDiff = (closestPlayer.getY() + closestPlayer.getEyeHeight() - xpEntity.getY()) / range;
             double zDiff = (closestPlayer.getZ() - xpEntity.getZ()) / range;
@@ -65,17 +66,17 @@ public class VeteranEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableVeteran.get() ? 1 : 0;
+        return EnchantmentInit.enableVeteran.get() ? 1 : 0;
     }
 
     @Override
     public boolean canEnchant(ItemStack stack) {
         return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.HEAD) &&
-                EnchantmentFeature.enableVeteran.get();
+                EnchantmentInit.enableVeteran.get();
     }
 
     @Override
     public boolean isDiscoverable() {
-        return EnchantmentFeature.enableVeteran.get();
+        return EnchantmentInit.enableVeteran.get();
     }
 }

@@ -9,22 +9,17 @@
   "item.vanillatweaks.dynamite": "ダイナマイト",
   "item.vanillatweaks.friedegg": "フライドエッグ",
   "item.vanillatweaks.pad": "作業パッド",
-  "item.vanillatweaks.lens": "双眼鏡のレンズ",
-  "item.vanillatweaks.binoculars": "双眼鏡",
   "item.vanillatweaks.slime": "Slime Finder",
-  "item.vanillatweaks.binocular_bauble": "Binoculars(Baubles)",
 
   "_comment": "advancements",
   "advancements.vt.pad": "Vanilla Tweaks",
   "advancements.vt.storage": "Storage Blocks",
-  "advancements.vt.zoom": "Zoom",
   "advancements.vt.boom": "Boom!!",
   "advancements.vt.friedegg": "Fried Egg!!",
 
   "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Craft the storage block",
   "advancements.vt.pad.desc": "Craft an Crafting Pad",
-  "advancements.vt.zoom.desc": "Craft an Binoculars",
   "advancements.vt.boom.desc": "Craft an Dynamite",
   "advancements.vt.friedegg.desc": "Smelt an Egg",
 
@@ -36,10 +31,6 @@
   "enchantment.vanillatweaks.blazing": "炎々",
   "enchantment.vanillatweaks.siphon": "サイフォン",
   "enchantment.vanillatweaks.homing": "ホーミング",
-
-  "_comment": "keybinds",
-  "key.category.vt": "VanillaTweaks",
-  "key.vt:zoom": "Zoom Key",
 
   "_comment": "misc",
   "entity.dynamite": "Dynamite",

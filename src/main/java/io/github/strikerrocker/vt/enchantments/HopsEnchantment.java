@@ -11,12 +11,13 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber
 public class HopsEnchantment extends Enchantment {
 
     HopsEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[]{EquipmentSlot.FEET});
-        this.setRegistryName("hops");
     }
 
     /**
@@ -25,10 +26,10 @@ public class HopsEnchantment extends Enchantment {
      * @param event LivingEquipmentChangeEvent
      */
     @SubscribeEvent
-    public void onEquipmentChange(LivingEquipmentChangeEvent event) {
+    public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
         LivingEntity entity = event.getEntityLiving();
-        if (EnchantmentFeature.enableHops.get() && !event.getEntity().level.isClientSide()) {
-            int lvl = EnchantmentHelper.getItemEnchantmentLevel(this, event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET));
+        if (EnchantmentInit.enableHops.get() && !event.getEntity().level.isClientSide()) {
+            int lvl = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.HOPS.get(), event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET));
             if (lvl > 0) {
                 if (!entity.hasEffect(MobEffects.JUMP)) {
                     entity.addEffect(new MobEffectInstance(MobEffects.JUMP, Integer.MAX_VALUE, lvl, true, false, false));
@@ -53,16 +54,16 @@ public class HopsEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableHops.get() ? 3 : 0;
+        return EnchantmentInit.enableHops.get() ? 3 : 0;
     }
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.FEET) && EnchantmentFeature.enableHops.get();
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.FEET) && EnchantmentInit.enableHops.get();
     }
 
     @Override
     public boolean isDiscoverable() {
-        return EnchantmentFeature.enableHops.get();
+        return EnchantmentInit.enableHops.get();
     }
 }

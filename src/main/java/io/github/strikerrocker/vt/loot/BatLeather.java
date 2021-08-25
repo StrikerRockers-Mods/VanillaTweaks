@@ -34,7 +34,8 @@ public class BatLeather extends Feature {
     public void onLivingDrop(LivingDeathEvent event) {
         Entity entity = event.getEntity();
         Level world = entity.level;
-        if (!world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && event.getSource().getEntity() instanceof Player &&
+        if (!world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) &&
+                event.getSource().getEntity() instanceof Player &&
                 entity instanceof Bat && batLeatherDropChance.get() / 10 > Math.random()) {
             entity.spawnAtLocation(Items.LEATHER);
         }

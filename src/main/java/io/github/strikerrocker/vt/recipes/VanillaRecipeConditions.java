@@ -33,7 +33,6 @@ public record VanillaRecipeConditions(String object) implements ICondition {
 
         @Override
         public void write(JsonObject json, VanillaRecipeConditions value) {
-
         }
 
         @Override

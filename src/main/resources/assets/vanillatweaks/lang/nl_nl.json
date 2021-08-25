@@ -9,22 +9,17 @@
   "item.vanillatweaks.dynamite": "Dynamiet",
   "item.vanillatweaks.friedegg": "Gebakken Ei",
   "item.vanillatweaks.pad": "Bouw Onderlegger",
-  "item.vanillatweaks.lens": "Verrekijker lens",
-  "item.vanillatweaks.binoculars": "Verrekijker",
   "item.vanillatweaks.slime": "Slijm Vinder",
-  "item.vanillatweaks.binocular_bauble": "Verrekijker(Baubles)",
 
   "_comment": "advancements",
   "advancements.vt.pad": "Vanille Aanpassingen",
   "advancements.vt.storage": "Opslag Blokken",
-  "advancements.vt.zoom": "Inzoemen",
   "advancements.vt.boom": "Boem!!",
   "advancements.vt.friedegg": "Gebakken Eieren!!",
 
   "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Maak het Opslag Blok",
   "advancements.vt.pad.desc": "Maak een Bouw Onderlegger",
-  "advancements.vt.zoom.desc": "Maak een Verrekijker",
   "advancements.vt.boom.desc": "Maak een Dynamiet",
   "advancements.vt.friedegg.desc": "Bak een Ei",
 
@@ -36,10 +31,6 @@
   "enchantment.vanillatweaks.blazing": "Vlammend",
   "enchantment.vanillatweaks.siphon": "Hevel",
   "enchantment.vanillatweaks.homing": "Doelzoekend",
-
-  "_comment": "keybinds",
-  "key.category.vt": "VanilleAanpassingen",
-  "key.vt:zoom": "Inzoem Toets",
 
   "_comment": "misc",
   "entity.dynamite": "Dynamiet",

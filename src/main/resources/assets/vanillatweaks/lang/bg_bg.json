@@ -9,22 +9,17 @@
   "item.vanillatweaks.dynamite": "Динамит",
   "item.vanillatweaks.friedegg": "Пържено яйце",
   "item.vanillatweaks.pad": "Разработващ пад",
-  "item.vanillatweaks.lens": "Бинокулярни лещи",
-  "item.vanillatweaks.binoculars": "Бинокъл",
   "item.vanillatweaks.slime": "Шламотърсач",
-  "item.vanillatweaks.binocular_bauble": "Бинокъл(Baubles)",
 
   "_comment": "advancements",
   "advancements.vt.pad": "Vanilla Tweaks",
   "advancements.vt.storage": "Блокове за съхранение",
-  "advancements.vt.zoom": "Приближи",
   "advancements.vt.boom": "Боом!!",
   "advancements.vt.friedegg": "Пържено яйце!!",
 
   "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Разработи блоковете за съхранение",
   "advancements.vt.pad.desc": "Разрабори един Разработващ пад",
-  "advancements.vt.zoom.desc": "Разрабори един Бинокъл",
   "advancements.vt.boom.desc": "Разрабори един Динамите",
   "advancements.vt.friedegg.desc": "Изпечи Яйце",
 
@@ -44,10 +39,6 @@
   "enchantment.vanillatweaks.blazing.desc": "Автоматично топи всичко което блокчето дропва.",
   "enchantment.vanillatweaks.siphon.desc": "Всички минирани блокчета веднага отиват в твоп инвентар.",
   "enchantment.vanillatweaks.homing.desc": "Твойте стрели ще олучат точно твоята цел.",
-
-  "_comment": "keybinds",
-  "key.category.vt": "VanillaTweaks",
-  "key.vt:zoom": "Zoom Key",
 
   "_comment": "misc",
   "entity.dynamite": "Динамит",

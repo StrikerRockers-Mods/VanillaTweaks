@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.content.items.dynamite;
 
-import io.github.strikerrocker.vt.content.items.Items;
+import io.github.strikerrocker.vt.content.items.ItemInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
@@ -33,17 +33,17 @@ public class DynamiteEntity extends ThrowableItemProjectile {
     }
 
     DynamiteEntity(Level world, LivingEntity shooter) {
-        super(Items.DYNAMITE_TYPE, shooter, world);
+        super(ItemInit.DYNAMITE_TYPE.get(), shooter, world);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return Items.DYNAMITE;
+        return ItemInit.DYNAMITE.get();
     }
 
     @Override
     public ItemStack getItem() {
-        return new ItemStack(Items.DYNAMITE);
+        return new ItemStack(ItemInit.DYNAMITE.get());
     }
 
     @Override
@@ -79,14 +79,14 @@ public class DynamiteEntity extends ThrowableItemProjectile {
     protected void onHit(HitResult result) {
         if (!level.isClientSide()) {
             if (this.entityData.get(TICKS_SINCE_WET) < WET_TICKS) {
-                this.spawnAtLocation(Items.DYNAMITE);
+                this.spawnAtLocation(ItemInit.DYNAMITE.get());
                 this.remove(RemovalReason.KILLED);
             } else {
                 if (result instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof DynamiteEntity) {
                     return;
                 } else {
                     BlockPos pos = blockPosition();
-                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), Items.dynamiteExplosionPower.get(), Explosion.BlockInteraction.BREAK);
+                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), ItemInit.dynamiteExplosionPower.get(), Explosion.BlockInteraction.BREAK);
                 }
             }
             this.remove(RemovalReason.KILLED);

@@ -1,22 +1,19 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
+import io.github.strikerrocker.vt.content.blocks.BlockInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class PedestalContainer extends AbstractContainerMenu {
-    @ObjectHolder("vanillatweaks:pedestal")
-    public static final MenuType<PedestalContainer> TYPE = null;
 
     public PedestalContainer(int id, Inventory playerInv, BlockPos pos) {
-        super(TYPE, id);
+        super(BlockInit.PEDESTAL_MENU_TYPE.get(), id);
         PedestalBlockEntity pedestal = (PedestalBlockEntity) playerInv.player.level.getBlockEntity(pos);
         if (pedestal != null) {
             pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)

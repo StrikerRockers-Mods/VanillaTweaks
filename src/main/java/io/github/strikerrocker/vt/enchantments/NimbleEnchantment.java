@@ -12,16 +12,17 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.UUID;
 
+@Mod.EventBusSubscriber
 public class NimbleEnchantment extends Enchantment {
 
     private static final UUID nimbleUUID = UUID.fromString("05b61a62-ae84-492e-8536-f365b7143296");
 
     NimbleEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[]{EquipmentSlot.FEET});
-        this.setRegistryName("nimble");
     }
 
     /**
@@ -30,10 +31,10 @@ public class NimbleEnchantment extends Enchantment {
      * @param event LivingEquipmentChangeEvent
      */
     @SubscribeEvent
-    public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        if (EnchantmentFeature.enableNimble.get()) {
+    public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
+        if (EnchantmentInit.enableNimble.get()) {
             LivingEntity entity = event.getEntityLiving();
-            int lvl = EnchantmentHelper.getItemEnchantmentLevel(this, entity.getItemBySlot(EquipmentSlot.FEET));
+            int lvl = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.NIMBLE.get(), entity.getItemBySlot(EquipmentSlot.FEET));
             AttributeInstance speedAttribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", lvl * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
             if (speedAttribute != null) {
@@ -60,17 +61,17 @@ public class NimbleEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableNimble.get() ? 3 : 0;
+        return EnchantmentInit.enableNimble.get() ? 3 : 0;
     }
 
     @Override
     public boolean canEnchant(ItemStack stack) {
         return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.FEET) &&
-                EnchantmentFeature.enableNimble.get();
+                EnchantmentInit.enableNimble.get();
     }
 
     @Override
     public boolean isDiscoverable() {
-        return EnchantmentFeature.enableNimble.get();
+        return EnchantmentInit.enableNimble.get();
     }
 }

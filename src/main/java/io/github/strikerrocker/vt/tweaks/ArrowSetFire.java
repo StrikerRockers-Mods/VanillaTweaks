@@ -32,8 +32,8 @@ public class ArrowSetFire extends Feature {
      */
     @SubscribeEvent
     public void onArrowImpact(ProjectileImpactEvent event) {
-        if (event.getProjectile() instanceof AbstractArrow arrow &&
-                !arrow.level.isClientSide() && arrow.isOnFire() && arrowsSetBlockOnFire.get()) {
+        if (event.getProjectile() instanceof AbstractArrow arrow && arrowsSetBlockOnFire.get() &&
+                !arrow.level.isClientSide() && arrow.isOnFire()) {
             BlockPos pos = arrow.blockPosition();
             Vec3 vec3d = new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(arrow.getDeltaMovement());
             BlockHitResult blockHitResult = arrow.level.clip(new ClipContext(arrow.position(), vec3d, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, arrow));

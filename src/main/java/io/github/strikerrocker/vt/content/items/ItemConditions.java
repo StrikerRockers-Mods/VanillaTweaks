@@ -20,15 +20,15 @@ public record ItemConditions(String object) implements ICondition {
 
     @Override
     public boolean test() {
-        if (object.equals("crafting_pad")) return Items.enablePad.get();
-        if (object.equals("slime_bucket")) return Items.enableSlimeBucket.get();
-        if (object.equals("dynamite")) return Items.enableDynamite.get();
-        if (object.equals("fried_egg")) return Items.enableFriedEgg.get();
+        if (object.equals("crafting_pad")) return ItemInit.enablePad.get();
+        if (object.equals("slime_bucket")) return ItemInit.enableSlimeBucket.get();
+        if (object.equals("dynamite")) return ItemInit.enableDynamite.get();
+        if (object.equals("fried_egg")) return ItemInit.enableFriedEgg.get();
         return false;
     }
 
     public static class Serializer implements IConditionSerializer<ItemConditions> {
-        static final Serializer INSTANCE = new Serializer();
+        public static final Serializer INSTANCE = new Serializer();
 
         @Override
         public void write(JsonObject json, ItemConditions value) {

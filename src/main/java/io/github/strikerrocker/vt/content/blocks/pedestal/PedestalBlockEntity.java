@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import io.github.strikerrocker.vt.content.blocks.Blocks;
+import io.github.strikerrocker.vt.content.blocks.BlockInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -33,7 +33,7 @@ public class PedestalBlockEntity extends BlockEntity {
     private final LazyOptional<IItemHandler> holder = LazyOptional.of(() -> inventory);
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
-        super(Blocks.PEDESTAL_TYPE, pos, state);
+        super(BlockInit.PEDESTAL_TYPE.get(), pos, state);
     }
 
     @Override

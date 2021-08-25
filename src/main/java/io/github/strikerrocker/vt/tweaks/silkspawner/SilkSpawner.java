@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SpawnerBlock;
@@ -65,10 +65,10 @@ public class SilkSpawner extends Feature {
      */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onBreak(BlockEvent.BreakEvent event) {
-        LevelAccessor world = event.getWorld();
-        BlockEntity blockEntity = world.getBlockEntity(event.getPos());
+        Level level = event.getPlayer().level;
+        BlockEntity blockEntity = level.getBlockEntity(event.getPos());
         int lvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, event.getPlayer().getMainHandItem());
-        if (event.getState().getBlock() instanceof SpawnerBlock && !world.isClientSide() && blockEntity instanceof SpawnerBlockEntity && enableSilkSpawner.get() && lvl >= 1) {
+        if (event.getState().getBlock() instanceof SpawnerBlock && !level.isClientSide() && blockEntity instanceof SpawnerBlockEntity && enableSilkSpawner.get() && lvl >= 1) {
             event.setExpToDrop(0);
             ItemStack drop = new ItemStack(Blocks.SPAWNER);
             CompoundTag spawnerData = ((SpawnerBlockEntity) blockEntity).getSpawner().save(blockEntity.getLevel(), event.getPos(), new CompoundTag());
@@ -78,9 +78,8 @@ public class SilkSpawner extends Feature {
             drop.setTag(stackTag);
 
             Block.popResource(event.getPlayer().level, event.getPos(), drop);
-            //Does this cause problems w/ block protection?
-            event.getPlayer().level.removeBlockEntity(blockEntity.getBlockPos());
-            world.destroyBlock(event.getPos(), false);
+            level.removeBlockEntity(blockEntity.getBlockPos());
+            level.destroyBlock(event.getPos(), false);
             event.setCanceled(true);
         }
     }

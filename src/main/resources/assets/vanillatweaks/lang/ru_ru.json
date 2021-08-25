@@ -9,22 +9,17 @@
   "item.vanillatweaks.dynamite": "Динамит",
   "item.vanillatweaks.friedegg": "Жаренное яйцо",
   "item.vanillatweaks.pad": "Планшетный верстак",
-  "item.vanillatweaks.lens": "Объектив",
-  "item.vanillatweaks.binoculars": "Бинокль",
   "item.vanillatweaks.slime": "Слизневый поисковик",
-  "item.vanillatweaks.binocular_bauble": "Бинокль (Baubles)",
 
   "_comment": "advancements",
   "advancements.vt.pad": "Vanilla Tweaks",
   "advancements.vt.storage": "Блоки для хранения",
-  "advancements.vt.zoom": "Зум",
   "advancements.vt.boom": "Бум!!",
   "advancements.vt.friedegg": "Яичница!!",
 
   "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Создайте блоки для хранения",
   "advancements.vt.pad.desc": "Создайте Планшетный верстак",
-  "advancements.vt.zoom.desc": "Создайте Бинокль",
   "advancements.vt.boom.desc": "Создайте Динамит",
   "advancements.vt.friedegg.desc": "Переплавьте Яйцо",
 
@@ -44,10 +39,6 @@
   "enchantment.vanillatweaks.blazing.desc": "Автоматически переплавляет добываемые блоки.",
   "enchantment.vanillatweaks.siphon.desc": "Добытые блоки мгновенно попадают в ваш инвентарь.",
   "enchantment.vanillatweaks.homing.desc": "Ваши стрелы будут лететь прямо в цель.",
-
-  "_comment": "keybinds",
-  "key.category.vt": "VanillaTweaks",
-  "key.vt:zoom": "Зум",
 
   "_comment": "misc",
   "entity.dynamite": "Динамит",

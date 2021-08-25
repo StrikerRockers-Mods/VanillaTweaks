@@ -15,7 +15,6 @@ import net.minecraft.world.level.Level;
 public class CraftingPadItem extends Item {
     public CraftingPadItem() {
         super(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(1));
-        setRegistryName("pad");
     }
 
     @Override

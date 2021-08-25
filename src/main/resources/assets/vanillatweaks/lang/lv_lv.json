@@ -9,14 +9,10 @@
   "item.vanillatweaks.dynamite": "Dinamīts",
   "item.vanillatweaks.friedegg": "Cepta Ola",
   "item.vanillatweaks.pad": "Darba Paliknis",
-  "item.vanillatweaks.lens": "Binokļa Lēcas",
-  "item.vanillatweaks.binoculars": "Binoklis",
   "item.vanillatweaks.slime": "Gļotu Meklētājs",
-  "item.vanillatweaks.binocular_bauble": "Binoklis (Baubles)",
 
   "_comment": "advancements",
   "advancements.vt.storage": "Glabāšanas Bloki",
-  "advancements.vt.zoom": "Pievilkšana",
   "advancements.vt.friedegg": "Cepta Ola!!",
   "advancements.vt.pad": "Vanilla Tweaks",
   "advancements.vt.boom": "Boom!!",
@@ -24,7 +20,6 @@
   "_comment": "advancements desc",
   "advancements.vt.storage.desc": "Izveido glabāšanas bloku",
   "advancements.vt.pad.desc": "Izveido Darba Palikni",
-  "advancements.vt.zoom.desc": "Izveido Binokli",
   "advancements.vt.boom.desc": "Izveido Dinamītu",
   "advancements.vt.friedegg.desc": "Izcep Olu",
 
@@ -36,10 +31,6 @@
   "enchantment.vanillatweaks.blazing": "Liesmojošs",
   "enchantment.vanillatweaks.siphon": "Sifons",
   "enchantment.vanillatweaks.homing": "Sekojošs",
-
-  "_comment": "keybinds",
-  "key.vt:zoom": "Pievilkšanas Taustiņš",
-  "key.category.vt": "VanillaTweaks",
 
   "_comment": "misc",
   "entity.dynamite": "Dinamīts",

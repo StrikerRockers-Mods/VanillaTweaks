@@ -2,13 +2,23 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.Module;
 import io.github.strikerrocker.vt.content.ContentModule;
+import io.github.strikerrocker.vt.content.blocks.BlockConditions;
+import io.github.strikerrocker.vt.content.blocks.BlockInit;
+import io.github.strikerrocker.vt.content.items.ItemConditions;
+import io.github.strikerrocker.vt.content.items.ItemInit;
 import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
 import io.github.strikerrocker.vt.loot.LootModule;
 import io.github.strikerrocker.vt.recipes.RecipeModule;
+import io.github.strikerrocker.vt.recipes.VanillaRecipeConditions;
 import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.WorldModule;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -36,6 +46,12 @@ public class VanillaTweaks {
         registerModules();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
+        ItemInit.ITEMS.register(modEventBus);
+        ItemInit.ENTITY_TYPES.register(modEventBus);
+        BlockInit.BLOCKS.register(modEventBus);
+        BlockInit.MENU_TYPE.register(modEventBus);
+        BlockInit.BLOCK_ENTITY_TYPE.register(modEventBus);
+        modEventBus.addListener(this::registerRecipeSerializers);
     }
 
     private static void registerModules() {
@@ -57,5 +73,11 @@ public class VanillaTweaks {
     private void setup(final FMLCommonSetupEvent event) {
         modules.forEach(module -> module.setup(event));
         LOGGER.info("Setup Complete");
+    }
+
+    public void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
+        CraftingHelper.register(ItemConditions.Serializer.INSTANCE);
+        CraftingHelper.register(BlockConditions.Serializer.INSTANCE);
+        CraftingHelper.register(VanillaRecipeConditions.Serializer.INSTANCE);
     }
 }

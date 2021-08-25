@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import io.github.strikerrocker.vt.misc.ConeShape;
+import io.github.strikerrocker.vt.misc.Utils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,14 +14,15 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
+@Mod.EventBusSubscriber
 public class HomingEnchantment extends Enchantment {
 
     public HomingEnchantment() {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-        this.setRegistryName("homing");
     }
 
     /**
@@ -30,14 +31,14 @@ public class HomingEnchantment extends Enchantment {
      * @param event EntityJoinWorldEvent
      */
     @SubscribeEvent
-    public void entityJoin(EntityJoinWorldEvent event) {
-        if (!event.getWorld().isClientSide() && EnchantmentFeature.enableHoming.get() &&
+    public static void entityJoin(EntityJoinWorldEvent event) {
+        if (!event.getWorld().isClientSide() && EnchantmentInit.enableHoming.get() &&
                 event.getEntity() instanceof AbstractArrow arrow && arrow.getOwner() instanceof LivingEntity shooter) {
             ServerLevel level = (ServerLevel) event.getWorld();
-            int lvl = EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getUseItem());
+            int lvl = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.HOMING.get(), shooter.getUseItem());
             if (lvl > 0) {
                 LivingEntity target = null;
-                AABB coneBound = ConeShape.getConeBounds(shooter, lvl);
+                AABB coneBound = Utils.getConeBounds(shooter, lvl);
                 List<Entity> potentialTarget = level.getEntities(shooter, coneBound);
                 for (Entity entity : potentialTarget) {
                     if (entity instanceof LivingEntity livingEntity && shooter.hasLineOfSight(entity)) {
@@ -66,16 +67,16 @@ public class HomingEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableHoming.get() ? 3 : 0;
+        return EnchantmentInit.enableHoming.get() ? 3 : 0;
     }
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof BowItem && EnchantmentFeature.enableHoming.get();
+        return stack.getItem() instanceof BowItem && EnchantmentInit.enableHoming.get();
     }
 
     @Override
     public boolean isDiscoverable() {
-        return EnchantmentFeature.enableHoming.get();
+        return EnchantmentInit.enableHoming.get();
     }
 }

@@ -1,15 +1,24 @@
 package io.github.strikerrocker.vt.compat;
 
+import io.github.strikerrocker.vt.VanillaTweaks;
+import io.github.strikerrocker.vt.content.items.ItemInit;
+import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+
 /**
  * Handles JustEnoughItems compatibility
  */
-//@mezz.jei.api.JeiPlugin
-public class JEIPlugin /*implements IModPlugin*/ {
-    /*TODO Update when JEI is updated
+@mezz.jei.api.JeiPlugin
+public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        if (Items.enablePad.get())
-            registration.addRecipeCatalyst(new ItemStack(Items.CRAFTING_PAD), VanillaRecipeCategoryUid.CRAFTING);
+        if (ItemInit.enablePad.get())
+            registration.addRecipeCatalyst(new ItemStack(ItemInit.CRAFTING_PAD.get()), VanillaRecipeCategoryUid.CRAFTING);
     }
 
     @Override
@@ -19,6 +28,6 @@ public class JEIPlugin /*implements IModPlugin*/ {
 
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(MODID, MODID);
-    }*/
+        return new ResourceLocation(VanillaTweaks.MOD_ID, VanillaTweaks.MOD_ID);
+    }
 }

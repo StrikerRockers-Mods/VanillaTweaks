@@ -16,7 +16,6 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 public class SlimeBucketItem extends Item {
     SlimeBucketItem() {
         super(new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1));
-        this.setRegistryName("slime");
     }
 
     @Override

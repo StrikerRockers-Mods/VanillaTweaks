@@ -1,8 +1,8 @@
 package io.github.strikerrocker.vt.content;
 
 import io.github.strikerrocker.vt.base.Module;
-import io.github.strikerrocker.vt.content.blocks.Blocks;
-import io.github.strikerrocker.vt.content.items.Items;
+import io.github.strikerrocker.vt.content.blocks.BlockInit;
+import io.github.strikerrocker.vt.content.items.ItemInit;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ContentModule extends Module {
@@ -12,7 +12,7 @@ public class ContentModule extends Module {
 
     @Override
     public void addFeatures() {
-        registerFeature("items", new Items());
-        registerFeature("blocks", new Blocks());
+        registerFeature("items", new ItemInit());
+        registerFeature("blocks", new BlockInit());
     }
 }

@@ -9,7 +9,6 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 public class SiphonEnchantment extends Enchantment {
     SiphonEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-        this.setRegistryName("siphon");
     }
 
     @Override
@@ -24,16 +23,16 @@ public class SiphonEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableSiphon.get() ? 1 : 0;
+        return EnchantmentInit.enableSiphon.get() ? 1 : 0;
     }
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof DiggerItem && EnchantmentFeature.enableSiphon.get();
+        return stack.getItem() instanceof DiggerItem && EnchantmentInit.enableSiphon.get();
     }
 
     @Override
     public boolean isDiscoverable() {
-        return EnchantmentFeature.enableSiphon.get();
+        return EnchantmentInit.enableSiphon.get();
     }
 }

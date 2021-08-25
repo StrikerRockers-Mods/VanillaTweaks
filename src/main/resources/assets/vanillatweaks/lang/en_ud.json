@@ -4,30 +4,21 @@
   "block.vanillatweaks.sugarblock": "ɹɐᵷnS ɟo ʞɔoꞁᗺ",
   "block.vanillatweaks.charcoalblock": "ꞁɐoɔɹɐɥƆ ɟo ʞɔoꞁᗺ",
   "block.vanillatweaks.pedestal": "ꞁɐʇsǝpǝԀ",
-
   "_comment": "items",
   "item.vanillatweaks.dynamite": "ǝʇᴉɯɐuʎᗡ",
   "item.vanillatweaks.friedegg": "ᵷᵷƎ pǝᴉɹℲ",
   "item.vanillatweaks.pad": "pɐԀ ᵷuᴉʇɟɐɹƆ",
-  "item.vanillatweaks.lens": "suǝꞀ ɹɐꞁnɔouᴉᗺ",
-  "item.vanillatweaks.binoculars": "sɹɐꞁnɔouᴉᗺ",
   "item.vanillatweaks.slime": "ɹǝpuᴉℲ ǝɯᴉꞁS",
-  "item.vanillatweaks.binocular_bauble": "(sǝꞁqnɐᗺ)sɹɐꞁnɔouᴉᗺ",
-
   "_comment": "advancements",
   "advancements.vt.pad": "sʞɐǝʍ⟘ ɐꞁꞁᴉuɐΛ",
   "advancements.vt.storage": "sʞɔoꞁᗺ ǝᵷɐɹoʇS",
-  "advancements.vt.zoom": "ɯooZ",
   "advancements.vt.boom": "¡¡ɯooᗺ",
   "advancements.vt.friedegg": "¡¡ᵷᵷƎ pǝᴉɹℲ",
-
   "_comment": "advancements desc",
   "advancements.vt.storage.desc": "ʞɔoꞁq ǝᵷɐɹoʇs ǝɥʇ ʇɟɐɹƆ",
   "advancements.vt.pad.desc": "pɐԀ ᵷuᴉʇɟɐɹƆ uɐ ʇɟɐɹƆ",
-  "advancements.vt.zoom.desc": "sɹɐꞁnɔouᴉᗺ uɐ ʇɟɐɹƆ",
   "advancements.vt.boom.desc": "ǝʇᴉɯɐuʎᗡ uɐ ʇɟɐɹƆ",
   "advancements.vt.friedegg.desc": "ᵷᵷƎ uɐ ʇꞁǝɯS",
-
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "ǝꞁqɯᴉN",
   "enchantment.vanillatweaks.hops": "sdoH",
@@ -36,7 +27,6 @@
   "enchantment.vanillatweaks.blazing": "ᵷuᴉzɐꞁᗺ",
   "enchantment.vanillatweaks.siphon": "uoɥdᴉS",
   "enchantment.vanillatweaks.homing": "ᵷuᴉɯoH",
-
   "enchantment.vanillatweaks.nimble.desc": "˙pǝǝds ʇuǝɯǝʌoɯ ɹnoʎ oʇ ʇᴉq ɐ sppɐ ꞁǝʌǝꞁ ɥɔɐƎ",
   "enchantment.vanillatweaks.hops.desc": "˙ʇɥᵷᴉǝɥ dɯnɾ ɹnoʎ oʇ ʇᴉq ɐ sppɐ ꞁǝʌǝꞁ ɥɔɐƎ",
   "enchantment.vanillatweaks.vigor.desc": "˙ꞁǝʌǝꞁ ɹǝd ǝsɐǝɹɔuᴉ ɥʇꞁɐǝɥ xɐɯ ʇɹɐǝɥ ǝuo ɐ ɹǝɹɐǝʍ ǝɥʇ sʇuɐɹ⅁",
@@ -44,17 +34,11 @@
   "enchantment.vanillatweaks.blazing.desc": "˙sdoɹp ʞɔoꞁq ǝɥʇ ᵷuᴉɥʇʎɹǝʌǝ sʇꞁǝɯs ʎꞁꞁɐɔᴉʇɐɯoʇnⱯ",
   "enchantment.vanillatweaks.siphon.desc": "˙ʎɹoʇuǝʌuᴉ ɹnoʎ oʇuᴉ oᵷ ʎꞁʇuɐʇsuᴉ sdoɹp ʞɔoꞁq pǝuᴉɯ ꞁꞁⱯ",
   "enchantment.vanillatweaks.homing.desc": "˙ʇǝᵷɹɐʇ ɹnoʎ ʇɐ ʇɥᵷᴉɹ ɯᴉɐ ꞁꞁᴉʍ sʍoɹɹɐ ɹno⅄",
-
-  "_comment": "keybinds",
-  "key.category.vt": "sʞɐǝʍ⟘ɐꞁꞁᴉuɐΛ",
-  "key.vt:zoom": "ʎǝʞ ɯooZ",
-
   "_comment": "misc",
   "entity.dynamite": "ǝʇᴉɯɐuʎᗡ",
   "tooltip.entity": "%s :suʍɐdS",
   "slime.chunk": "§aʞunɥƆ ǝɯᴉꞁS",
   "slime.chunk.false": "ʞunɥƆ ǝɯᴉꞁS ɐ ʇoN",
-
   "enchantment.level.11": "IX",
   "enchantment.level.12": "IIX",
   "enchantment.level.13": "IIIX",
@@ -300,7 +284,6 @@
   "enchantment.level.253": "IIIꞀƆƆ",
   "enchantment.level.254": "ΛIꞀƆƆ",
   "enchantment.level.255": "ΛꞀƆƆ",
-
   "potion.potency.4": "Λ",
   "potion.potency.5": "IΛ",
   "potion.potency.6": "IIΛ",

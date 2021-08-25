@@ -50,7 +50,7 @@ class BlazingModifier extends LootModifier {
         ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
         if (tool == null) return generatedLoot;
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(tool);
-        if (enchantments.containsKey(Enchantments.BLOCK_FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
+        if (enchantments.containsKey(Enchantments.BLOCK_FORTUNE) && enchantments.containsKey(EnchantmentInit.BLAZING.get())) {
             return generatedLoot;
         }
         ArrayList<ItemStack> ret = new ArrayList<>();

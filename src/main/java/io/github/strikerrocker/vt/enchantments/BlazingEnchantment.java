@@ -10,12 +10,11 @@ import net.minecraft.world.item.enchantment.Enchantments;
 public class BlazingEnchantment extends Enchantment {
     BlazingEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-        this.setRegistryName("blazing");
     }
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentFeature.enableBlazing.get() ? 1 : 0;
+        return EnchantmentInit.enableBlazing.get() ? 1 : 0;
     }
 
     @Override
@@ -35,12 +34,12 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof DiggerItem && EnchantmentFeature.enableBlazing.get();
+        return stack.getItem() instanceof DiggerItem && EnchantmentInit.enableBlazing.get();
     }
 
     @Override
     public boolean isAllowedOnBooks() {
-        return EnchantmentFeature.enableBlazing.get();
+        return EnchantmentInit.enableBlazing.get();
     }
 
 }

@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.content.items.dynamite;
 
-import io.github.strikerrocker.vt.content.items.Items;
+import io.github.strikerrocker.vt.content.items.ItemInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 public class DynamiteItem extends Item {
     public DynamiteItem() {
         super(new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(16));
-        this.setRegistryName("dynamite");
     }
 
     @Override
@@ -27,7 +26,7 @@ public class DynamiteItem extends Item {
             itemstack.shrink(1);
         BlockPos pos = playerIn.blockPosition();
         worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
-        playerIn.getCooldowns().addCooldown(this, Items.dynamiteCooldown.get());
+        playerIn.getCooldowns().addCooldown(this, ItemInit.dynamiteCooldown.get());
         if (!worldIn.isClientSide()) {
             DynamiteEntity dynamite = new DynamiteEntity(worldIn, playerIn);
             dynamite.setItem(itemstack);

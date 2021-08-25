@@ -21,17 +21,16 @@ public record BlockConditions(String object) implements ICondition {
 
     @Override
     public boolean test() {
-        if (object.equals("pedestal")) return Blocks.enablePedestal.get();
-        if (object.equals("storage_blocks")) return Blocks.enableStorageBlocks.get();
+        if (object.equals("pedestal")) return BlockInit.enablePedestal.get();
+        if (object.equals("storage_blocks")) return BlockInit.enableStorageBlocks.get();
         return false;
     }
 
     public static class Serializer implements IConditionSerializer<BlockConditions> {
-        static final BlockConditions.Serializer INSTANCE = new BlockConditions.Serializer();
+        public static final BlockConditions.Serializer INSTANCE = new BlockConditions.Serializer();
 
         @Override
         public void write(JsonObject json, BlockConditions value) {
-
         }
 
         @Override
