@@ -54,6 +54,8 @@ public class ItemInit extends Feature {
             new BlockItem(BlockInit.SUGAR_BLOCK.get(), new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
     private static final RegistryObject<Item> FLINT_BLOCK_ITEM = ITEMS.register("flintblock", () ->
             new BlockItem(BlockInit.FLINT_BLOCK.get(), new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+    private static final RegistryObject<Item> PEDESTAL_ITEM = ITEMS.register("pedestal", () ->
+            new BlockItem(BlockInit.PEDESTAL_BLOCK.get(), new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
     // Configs
     public static ForgeConfigSpec.IntValue dynamiteCooldown;
     public static ForgeConfigSpec.IntValue dynamiteExplosionPower;

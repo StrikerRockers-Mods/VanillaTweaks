@@ -35,6 +35,13 @@ public class EnchantmentInit extends Feature {
     public static ForgeConfigSpec.BooleanValue enableVeteran;
     public static ForgeConfigSpec.BooleanValue enableVigor;
     public static ForgeConfigSpec.BooleanValue enableHoming;
+    public static ForgeConfigSpec.BooleanValue blazingTreasureOnly;
+    public static ForgeConfigSpec.BooleanValue hopsTreasureOnly;
+    public static ForgeConfigSpec.BooleanValue nimbleTreasureOnly;
+    public static ForgeConfigSpec.BooleanValue siphonTreasureOnly;
+    public static ForgeConfigSpec.BooleanValue veteranTreasureOnly;
+    public static ForgeConfigSpec.BooleanValue vigorTreasureOnly;
+    public static ForgeConfigSpec.BooleanValue homingTreasureOnly;
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
@@ -66,5 +73,26 @@ public class EnchantmentInit extends Feature {
                 .translation("config.vanillatweaks:enableHoming")
                 .comment("Don't want to aim but love shooting arrows?")
                 .define("enableHoming", true);
+        blazingTreasureOnly = builder
+                .comment("Want blazing enchantment to only appear in loot?")
+                .define("blazingTreasureOnly", false);
+        hopsTreasureOnly = builder
+                .comment("Want Hops enchantment to only appear in loot?")
+                .define("hopsTreasureOnly", false);
+        nimbleTreasureOnly = builder
+                .comment("Want Nimble enchantment to only appear in loot?")
+                .define("nimbleTreasureOnly", false);
+        siphonTreasureOnly = builder
+                .comment("Want Siphon enchantment to only appear in loot?")
+                .define("siphonTreasureOnly", false);
+        veteranTreasureOnly = builder
+                .comment("Want Veteran enchantment to only appear in loot?")
+                .define("veteranTreasureOnly", false);
+        vigorTreasureOnly = builder
+                .comment("Want Vigor enchantment to only appear in loot?")
+                .define("vigorTreasureOnly", false);
+        homingTreasureOnly = builder
+                .comment("Want Homing enchantment to only appear in loot?")
+                .define("homingTreasureOnly", false);
     }
 }

@@ -79,4 +79,9 @@ public class VeteranEnchantment extends Enchantment {
     public boolean isDiscoverable() {
         return EnchantmentInit.enableVeteran.get();
     }
+
+    @Override
+    public boolean isTreasureOnly() {
+        return EnchantmentInit.veteranTreasureOnly.get();
+    }
 }

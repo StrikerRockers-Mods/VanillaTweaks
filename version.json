@@ -7,7 +7,7 @@
     "1.16.1-latest": "1.16.1-1.5.31",
     "1.16.2-latest": "1.16.2-1.5.32",
     "1.16.4-latest": "1.16.4-1.5.38",
-    "1.17.1-latest": "1.17.1-1.5.42"
+    "1.17.1-latest": "1.17.1-1.5.43"
   },
   "1.12.2": {
     "1.3.6": "* Arrows which hit ground and are on fire sets the ground to fire\n* TNT placed adjacent to lava and magma block ignites itself",
@@ -43,7 +43,7 @@
   },
   "1.16.1": {
     "1.16.1-1.5.29": "Port to 1.16",
-    "1.16.1-1.5.30": "Config now appears in serverconfig folder rather than the config folder. Fixed Curios Compatability.",
+    "1.16.1-1.5.30": "Config now appears in server config folder rather than the config folder. Fixed Curios Compatibility.",
     "1.16.1-1.5.31": "Added license field to mod.toml fixing crash with latest forge version"
   },
   "1.16.2": {
@@ -56,6 +56,7 @@
   "1.17.1": {
     "1.17.1-1.5.40": "Update to 1.17.1",
     "1.17.1-1.5.41": "Rewrite homing enchantment.\n Fix armor swapping not working.",
-    "1.17.1-1.5.42": "Blazing now can be applied with fortune.\n Enchantment which are disabled won't appear in loot chests or enchantment table.\n Silk Spawner now works again.\n You can now place sign on other signs when shift right clicking.\n Removed better stairs and stone tools."
+    "1.17.1-1.5.42": "Blazing now can be applied with fortune.\n Enchantment which are disabled won't appear in loot chests or enchantment table.\n Silk Spawner now works again.\n You can now place sign on other signs when shift right clicking.\n Removed better stairs and stone tools.",
+    "1.17.1-1.5.43": "Started using DeferredRegistry instead of RegistryEvents.\nAdded back JEI support.\nRemoved unused translation texts.\n Added an config to make enchantments appear only in loot."
   }
 }

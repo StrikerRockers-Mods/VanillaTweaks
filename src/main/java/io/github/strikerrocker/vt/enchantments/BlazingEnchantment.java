@@ -42,4 +42,8 @@ public class BlazingEnchantment extends Enchantment {
         return EnchantmentInit.enableBlazing.get();
     }
 
+    @Override
+    public boolean isTreasureOnly() {
+        return EnchantmentInit.blazingTreasureOnly.get();
+    }
 }

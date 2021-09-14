@@ -75,4 +75,9 @@ public class VigorEnchantment extends Enchantment {
     public boolean isDiscoverable() {
         return EnchantmentInit.enableVigor.get();
     }
+
+    @Override
+    public boolean isTreasureOnly() {
+        return EnchantmentInit.vigorTreasureOnly.get();
+    }
 }

@@ -79,4 +79,9 @@ public class HomingEnchantment extends Enchantment {
     public boolean isDiscoverable() {
         return EnchantmentInit.enableHoming.get();
     }
+
+    @Override
+    public boolean isTreasureOnly() {
+        return EnchantmentInit.homingTreasureOnly.get();
+    }
 }

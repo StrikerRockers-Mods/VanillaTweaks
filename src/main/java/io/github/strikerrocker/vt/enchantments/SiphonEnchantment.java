@@ -35,4 +35,9 @@ public class SiphonEnchantment extends Enchantment {
     public boolean isDiscoverable() {
         return EnchantmentInit.enableSiphon.get();
     }
+
+    @Override
+    public boolean isTreasureOnly() {
+        return EnchantmentInit.siphonTreasureOnly.get();
+    }
 }
