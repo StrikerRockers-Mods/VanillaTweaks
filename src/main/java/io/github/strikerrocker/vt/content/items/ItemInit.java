@@ -40,7 +40,7 @@ public class ItemInit extends Feature {
     // EntityType
     public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite", DynamiteItem::new);
     public static final RegistryObject<EntityType<DynamiteEntity>> DYNAMITE_TYPE = ENTITY_TYPES.register("dynamite", () ->
-            EntityType.Builder.<DynamiteEntity>of(DynamiteEntity::new, MobCategory.MISC).
+            EntityType.Builder.of(DynamiteEntity::new, MobCategory.MISC).
                     setTrackingRange(64).setUpdateInterval(20).build(MOD_ID + ":dynamite"));
     // Items
     public static final RegistryObject<Item> CRAFTING_PAD = ITEMS.register("pad", CraftingPadItem::new);

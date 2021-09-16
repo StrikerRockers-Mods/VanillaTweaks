@@ -57,6 +57,7 @@
     "1.17.1-1.5.40": "Update to 1.17.1",
     "1.17.1-1.5.41": "Rewrite homing enchantment.\n Fix armor swapping not working.",
     "1.17.1-1.5.42": "Blazing now can be applied with fortune.\n Enchantment which are disabled won't appear in loot chests or enchantment table.\n Silk Spawner now works again.\n You can now place sign on other signs when shift right clicking.\n Removed better stairs and stone tools.",
-    "1.17.1-1.5.43": "Started using DeferredRegistry instead of RegistryEvents.\nAdded back JEI support.\nRemoved unused translation texts.\n Added an config to make enchantments appear only in loot."
+    "1.17.1-1.5.43": "Started using DeferredRegistry instead of RegistryEvents.\nAdded back JEI support.\nRemoved unused translation texts.\n Added an config to make enchantments appear only in loot.",
+    "1.17.1-1.5.44": "Rework advancements for the mod to not appear in the menu but unlock the recipes."
   }
 }

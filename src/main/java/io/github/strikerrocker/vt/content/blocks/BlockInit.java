@@ -40,11 +40,10 @@ public class BlockInit extends Feature {
             () -> new Block(Properties.of(Material.SAND, MaterialColor.TERRACOTTA_WHITE).strength(0.5f).sound(SoundType.SAND)));
     public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flintblock", () ->
             new Block(Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)));
-    // BlockEntityType and MenuType
+    public static final RegistryObject<MenuType<PedestalContainer>> PEDESTAL_MENU_TYPE = MENU_TYPE.register("pedestal",
+            () -> IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))));    // BlockEntityType and MenuType
     public static final RegistryObject<BlockEntityType<PedestalBlockEntity>> PEDESTAL_TYPE = BLOCK_ENTITY_TYPE.register("pedestal",
             () -> BlockEntityType.Builder.of(PedestalBlockEntity::new, PEDESTAL_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<PedestalContainer>> PEDESTAL_MENU_TYPE = MENU_TYPE.register("pedestal",
-            () -> IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))));
     // Configs
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
@@ -89,4 +88,6 @@ public class BlockInit extends Feature {
             event.registerBlockEntityRenderer(PEDESTAL_TYPE.get(), PedestalRenderer::new);
         }
     }
+
+
 }

@@ -4,24 +4,11 @@
   "block.vanillatweaks.sugarblock": "Bloque de Azúcar",
   "block.vanillatweaks.charcoalblock": "Bloque de Carbón",
   "block.vanillatweaks.pedestal": "Pedestal",
-
   "_comment": "items",
   "item.vanillatweaks.dynamite": "Dinamita",
   "item.vanillatweaks.friedegg": "Huevo Frito",
   "item.vanillatweaks.pad": "Almohadilla Artesanía",
   "item.vanillatweaks.slime": "Slime Finder",
-  "_comment": "advancements",
-  "advancements.vt.pad": "Vanilla Tweaks",
-  "advancements.vt.storage": "Storage Blocks",
-  "advancements.vt.boom": "Boom!!",
-  "advancements.vt.friedegg": "Fried Egg!!",
-
-  "_comment": "advancements desc",
-  "advancements.vt.storage.desc": "Craft the storage block",
-  "advancements.vt.pad.desc": "Craft an Crafting Pad",
-  "advancements.vt.boom.desc": "Craft an Dynamite",
-  "advancements.vt.friedegg.desc": "Smelt an Egg",
-
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "Ágil",
   "enchantment.vanillatweaks.hops": "Lúpulo",
@@ -30,7 +17,6 @@
   "enchantment.vanillatweaks.blazing": "Flameante",
   "enchantment.vanillatweaks.siphon": "Sifón",
   "enchantment.vanillatweaks.homing": "Buscador de Blancos",
-
   "_comment": "misc",
   "entity.dynamite": "Dynamite",
   "tooltip.entity": "Spawns: %s"

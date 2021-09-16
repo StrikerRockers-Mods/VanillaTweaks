@@ -4,24 +4,11 @@
   "block.vanillatweaks.sugarblock": "Block of Sugar",
   "block.vanillatweaks.charcoalblock": "Block of Charcoal",
   "block.vanillatweaks.pedestal": "Pedestal",
-
   "_comment": "items",
   "item.vanillatweaks.dynamite": "Dynamite",
   "item.vanillatweaks.friedegg": "Fried Egg",
   "item.vanillatweaks.pad": "Crafting Pad",
   "item.vanillatweaks.slime": "Slime Finder",
-
-  "_comment": "advancements",
-  "advancements.vt.pad": "Vanilla Tweaks",
-  "advancements.vt.storage": "Storage Blocks",
-  "advancements.vt.boom": "Boom!!",
-  "advancements.vt.friedegg": "Fried Egg!!",
-
-  "_comment": "advancements desc",
-  "advancements.vt.storage.desc": "Craft the storage block",
-  "advancements.vt.pad.desc": "Craft an Crafting Pad",
-  "advancements.vt.boom.desc": "Craft an Dynamite",
-  "advancements.vt.friedegg.desc": "Smelt an Egg",
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "Nimble",
   "enchantment.vanillatweaks.hops": "Hops",
@@ -290,7 +277,6 @@
   "enchantment.level.253": "CCLIII",
   "enchantment.level.254": "CCLIV",
   "enchantment.level.255": "CCLV",
-
   "potion.potency.4": "V",
   "potion.potency.5": "VI",
   "potion.potency.6": "VII",

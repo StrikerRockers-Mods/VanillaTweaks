@@ -4,25 +4,11 @@
   "block.vanillatweaks.sugarblock": "砂糖ブロック",
   "block.vanillatweaks.charcoalblock": "木炭ブロック",
   "block.vanillatweaks.pedestal": "台座",
-
   "_comment": "items",
   "item.vanillatweaks.dynamite": "ダイナマイト",
   "item.vanillatweaks.friedegg": "フライドエッグ",
   "item.vanillatweaks.pad": "作業パッド",
   "item.vanillatweaks.slime": "Slime Finder",
-
-  "_comment": "advancements",
-  "advancements.vt.pad": "Vanilla Tweaks",
-  "advancements.vt.storage": "Storage Blocks",
-  "advancements.vt.boom": "Boom!!",
-  "advancements.vt.friedegg": "Fried Egg!!",
-
-  "_comment": "advancements desc",
-  "advancements.vt.storage.desc": "Craft the storage block",
-  "advancements.vt.pad.desc": "Craft an Crafting Pad",
-  "advancements.vt.boom.desc": "Craft an Dynamite",
-  "advancements.vt.friedegg.desc": "Smelt an Egg",
-
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "素早い",
   "enchantment.vanillatweaks.hops": "ホップ",
@@ -31,7 +17,6 @@
   "enchantment.vanillatweaks.blazing": "炎々",
   "enchantment.vanillatweaks.siphon": "サイフォン",
   "enchantment.vanillatweaks.homing": "ホーミング",
-
   "_comment": "misc",
   "entity.dynamite": "Dynamite",
   "tooltip.entity": "Spawns: %s"

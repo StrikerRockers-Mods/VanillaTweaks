@@ -4,25 +4,11 @@
   "block.vanillatweaks.sugarblock": "Cukura Bloks",
   "block.vanillatweaks.charcoalblock": "Kokogles Bloks",
   "block.vanillatweaks.pedestal": "Pedestālis",
-
   "_comment": "items",
   "item.vanillatweaks.dynamite": "Dinamīts",
   "item.vanillatweaks.friedegg": "Cepta Ola",
   "item.vanillatweaks.pad": "Darba Paliknis",
   "item.vanillatweaks.slime": "Gļotu Meklētājs",
-
-  "_comment": "advancements",
-  "advancements.vt.storage": "Glabāšanas Bloki",
-  "advancements.vt.friedegg": "Cepta Ola!!",
-  "advancements.vt.pad": "Vanilla Tweaks",
-  "advancements.vt.boom": "Boom!!",
-
-  "_comment": "advancements desc",
-  "advancements.vt.storage.desc": "Izveido glabāšanas bloku",
-  "advancements.vt.pad.desc": "Izveido Darba Palikni",
-  "advancements.vt.boom.desc": "Izveido Dinamītu",
-  "advancements.vt.friedegg.desc": "Izcep Olu",
-
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "Veikls",
   "enchantment.vanillatweaks.hops": "Lecošs",
@@ -31,7 +17,6 @@
   "enchantment.vanillatweaks.blazing": "Liesmojošs",
   "enchantment.vanillatweaks.siphon": "Sifons",
   "enchantment.vanillatweaks.homing": "Sekojošs",
-
   "_comment": "misc",
   "entity.dynamite": "Dinamīts",
   "tooltip.entity": "Rodas: %s"

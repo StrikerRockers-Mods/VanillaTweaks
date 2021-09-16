@@ -4,25 +4,11 @@
   "block.vanillatweaks.sugarblock": "Blok van Suiker",
   "block.vanillatweaks.charcoalblock": "Blok van Houtskool",
   "block.vanillatweaks.pedestal": "Voetstuk",
-
   "_comment": "items",
   "item.vanillatweaks.dynamite": "Dynamiet",
   "item.vanillatweaks.friedegg": "Gebakken Ei",
   "item.vanillatweaks.pad": "Bouw Onderlegger",
   "item.vanillatweaks.slime": "Slijm Vinder",
-
-  "_comment": "advancements",
-  "advancements.vt.pad": "Vanille Aanpassingen",
-  "advancements.vt.storage": "Opslag Blokken",
-  "advancements.vt.boom": "Boem!!",
-  "advancements.vt.friedegg": "Gebakken Eieren!!",
-
-  "_comment": "advancements desc",
-  "advancements.vt.storage.desc": "Maak het Opslag Blok",
-  "advancements.vt.pad.desc": "Maak een Bouw Onderlegger",
-  "advancements.vt.boom.desc": "Maak een Dynamiet",
-  "advancements.vt.friedegg.desc": "Bak een Ei",
-
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "Wendbaar",
   "enchantment.vanillatweaks.hops": "Huppelen",
@@ -31,7 +17,6 @@
   "enchantment.vanillatweaks.blazing": "Vlammend",
   "enchantment.vanillatweaks.siphon": "Hevel",
   "enchantment.vanillatweaks.homing": "Doelzoekend",
-
   "_comment": "misc",
   "entity.dynamite": "Dynamiet",
   "tooltip.entity": "Brengt voort: %s"

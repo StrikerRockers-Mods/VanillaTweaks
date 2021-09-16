@@ -4,25 +4,11 @@
   "block.vanillatweaks.sugarblock": "Сахарный блок",
   "block.vanillatweaks.charcoalblock": "Блок древесного угля",
   "block.vanillatweaks.pedestal": "Пьедестал",
-
   "_comment": "items",
   "item.vanillatweaks.dynamite": "Динамит",
   "item.vanillatweaks.friedegg": "Жаренное яйцо",
   "item.vanillatweaks.pad": "Планшетный верстак",
   "item.vanillatweaks.slime": "Слизневый поисковик",
-
-  "_comment": "advancements",
-  "advancements.vt.pad": "Vanilla Tweaks",
-  "advancements.vt.storage": "Блоки для хранения",
-  "advancements.vt.boom": "Бум!!",
-  "advancements.vt.friedegg": "Яичница!!",
-
-  "_comment": "advancements desc",
-  "advancements.vt.storage.desc": "Создайте блоки для хранения",
-  "advancements.vt.pad.desc": "Создайте Планшетный верстак",
-  "advancements.vt.boom.desc": "Создайте Динамит",
-  "advancements.vt.friedegg.desc": "Переплавьте Яйцо",
-
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "Проворность",
   "enchantment.vanillatweaks.hops": "Прыгучесть",
@@ -31,7 +17,6 @@
   "enchantment.vanillatweaks.blazing": "Пламя",
   "enchantment.vanillatweaks.siphon": "Предметный сифон",
   "enchantment.vanillatweaks.homing": "Самонаведение",
-
   "enchantment.vanillatweaks.nimble.desc": "Каждый уровень немного увеличивает скорость передвижения.",
   "enchantment.vanillatweaks.hops.desc": "Каждый уровень немного увеличивает высоту прыжка.",
   "enchantment.vanillatweaks.vigor.desc": "Увеличивает максимальное количество сердец на одно за уровень.",
@@ -39,7 +24,6 @@
   "enchantment.vanillatweaks.blazing.desc": "Автоматически переплавляет добываемые блоки.",
   "enchantment.vanillatweaks.siphon.desc": "Добытые блоки мгновенно попадают в ваш инвентарь.",
   "enchantment.vanillatweaks.homing.desc": "Ваши стрелы будут лететь прямо в цель.",
-
   "_comment": "misc",
   "entity.dynamite": "Динамит",
   "tooltip.entity": "Сущность: %s",

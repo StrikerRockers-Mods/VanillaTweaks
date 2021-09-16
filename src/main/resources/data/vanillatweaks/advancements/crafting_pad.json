@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "vanillatweaks:content/crafting_pad"
+    ]
+  },
+  "criteria": {
+    "has_pad": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:crafting_table"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "vanillatweaks:content/crafting_pad"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_pad",
+      "has_the_recipe"
+    ]
+  ]
+}

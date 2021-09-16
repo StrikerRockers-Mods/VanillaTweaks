@@ -1,0 +1,59 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "vanillatweaks:content/charcoal",
+      "vanillatweaks:content/charcoal_block",
+      "vanillatweaks:content/flint",
+      "vanillatweaks:content/flint_block",
+      "vanillatweaks:content/sugar",
+      "vanillatweaks:content/sugar_block"
+    ]
+  },
+  "criteria": {
+    "has_sugar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:sugar"
+          }
+        ]
+      }
+    },
+    "has_charcoal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:charcoal"
+          }
+        ]
+      }
+    },
+    "has_flint": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:flint"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "vanillatweaks:content/charcoal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sugar",
+      "has_charcoal",
+      "has_flint",
+      "has_the_recipe"
+    ]
+  ]
+}

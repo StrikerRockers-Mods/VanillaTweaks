@@ -4,25 +4,11 @@
   "block.vanillatweaks.sugarblock": "Блок от зажърr",
   "block.vanillatweaks.charcoalblock": "Блок от въглен",
   "block.vanillatweaks.pedestal": "Пиедестал",
-
   "_comment": "items",
   "item.vanillatweaks.dynamite": "Динамит",
   "item.vanillatweaks.friedegg": "Пържено яйце",
   "item.vanillatweaks.pad": "Разработващ пад",
   "item.vanillatweaks.slime": "Шламотърсач",
-
-  "_comment": "advancements",
-  "advancements.vt.pad": "Vanilla Tweaks",
-  "advancements.vt.storage": "Блокове за съхранение",
-  "advancements.vt.boom": "Боом!!",
-  "advancements.vt.friedegg": "Пържено яйце!!",
-
-  "_comment": "advancements desc",
-  "advancements.vt.storage.desc": "Разработи блоковете за съхранение",
-  "advancements.vt.pad.desc": "Разрабори един Разработващ пад",
-  "advancements.vt.boom.desc": "Разрабори един Динамите",
-  "advancements.vt.friedegg.desc": "Изпечи Яйце",
-
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "Nimble",
   "enchantment.vanillatweaks.hops": "Hops",
@@ -31,7 +17,6 @@
   "enchantment.vanillatweaks.blazing": "Blazing",
   "enchantment.vanillatweaks.siphon": "Siphon",
   "enchantment.vanillatweaks.homing": "Homing",
-
   "enchantment.vanillatweaks.nimble.desc": "Всяко ниво добавя малко към твоята бързуна на ходене.",
   "enchantment.vanillatweaks.hops.desc": "Всяко ниво добавя малко към височината на скачане.",
   "enchantment.vanillatweaks.vigor.desc": "Добавя на юзера по още едно сърце сърце на пълния живот за всяко ниво.",
@@ -39,7 +24,6 @@
   "enchantment.vanillatweaks.blazing.desc": "Автоматично топи всичко което блокчето дропва.",
   "enchantment.vanillatweaks.siphon.desc": "Всички минирани блокчета веднага отиват в твоп инвентар.",
   "enchantment.vanillatweaks.homing.desc": "Твойте стрели ще олучат точно твоята цел.",
-
   "_comment": "misc",
   "entity.dynamite": "Динамит",
   "tooltip.entity": "Spawns: %s"

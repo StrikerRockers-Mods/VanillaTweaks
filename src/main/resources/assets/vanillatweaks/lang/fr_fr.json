@@ -4,25 +4,11 @@
   "block.vanillatweaks.sugarblock": "Bloc de Sucre",
   "block.vanillatweaks.charcoalblock": "Bloc de Charbon",
   "block.vanillatweaks.pedestal": "Pedestal",
-
   "_comment": "blocks",
   "item.vanillatweaks.dynamite": "Dynamiter",
   "item.vanillatweaks.friedegg": "Oeuf Frit",
   "item.vanillatweaks.pad": "Pad D'artisanat",
   "item.vanillatweaks.slime": "Slime Finder",
-
-  "_comment": "advancement",
-  "advancements.vt.pad": "Vanilla Tweaks",
-  "advancements.vt.storage": "Storage Blocks",
-  "advancements.vt.boom": "Boom!!",
-  "advancements.vt.friedegg": "Fried Egg!!",
-
-  "_comment": "advancement desc",
-  "advancements.vt.storage.desc": "Craft the storage block",
-  "advancements.vt.pad.desc": "Craft an Crafting Pad",
-  "advancements.vt.boom.desc": "Craft an Dynamite",
-  "advancements.vt.friedegg.desc": "Smelt an Egg",
-
   "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "Agile",
   "enchantment.vanillatweaks.hops": "Houblon",
@@ -31,7 +17,6 @@
   "enchantment.vanillatweaks.blazing": "Brûlant",
   "enchantment.vanillatweaks.siphon": "Siphon",
   "enchantment.vanillatweaks.homing": "La Prise D'origine",
-
   "_comment": "misc",
   "entity.dynamite": "Dynamite",
   "tooltip.entity": "Spawns: %s"
