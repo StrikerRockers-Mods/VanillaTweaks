@@ -44,7 +44,7 @@ class BlazingModifier extends LootModifier {
             return generatedLoot;
         }
         ArrayList<ItemStack> ret = new ArrayList<>();
-        generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
+        generatedLoot.forEach(stack -> ret.add(smelt(stack, context)));
         return ret;
     }
 
