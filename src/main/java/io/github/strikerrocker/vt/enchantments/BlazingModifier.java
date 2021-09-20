@@ -1,9 +1,6 @@
 package io.github.strikerrocker.vt.enchantments;
 
 import com.google.gson.JsonObject;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
@@ -19,7 +16,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 class BlazingModifier extends LootModifier {
     public BlazingModifier(ILootCondition[] conditionsIn) {
@@ -39,10 +35,6 @@ class BlazingModifier extends LootModifier {
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
         ItemStack tool = context.getParamOrNull(LootParameters.TOOL);
         if (tool == null) return generatedLoot;
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(tool);
-        if (enchantments.containsKey(Enchantments.BLOCK_FORTUNE) && enchantments.containsKey(EnchantmentFeature.enchantments.get("blazing").getA())) {
-            return generatedLoot;
-        }
         ArrayList<ItemStack> ret = new ArrayList<>();
         generatedLoot.forEach(stack -> ret.add(smelt(stack, context)));
         return ret;
