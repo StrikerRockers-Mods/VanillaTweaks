@@ -18,7 +18,7 @@ public class BatLeather extends Feature {
     public void setupConfig(ForgeConfigSpec.Builder builder) {
         batLeatherDropChance = builder
                 .translation("config.vanillatweaks:batLeatherDropChance")
-                .comment()
+                .comment("Do you want bat to drop leather when killed by a player?")
                 .defineInRange("batLeatherDropChance", 1D, 0, 10);
     }
 
