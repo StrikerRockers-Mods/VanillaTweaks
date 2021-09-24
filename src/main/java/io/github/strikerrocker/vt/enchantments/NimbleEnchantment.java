@@ -30,7 +30,7 @@ public class NimbleEnchantment extends Enchantment {
             LivingEntity entity = event.getEntityLiving();
             int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(this, entity.getItemBySlot(EquipmentSlotType.FEET));
             ModifiableAttributeInstance speedAttribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
-            AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", (float) enchantmentLevel * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
+            AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", enchantmentLevel * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
             if (enchantmentLevel > 0) {
                 if (speedAttribute.getModifier(nimbleUUID) == null) {
                     speedAttribute.addPermanentModifier(speedModifier);
