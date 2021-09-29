@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.enchantments;
 
+import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.misc.ConeShape;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -11,49 +12,78 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class HomingEnchantment extends Enchantment {
-    private final AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
 
     HomingEnchantment() {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentType.BOW, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
         this.setRegistryName("homing");
     }
 
+    /**
+     * Returns the target entity for homing enchantment
+     */
+    @Nullable
+    private static LivingEntity getTarget(World world, LivingEntity shooter, int homingLevel) {
+        LivingEntity target = null;
+        AxisAlignedBB coneBound = ConeShape.getConeBoundApprox(shooter, homingLevel);
+        List<Entity> livingEntities = world.getEntities((EntityType<Entity>) null,
+                coneBound,
+                (entity -> !entity.getUUID().equals(shooter.getUUID())));
+        VanillaTweaks.LOGGER.debug(coneBound);
+        for (Entity entity : livingEntities) {
+            if (entity instanceof LivingEntity && shooter.canSee(entity)) {
+                target = (LivingEntity) entity;
+            }
+        }
+        VanillaTweaks.LOGGER.debug(target);
+        return target;
+    }
+
+    /**
+     * Retargets the arrow towards the targeted entity
+     */
     @SubscribeEvent
     public void entityJoin(EntityJoinWorldEvent event) {
         if (!event.getWorld().isClientSide() && EnchantmentFeature.enableHoming.get() && event.getEntity() instanceof AbstractArrowEntity) {
-            onArrowJoinWorld((AbstractArrowEntity) event.getEntity(), (ServerWorld) event.getWorld());
+            AbstractArrowEntity arrow = (AbstractArrowEntity) event.getEntity();
+            LivingEntity shooter = (LivingEntity) arrow.getOwner();
+            if (shooter != null && EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem()) > 0) {
+                int homingLevel = EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem());
+                LivingEntity target = getTarget(event.getWorld(), shooter, homingLevel);
+                if (target != null) {
+                    double x = target.getX() - arrow.getX();
+                    double y = target.getEyeY() - arrow.getY();
+                    double z = target.getZ() - arrow.getZ();
+                    arrow.setNoGravity(true);
+                    arrow.shoot(x, y, z, (float) arrow.getDeltaMovement().length(), 0);
+                }
+            }
         }
     }
 
-    private void onArrowJoinWorld(AbstractArrowEntity arrow, ServerWorld world) {
-        LivingEntity shooter = (LivingEntity) arrow.getOwner();
-        if (shooter != null && EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem()) > 0) {
-            int homingLevel = EnchantmentHelper.getItemEnchantmentLevel(this, shooter.getMainHandItem());
-            LivingEntity target = null;
-            AxisAlignedBB coneBound = ConeShape.getConeBounds(shooter, homingLevel);
-            List<Entity> livingEntities = world.getEntities((EntityType<Entity>) null,
-                    coneBound,
-                    (entity -> !entity.getUUID().equals(shooter.getUUID())));
-            System.out.println(coneBound);
-            for (Entity entity : livingEntities) {
-                if (entity instanceof LivingEntity && shooter.canSee(entity)) {
-                    target = (LivingEntity) entity;
-                }
-            }
-            System.out.println(target);
-            if (target != null) {
-                double x = target.getX() - arrow.getX();
-                double y = target.getEyeY() - arrow.getY();
-                double z = target.getZ() - arrow.getZ();
-                arrow.shoot(x, y, z, (float) arrow.getDeltaMovement().length(), 0);
+    /**
+     * Adds the glowing effect to the targeting entity when using the bow
+     */
+    @SubscribeEvent
+    public void useItem(LivingEntityUseItemEvent event) {
+        if (!event.getEntityLiving().getCommandSenderWorld().isClientSide()) {
+            LivingEntity player = event.getEntityLiving();
+            int homingLvl = EnchantmentHelper.getItemEnchantmentLevel(this, event.getItem());
+            if (homingLvl > 0) {
+                LivingEntity target = getTarget(event.getEntityLiving().getCommandSenderWorld(), player, homingLvl);
+                if (target != null)
+                    target.addEffect(new EffectInstance(Effects.GLOWING, 4, 1, true, false, false));
             }
         }
     }

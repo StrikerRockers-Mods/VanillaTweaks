@@ -13,7 +13,7 @@ public class ConeShape {
         return Math.min(Math.min(Math.min(Math.min(a, b), c), d), e);
     }
 
-    public static AxisAlignedBB getConeBounds(LivingEntity livingEntity, int enchantmentLvl) {
+    public static AxisAlignedBB getConeBoundApprox(LivingEntity livingEntity, int enchantmentLvl) {
         double length = Math.pow(2, (double) enchantmentLvl - 1) * 16;// cone length
         float radius = 2;
         float hyp = (float) Math.sqrt(radius * radius + length * length);
