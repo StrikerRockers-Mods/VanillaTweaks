@@ -49,7 +49,7 @@ public class Utils {
         return new Vec3(xx, yy, zz);
     }
 
-    public static AABB getConeBounds(LivingEntity livingEntity, int enchantmentLvl) {
+    public static AABB getConeBoundApprox(LivingEntity livingEntity, int enchantmentLvl) {
         double length = Math.pow(2, (double) enchantmentLvl - 1) * 16;// cone length
         float radius = 2;
         float hyp = (float) Math.sqrt(radius * radius + length * length);

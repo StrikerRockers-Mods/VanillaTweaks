@@ -1,7 +1,9 @@
 package io.github.strikerrocker.vt.enchantments;
 
+import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.misc.Utils;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,11 +13,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 @Mod.EventBusSubscriber
@@ -26,31 +31,56 @@ public class HomingEnchantment extends Enchantment {
     }
 
     /**
-     * Handles the logic of Homing enchantment
-     *
-     * @param event EntityJoinWorldEvent
+     * Returns the target entity for homing enchantment
+     */
+    @Nullable
+    private static LivingEntity getTarget(Level level, LivingEntity shooter, int homingLevel) {
+        LivingEntity target = null;
+        AABB coneBound = Utils.getConeBoundApprox(shooter, homingLevel);
+        List<Entity> potentialTarget = level.getEntities(shooter, coneBound);
+        VanillaTweaks.LOGGER.debug(coneBound);
+        for (Entity entity : potentialTarget) {
+            if (entity instanceof LivingEntity livingEntity && shooter.hasLineOfSight(entity)) {
+                target = livingEntity;
+            }
+        }
+        VanillaTweaks.LOGGER.debug(target);
+        return target;
+    }
+
+    /**
+     * Retargets the arrow towards the targeted entity
      */
     @SubscribeEvent
     public static void entityJoin(EntityJoinWorldEvent event) {
         if (!event.getWorld().isClientSide() && EnchantmentInit.enableHoming.get() &&
                 event.getEntity() instanceof AbstractArrow arrow && arrow.getOwner() instanceof LivingEntity shooter) {
-            ServerLevel level = (ServerLevel) event.getWorld();
             int lvl = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.HOMING.get(), shooter.getUseItem());
             if (lvl > 0) {
-                LivingEntity target = null;
-                AABB coneBound = Utils.getConeBounds(shooter, lvl);
-                List<Entity> potentialTarget = level.getEntities(shooter, coneBound);
-                for (Entity entity : potentialTarget) {
-                    if (entity instanceof LivingEntity livingEntity && shooter.hasLineOfSight(entity)) {
-                        target = livingEntity;
-                    }
-                }
+                LivingEntity target = getTarget(event.getWorld(), shooter, lvl);
                 if (target != null) {
                     double x = target.getX() - arrow.getX();
                     double y = target.getEyeY() - arrow.getY();
                     double z = target.getZ() - arrow.getZ();
+                    arrow.setNoGravity(true);
                     arrow.shoot(x, y, z, (float) arrow.getDeltaMovement().length(), 0);
                 }
+            }
+        }
+    }
+
+    /**
+     * Adds the glowing effect to the targeting entity when using the bow
+     */
+    @SubscribeEvent
+    public static void useItem(LivingEntityUseItemEvent event) {
+        if (!event.getEntityLiving().getCommandSenderWorld().isClientSide()) {
+            LivingEntity player = event.getEntityLiving();
+            int homingLvl = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.HOMING.get(), event.getItem());
+            if (homingLvl > 0) {
+                LivingEntity target = getTarget(event.getEntityLiving().getCommandSenderWorld(), player, homingLvl);
+                if (target != null)
+                    target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 4, 1, true, false, false));
             }
         }
     }
