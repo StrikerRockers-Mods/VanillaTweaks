@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
@@ -37,13 +38,14 @@ public class HomingEnchantment extends Enchantment {
     private static LivingEntity getTarget(Level level, LivingEntity shooter, int homingLevel) {
         LivingEntity target = null;
         AABB coneBound = Utils.getConeBoundApprox(shooter, homingLevel);
-        List<Entity> potentialTarget = level.getEntities(shooter, coneBound);
-        VanillaTweaks.LOGGER.debug(coneBound);
-        for (Entity entity : potentialTarget) {
+        List<Entity> potentialTargets = level.getEntities(shooter, coneBound);
+        for (Entity entity : potentialTargets) {
             if (entity instanceof LivingEntity livingEntity && shooter.hasLineOfSight(entity)) {
+                if (livingEntity instanceof OwnableEntity tamed && tamed.getOwnerUUID() == shooter.getUUID()) continue;
                 target = livingEntity;
             }
         }
+        VanillaTweaks.LOGGER.debug(coneBound);
         VanillaTweaks.LOGGER.debug(target);
         return target;
     }

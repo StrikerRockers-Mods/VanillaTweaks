@@ -1,22 +1,7 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/vanillatweaks",
   "promos": {
-    "1.16.1-latest": "1.16.1-1.5.31",
-    "1.16.2-latest": "1.16.2-1.5.32",
-    "1.16.4-latest": "1.16.4-1.5.38",
-    "1.17.1-latest": "1.17.1-1.5.46"
-  },
-  "1.16.1": {
-    "1.16.1-1.5.29": "Port to 1.16",
-    "1.16.1-1.5.30": "Config now appears in server config folder rather than the config folder. Fixed Curios Compatibility.",
-    "1.16.1-1.5.31": "Added license field to mod.toml fixing crash with latest forge version"
-  },
-  "1.16.2": {
-    "1.16.2-1.5.32": "Fixed pedestal GUI title appearing not correctly.\nRemoved creeper tnt as it was not balanced.\nRevert the bug which would cause all plant items to despawn in a minute. \nDisabled fortune and blazing being allowed together."
-  },
-  "1.16.4": {
-    "1.16.4-1.5.36": "Added Beehive tooltips and easier recipe for repeater and trapped chest.",
-    "1.16.4-1.5.39": "Added configuration option for dynamite cool down and explosion power"
+    "1.17.1-latest": "1.17.1-1.5.47"
   },
   "1.17.1": {
     "1.17.1-1.5.40": "Update to 1.17.1",
@@ -25,6 +10,7 @@
     "1.17.1-1.5.43": "Started using DeferredRegistry instead of RegistryEvents.\nAdded back JEI support.\nRemoved unused translation texts.\n Added an config to make enchantments appear only in loot.",
     "1.17.1-1.5.44": "Rework advancements for the mod to not appear in the menu but unlock the recipes.",
     "1.17.1-1.5.45": "When blazing and fortune are both present, fortune effect happens and then blazing effect.",
-    "1.17.1-1.5.46": "Disable gravity for homing arrow when it only targets an entity.\nAdd glowing effect to the entity homing bow is going to target."
+    "1.17.1-1.5.46": "Disable gravity for homing arrow when it only targets an entity.\nAdd glowing effect to the entity homing bow is going to target.",
+    "1.17.1-1.5.47": "Homing no longer targets pets.\nFix not being able to dye signs due to sign editing feature."
   }
 }
