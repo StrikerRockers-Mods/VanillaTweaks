@@ -1,13 +1,10 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/vanillatweaks",
   "promos": {
-    "1.12.2-latest": "1.12.2-1.5.3",
-    "1.14.4-latest": "1.14.4-1.5.11",
-    "1.15.2-latest": "1.15.2-1.5.26",
     "1.16.1-latest": "1.16.1-1.5.31",
     "1.16.2-latest": "1.16.2-1.5.32",
     "1.16.4-latest": "1.16.4-1.5.38",
-    "1.16.5-latest": "1.16.5-1.5.43"
+    "1.16.5-latest": "1.16.5-1.5.45"
   },
   "1.16.1": {
     "1.16.1-1.5.29": "Port to 1.16",
@@ -25,6 +22,7 @@
     "1.16.5-1.5.40": "Rewrote homing enchantment logic to be less resource intensive.\nTnt ignition works even if tnt is placed before magma block.",
     "1.16.5-1.5.42": "When blazing and fortune are both present, fortune effect happens and then blazing effect.",
     "1.16.5-1.5.43": "Fixed the issue where hops cancels/reduces the momentum of the player when jumping.",
-    "1.16.5-1.5.44": "Disable gravity for homing arrow when it only targets an entity.\nAdd glowing effect to the entity homing bow is going to target."
+    "1.16.5-1.5.44": "Disable gravity for homing arrow when it only targets an entity.\nAdd glowing effect to the entity homing bow is going to target.",
+    "1.16.5-1.5.45": "Homing no longer targets pets.\nFix not being able to dye signs due to sign editing feature."
   }
 }

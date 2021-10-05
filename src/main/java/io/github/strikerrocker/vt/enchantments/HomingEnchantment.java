@@ -8,6 +8,7 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
@@ -40,12 +41,14 @@ public class HomingEnchantment extends Enchantment {
         List<Entity> livingEntities = world.getEntities((EntityType<Entity>) null,
                 coneBound,
                 (entity -> !entity.getUUID().equals(shooter.getUUID())));
-        VanillaTweaks.LOGGER.debug(coneBound);
         for (Entity entity : livingEntities) {
             if (entity instanceof LivingEntity && shooter.canSee(entity)) {
+                if (entity instanceof TameableEntity && ((TameableEntity) entity).getOwnerUUID() == shooter.getUUID())
+                    continue;
                 target = (LivingEntity) entity;
             }
         }
+        VanillaTweaks.LOGGER.debug(coneBound);
         VanillaTweaks.LOGGER.debug(target);
         return target;
     }

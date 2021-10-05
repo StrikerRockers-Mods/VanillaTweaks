@@ -17,7 +17,7 @@ public class SignEditing extends Feature {
         PlayerEntity player = event.getPlayer();
         boolean success = false;
         TileEntity te = event.getWorld().getBlockEntity(event.getPos());
-        if (te instanceof SignTileEntity && enableSignEditing.get() && !event.getWorld().isClientSide() && !player.isCrouching()) {
+        if (te instanceof SignTileEntity && enableSignEditing.get() && !event.getWorld().isClientSide() && !player.isCrouching() && player.getItemInHand(event.getHand()).isEmpty()) {
             SignTileEntity sign = (SignTileEntity) te;
             player.openTextEdit(sign);
             success = true;
