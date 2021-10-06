@@ -65,4 +65,9 @@ public class NimbleEnchantment extends Enchantment {
     public boolean isAllowedOnBooks() {
         return EnchantmentFeature.enableNimble.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentFeature.enableNimble.get();
+    }
 }

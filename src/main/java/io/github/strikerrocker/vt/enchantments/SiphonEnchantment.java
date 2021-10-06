@@ -37,4 +37,8 @@ public class SiphonEnchantment extends Enchantment {
         return EnchantmentFeature.enableSiphon.get();
     }
 
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentFeature.enableSiphon.get();
+    }
 }
