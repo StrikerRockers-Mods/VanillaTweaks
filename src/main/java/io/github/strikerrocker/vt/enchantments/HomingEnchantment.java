@@ -115,4 +115,9 @@ public class HomingEnchantment extends Enchantment {
     public boolean isAllowedOnBooks() {
         return EnchantmentFeature.enableHoming.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentFeature.enableHoming.get();
+    }
 }

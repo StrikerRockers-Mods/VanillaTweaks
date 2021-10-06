@@ -66,4 +66,9 @@ public class VigorEnchantment extends Enchantment {
     public boolean isAllowedOnBooks() {
         return EnchantmentFeature.enableVigor.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentFeature.enableVigor.get();
+    }
 }

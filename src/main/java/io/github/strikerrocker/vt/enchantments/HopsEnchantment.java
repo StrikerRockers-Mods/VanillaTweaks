@@ -65,4 +65,9 @@ public class HopsEnchantment extends Enchantment {
     public boolean isAllowedOnBooks() {
         return EnchantmentFeature.enableHops.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentFeature.enableHops.get();
+    }
 }

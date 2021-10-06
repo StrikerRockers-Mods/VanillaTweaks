@@ -43,4 +43,8 @@ public class BlazingEnchantment extends Enchantment {
         return EnchantmentFeature.enableBlazing.get();
     }
 
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentFeature.enableBlazing.get();
+    }
 }
