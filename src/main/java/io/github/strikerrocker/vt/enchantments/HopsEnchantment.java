@@ -71,4 +71,9 @@ public class HopsEnchantment extends Enchantment {
     public boolean isTreasureOnly() {
         return EnchantmentInit.hopsTreasureOnly.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentInit.enableHops.get();
+    }
 }

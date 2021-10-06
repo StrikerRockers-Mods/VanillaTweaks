@@ -80,4 +80,9 @@ public class VigorEnchantment extends Enchantment {
     public boolean isTreasureOnly() {
         return EnchantmentInit.vigorTreasureOnly.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentInit.enableVigor.get();
+    }
 }
