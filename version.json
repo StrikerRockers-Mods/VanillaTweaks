@@ -3,8 +3,8 @@
   "promos": {
     "1.16.1-latest": "1.16.1-1.5.31",
     "1.16.2-latest": "1.16.2-1.5.32",
-    "1.16.4-latest": "1.16.4-1.5.38",
-    "1.16.5-latest": "1.16.5-1.5.45"
+    "1.16.4-latest": "1.16.4-1.5.39",
+    "1.16.5-latest": "1.16.5-1.5.46"
   },
   "1.16.1": {
     "1.16.1-1.5.29": "Port to 1.16",
@@ -23,6 +23,7 @@
     "1.16.5-1.5.42": "When blazing and fortune are both present, fortune effect happens and then blazing effect.",
     "1.16.5-1.5.43": "Fixed the issue where hops cancels/reduces the momentum of the player when jumping.",
     "1.16.5-1.5.44": "Disable gravity for homing arrow when it only targets an entity.\nAdd glowing effect to the entity homing bow is going to target.",
-    "1.16.5-1.5.45": "Homing no longer targets pets.\nFix not being able to dye signs due to sign editing feature."
+    "1.16.5-1.5.45": "Homing no longer targets pets.\nFix not being able to dye signs due to sign editing feature.",
+    "1.16.5-1.5.46": "Fix disabling enchantments not causing it to appear in librarians trades."
   }
 }
