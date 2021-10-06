@@ -46,4 +46,9 @@ public class BlazingEnchantment extends Enchantment {
     public boolean isTreasureOnly() {
         return EnchantmentInit.blazingTreasureOnly.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentInit.enableBlazing.get();
+    }
 }

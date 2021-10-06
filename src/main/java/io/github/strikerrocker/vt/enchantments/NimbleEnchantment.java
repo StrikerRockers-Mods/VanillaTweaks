@@ -79,4 +79,9 @@ public class NimbleEnchantment extends Enchantment {
     public boolean isTreasureOnly() {
         return EnchantmentInit.nimbleTreasureOnly.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentInit.enableNimble.get();
+    }
 }

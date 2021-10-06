@@ -40,4 +40,9 @@ public class SiphonEnchantment extends Enchantment {
     public boolean isTreasureOnly() {
         return EnchantmentInit.siphonTreasureOnly.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentInit.enableSiphon.get();
+    }
 }

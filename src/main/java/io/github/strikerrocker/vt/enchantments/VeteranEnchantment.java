@@ -84,4 +84,9 @@ public class VeteranEnchantment extends Enchantment {
     public boolean isTreasureOnly() {
         return EnchantmentInit.veteranTreasureOnly.get();
     }
+
+    @Override
+    public boolean isTradeable() {
+        return EnchantmentInit.enableVeteran.get();
+    }
 }
