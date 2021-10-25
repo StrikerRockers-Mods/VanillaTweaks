@@ -26,7 +26,7 @@ public class EnchantmentInit extends Feature {
     public static final RegistryObject<GlobalLootModifierSerializer<?>> BLAZING_MODIFIER = LOOT_MODIFIER_SERIALIZERS.register("blazing",
             BlazingModifier.Serializer::new);
     public static final RegistryObject<GlobalLootModifierSerializer<?>> SIPHON_MODIFIER = LOOT_MODIFIER_SERIALIZERS.register("siphon",
-            BlazingModifier.Serializer::new);
+            SiphonModifier.Serializer::new);
     // Configs
     public static ForgeConfigSpec.BooleanValue enableBlazing;
     public static ForgeConfigSpec.BooleanValue enableHops;

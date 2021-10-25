@@ -12,6 +12,7 @@
     "1.17.1-1.5.45": "When blazing and fortune are both present, fortune effect happens and then blazing effect.",
     "1.17.1-1.5.46": "Disable gravity for homing arrow when it only targets an entity.\nAdd glowing effect to the entity homing bow is going to target.",
     "1.17.1-1.5.47": "Homing no longer targets pets.\nFix not being able to dye signs due to sign editing feature.",
-    "1.17.1-1.5.48": "Fix disabling enchantments not causing it to appear in librarians trades."
+    "1.17.1-1.5.48": "Fix disabling enchantments not causing it to appear in librarians trades.",
+    "1.17.1-1.5.49": "Fixed siphon not working as intended."
   }
 }
