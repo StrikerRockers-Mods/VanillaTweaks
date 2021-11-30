@@ -30,7 +30,7 @@ public class TNTIgnition extends Feature {
                 for (Direction f : Direction.values()) {
                     BlockState state = level.getBlockState(pos.relative(f));
                     if (state.getBlock() instanceof MagmaBlock || state.getMaterial() == Material.LAVA) {
-                        blockState.getBlock().catchFire(blockState, event.getEntity().level, pos, f,
+                        blockState.getBlock().onCaughtFire(blockState, event.getEntity().level, pos, f,
                                 event.getEntity() instanceof LivingEntity livingEntity ? livingEntity :
                                         null);
                         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
@@ -41,7 +41,7 @@ public class TNTIgnition extends Feature {
                     BlockState state = level.getBlockState(pos.relative(f));
                     if (state.getBlock() instanceof TntBlock) {
                         BlockPos relativePos = pos.relative(f);
-                        state.getBlock().catchFire(blockState, event.getEntity().level, relativePos, f.getOpposite(),
+                        state.getBlock().onCaughtFire(blockState, event.getEntity().level, relativePos, f.getOpposite(),
                                 event.getEntity() instanceof LivingEntity livingEntity ? livingEntity :
                                         null);
                         level.setBlock(relativePos, Blocks.AIR.defaultBlockState(), 11);

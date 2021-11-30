@@ -3,9 +3,7 @@ package io.github.strikerrocker.vt.world;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import io.github.strikerrocker.vt.base.Feature;
-import net.minecraft.data.worldgen.Features;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -52,7 +50,10 @@ public class NoMoreLavaPocketGen extends Feature {
     @SubscribeEvent
     public void biomeCreationEvent(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.BiomeCategory.NETHER && disableLavaPocketGen.get()) {
-            event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION).removeIf(configuredFeatureSupplier -> serializeAndCompareFeature(Features.SPRING_CLOSED, configuredFeatureSupplier.get()) || serializeAndCompareFeature(Features.SPRING_CLOSED_DOUBLE, configuredFeatureSupplier.get()));
+            //TODO Fix this
+//            event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION).removeIf(configuredFeatureSupplier -> {
+//                return serializeAndCompareFeature(Features.SPRING_CLOSED, configuredFeatureSupplier.get()) || serializeAndCompareFeature(Features.SPRING_CLOSED_DOUBLE, configuredFeatureSupplier.get());
+//            });
         }
     }
 }

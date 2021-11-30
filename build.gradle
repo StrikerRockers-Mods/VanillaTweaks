@@ -6,12 +6,12 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.parchmentmc:librarian:1.+'
+        //classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
+//apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
@@ -26,10 +26,11 @@ version = vt_version
 group = 'io.github.strikerrocker.vt'
 archivesBaseName = 'VanillaTweaks'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'parchment', version: '2021.07.27-1.17.1'
+    mappings channel: 'official', version: '1.18'
+    //mappings channel: 'parchment', version: '2021.07.27-1.17.1'
     runs {
         client {
             properties 'forge.logging.console.level': 'debug'
@@ -45,9 +46,9 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.17.1-37.0.33'
-    compileOnly fg.deobf("mezz.jei:jei-1.17.1:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.17.1:${jei_version}")
+    minecraft 'net.minecraftforge:forge:1.18-38.0.0'
+    //compileOnly fg.deobf("mezz.jei:jei-1.17.1:${jei_version}:api")
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.17.1:${jei_version}")
 }
 
 jar {

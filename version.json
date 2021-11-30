@@ -1,7 +1,8 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/vanillatweaks",
   "promos": {
-    "1.17.1-latest": "1.17.1-1.5.48"
+    "1.17.1-latest": "1.17.1-1.5.48",
+    "1.18-latest": "1.18-1.5.50"
   },
   "1.17.1": {
     "1.17.1-1.5.40": "Update to 1.17.1",
@@ -14,5 +15,8 @@
     "1.17.1-1.5.47": "Homing no longer targets pets.\nFix not being able to dye signs due to sign editing feature.",
     "1.17.1-1.5.48": "Fix disabling enchantments not causing it to appear in librarians trades.",
     "1.17.1-1.5.49": "Fixed siphon not working as intended."
+  },
+  "1.18": {
+    "1.18-1.5.50": "Updated to Minecraft 1.18"
   }
 }

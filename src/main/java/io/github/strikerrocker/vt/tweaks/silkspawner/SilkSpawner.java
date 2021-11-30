@@ -71,7 +71,7 @@ public class SilkSpawner extends Feature {
         if (event.getState().getBlock() instanceof SpawnerBlock && !level.isClientSide() && blockEntity instanceof SpawnerBlockEntity && enableSilkSpawner.get() && lvl >= 1) {
             event.setExpToDrop(0);
             ItemStack drop = new ItemStack(Blocks.SPAWNER);
-            CompoundTag spawnerData = ((SpawnerBlockEntity) blockEntity).getSpawner().save(blockEntity.getLevel(), event.getPos(), new CompoundTag());
+            CompoundTag spawnerData = ((SpawnerBlockEntity) blockEntity).getSpawner().save(new CompoundTag());
             CompoundTag stackTag = new CompoundTag();
             spawnerData.remove("Delay");
             stackTag.put(SPAWNER_TAG, spawnerData);

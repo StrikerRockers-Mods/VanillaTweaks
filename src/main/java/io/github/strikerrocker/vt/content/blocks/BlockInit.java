@@ -14,13 +14,13 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
@@ -41,12 +41,12 @@ public class BlockInit extends Feature {
     public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flintblock", () ->
             new Block(Properties.of(Material.SAND, MaterialColor.COLOR_BROWN).strength(1.0f, 10.0f)));
     public static final RegistryObject<MenuType<PedestalContainer>> PEDESTAL_MENU_TYPE = MENU_TYPE.register("pedestal",
-            () -> IForgeContainerType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))));    // BlockEntityType and MenuType
-    public static final RegistryObject<BlockEntityType<PedestalBlockEntity>> PEDESTAL_TYPE = BLOCK_ENTITY_TYPE.register("pedestal",
-            () -> BlockEntityType.Builder.of(PedestalBlockEntity::new, PEDESTAL_BLOCK.get()).build(null));
+            () -> IForgeMenuType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))));    // BlockEntityType and MenuType
     // Configs
     static ForgeConfigSpec.BooleanValue enableStorageBlocks;
     static ForgeConfigSpec.BooleanValue enablePedestal;
+    public static final RegistryObject<BlockEntityType<PedestalBlockEntity>> PEDESTAL_TYPE = BLOCK_ENTITY_TYPE.register("pedestal",
+            () -> BlockEntityType.Builder.of(PedestalBlockEntity::new, PEDESTAL_BLOCK.get()).build(null));
 
     @Override
     public void setupConfig(ForgeConfigSpec.Builder builder) {
