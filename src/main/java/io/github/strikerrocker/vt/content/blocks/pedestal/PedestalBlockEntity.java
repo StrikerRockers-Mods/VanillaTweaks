@@ -43,7 +43,7 @@ public class PedestalBlockEntity extends BlockEntity {
 
     @Override
     public CompoundTag getUpdateTag() {
-        return save(new CompoundTag());
+        return saveWithFullMetadata();
     }
 
     @Nullable
@@ -64,10 +64,10 @@ public class PedestalBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        compound.put("inventory", inventory.serializeNBT());
-        compound.putLong("lastChangeTime", lastChangeTime);
-        return super.save(compound);
+    protected void saveAdditional(CompoundTag compoundTag) {
+        compoundTag.put("inventory", inventory.serializeNBT());
+        compoundTag.putLong("lastChangeTime", lastChangeTime);
+        super.saveAdditional(compoundTag);
     }
 
     @Override
