@@ -2,7 +2,10 @@
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/vanillatweaks",
   "promos": {
     "1.17.1-latest": "1.17.1-1.5.48",
-    "1.18-latest": "1.18-1.5.51"
+    "1.18-latest": "1.5.52",
+    "1.18-recommended": "1.5.52",
+    "1.18.1-latest": "1.5.52",
+    "1.18.1-recommended": "1.5.52"
   },
   "1.17.1": {
     "1.17.1-1.5.40": "Update to 1.17.1",
@@ -18,6 +21,7 @@
   },
   "1.18": {
     "1.18-1.5.50": "Updated to Minecraft 1.18",
-    "1.18-1.5.51": "Fixed pedestal not saving data.\n Made Lava pocket disabler work again"
+    "1.5.51": "Fixed pedestal not saving data.\n Made Lava pocket disabler work again",
+    "1.5.52": "Added back JEI support.\n Made lava pocket disabler also disable open lava pockets."
   }
 }
