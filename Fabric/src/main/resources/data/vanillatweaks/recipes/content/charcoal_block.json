@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "FFF",
+    "FFF"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:charcoal"
+    }
+  },
+  "result": {
+    "item": "vanillatweaks:charcoal_block"
+  },
+  "frc:conditions": [
+    {
+      "recipeconditions:item_registered": "vanillatweaks:charcoal_block"
+    }
+  ]
+}

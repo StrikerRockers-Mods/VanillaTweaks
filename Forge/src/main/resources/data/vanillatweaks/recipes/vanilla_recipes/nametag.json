@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "nametag"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    " P ",
+    "P  "
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "minecraft:name_tag"
+  }
+}

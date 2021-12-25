@@ -1,0 +1,23 @@
+{
+  "_comment": "blocks",
+  "block.vanillatweaks.flint_block": "Bloc de Flint",
+  "block.vanillatweaks.sugar_block": "Bloc de Sucre",
+  "block.vanillatweaks.charcoal_block": "Bloc de Charbon",
+  "block.vanillatweaks.pedestal": "Pedestal",
+  "_comment": "blocks",
+  "item.vanillatweaks.dynamite": "Dynamiter",
+  "item.vanillatweaks.fried_egg": "Oeuf Frit",
+  "item.vanillatweaks.crafting_pad": "Pad D'artisanat",
+  "item.vanillatweaks.slime_bucket": "Slime Finder",
+  "_comment": "enchantments",
+  "enchantment.vanillatweaks.nimble": "Agile",
+  "enchantment.vanillatweaks.hops": "Houblon",
+  "enchantment.vanillatweaks.vigor": "Vigueur",
+  "enchantment.vanillatweaks.veteran": "Ancien Combattant",
+  "enchantment.vanillatweaks.blazing": "Brûlant",
+  "enchantment.vanillatweaks.siphon": "Siphon",
+  "enchantment.vanillatweaks.homing": "La Prise D'origine",
+  "_comment": "misc",
+  "entity.dynamite": "Dynamite",
+  "tooltip.entity": "Spawns: %s"
+}

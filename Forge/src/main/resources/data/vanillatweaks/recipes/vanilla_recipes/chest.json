@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "chest"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "O O",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "minecraft:chest",
+    "count": 4
+  }
+}

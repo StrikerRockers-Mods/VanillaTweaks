@@ -1,0 +1,18 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "string"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "minecraft:wool"
+    }
+  ],
+  "result": {
+    "item": "minecraft:string",
+    "count": 4
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:items",
+      "object": "fried_egg"
+    }
+  ],
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "minecraft:egg"
+  },
+  "result": "vanillatweaks:fried_egg",
+  "experience": 0.35,
+  "cookingtime": 100
+}

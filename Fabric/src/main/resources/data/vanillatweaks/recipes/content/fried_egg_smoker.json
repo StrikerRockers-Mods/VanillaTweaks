@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "minecraft:egg"
+  },
+  "result": "vanillatweaks:fried_egg",
+  "experience": 0.35,
+  "cookingtime": 100,
+  "frc:conditions": [
+    {
+      "recipeconditions:item_registered": "vanillatweaks:fried_egg"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "_comment": "blocks",
+  "block.vanillatweaks.flint_block": "火打石ブロック",
+  "block.vanillatweaks.sugar_block": "砂糖ブロック",
+  "block.vanillatweaks.charcoal_block": "木炭ブロック",
+  "block.vanillatweaks.pedestal": "台座",
+  "_comment": "items",
+  "item.vanillatweaks.dynamite": "ダイナマイト",
+  "item.vanillatweaks.fried_egg": "フライドエッグ",
+  "item.vanillatweaks.crafting_pad": "作業パッド",
+  "item.vanillatweaks.slime_bucket": "Slime Finder",
+  "_comment": "enchantments",
+  "enchantment.vanillatweaks.nimble": "素早い",
+  "enchantment.vanillatweaks.hops": "ホップ",
+  "enchantment.vanillatweaks.vigor": "剛健",
+  "enchantment.vanillatweaks.veteran": "古豪",
+  "enchantment.vanillatweaks.blazing": "炎々",
+  "enchantment.vanillatweaks.siphon": "サイフォン",
+  "enchantment.vanillatweaks.homing": "ホーミング",
+  "_comment": "misc",
+  "entity.dynamite": "Dynamite",
+  "tooltip.entity": "Spawns: %s"
+}

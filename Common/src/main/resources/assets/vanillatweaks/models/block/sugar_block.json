@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "vanillatweaks:blocks/sugar_block",
+    "particle": "vanillatweaks:blocks/sugar_block"
+  }
+}

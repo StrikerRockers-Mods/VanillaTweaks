@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "FFF",
+    "FFF"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "item": "vanillatweaks:sugar_block"
+  },
+  "frc:conditions": [
+    {
+      "recipeconditions:item_registered": "vanillatweaks:sugar_block"
+    }
+  ]
+}

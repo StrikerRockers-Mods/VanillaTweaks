@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vanillatweaks:charcoal_block"
+    }
+  ],
+  "result": {
+    "item": "minecraft:charcoal",
+    "count": 9
+  },
+  "frc:conditions": [
+    {
+      "recipeconditions:item_registered": "vanillatweaks:charcoal_block"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "vanillatweaks",
+  "version": "${version}",
+  "name": "VanillaTweaks",
+  "description": "A Vanilla enhancing mod without going overboard",
+  "authors": [
+    "StrikerRocker"
+  ],
+  "license": "MIT",
+  "icon": "logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.strikerrocker.vt.VanillaTweaksFabric"
+    ],
+    "client": [
+      "io.github.strikerrocker.vt.VanillaTweaksClient"
+    ],
+    "modmenu": [
+      "io.github.strikerrocker.vt.misc.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "vanillatweaks.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.0",
+    "fabric": "*",
+    "cloth-config2": ">=6.0.42",
+    "java": ">=17"
+  }
+}

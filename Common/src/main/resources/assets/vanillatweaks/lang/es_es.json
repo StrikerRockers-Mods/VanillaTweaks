@@ -1,0 +1,23 @@
+{
+  "_comment": "blocks",
+  "block.vanillatweaks.flint_block": "Bloque de Flint",
+  "block.vanillatweaks.sugar_block": "Bloque de Azúcar",
+  "block.vanillatweaks.charcoal_block": "Bloque de Carbón",
+  "block.vanillatweaks.pedestal": "Pedestal",
+  "_comment": "items",
+  "item.vanillatweaks.dynamite": "Dinamita",
+  "item.vanillatweaks.fried_egg": "Huevo Frito",
+  "item.vanillatweaks.crafting_pad": "Almohadilla Artesanía",
+  "item.vanillatweaks.slime_bucket": "Slime Finder",
+  "_comment": "enchantments",
+  "enchantment.vanillatweaks.nimble": "Ágil",
+  "enchantment.vanillatweaks.hops": "Lúpulo",
+  "enchantment.vanillatweaks.vigor": "Vigor",
+  "enchantment.vanillatweaks.veteran": "Veterano",
+  "enchantment.vanillatweaks.blazing": "Flameante",
+  "enchantment.vanillatweaks.siphon": "Sifón",
+  "enchantment.vanillatweaks.homing": "Buscador de Blancos",
+  "_comment": "misc",
+  "entity.dynamite": "Dynamite",
+  "tooltip.entity": "Spawns: %s"
+}

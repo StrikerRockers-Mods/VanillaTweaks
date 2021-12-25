@@ -1,0 +1,23 @@
+{
+  "_comment": "blocks",
+  "block.vanillatweaks.flint_block": "Block o' Flint",
+  "block.vanillatweaks.sugar_block": "Block o' Sugar",
+  "block.vanillatweaks.charcoal_block": "Block o' Charcoal",
+  "block.vanillatweaks.pedestal": "Pedestal",
+  "_comment": "items",
+  "item.vanillatweaks.dynamite": "Dynamite",
+  "item.vanillatweaks.fried_egg": "Fried Egg",
+  "item.vanillatweaks.crafting_pad": "Craftin' Pad",
+  "item.vanillatweaks.slime_bucket": "Slime Finder",
+  "_comment": "enchantments",
+  "enchantment.vanillatweaks.nimble": "Nimble",
+  "enchantment.vanillatweaks.hops": "Hops",
+  "enchantment.vanillatweaks.vigor": "Vigor",
+  "enchantment.vanillatweaks.veteran": "Veteran",
+  "enchantment.vanillatweaks.blazing": "Blazin'",
+  "enchantment.vanillatweaks.siphon": "Siphon",
+  "enchantment.vanillatweaks.homing": "Homin'",
+  "_comment": "misc",
+  "entity.dynamite": "Dynamite",
+  "tooltip.entity": "Spawns: %s"
+}

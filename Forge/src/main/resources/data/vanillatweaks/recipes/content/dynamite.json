@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:items",
+      "object": "dynamite"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " W",
+    " G",
+    "S "
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:string"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "S": {
+      "item": "minecraft:sand"
+    }
+  },
+  "result": {
+    "item": "vanillatweaks:dynamite"
+  }
+}

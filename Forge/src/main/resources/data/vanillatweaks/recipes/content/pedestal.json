@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "vanillatweaks:blocks",
+      "object": "pedestal"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    " B ",
+    "SBS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone_brick_slab"
+    },
+    "B": {
+      "item": "minecraft:stone_bricks"
+    }
+  },
+  "result": {
+    "item": "vanillatweaks:pedestal"
+  }
+}

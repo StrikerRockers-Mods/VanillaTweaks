@@ -1,0 +1,23 @@
+{
+  "_comment": "blocks",
+  "block.vanillatweaks.flint_block": "Blok van Vuursteen",
+  "block.vanillatweaks.sugar_block": "Blok van Suiker",
+  "block.vanillatweaks.charcoal_block": "Blok van Houtskool",
+  "block.vanillatweaks.pedestal": "Voetstuk",
+  "_comment": "items",
+  "item.vanillatweaks.dynamite": "Dynamiet",
+  "item.vanillatweaks.fried_egg": "Gebakken Ei",
+  "item.vanillatweaks.crafting_pad": "Bouw Onderlegger",
+  "item.vanillatweaks.slime_bucket": "Slijm Vinder",
+  "_comment": "enchantments",
+  "enchantment.vanillatweaks.nimble": "Wendbaar",
+  "enchantment.vanillatweaks.hops": "Huppelen",
+  "enchantment.vanillatweaks.vigor": "Vitaliteit",
+  "enchantment.vanillatweaks.veteran": "Veteraan",
+  "enchantment.vanillatweaks.blazing": "Vlammend",
+  "enchantment.vanillatweaks.siphon": "Hevel",
+  "enchantment.vanillatweaks.homing": "Doelzoekend",
+  "_comment": "misc",
+  "entity.dynamite": "Dynamiet",
+  "tooltip.entity": "Brengt voort: %s"
+}
