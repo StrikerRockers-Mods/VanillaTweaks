@@ -22,13 +22,10 @@ public class Sickle extends ForgeFeature {
         return true;
     }
 
-    /**
-     * Handles crop harvesting more than one block when using hoe
-     */
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
         //TODO not working
-        TweaksImpl.triggerSickle(player, player.getUseItem(), player.getCommandSenderWorld(), event.getPos(), event.getState(), hoeActsAsSickle.get());
+        TweaksImpl.triggerSickle(player, player.getItemInHand(player.getUsedItemHand()), player.getCommandSenderWorld(), event.getPos(), event.getState(), hoeActsAsSickle.get());
     }
 }

@@ -19,7 +19,7 @@ public class NoMoreLavaPocketGen extends ForgeFeature {
     /**
      * Serializes the given features and then compares them
      */
-    private static boolean serializeAndCompareFeature(PlacedFeature placedFeature1, PlacedFeature placedFeature2) {
+    private static boolean compareFeature(PlacedFeature placedFeature1, PlacedFeature placedFeature2) {
         Optional<JsonElement> placedFeatureJSON1 = PlacedFeature.DIRECT_CODEC.encode(placedFeature1, JsonOps.INSTANCE, JsonOps.INSTANCE.empty()).get().left();
         Optional<JsonElement> placedFeatureJSON2 = PlacedFeature.DIRECT_CODEC.encode(placedFeature2, JsonOps.INSTANCE, JsonOps.INSTANCE.empty()).get().left();
         // One of the configured features cannot be serialized
@@ -51,7 +51,8 @@ public class NoMoreLavaPocketGen extends ForgeFeature {
     public void biomesLoadingEvent(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.BiomeCategory.NETHER && disableLavaPocketGen.get()) {
             event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION).removeIf(featureSupplier -> {
-                return serializeAndCompareFeature(NetherPlacements.SPRING_CLOSED, featureSupplier.get()) || serializeAndCompareFeature(NetherPlacements.SPRING_CLOSED_DOUBLE, featureSupplier.get()) || serializeAndCompareFeature(NetherPlacements.SPRING_OPEN, featureSupplier.get());
+                PlacedFeature feature = featureSupplier.get();
+                return compareFeature(NetherPlacements.SPRING_CLOSED, feature) || compareFeature(NetherPlacements.SPRING_CLOSED_DOUBLE, feature) || compareFeature(NetherPlacements.SPRING_OPEN, feature);
             });
         }
     }

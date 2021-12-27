@@ -8,9 +8,6 @@ import net.minecraft.world.item.ItemStack;
 
 public class ShearNameTag extends Feature {
 
-    /**
-     * Make the nametag shear-able
-     */
     @Override
     public void initialize() {
         UseEntityCallback.EVENT.register(((player, world, hand, target, entityHitResult) -> {

@@ -67,7 +67,7 @@ public class ModConfig implements ConfigData {
 
     public static class Loot {
         @ConfigEntry.BoundedDiscrete(max = 10)
-        public float batLeatherDropChance = 1f;
+        public double batLeatherDropChance = 1d;
         public boolean namedMobsDropNameTag = true;
     }
 

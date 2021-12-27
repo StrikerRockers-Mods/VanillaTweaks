@@ -7,9 +7,6 @@ import net.minecraft.world.level.block.BeehiveBlock;
 
 public class BeehiveTooltips extends Feature {
 
-    /**
-     * Shows the number of bees and honey level of bee hives
-     */
     @Override
     public void initialize() {
         ItemTooltipCallback.EVENT.register((stack, context, lines) -> {

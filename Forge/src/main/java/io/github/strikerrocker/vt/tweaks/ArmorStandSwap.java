@@ -1,8 +1,6 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.ForgeFeature;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -24,20 +22,10 @@ public class ArmorStandSwap extends ForgeFeature {
         return true;
     }
 
-    /**
-     * Swaps all the armor slots of armor stand and player when shift right-clicked
-     */
     @SubscribeEvent
     public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
         Player player = event.getPlayer();
-        if (player.isCrouching() && enableArmorStandSwapping.get() && !player.level.isClientSide() && !player.isSpectator()
-                && event.getTarget() instanceof ArmorStand armorStand) {
+        if (TweaksImpl.triggerArmorStandSwap(player, event.getTarget(), enableArmorStandSwapping.get()))
             event.setCanceled(true);
-            for (EquipmentSlot equipmentSlotType : EquipmentSlot.values()) {
-                if (equipmentSlotType.getType() == EquipmentSlot.Type.ARMOR) {
-                    TweaksImpl.swapSlot(player, armorStand, equipmentSlotType);
-                }
-            }
-        }
     }
 }

@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.tweaks;
 
-import io.github.strikerrocker.vt.VanillaTweaks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -9,19 +9,31 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 
 import java.util.List;
 
 public class TweaksImpl {
+
+    public static final String SPAWNER_TAG = "SilkSpawnerData";
 
     /**
      * Swaps the items in given slot of Player and ArmorStand
@@ -31,6 +43,19 @@ public class TweaksImpl {
         ItemStack armorStandItem = armorStand.getItemBySlot(slot);
         player.setItemSlot(slot, armorStandItem);
         armorStand.setItemSlot(slot, playerItem);
+    }
+
+    /**
+     * Returns if entity can burn
+     */
+    public static boolean canBurn(LivingEntity entity) {
+        Level world = entity.level;
+        if (world.isDay() && !world.isClientSide) {
+            float f = entity.getBrightness();
+            boolean bl = entity.isInWaterRainOrBubble() || entity.isInPowderSnow || entity.wasInPowderSnow;
+            return f > 0.5F && entity.getRandom().nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !bl && world.canSeeSky(entity.blockPosition());
+        }
+        return false;
     }
 
     /**
@@ -52,6 +77,9 @@ public class TweaksImpl {
         else return 1;
     }
 
+    /**
+     * Shows the number of bees and honey level of bee hives
+     */
     public static void addBeeHiveTooltip(ItemStack stack, List<Component> tooltips) {
         CompoundTag tag = stack.getOrCreateTag();
         CompoundTag beTag = tag.getCompound("BlockEntityTag");
@@ -62,8 +90,10 @@ public class TweaksImpl {
         tooltips.add(new TranslatableComponent("vanillatweaks.honey.lvl").append(new TextComponent(String.format("%s", honeyLvl))));
     }
 
+    /**
+     * Harvests large area of crops when different hoe types are used.
+     */
     public static void triggerSickle(Player player, ItemStack stack, Level world, BlockPos blockPos, BlockState originalState, boolean config) {
-        VanillaTweaks.LOGGER.info(stack);
         if (!stack.isEmpty() && stack.getItem() instanceof HoeItem && TweaksImpl.canHarvest(originalState) &&
                 config) {
             int range = TweaksImpl.getRange(stack.getItem());
@@ -86,6 +116,9 @@ public class TweaksImpl {
         }
     }
 
+    /**
+     * Make the nametag item drop when right-clicked with a shear
+     */
     public static void triggerShearNametag(Player player, ItemStack stack, Entity target, Level world, boolean config) {
         if (config && !stack.isEmpty() && stack.getItem() instanceof ShearsItem &&
                 target instanceof LivingEntity && target.hasCustomName() && !world.isClientSide) {
@@ -96,5 +129,137 @@ public class TweaksImpl {
             target.setCustomName(null);
             stack.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
         }
+    }
+
+    /**
+     * Explode TNT when it is beside lava or magma block
+     */
+    public static void triggerTNTIgnition(Level level, BlockPos pos, BlockState blockState, boolean config) {
+        if (!level.isClientSide() && config) {
+            if (blockState.getBlock() instanceof TntBlock) {
+                for (Direction f : Direction.values()) {
+                    BlockState state = level.getBlockState(pos.relative(f));
+                    if (state.getBlock() instanceof MagmaBlock || state.getMaterial() == Material.LAVA) {
+                        TntBlock.explode(level, pos);
+                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                    }
+                }
+            } else if (blockState.getBlock() instanceof MagmaBlock) {
+                for (Direction f : Direction.values()) {
+                    BlockPos offsetPos = pos.relative(f);
+                    if (level.getBlockState(offsetPos).getBlock() instanceof TntBlock) {
+                        TntBlock.explode(level, offsetPos);
+                        level.setBlock(offsetPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Open sign editor even when its already placed
+     */
+    public static boolean triggerSignEditing(Level level, Player player, BlockEntity blockEntity, InteractionHand hand, boolean config) {
+        if (blockEntity instanceof SignBlockEntity sign && !level.isClientSide() && player.isCrouching() && config) {
+            sign.setEditable(true);
+            player.openTextEdit(sign);
+            player.swing(hand);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Swaps all the armor slots of armor stand and player when shift right-clicked
+     */
+    public static boolean triggerArmorStandSwap(Player player, Entity target, boolean config) {
+        if (player.isCrouching() && config && !player.level.isClientSide() && !player.isSpectator()
+                && target instanceof ArmorStand armorStand) {
+            for (EquipmentSlot equipmentSlotType : EquipmentSlot.values()) {
+                if (equipmentSlotType.getType() == EquipmentSlot.Type.ARMOR) {
+                    swapSlot(player, armorStand, equipmentSlotType);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Handles burning of baby zombie and creepers in daylight
+     */
+    public static void triggerMobsBurnInSun(LivingEntity livingEntity, boolean creeperConfig, boolean babyZombieConfig) {
+        if (livingEntity instanceof Creeper && creeperConfig ||
+                livingEntity instanceof Zombie && livingEntity.isBaby() && babyZombieConfig) {
+            boolean flag = canBurn(livingEntity);
+            if (flag) {
+                ItemStack itemStack = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
+                // Damages the helmet if its present
+                if (!itemStack.isEmpty()) {
+                    if (itemStack.isDamageableItem()) {
+                        itemStack.setDamageValue(itemStack.getDamageValue() + livingEntity.getRandom().nextInt(2));
+                        if (itemStack.getDamageValue() >= itemStack.getMaxDamage()) {
+                            livingEntity.broadcastBreakEvent(EquipmentSlot.HEAD);
+                            livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                        }
+                    }
+                    flag = false;
+                }
+                if (flag) {
+                    livingEntity.setSecondsOnFire(8);
+                }
+            }
+        }
+    }
+
+    /**
+     * Rotates the item frame in reverse when shift right-clicked
+     */
+    public static boolean triggerItemFrameReverse(Entity target, Player player, boolean config) {
+        if (target instanceof ItemFrame frame && player.isShiftKeyDown() && config) {
+            int rotation = frame.getRotation() - 1;
+            if (rotation < 0)
+                rotation = 7;
+            frame.setRotation(rotation);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Handles spawner block entity placement
+     */
+    public static void triggerSpawnerPlacement(Level level, BlockPos pos, ItemStack stack, boolean config) {
+        if (!level.isClientSide() && config && !stack.isEmpty() && stack.getItem() == Items.SPAWNER) {
+            CompoundTag spawnerDataNBT = stack.getOrCreateTag().getCompound(SPAWNER_TAG);
+            if (!spawnerDataNBT.isEmpty()) {
+                BlockEntity tile = level.getBlockEntity(pos);
+                if (tile instanceof SpawnerBlockEntity spawner) {
+                    spawner.getSpawner().load(level, pos, spawnerDataNBT);
+                }
+            }
+        }
+    }
+
+    /**
+     * Handles Spawner break logic
+     */
+    public static boolean triggerSpawnerBreak(Level level, BlockPos pos, BlockState state, Player player, boolean config) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        int lvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
+        if (state.getBlock() instanceof SpawnerBlock && !level.isClientSide() && blockEntity instanceof SpawnerBlockEntity && config && lvl >= 1) {
+            ItemStack drop = new ItemStack(Blocks.SPAWNER);
+            CompoundTag spawnerData = ((SpawnerBlockEntity) blockEntity).getSpawner().save(new CompoundTag());
+            CompoundTag stackTag = new CompoundTag();
+            spawnerData.remove("Delay");
+            stackTag.put(SPAWNER_TAG, spawnerData);
+            drop.setTag(stackTag);
+
+            Block.popResource(player.getCommandSenderWorld(), pos, drop);
+            level.removeBlockEntity(pos);
+            level.destroyBlock(pos, false);
+            return true;
+        }
+        return false;
     }
 }

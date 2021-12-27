@@ -11,9 +11,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ShearNameTag extends ForgeFeature {
     private ForgeConfigSpec.BooleanValue shearOffNameTag;
 
-    /**
-     * Make the nametag shear-able
-     */
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         Player player = event.getPlayer();

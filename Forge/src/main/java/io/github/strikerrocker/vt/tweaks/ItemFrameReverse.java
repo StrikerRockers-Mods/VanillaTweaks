@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.ForgeFeature;
-import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -9,16 +8,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ItemFrameReverse extends ForgeFeature {
     private ForgeConfigSpec.BooleanValue itemFrameRotateBackwards;
 
-    /**
-     * Rotates the item frame in reverse when shift right-clicked
-     */
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (itemFrameRotateBackwards.get() && event.getTarget() instanceof ItemFrame frame && event.getPlayer().isCrouching()) {
-            int rotation = frame.getRotation() - 2;
-            if (rotation < 0)
-                rotation = 7;
-            frame.setRotation(rotation);
+        if (TweaksImpl.triggerItemFrameReverse(event.getTarget(), event.getPlayer(), itemFrameRotateBackwards.get())) {
+            event.setCanceled(true);
         }
     }
 

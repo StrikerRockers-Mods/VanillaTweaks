@@ -46,7 +46,6 @@ public class PedestalBlockEntity extends BlockEntity implements MenuProvider, Im
 
     @Override
     public void load(CompoundTag nbt) {
-        super.load(nbt);
         inventory = NonNullList.withSize(inventory.size(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(nbt, this.inventory);
     }
@@ -66,6 +65,11 @@ public class PedestalBlockEntity extends BlockEntity implements MenuProvider, Im
     @Nullable
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this, BlockEntity::saveWithFullMetadata);
+        return ClientboundBlockEntityDataPacket.create(this, BlockEntity::getUpdateTag);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithFullMetadata();
     }
 }

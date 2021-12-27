@@ -7,9 +7,6 @@ import net.minecraft.world.InteractionResult;
 
 public class Sickle extends Feature {
 
-    /**
-     * Handles crop harvesting more than one block when using hoe
-     */
     @Override
     public void initialize() {
         AttackBlockCallback.EVENT.register((player, world, hand, blockPos, direction) -> {

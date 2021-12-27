@@ -51,7 +51,7 @@ public class SelfPlanting extends ForgeFeature {
     }
 
     /**
-     * Check if the despawning item can plant if not restore default lifespan of the item
+     * Check if the de-spawning item can plant if not restore default lifespan of the item
      */
     @SubscribeEvent
     public void itemDecay(ItemExpireEvent event) {
@@ -60,7 +60,7 @@ public class SelfPlanting extends ForgeFeature {
     }
 
     /**
-     * If item is of plantable then change the lifespan
+     * If item is of plant-able then change the lifespan
      */
     @SubscribeEvent
     public void itemToss(EntityJoinWorldEvent event) {

@@ -10,12 +10,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public interface BlockPlaceCallback {
     Event<BlockPlaceCallback> EVENT = EventFactory.createArrayBacked(BlockPlaceCallback.class,
-            listeners -> ((world, pos, blockState, entity, stack) -> {
+            listeners -> ((level, pos, blockState, entity, stack) -> {
                 for (BlockPlaceCallback blockPlaceCallback : listeners) {
-                    blockPlaceCallback.onPlaced(world, pos, blockState, entity, stack);
+                    blockPlaceCallback.onPlaced(level, pos, blockState, entity, stack);
                 }
             })
     );
 
-    void onPlaced(Level world, BlockPos pos, BlockState blockState, LivingEntity entity, ItemStack stack);
+    void onPlaced(Level level, BlockPos pos, BlockState blockState, LivingEntity entity, ItemStack stack);
 }
