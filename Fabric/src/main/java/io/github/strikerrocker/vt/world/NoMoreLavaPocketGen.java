@@ -17,13 +17,13 @@ public class NoMoreLavaPocketGen extends Feature {
             BiomeModifications.create(new ResourceLocation(VanillaTweaks.MOD_ID, "lava_pocket_removal")).
                     add(ModificationPhase.REMOVALS,
                             BiomeSelectors.foundInTheNether(),
-                            biomeModificationContext ->
-                                    biomeModificationContext.getGenerationSettings().removeFeature(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, new ResourceLocation("spring_closed"))));
+                            ctx -> ctx.getGenerationSettings()
+                                    .removeFeature(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, new ResourceLocation("spring_closed"))));
             BiomeModifications.create(new ResourceLocation(VanillaTweaks.MOD_ID, "lava_pocket_removal_double")).
                     add(ModificationPhase.REMOVALS,
                             BiomeSelectors.foundInTheNether(),
-                            biomeModificationContext ->
-                                    biomeModificationContext.getGenerationSettings().removeFeature(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, new ResourceLocation("spring_closed_double"))));
+                            ctx -> ctx.getGenerationSettings()
+                                    .removeFeature(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, new ResourceLocation("spring_closed_double"))));
         }
     }
 }

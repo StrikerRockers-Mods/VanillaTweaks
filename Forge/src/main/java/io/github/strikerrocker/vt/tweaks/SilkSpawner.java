@@ -1,9 +1,7 @@
-package io.github.strikerrocker.vt.tweaks.silkspawner;
+package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.ForgeFeature;
-import io.github.strikerrocker.vt.tweaks.TweaksClientImpl;
-import io.github.strikerrocker.vt.tweaks.TweaksImpl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;

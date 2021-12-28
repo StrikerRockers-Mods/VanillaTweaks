@@ -1,4 +1,4 @@
-package io.github.strikerrocker.vt.base;
+package io.github.strikerrocker.vt.content;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

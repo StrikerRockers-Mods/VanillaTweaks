@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.tweaks;
 
 import io.github.strikerrocker.vt.base.ForgeModule;
-import io.github.strikerrocker.vt.tweaks.silkspawner.SilkSpawner;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class TweaksModule extends ForgeModule {

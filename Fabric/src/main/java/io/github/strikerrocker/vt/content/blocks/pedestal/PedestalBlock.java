@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import io.github.strikerrocker.vt.base.BasePedestalBlock;
+import io.github.strikerrocker.vt.content.BasePedestalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;

@@ -7,7 +7,7 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
 /**
- * Adds conditions for adding vanilla-isque recipes
+ * Adds conditions for adding vanilla-like recipes
  */
 public record VanillaRecipeConditions(String object) implements ICondition {
 

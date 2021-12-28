@@ -88,7 +88,6 @@ processResources {
     from project(":Common").sourceSets.main.resources
 }
 
-
 jar.finalizedBy('reobfJar')
 
 publishing {

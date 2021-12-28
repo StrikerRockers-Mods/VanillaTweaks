@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
-import io.github.strikerrocker.vt.base.BasePedestalBlock;
+import io.github.strikerrocker.vt.content.BasePedestalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.TranslatableComponent;
