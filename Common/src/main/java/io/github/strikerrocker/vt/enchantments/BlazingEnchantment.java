@@ -7,14 +7,16 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 
-public class BlazingEnchantment extends Enchantment {
-    BlazingEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+import java.util.function.Supplier;
+
+public class BlazingEnchantment extends ConfigEnchantment {
+    public BlazingEnchantment(Supplier<Boolean> enableEnchantment, Supplier<Boolean> treasureOnly) {
+        super(Rarity.VERY_RARE, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND}, enableEnchantment, treasureOnly);
     }
 
     @Override
     public int getMaxLevel() {
-        return EnchantmentInit.enableBlazing.get() ? 1 : 0;
+        return enableEnchantment.get() ? 1 : 0;
     }
 
     @Override
@@ -34,21 +36,16 @@ public class BlazingEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof DiggerItem && EnchantmentInit.enableBlazing.get();
-    }
-
-    @Override
-    public boolean isAllowedOnBooks() {
-        return EnchantmentInit.enableBlazing.get();
+        return stack.getItem() instanceof DiggerItem && enableEnchantment.get();
     }
 
     @Override
     public boolean isTreasureOnly() {
-        return EnchantmentInit.blazingTreasureOnly.get();
+        return treasureOnly.get();
     }
 
     @Override
     public boolean isTradeable() {
-        return EnchantmentInit.enableBlazing.get();
+        return enableEnchantment.get();
     }
 }

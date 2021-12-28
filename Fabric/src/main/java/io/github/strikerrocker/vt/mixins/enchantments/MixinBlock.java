@@ -1,9 +1,8 @@
 package io.github.strikerrocker.vt.mixins.enchantments;
 
+import io.github.strikerrocker.vt.EnchantmentModule;
 import io.github.strikerrocker.vt.VanillaTweaksFabric;
-import io.github.strikerrocker.vt.enchantments.BlazingEnchantment;
-import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
-import io.github.strikerrocker.vt.enchantments.SiphonEnchantment;
+import io.github.strikerrocker.vt.enchantments.EnchantmentImpl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -30,10 +29,10 @@ public class MixinBlock {
             cancellable = true)
     private static void dropLoot(BlockState state, ServerLevel world, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack tool, CallbackInfoReturnable<List<ItemStack>> ci) {
         if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentModule.BLAZING, tool) != 0 && VanillaTweaksFabric.config.enchanting.enableBlazing) {
-            ci.setReturnValue(BlazingEnchantment.blazingLogic(world, entity, tool, ci.getReturnValue()));
+            ci.setReturnValue(EnchantmentImpl.blazingLogic(world, entity, tool, ci.getReturnValue()));
         }
         if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentModule.SIPHON, tool) != 0 && VanillaTweaksFabric.config.enchanting.enableSiphon) {
-            ci.setReturnValue(SiphonEnchantment.siphonLogic(entity, ci.getReturnValue()));
+            ci.setReturnValue(EnchantmentImpl.siphonLogic(entity, ci.getReturnValue()));
         }
     }
 }

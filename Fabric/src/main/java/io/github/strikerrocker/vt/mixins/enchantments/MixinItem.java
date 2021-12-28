@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.mixins.enchantments;
 
+import io.github.strikerrocker.vt.EnchantmentModule;
 import io.github.strikerrocker.vt.enchantments.EnchantmentImpl;
-import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;

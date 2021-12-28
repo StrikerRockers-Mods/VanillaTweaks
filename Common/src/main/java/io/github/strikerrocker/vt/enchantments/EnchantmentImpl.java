@@ -2,6 +2,9 @@ package io.github.strikerrocker.vt.enchantments;
 
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.misc.ConeShape;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -13,14 +16,18 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class EnchantmentImpl {
     private static final UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
@@ -119,5 +126,50 @@ public class EnchantmentImpl {
                 arrow.shoot(x, y, z, (float) arrow.getDeltaMovement().length(), 0);
             }
         }
+    }
+
+    public static List<ItemStack> blazingLogic(ServerLevel world, Entity entity, ItemStack tool, List<ItemStack> dropList) {
+        RecipeManager recipeManager = world.getRecipeManager();
+        Container simpleInv = new SimpleContainer(1);
+        ItemStack itemToBeChecked;
+        Optional<SmeltingRecipe> smeltingResult;
+        ArrayList<ItemStack> newDropList = new ArrayList<>(dropList);
+        if (!newDropList.isEmpty())
+            for (int i = 0; i < newDropList.size(); i++) {
+                itemToBeChecked = newDropList.get(i);
+                simpleInv.setItem(0, itemToBeChecked);
+                smeltingResult = recipeManager.getRecipeFor(RecipeType.SMELTING, simpleInv, entity.level);
+                if (smeltingResult.isPresent() && entity instanceof Player playerEntity) {
+                    int count = itemToBeChecked.getCount();
+                    if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool) > 0) {
+                        count = getFortuneCount(world.getRandom(), count, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool));
+                        tool.hurtAndBreak(Math.max(count - 1, 3), playerEntity, player -> player.broadcastBreakEvent(player.getUsedItemHand()));
+                    }
+                    newDropList.set(i, new ItemStack(smeltingResult.get().getResultItem().getItem(), count));
+                    playerEntity.giveExperiencePoints((int) (smeltingResult.get().getExperience() * itemToBeChecked.getCount()));
+                }
+            }
+        return newDropList;
+    }
+
+    public static int getFortuneCount(Random random, int initialCount, int lvl) {
+        if (lvl > 0) {
+            int i = random.nextInt(lvl + 2) - 1;
+            if (i < 0) {
+                i = 0;
+            }
+            return initialCount * (i + 1);
+        } else {
+            return initialCount;
+        }
+    }
+
+    public static List<ItemStack> siphonLogic(Entity entity, List<ItemStack> dropList) {
+        if (entity instanceof Player playerEntity) {
+            ArrayList<ItemStack> newDropList = new ArrayList<>(dropList);
+            newDropList.removeIf(playerEntity::addItem);
+            return newDropList;
+        }
+        return dropList;
     }
 }

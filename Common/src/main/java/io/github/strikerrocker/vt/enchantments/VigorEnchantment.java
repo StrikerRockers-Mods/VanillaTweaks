@@ -1,16 +1,15 @@
 package io.github.strikerrocker.vt.enchantments;
 
-import io.github.strikerrocker.vt.VanillaTweaksFabric;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class VigorEnchantment extends Enchantment {
+import java.util.function.Supplier;
 
-    VigorEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
+public class VigorEnchantment extends ConfigEnchantment {
+    public VigorEnchantment(Supplier<Boolean> enableEnchantment, Supplier<Boolean> treasureOnly) {
+        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST}, enableEnchantment, treasureOnly);
     }
 
     @Override
@@ -25,27 +24,27 @@ public class VigorEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return VanillaTweaksFabric.config.enchanting.enableVigor ? 3 : 0;
+        return enableEnchantment.get() ? 3 : 0;
     }
 
     @Override
     public boolean canEnchant(ItemStack stack) {
         return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.CHEST) &&
-                VanillaTweaksFabric.config.enchanting.enableVigor;
+                enableEnchantment.get();
     }
 
     @Override
     public boolean isDiscoverable() {
-        return VanillaTweaksFabric.config.enchanting.enableVigor;
+        return enableEnchantment.get();
     }
 
     @Override
     public boolean isTreasureOnly() {
-        return VanillaTweaksFabric.config.enchanting.vigorTreasureOnly;
+        return treasureOnly.get();
     }
 
     @Override
     public boolean isTradeable() {
-        return VanillaTweaksFabric.config.enchanting.enableVigor;
+        return enableEnchantment.get();
     }
 }

@@ -2,7 +2,6 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.FabricModule;
 import io.github.strikerrocker.vt.content.ContentModule;
-import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
 import io.github.strikerrocker.vt.loot.LootModule;
 import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.WorldModule;
