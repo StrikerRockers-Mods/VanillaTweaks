@@ -31,7 +31,6 @@ public class EnchantmentInit extends ForgeFeature {
     // GlobalLootModifierSerializer
     public static final RegistryObject<GlobalLootModifierSerializer<?>> BLAZING_MODIFIER = LOOT_MODIFIER_SERIALIZERS.register("blazing", BlazingModifier.Serializer::new);
     public static final RegistryObject<GlobalLootModifierSerializer<?>> SIPHON_MODIFIER = LOOT_MODIFIER_SERIALIZERS.register("siphon", SiphonModifier.Serializer::new);
-    public static final RegistryObject<Enchantment> HOPS = ENCHANTMENTS.register("hops", () -> new HopsEnchantment(() -> enableHops.get(), () -> hopsTreasureOnly.get()));
     public static ForgeConfigSpec.BooleanValue enableHops;
     public static ForgeConfigSpec.BooleanValue enableNimble;
     public static ForgeConfigSpec.BooleanValue enableSiphon;
@@ -39,20 +38,21 @@ public class EnchantmentInit extends ForgeFeature {
     public static ForgeConfigSpec.BooleanValue enableVigor;
     public static ForgeConfigSpec.BooleanValue enableHoming;
     public static ForgeConfigSpec.BooleanValue blazingTreasureOnly;
-    public static final RegistryObject<Enchantment> NIMBLE = ENCHANTMENTS.register("nimble", () -> new NimbleEnchantment(() -> enableNimble.get(), () -> nimbleTreasureOnly.get()));
     public static ForgeConfigSpec.BooleanValue hopsTreasureOnly;
-    public static final RegistryObject<Enchantment> SIPHON = ENCHANTMENTS.register("siphon", () -> new SiphonEnchantment(() -> enableSiphon.get(), () -> siphonTreasureOnly.get()));
+    public static final RegistryObject<Enchantment> HOPS = ENCHANTMENTS.register("hops", () -> new HopsEnchantment(() -> enableHops.get(), () -> hopsTreasureOnly.get()));
     public static ForgeConfigSpec.BooleanValue nimbleTreasureOnly;
-    public static final RegistryObject<Enchantment> VETERAN = ENCHANTMENTS.register("veteran", () -> new VeteranEnchantment(() -> enableVeteran.get(), () -> veteranTreasureOnly.get()));
+    public static final RegistryObject<Enchantment> NIMBLE = ENCHANTMENTS.register("nimble", () -> new NimbleEnchantment(() -> enableNimble.get(), () -> nimbleTreasureOnly.get()));
     public static ForgeConfigSpec.BooleanValue siphonTreasureOnly;
-    public static final RegistryObject<Enchantment> VIGOR = ENCHANTMENTS.register("vigor", () -> new VigorEnchantment(() -> enableVigor.get(), () -> vigorTreasureOnly.get()));
+    public static final RegistryObject<Enchantment> SIPHON = ENCHANTMENTS.register("siphon", () -> new SiphonEnchantment(() -> enableSiphon.get(), () -> siphonTreasureOnly.get()));
     public static ForgeConfigSpec.BooleanValue veteranTreasureOnly;
-    public static final RegistryObject<Enchantment> HOMING = ENCHANTMENTS.register("homing", () -> new HomingEnchantment(() -> enableHoming.get(), () -> homingTreasureOnly.get()));
+    public static final RegistryObject<Enchantment> VETERAN = ENCHANTMENTS.register("veteran", () -> new VeteranEnchantment(() -> enableVeteran.get(), () -> veteranTreasureOnly.get()));
     public static ForgeConfigSpec.BooleanValue vigorTreasureOnly;
+    public static final RegistryObject<Enchantment> VIGOR = ENCHANTMENTS.register("vigor", () -> new VigorEnchantment(() -> enableVigor.get(), () -> vigorTreasureOnly.get()));
     // Configs & Enchantments
     public static ForgeConfigSpec.BooleanValue enableBlazing;
-    public static ForgeConfigSpec.BooleanValue homingTreasureOnly;
     public static final RegistryObject<Enchantment> BLAZING = ENCHANTMENTS.register("blazing", () -> new BlazingEnchantment(() -> enableBlazing.get(), () -> blazingTreasureOnly.get()));
+    public static ForgeConfigSpec.BooleanValue homingTreasureOnly;
+    public static final RegistryObject<Enchantment> HOMING = ENCHANTMENTS.register("homing", () -> new HomingEnchantment(() -> enableHoming.get(), () -> homingTreasureOnly.get()));
 
     /**
      * Adds the glowing effect to the targeting entity when using the bow
