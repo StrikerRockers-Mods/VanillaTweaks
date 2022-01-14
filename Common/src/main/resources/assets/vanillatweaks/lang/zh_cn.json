@@ -1,17 +1,15 @@
 {
-  "_comment": "方块",
+  "_comment": "blocks",
   "block.vanillatweaks.flint_block": "燧石块",
   "block.vanillatweaks.sugar_block": "糖块",
   "block.vanillatweaks.charcoal_block": "木炭块",
   "block.vanillatweaks.pedestal": "展示基座",
-  
-  "_comment": "物品",
+  "_comment": "items",
   "item.vanillatweaks.dynamite": "炸药",
   "item.vanillatweaks.fried_egg": "煎鸡蛋",
   "item.vanillatweaks.crafting_pad": "随身工作台",
   "item.vanillatweaks.slime_bucket": "史莱姆探测桶",
-  
-  "_comment": "附魔",
+  "_comment": "enchantments",
   "enchantment.vanillatweaks.nimble": "敏捷",
   "enchantment.vanillatweaks.hops": "跳跃",
   "enchantment.vanillatweaks.vigor": "生命提升",
@@ -19,8 +17,7 @@
   "enchantment.vanillatweaks.blazing": "自动熔炼",
   "enchantment.vanillatweaks.siphon": "收集",
   "enchantment.vanillatweaks.homing": "自动瞄准",
-  
-  "_comment": "附魔描述",
+  "_comment": "Enchantments Description",
   "enchantment.vanillatweaks.nimble.desc": "增加移动速度",
   "enchantment.vanillatweaks.hops.desc": "增加跳跃高度",
   "enchantment.vanillatweaks.vigor.desc": "每一级增加一颗心的生命上限",
@@ -28,8 +25,7 @@
   "enchantment.vanillatweaks.blazing.desc": "自动熔炼矿物",
   "enchantment.vanillatweaks.siphon.desc": "掉落物会直接进入物品栏",
   "enchantment.vanillatweaks.homing.desc": "射出的箭会自动瞄准目标",
-  
-  "_comment": "Fabric 配置翻译",
+  "_comment": "Fabric config translations",
   "text.autoconfig.vanillatweaks.title":"VanillaTweaks 配置",
   "text.autoconfig.vanillatweaks.option.content": "内容",
   "text.autoconfig.vanillatweaks.option.enchanting": "附魔",
@@ -37,7 +33,6 @@
   "text.autoconfig.vanillatweaks.option.world": "世界",
   "text.autoconfig.vanillatweaks.option.tweaks": "调整",
   "text.autoconfig.vanillatweaks.option.recipe": "合成表",
-
   "text.autoconfig.vanillatweaks.option.content.enableCraftingPad": "便携式工作台",
   "text.autoconfig.vanillatweaks.option.content.enableDynamite": "效果较差但可投掷的TNT",
   "text.autoconfig.vanillatweaks.option.content.enableSlimeBucket": "史莱姆识别桶",
@@ -47,7 +42,6 @@
   "text.autoconfig.vanillatweaks.option.content.enablePedestal": "展示宝藏的方块",
   "text.autoconfig.vanillatweaks.option.content.dynamiteCooldown": "以tick为单位的炸药冷却时间",
   "text.autoconfig.vanillatweaks.option.content.dynamiteExplosionPower": "炸药的爆炸威力\nTNT 有 4 个，末影水晶有 6 个",
-
   "text.autoconfig.vanillatweaks.option.enchanting.enableBlazing": "启用 自动熔炼",
   "text.autoconfig.vanillatweaks.option.enchanting.enableHops": "启用 跳跃",
   "text.autoconfig.vanillatweaks.option.enchanting.enableNimble": "启用 敏捷",
@@ -55,7 +49,6 @@
   "text.autoconfig.vanillatweaks.option.enchanting.enableVeteran": "启用 经验吸引",
   "text.autoconfig.vanillatweaks.option.enchanting.enableVigor": "启用 生命提升",
   "text.autoconfig.vanillatweaks.option.enchanting.enableHoming": "启用 自动瞄准",
-
   "text.autoconfig.vanillatweaks.option.enchanting.blazingTreasureOnly": "自动熔炼 只出现在战利品中",
   "text.autoconfig.vanillatweaks.option.enchanting.hopsTreasureOnly": "跳跃 只出现在战利品中",
   "text.autoconfig.vanillatweaks.option.enchanting.nimbleTreasureOnly": "敏捷 只出现在战利品中",
@@ -63,10 +56,8 @@
   "text.autoconfig.vanillatweaks.option.enchanting.veteranTreasureOnly": "经验吸引 只出现在战利品中",
   "text.autoconfig.vanillatweaks.option.enchanting.vigorTreasureOnly": "生命提升 只出现在战利品中",
   "text.autoconfig.vanillatweaks.option.enchanting.homingTreasureOnly": "自动瞄准 只出现在战利品中",
-
   "text.autoconfig.vanillatweaks.option.loot.batLeatherDropChance": "蝙蝠掉落皮革的几率，最大10",
   "text.autoconfig.vanillatweaks.option.loot.namedMobsDropNameTag": "当命名生物死亡时掉落名称标签",
-
   "text.autoconfig.vanillatweaks.option.tweaks.enableArmorStandSwapping": "盔甲架可交换盔甲",
   "text.autoconfig.vanillatweaks.option.tweaks.itemFrameRotateBackwards": "移动点击物品框架以反向旋转",
   "text.autoconfig.vanillatweaks.option.tweaks.babyZombieBurnInDaylight": "小僵尸在白天燃烧",
@@ -76,18 +67,15 @@
   "text.autoconfig.vanillatweaks.option.tweaks.enableSignEditing": "可编辑标志牌中的文本",
   "text.autoconfig.vanillatweaks.option.tweaks.tntIgnition": " TNT在靠近熔岩或岩浆块时点燃",
   "text.autoconfig.vanillatweaks.option.tweaks.enableSilkSpawner": "精准采集移动刷怪笼",
-
   "text.autoconfig.vanillatweaks.option.world.selfPlanting": "种子在破损时自动种植",
   "text.autoconfig.vanillatweaks.option.world.realisticRelationship": "现实的捕食者/猎物关系是否被激活",
   "text.autoconfig.vanillatweaks.option.world.disableLavaPockets": "不让下界那个讨厌的熔岩袋杀死你",
-
   "text.autoconfig.vanillatweaks.option.recipe.betterChestRecipe": "一次制作多个箱子",
   "text.autoconfig.vanillatweaks.option.recipe.betterTrappedChestRecipe": "更简单的陷阱箱",
   "text.autoconfig.vanillatweaks.option.recipe.woolToString": "羊毛制线",
   "text.autoconfig.vanillatweaks.option.recipe.nameTag": "命名牌",
   "text.autoconfig.vanillatweaks.option.recipe.betterRepeater": "更简单的中继器",
-  
-  "_comment": "杂项",
+  "_comment": "misc",
   "entity.dynamite": "炸药",
   "tooltip.entity": "生成：%s",
   "slime_bucket.chunk": "§a史莱姆区块！",
