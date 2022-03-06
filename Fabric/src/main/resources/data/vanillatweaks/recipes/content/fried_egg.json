@@ -6,9 +6,12 @@
   "result": "vanillatweaks:fried_egg",
   "experience": 0.35,
   "cookingtime": 200,
-  "frc:conditions": [
+  "fabric:load_conditions": [
     {
-      "recipeconditions:item_registered": "vanillatweaks:fried_egg"
+      "condition": "vanillatweaks:item_registered",
+      "values": [
+        "vanillatweaks:fried_egg"
+      ]
     }
   ]
 }

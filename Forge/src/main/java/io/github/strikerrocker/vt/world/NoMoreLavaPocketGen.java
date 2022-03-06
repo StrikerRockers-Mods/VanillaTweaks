@@ -51,8 +51,8 @@ public class NoMoreLavaPocketGen extends ForgeFeature {
     public void biomesLoadingEvent(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.BiomeCategory.NETHER && disableLavaPocketGen.get()) {
             event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION).removeIf(featureSupplier -> {
-                PlacedFeature feature = featureSupplier.get();
-                return compareFeature(NetherPlacements.SPRING_CLOSED, feature) || compareFeature(NetherPlacements.SPRING_CLOSED_DOUBLE, feature) || compareFeature(NetherPlacements.SPRING_OPEN, feature);
+                PlacedFeature feature = featureSupplier.value();
+                return compareFeature(NetherPlacements.SPRING_CLOSED.value(), feature) || compareFeature(NetherPlacements.SPRING_CLOSED_DOUBLE.value(), feature) || compareFeature(NetherPlacements.SPRING_OPEN.value(), feature);
             });
         }
     }

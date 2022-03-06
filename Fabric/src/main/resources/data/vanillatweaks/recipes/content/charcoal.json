@@ -9,9 +9,12 @@
     "item": "minecraft:charcoal",
     "count": 9
   },
-  "frc:conditions": [
+  "fabric:load_conditions": [
     {
-      "recipeconditions:item_registered": "vanillatweaks:charcoal_block"
+      "condition": "vanillatweaks:item_registered",
+      "values": [
+        "vanillatweaks:charcoal_block"
+      ]
     }
   ]
 }

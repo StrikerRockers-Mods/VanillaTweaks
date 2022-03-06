@@ -19,9 +19,12 @@
   "result": {
     "item": "vanillatweaks:dynamite"
   },
-  "frc:conditions": [
+  "fabric:load_conditions": [
     {
-      "recipeconditions:item_registered": "vanillatweaks:dynamite"
+      "condition": "vanillatweaks:item_registered",
+      "values": [
+        "vanillatweaks:dynamite"
+      ]
     }
   ]
 }

@@ -1,7 +1,6 @@
 package io.github.strikerrocker.vt.mixins.tweaks;
 
 import io.github.strikerrocker.vt.VanillaTweaksFabric;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +21,7 @@ public class MixinSpawnerBlock {
      */
     @Inject(method = "spawnAfterBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/BaseEntityBlock;spawnAfterBreak(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.AFTER), cancellable = true)
     public void cancelXP(BlockState state, ServerLevel world, BlockPos pos, ItemStack stack, CallbackInfo ci) {
-        if (FabricToolTags.PICKAXES.contains(stack.getItem()) && EnchantmentHelper.getEnchantments(stack).containsKey(Enchantments.SILK_TOUCH)
+        if (EnchantmentHelper.getEnchantments(stack).containsKey(Enchantments.SILK_TOUCH)
                 && VanillaTweaksFabric.config.tweaks.enableSilkSpawner) {
             ci.cancel();
         }

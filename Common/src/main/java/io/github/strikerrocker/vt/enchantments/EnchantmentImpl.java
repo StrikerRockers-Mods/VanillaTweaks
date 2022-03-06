@@ -109,8 +109,8 @@ public class EnchantmentImpl {
                 target = livingEntity;
             }
         }
-        VanillaTweaks.LOGGER.debug(coneBound);
-        VanillaTweaks.LOGGER.debug(target);
+        VanillaTweaks.LOGGER.debug(coneBound.toString());
+        VanillaTweaks.LOGGER.debug(target.toString());
         return target;
     }
 

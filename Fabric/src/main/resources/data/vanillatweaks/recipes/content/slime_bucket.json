@@ -15,9 +15,12 @@
   "result": {
     "item": "vanillatweaks:slime_bucket"
   },
-  "frc:conditions": [
+  "fabric:load_conditions": [
     {
-      "recipeconditions:item_registered": "vanillatweaks:slime_bucket"
+      "condition": "vanillatweaks:item_registered",
+      "values": [
+        "vanillatweaks:slime_bucket"
+      ]
     }
   ]
 }

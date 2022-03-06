@@ -13,9 +13,12 @@
   "result": {
     "item": "vanillatweaks:flint_block"
   },
-  "frc:conditions": [
+  "fabric:load_conditions": [
     {
-      "recipeconditions:item_registered": "vanillatweaks:flint_block"
+      "condition": "vanillatweaks:item_registered",
+      "values": [
+        "vanillatweaks:flint_block"
+      ]
     }
   ]
 }

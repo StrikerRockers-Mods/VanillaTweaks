@@ -16,9 +16,12 @@
   "result": {
     "item": "vanillatweaks:pedestal"
   },
-  "frc:conditions": [
+  "fabric:load_conditions": [
     {
-      "recipeconditions:item_registered": "vanillatweaks:pedestal"
+      "condition": "vanillatweaks:item_registered",
+      "values": [
+        "vanillatweaks:pedestal"
+      ]
     }
   ]
 }
