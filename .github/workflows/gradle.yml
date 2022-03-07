@@ -1,6 +1,21 @@
 name: build
-on: [ pull_request, push ]
-
+on:
+  push:
+    branches:
+      - '[0-9]**'
+    paths-ignore:
+      - '*.md'
+      - 'LICENSE'
+      - '.gitignore'
+    tags-ignore:
+      - '[0-9]+.[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+      - 'LICENSE'
+      - '.github/**'
+      - '.gitignore'
 jobs:
   build:
     strategy:
@@ -37,4 +52,3 @@ jobs:
           path: |
             Forge/build/libs/
             Fabric/build/libs/
-            Common/build/libs/
