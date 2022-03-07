@@ -1,13 +1,28 @@
 name: build
-on: [ pull_request, push ]
-
+on:
+  push:
+    branches:
+      - '[0-9]**'
+    paths-ignore:
+      - '*.md'
+      - 'LICENSE'
+      - '.gitignore'
+    tags-ignore:
+      - '[0-9]+.[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+      - 'LICENSE'
+      - '.github/**'
+      - '.gitignore'
 jobs:
   build:
     strategy:
       matrix:
         # Use these Java versions
         java: [
-            17
+          17
         ]
         # and run on both Linux, Windows
         os: [ ubuntu-latest ] #, windows-latest ]
@@ -15,6 +30,8 @@ jobs:
     steps:
       - name: checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: validate gradle wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: setup jdk ${{ matrix.java }}
@@ -35,4 +52,3 @@ jobs:
           path: |
             Forge/build/libs/
             Fabric/build/libs/
-            Common/build/libs/

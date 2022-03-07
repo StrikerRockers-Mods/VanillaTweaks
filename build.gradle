@@ -42,3 +42,36 @@ subprojects {
         enabled = false
     }
 }
+
+task setupGithubActions() {
+    doLast {
+        exec {
+            commandLine "echo", "##[set-output name=version;]${rootProject.version}"
+        }
+        exec {
+            commandLine "echo", "##[set-output name=mod_name;]${rootProject.mod_name}"
+        }
+        exec {
+            commandLine "echo", "##[set-output name=minecraft_version;]${rootProject.minecraft_version}"
+        }
+        exec {
+            commandLine "echo", "##[set-output name=curse_project_id;]${rootProject.curse_project_id}"
+        }
+        exec {
+            commandLine "echo", "##[set-output name=curse_versions_fabric;]${rootProject.curse_versions_fabric}"
+        }
+        exec {
+            commandLine "echo", "##[set-output name=curse_versions_forge;]${rootProject.curse_versions_forge}"
+        }
+        if (rootProject.hasProperty('curse_relations_fabric')) {
+            exec {
+                commandLine "echo", "##[set-output name=curse_relations_fabric;]${rootProject.curse_relations_fabric}"
+            }
+        }
+        if (rootProject.hasProperty('curse_relations_forge')) {
+            exec {
+                commandLine "echo", "##[set-output name=curse_relations_forge;]${rootProject.curse_relations_forge}"
+            }
+        }
+    }
+}
