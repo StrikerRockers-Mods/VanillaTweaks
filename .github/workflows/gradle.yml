@@ -7,7 +7,7 @@ jobs:
       matrix:
         # Use these Java versions
         java: [
-            17
+          17
         ]
         # and run on both Linux, Windows
         os: [ ubuntu-latest ] #, windows-latest ]
@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: validate gradle wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: setup jdk ${{ matrix.java }}
