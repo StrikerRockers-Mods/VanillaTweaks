@@ -24,7 +24,7 @@ jobs:
         id: create_release
         uses: meeDamian/github-release@2.0
         with:
-          files: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.minecraft_version }}-fabric-${{ steps.build.outputs.version }}.jar Forge/build/libs/${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.minecraft_version }}-forge-${{ steps.build.outputs.version }}.jar"
+          files: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           gzip: false
           name: "${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.version }}"
           token: "${{ secrets.GITHUB_TOKEN }}"
@@ -33,7 +33,7 @@ jobs:
         with:
           display_name: "Don't Download THIS"
           #          changelog: "Changelog not added yet..."
-          file_path: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.minecraft_version }}-fabric-${{ steps.build.outputs.version }}.jar"
+          file_path: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           game_endpoint: minecraft
           relations: "${{ steps.build.outputs.curse_relations_fabric }}"
           game_versions: "${{ steps.build.outputs.curse_versions_fabric }}"
@@ -45,7 +45,7 @@ jobs:
         with:
           display_name: "Don't Download THIS"
           #          changelog: "Changelog not added yet..."
-          file_path: "Forge/build/libs/${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.minecraft_version }}-forge-${{ steps.build.outputs.version }}.jar"
+          file_path: "Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           game_endpoint: minecraft
           relations: "${{ steps.build.outputs.curse_relations_forge }}"
           game_versions: "${{ steps.build.outputs.curse_versions_forge }}"
