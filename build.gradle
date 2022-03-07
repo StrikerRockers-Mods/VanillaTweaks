@@ -46,6 +46,8 @@ subprojects {
 task setupGithubActions() {
     exec {
         commandLine "echo", "##[set-output name=version;]${rootProject.version}";
-        commandLine "echo", "##[set-output name=modid;]${rootProject.mod_id}";
+    }
+    exec {
+        commandLine "echo", "##[set-output name=mod_name;]${rootProject.mod_name}";
     }
 }

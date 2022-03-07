@@ -14,18 +14,19 @@ jobs:
         uses: actions/setup-java@v2,
         with: { distribution: "temurin", java-version: "17" },
       }
-      - {
-        name: "Build with Gradle",
-        id: build,
-        run: "chmod +x gradlew && ./gradlew setupGithubActions build",
-      }
+      - uses: burrunan/gradle-cache-action@v1
+        name: Build with Gradle
+        id: build
+        with:
+          arguments: "setupGithubActions build"
+          gradle-version: "wrapper"
       - name: "Create a Release"
         id: create_release
         uses: meeDamian/github-release@2.0
         with:
-          files: "Fabric/build/libs/${{ steps.build.outputs.modid }}-fabric-${{ steps.build.outputs.version }}.jar Forge/build/libs/${{ steps.build.outputs.modid }}-forge-${{ steps.build.outputs.version }}.jar"
+          files: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.version }}.jar Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.version }}.jar"
           gzip: false
-          name: "${{ steps.build.outputs.modid }}-${{ steps.build.outputs.version }}"
+          name: "${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.version }}"
           token: "${{ secrets.GITHUB_TOKEN }}"
       #      - name: "Upload Fabric to CurseForge"
       #        uses: itsmeow/curseforge-upload@master
