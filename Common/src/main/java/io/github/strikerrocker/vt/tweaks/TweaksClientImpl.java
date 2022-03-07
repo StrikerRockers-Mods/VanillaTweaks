@@ -15,7 +15,7 @@ public class TweaksClientImpl {
      * Shows the name of the mob in tooltip
      */
     public static void addSilkSpawnerTooltip(ItemStack stack, List<Component> list) {
-        if (stack.hasTag()) {
+        if (stack.hasTag() && Minecraft.getInstance().level != null) {
             CompoundTag spawnerDataNBT = stack.getOrCreateTag().getCompound(TweaksImpl.SPAWNER_TAG);
             if (!spawnerDataNBT.isEmpty()) {
                 DummySpawnerLogic.DUMMY_SPAWNER_LOGIC.load(Minecraft.getInstance().level, BlockPos.ZERO, spawnerDataNBT);

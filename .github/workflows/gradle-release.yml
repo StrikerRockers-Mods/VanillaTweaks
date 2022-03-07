@@ -37,7 +37,7 @@ jobs:
           relations: "${{ steps.build.outputs.curse_relations_fabric }}"
           game_versions: "${{ steps.build.outputs.curse_versions_fabric }}"
           project_id: "${{ steps.build.outputs.curse_project_id }}"
-          release_type: alpha
+          release_type: release
           token: "${{ secrets.CF_API_TOKEN }}"
       - name: "Upload Forge to CurseForge"
         uses: itsmeow/curseforge-upload@master
@@ -48,7 +48,7 @@ jobs:
           relations: "${{ steps.build.outputs.curse_relations_forge }}"
           game_versions: "${{ steps.build.outputs.curse_versions_forge }}"
           project_id: "${{ steps.build.outputs.curse_project_id }}"
-          release_type: alpha
+          release_type: release
           token: "${{ secrets.CF_API_TOKEN }}"
       - name: "Build Success"
         id: build-success
