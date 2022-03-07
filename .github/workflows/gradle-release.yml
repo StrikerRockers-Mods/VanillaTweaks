@@ -31,8 +31,7 @@ jobs:
       - name: "Upload Fabric to CurseForge"
         uses: itsmeow/curseforge-upload@master
         with:
-          display_name: "Don't Download THIS"
-          #          changelog: "Changelog not added yet..."
+          changelog: "Changelog not added yet..."
           file_path: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           game_endpoint: minecraft
           relations: "${{ steps.build.outputs.curse_relations_fabric }}"
@@ -43,8 +42,7 @@ jobs:
       - name: "Upload Forge to CurseForge"
         uses: itsmeow/curseforge-upload@master
         with:
-          display_name: "Don't Download THIS"
-          #          changelog: "Changelog not added yet..."
+          changelog: "Changelog not added yet..."
           file_path: "Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           game_endpoint: minecraft
           relations: "${{ steps.build.outputs.curse_relations_forge }}"
