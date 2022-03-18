@@ -5,19 +5,8 @@
     "1.18-latest": "1.5.52",
     "1.18-recommended": "1.5.52",
     "1.18.1-latest": "1.5.52",
-    "1.18.1-recommended": "1.5.53"
-  },
-  "1.17.1": {
-    "1.17.1-1.5.40": "Update to 1.17.1",
-    "1.17.1-1.5.41": "Rewrite homing enchantment.\n Fix armor swapping not working.",
-    "1.17.1-1.5.42": "Blazing now can be applied with fortune.\n Enchantment which are disabled won't appear in loot chests or enchantment table.\n Silk Spawner now works again.\n You can now place sign on other signs when shift right clicking.\n Removed better stairs and stone tools.",
-    "1.17.1-1.5.43": "Started using DeferredRegistry instead of RegistryEvents.\nAdded back JEI support.\nRemoved unused translation texts.\n Added an config to make enchantments appear only in loot.",
-    "1.17.1-1.5.44": "Rework advancements for the mod to not appear in the menu but unlock the recipes.",
-    "1.17.1-1.5.45": "When blazing and fortune are both present, fortune effect happens and then blazing effect.",
-    "1.17.1-1.5.46": "Disable gravity for homing arrow when it only targets an entity.\nAdd glowing effect to the entity homing bow is going to target.",
-    "1.17.1-1.5.47": "Homing no longer targets pets.\nFix not being able to dye signs due to sign editing feature.",
-    "1.17.1-1.5.48": "Fix disabling enchantments not causing it to appear in librarians trades.",
-    "1.17.1-1.5.49": "Fixed siphon not working as intended."
+    "1.18.1-recommended": "1.5.53",
+    "1.18.2-recommended": "1.5.55"
   },
   "1.18": {
     "1.18-1.5.50": "Updated to Minecraft 1.18",

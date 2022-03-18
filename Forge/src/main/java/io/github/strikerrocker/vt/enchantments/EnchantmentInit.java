@@ -27,7 +27,7 @@ public class EnchantmentInit extends ForgeFeature {
 
     // Deferred Registries
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MOD_ID);
-    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, MOD_ID);
+    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, MOD_ID);
     // GlobalLootModifierSerializer
     public static final RegistryObject<GlobalLootModifierSerializer<?>> BLAZING_MODIFIER = LOOT_MODIFIER_SERIALIZERS.register("blazing", BlazingModifier.Serializer::new);
     public static final RegistryObject<GlobalLootModifierSerializer<?>> SIPHON_MODIFIER = LOOT_MODIFIER_SERIALIZERS.register("siphon", SiphonModifier.Serializer::new);
