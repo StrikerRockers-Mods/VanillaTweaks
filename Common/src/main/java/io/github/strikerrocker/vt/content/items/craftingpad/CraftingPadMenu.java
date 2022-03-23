@@ -5,14 +5,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingMenu;
 
-public class CraftingPadScreenHandler extends CraftingMenu {
+public class CraftingPadMenu extends CraftingMenu {
+    int slotId;
 
-    CraftingPadScreenHandler(int id, Inventory playerInventory, ContainerLevelAccess screenHandlerContext) {
+    CraftingPadMenu(int id, Inventory playerInventory, ContainerLevelAccess screenHandlerContext, int slotId) {
         super(id, playerInventory, screenHandlerContext);
+        this.slotId = slotId;
     }
 
     @Override
     public boolean stillValid(Player player) {
-        return true;
+        return player.getInventory().getItem(slotId).getItem() instanceof CraftingPadItem;
     }
 }

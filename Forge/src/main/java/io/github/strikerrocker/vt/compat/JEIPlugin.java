@@ -2,7 +2,7 @@ package io.github.strikerrocker.vt.compat;
 
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.content.items.ForgeItems;
-import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadContainer;
+import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadMenu;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -23,7 +23,7 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(CraftingPadContainer.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
+        registration.addRecipeTransferHandler(CraftingPadMenu.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
     }
 
     @Override
