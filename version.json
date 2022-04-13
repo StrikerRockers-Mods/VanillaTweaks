@@ -12,6 +12,7 @@
     "1.18-1.5.50": "Updated to Minecraft 1.18",
     "1.5.51": "Fixed pedestal not saving data.\n Made Lava pocket disabler work again",
     "1.5.52": "Added back JEI support.\n Made lava pocket disabler also disable open lava pockets.",
-    "1.5.53": "Ported the whole mod MultiLoader which means same time update as Forge versions.\n Fixed issue with pedestal not displaying items on world reload."
+    "1.5.53": "Ported the whole mod MultiLoader which means same time update as Forge versions.\n Fixed issue with pedestal not displaying items on world reload.",
+    "1.5.57": "Fixed crash with null entity with "
   }
 }
