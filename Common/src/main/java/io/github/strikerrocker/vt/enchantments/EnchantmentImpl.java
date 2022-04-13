@@ -27,7 +27,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class EnchantmentImpl {
@@ -100,7 +99,6 @@ public class EnchantmentImpl {
         }
     }
 
-    @Nullable
     public static LivingEntity getHomingTarget(Level world, LivingEntity shooter, int homingLevel) {
         AABB coneBound = ConeShape.getConeBoundApprox(shooter, homingLevel);
         List<Entity> potentialTargets = world.getEntities(shooter, coneBound);
