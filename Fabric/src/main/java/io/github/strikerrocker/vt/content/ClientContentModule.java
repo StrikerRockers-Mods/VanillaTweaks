@@ -1,10 +1,10 @@
 package io.github.strikerrocker.vt.content;
 
-import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.FabricModule;
 import io.github.strikerrocker.vt.content.blocks.FabricBlocks;
 import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalRenderer;
 import io.github.strikerrocker.vt.content.blocks.pedestal.PedestalScreen;
+import io.github.strikerrocker.vt.content.items.dynamite.DynamiteEntity;
 import io.github.strikerrocker.vt.misc.EntitySpawnPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.phys.Vec3;
@@ -25,8 +24,6 @@ import static io.github.strikerrocker.vt.content.blocks.FabricBlocks.PEDESTAL_TY
 import static io.github.strikerrocker.vt.content.items.FabricItems.DYNAMITE_TYPE;
 
 public class ClientContentModule extends FabricModule {
-
-    public static final ResourceLocation PACKET_ID = new ResourceLocation(VanillaTweaks.MOD_ID, "dynamite");
 
     @Override
     public void addFeatures() {
@@ -41,7 +38,7 @@ public class ClientContentModule extends FabricModule {
     }
 
     public void receiveEntityPacket() {
-        ClientPlayNetworking.registerReceiver(PACKET_ID, (client, handler, buf, responseSender) -> {
+        ClientPlayNetworking.registerReceiver(DynamiteEntity.PACKET_ID, (client, handler, buf, responseSender) -> {
             EntityType<?> et = Registry.ENTITY_TYPE.byId(buf.readVarInt());
             UUID uuid = buf.readUUID();
             int entityId = buf.readVarInt();
