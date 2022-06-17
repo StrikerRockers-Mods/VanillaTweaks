@@ -19,7 +19,7 @@ public record VanillaRecipeConditions(String object) implements ICondition {
     }
 
     @Override
-    public boolean test() {
+    public boolean test(IContext context) {
         if (object.equals("chest")) return VanillaRecipes.betterChest.get();
         if (object.equals("nametag")) return VanillaRecipes.nametag.get();
         if (object.equals("string")) return VanillaRecipes.string.get();

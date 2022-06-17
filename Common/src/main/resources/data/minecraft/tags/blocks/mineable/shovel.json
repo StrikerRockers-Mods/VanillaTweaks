@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "vanillatweaks:sugar_block"
+    {
+      "id": "vanillatweaks:sugar_block",
+      "required": false
+    }
   ]
 }

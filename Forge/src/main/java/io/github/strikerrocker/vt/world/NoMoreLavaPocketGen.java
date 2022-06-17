@@ -1,39 +1,65 @@
 package io.github.strikerrocker.vt.world;
 
-import com.google.gson.JsonElement;
-import com.mojang.serialization.JsonOps;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.base.ForgeFeature;
-import net.minecraft.data.worldgen.placement.NetherPlacements;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
+import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.ForgeBiomeModifiers;
+import net.minecraftforge.common.world.ModifiableBiomeInfo;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-import java.util.Optional;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 public class NoMoreLavaPocketGen extends ForgeFeature {
-    private ForgeConfigSpec.BooleanValue disableLavaPocketGen;
+    // Version of forge stock biome modifier with config
+    public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, VanillaTweaks.MOD_ID);
+    public static final RegistryObject<Codec<RemoveFeaturesBiomeModifier>> REMOVE_FEATURES_BIOME_MODIFIER_TYPE = BIOME_MODIFIER_SERIALIZERS.register("remove_features", () ->
+            RecordCodecBuilder.create(builder -> builder.group(
+                    Biome.LIST_CODEC.fieldOf("biomes").forGetter(RemoveFeaturesBiomeModifier::biomes),
+                    PlacedFeature.LIST_CODEC.fieldOf("features").forGetter(RemoveFeaturesBiomeModifier::features),
+                    new ExtraCodecs.EitherCodec<>(GenerationStep.Decoration.CODEC.listOf(), GenerationStep.Decoration.CODEC).xmap(
+                            either -> either.map(Set::copyOf, Set::of), // convert list/singleton to set when decoding
+                            set -> set.size() == 1 ? Either.right(set.toArray(GenerationStep.Decoration[]::new)[0]) : Either.left(List.copyOf(set))
+                    ).optionalFieldOf("steps", EnumSet.allOf(GenerationStep.Decoration.class)).forGetter(RemoveFeaturesBiomeModifier::steps)
+            ).apply(builder, RemoveFeaturesBiomeModifier::new))
+    );
+    private static ForgeConfigSpec.BooleanValue disableLavaPocketGen;
 
-    /**
-     * Serializes the given features and then compares them
-     */
-    private static boolean compareFeature(PlacedFeature placedFeature1, PlacedFeature placedFeature2) {
-        Optional<JsonElement> placedFeatureJSON1 = PlacedFeature.DIRECT_CODEC.encode(placedFeature1, JsonOps.INSTANCE, JsonOps.INSTANCE.empty()).get().left();
-        Optional<JsonElement> placedFeatureJSON2 = PlacedFeature.DIRECT_CODEC.encode(placedFeature2, JsonOps.INSTANCE, JsonOps.INSTANCE.empty()).get().left();
-        // One of the configured features cannot be serialized
-        if (placedFeatureJSON1.isEmpty() || placedFeatureJSON2.isEmpty()) {
-            return false;
+    public record RemoveFeaturesBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> features,
+                                              Set<GenerationStep.Decoration> steps) implements BiomeModifier {
+
+        public static ForgeBiomeModifiers.RemoveFeaturesBiomeModifier allSteps(HolderSet<Biome> biomes, HolderSet<PlacedFeature> features) {
+            return new ForgeBiomeModifiers.RemoveFeaturesBiomeModifier(biomes, features, EnumSet.allOf(GenerationStep.Decoration.class));
         }
 
-        // Compare the JSON to see if it's the same ConfiguredFeature in the end.
-        return placedFeatureJSON1.equals(placedFeatureJSON2);
-    }
+        @Override
+        public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+            if (disableLavaPocketGen.get() && phase == Phase.REMOVE && this.biomes.contains(biome)) {
+                BiomeGenerationSettingsBuilder generationSettings = builder.getGenerationSettings();
+                for (GenerationStep.Decoration step : this.steps) {
+                    generationSettings.getFeatures(step).removeIf(this.features::contains);
+                }
+            }
+        }
 
-    @Override
-    public boolean usesEvents() {
-        return true;
+        @Override
+        public Codec<? extends BiomeModifier> codec() {
+            return REMOVE_FEATURES_BIOME_MODIFIER_TYPE.get();
+        }
     }
 
     @Override
@@ -42,18 +68,5 @@ public class NoMoreLavaPocketGen extends ForgeFeature {
                 .translation("config.vanillatweaks:disableLavaPocketGen")
                 .comment("Don't want that that pesky lava pockets in nether to kill you?")
                 .define("disableLavaPocketGen", true);
-    }
-
-    /**
-     * Remove lava pocket feature if enabled
-     */
-    @SubscribeEvent
-    public void biomesLoadingEvent(BiomeLoadingEvent event) {
-        if (event.getCategory() == Biome.BiomeCategory.NETHER && disableLavaPocketGen.get()) {
-            event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_DECORATION).removeIf(featureSupplier -> {
-                PlacedFeature feature = featureSupplier.value();
-                return compareFeature(NetherPlacements.SPRING_CLOSED.value(), feature) || compareFeature(NetherPlacements.SPRING_CLOSED_DOUBLE.value(), feature) || compareFeature(NetherPlacements.SPRING_OPEN.value(), feature);
-            });
-        }
     }
 }

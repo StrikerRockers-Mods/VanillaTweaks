@@ -1,7 +1,13 @@
 {
   "replace": false,
   "values": [
-    "vanillatweaks:charcoal_block",
-    "vanillatweaks:flint_block"
+    {
+      "id": "vanillatweaks:charcoal_block",
+      "required": false
+    },
+    {
+      "id": "vanillatweaks:flint_block",
+      "required": false
+    }
   ]
 }

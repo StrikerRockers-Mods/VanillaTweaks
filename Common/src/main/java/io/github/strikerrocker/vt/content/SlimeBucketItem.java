@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.content;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -23,7 +23,7 @@ public class SlimeBucketItem extends Item {
         if (!world.isClientSide) {
             ChunkPos chunkpos = new ChunkPos(user.blockPosition());
             boolean slime = WorldgenRandom.seedSlimeChunk(chunkpos.x, chunkpos.z, ((WorldGenLevel) world).getSeed(), 987234911L).nextInt(10) == 0;
-            user.displayClientMessage(new TranslatableComponent(slime ? "slime_bucket.chunk" : "slime_bucket.chunk.false"), true);
+            user.displayClientMessage(Component.translatable(slime ? "slime_bucket.chunk" : "slime_bucket.chunk.false"), true);
         }
         return new InteractionResultHolder<>(InteractionResult.PASS, user.getItemInHand(hand));
     }

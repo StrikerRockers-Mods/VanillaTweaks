@@ -1,6 +1,6 @@
 package io.github.strikerrocker.vt.content.items.craftingpad;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -26,7 +26,7 @@ public class CraftingPadItem extends Item {
                             user.blockPosition()), hand == InteractionHand.OFF_HAND ?
                             Inventory.SLOT_OFFHAND :
                             playerInventory.selected
-                    ), new TranslatableComponent("item.vanillatweaks.crafting_pad")));
+                    ), Component.translatable("item.vanillatweaks.crafting_pad")));
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, user.getItemInHand(hand));
         }
         return InteractionResultHolder.sidedSuccess(user.getItemInHand(hand), world.isClientSide);

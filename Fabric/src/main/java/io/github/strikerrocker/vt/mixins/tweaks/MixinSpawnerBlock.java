@@ -19,9 +19,9 @@ public class MixinSpawnerBlock {
     /*
      * Cancels experience drop when spawner is silk touched
      */
-    @Inject(method = "spawnAfterBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/BaseEntityBlock;spawnAfterBreak(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.AFTER), cancellable = true)
-    public void cancelXP(BlockState state, ServerLevel world, BlockPos pos, ItemStack stack, CallbackInfo ci) {
-        if (EnchantmentHelper.getEnchantments(stack).containsKey(Enchantments.SILK_TOUCH)
+    @Inject(method = "spawnAfterBreak", at = @At(value = "HEAD"), cancellable = true)
+    public void cancelXP(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, ItemStack itemStack, boolean bl, CallbackInfo ci) {
+        if (EnchantmentHelper.getEnchantments(itemStack).containsKey(Enchantments.SILK_TOUCH)
                 && VanillaTweaksFabric.config.tweaks.enableSilkSpawner) {
             ci.cancel();
         }

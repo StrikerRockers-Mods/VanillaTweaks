@@ -5,8 +5,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -46,12 +44,12 @@ public class TweaksImpl {
     }
 
     /**
-     * Returns if entity can burn
+     * Returns if entity can burn. Copied from Mob#isSunBurnTick
      */
     public static boolean canBurn(LivingEntity entity) {
         Level world = entity.level;
         if (world.isDay() && !world.isClientSide) {
-            float f = entity.getBrightness();
+            float f = entity.getLightLevelDependentMagicValue();
             boolean bl = entity.isInWaterRainOrBubble() || entity.isInPowderSnow || entity.wasInPowderSnow;
             return f > 0.5F && entity.getRandom().nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !bl && world.canSeeSky(entity.blockPosition());
         }
@@ -86,8 +84,8 @@ public class TweaksImpl {
         ListTag bees = beTag.getList("Bees", 10);
         CompoundTag blockStateTag = tag.getCompound("BlockStateTag");
         String honeyLvl = blockStateTag.getString("honey_level");
-        tooltips.add(new TranslatableComponent("vanillatweaks.bees").append(new TextComponent(String.format("%d", bees.size()))));
-        tooltips.add(new TranslatableComponent("vanillatweaks.honey.lvl").append(new TextComponent(String.format("%s", honeyLvl))));
+        tooltips.add(Component.translatable("vanillatweaks.bees").append(Component.literal(String.format("%d", bees.size()))));
+        tooltips.add(Component.translatable("vanillatweaks.honey.lvl").append(Component.literal(String.format("%s", honeyLvl))));
     }
 
     /**

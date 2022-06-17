@@ -3,6 +3,7 @@ package io.github.strikerrocker.vt.enchantments;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.misc.ConeShape;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -27,7 +28,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class EnchantmentImpl {
     private static final UUID vigorUUID = UUID.fromString("18339f34-6ab5-461d-a103-9b9a3ac3eec7");
@@ -154,7 +158,7 @@ public class EnchantmentImpl {
         return newDropList;
     }
 
-    public static int getFortuneCount(Random random, int initialCount, int lvl) {
+    public static int getFortuneCount(RandomSource random, int initialCount, int lvl) {
         if (lvl > 0) {
             int i = random.nextInt(lvl + 2) - 1;
             if (i < 0) {

@@ -33,16 +33,24 @@ public class FabricItems extends Feature {
                     .trackRangeBlocks(4).trackedUpdateRate(10)
                     .build()
     );
-    public static final Item DYNAMITE = Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "dynamite"), new DynamiteItem());
+    public static Item DYNAMITE;
 
     static {
-        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "charcoal_block"), CommonItems.CHARCOAL_BLOCK);
-        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "sugar_block"), CommonItems.SUGAR_BLOCK);
-        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "flint_block"), CommonItems.FLINT_BLOCK);
-        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "crafting_pad"), new CraftingPadItem());
-        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "slime_bucket"), new SlimeBucketItem());
-        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "pedestal"), new BlockItem(FabricBlocks.PEDESTAL_BLOCK, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "fried_egg"), CommonItems.FRIED_EGG);
+        if (VanillaTweaksFabric.config.content.enableDynamite)
+            DYNAMITE = Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "dynamite"), new DynamiteItem());
+        if (VanillaTweaksFabric.config.content.enableStorageBlocks) {
+            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "charcoal_block"), CommonItems.CHARCOAL_BLOCK);
+            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "sugar_block"), CommonItems.SUGAR_BLOCK);
+            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "flint_block"), CommonItems.FLINT_BLOCK);
+        }
+        if (VanillaTweaksFabric.config.content.enableCraftingPad)
+            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "crafting_pad"), new CraftingPadItem());
+        if (VanillaTweaksFabric.config.content.enableSlimeBucket)
+            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "slime_bucket"), new SlimeBucketItem());
+        if (VanillaTweaksFabric.config.content.enablePedestal)
+            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "pedestal"), new BlockItem(FabricBlocks.PEDESTAL_BLOCK, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+        if (VanillaTweaksFabric.config.content.enableFriedEgg)
+            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "fried_egg"), CommonItems.FRIED_EGG);
     }
 
     /**

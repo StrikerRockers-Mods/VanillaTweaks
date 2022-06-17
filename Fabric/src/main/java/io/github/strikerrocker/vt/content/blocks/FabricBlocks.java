@@ -26,10 +26,11 @@ public class FabricBlocks extends Feature {
     static {
         PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(PEDESTAL_IDENTIFIER, PedestalScreenHandler::new);
         PEDESTAL_TYPE = Registry.register(Registry.BLOCK_ENTITY_TYPE, PEDESTAL_IDENTIFIER, FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, PEDESTAL_BLOCK).build(null));
-
-        Registry.register(Registry.BLOCK, new ResourceLocation(MOD_ID, "charcoal_block"), CommonBlocks.CHARCOAL_BLOCK);
-        Registry.register(Registry.BLOCK, new ResourceLocation(MOD_ID, "sugar_block"), CommonBlocks.SUGAR_BLOCK);
-        Registry.register(Registry.BLOCK, new ResourceLocation(MOD_ID, "flint_block"), CommonBlocks.FLINT_BLOCK);
+        if (VanillaTweaksFabric.config.content.enableStorageBlocks) {
+            Registry.register(Registry.BLOCK, new ResourceLocation(MOD_ID, "charcoal_block"), CommonBlocks.CHARCOAL_BLOCK);
+            Registry.register(Registry.BLOCK, new ResourceLocation(MOD_ID, "sugar_block"), CommonBlocks.SUGAR_BLOCK);
+            Registry.register(Registry.BLOCK, new ResourceLocation(MOD_ID, "flint_block"), CommonBlocks.FLINT_BLOCK);
+        }
     }
 
     /**

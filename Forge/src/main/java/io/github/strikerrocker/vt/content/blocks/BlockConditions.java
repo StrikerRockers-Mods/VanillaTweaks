@@ -20,7 +20,7 @@ public record BlockConditions(String object) implements ICondition {
     }
 
     @Override
-    public boolean test() {
+    public boolean test(IContext context) {
         if (object.equals("pedestal")) return ForgeBlocks.enablePedestal.get();
         if (object.equals("storage_blocks")) return ForgeBlocks.enableStorageBlocks.get();
         return false;

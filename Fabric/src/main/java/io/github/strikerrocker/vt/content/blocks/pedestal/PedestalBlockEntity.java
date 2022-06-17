@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -41,7 +40,7 @@ public class PedestalBlockEntity extends BlockEntity implements MenuProvider, Im
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("block.vanillatweaks.pedestal");
+        return Component.translatable("block.vanillatweaks.pedestal");
     }
 
     @Override

@@ -15,5 +15,13 @@
         }
       ]
     }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "vanillatweaks:item_registered",
+      "values": [
+        "vanillatweaks:sugar_block"
+      ]
+    }
   ]
 }

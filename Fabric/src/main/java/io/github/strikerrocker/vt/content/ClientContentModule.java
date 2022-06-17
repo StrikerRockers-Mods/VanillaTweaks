@@ -51,7 +51,7 @@ public class ClientContentModule extends FabricModule {
                 Entity e = et.create(Minecraft.getInstance().level);
                 if (e == null)
                     throw new IllegalStateException("Failed to create instance of entity \"" + Registry.ENTITY_TYPE.getKey(et) + "\"!");
-                e.setPacketCoordinates(pos);
+                e.syncPacketPositionCodec(pos.x, pos.y, pos.z);
                 e.setPosRaw(pos.x, pos.y, pos.z);
                 e.setXRot(pitch);
                 e.setYRot(yaw);

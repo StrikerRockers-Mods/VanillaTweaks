@@ -19,7 +19,7 @@ public record ItemConditions(String object) implements ICondition {
     }
 
     @Override
-    public boolean test() {
+    public boolean test(IContext context) {
         if (object.equals("crafting_pad")) return ForgeItems.enablePad.get();
         if (object.equals("slime_bucket")) return ForgeItems.enableSlimeBucket.get();
         if (object.equals("dynamite")) return ForgeItems.enableDynamite.get();

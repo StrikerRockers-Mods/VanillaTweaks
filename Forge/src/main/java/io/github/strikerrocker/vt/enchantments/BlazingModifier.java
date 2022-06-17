@@ -1,6 +1,7 @@
 package io.github.strikerrocker.vt.enchantments;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
@@ -12,10 +13,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Handles the functionality of Blazing enchantment
@@ -23,6 +21,15 @@ import java.util.List;
 class BlazingModifier extends LootModifier {
     public BlazingModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
+    }
+
+    @Override
+    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+        ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
+        if (tool == null) return generatedLoot;
+        ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
+        generatedLoot.forEach(stack -> ret.add(smelt(stack, context)));
+        return ret;
     }
 
     /**
@@ -38,16 +45,6 @@ class BlazingModifier extends LootModifier {
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount()))
                 .orElse(stack);
-    }
-
-    @Nonnull
-    @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
-        if (tool == null) return generatedLoot;
-        ArrayList<ItemStack> ret = new ArrayList<>();
-        generatedLoot.forEach(stack -> ret.add(smelt(stack, context)));
-        return ret;
     }
 
     public static class Serializer extends GlobalLootModifierSerializer<BlazingModifier> {
