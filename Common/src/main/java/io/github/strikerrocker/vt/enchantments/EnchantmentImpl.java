@@ -3,8 +3,6 @@ package io.github.strikerrocker.vt.enchantments;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.misc.ConeShape;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -18,19 +16,16 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public class EnchantmentImpl {
@@ -134,40 +129,28 @@ public class EnchantmentImpl {
         }
     }
 
-    public static List<ItemStack> blazingLogic(ServerLevel world, Entity entity, ItemStack tool, List<ItemStack> dropList) {
-        RecipeManager recipeManager = world.getRecipeManager();
-        Container simpleInv = new SimpleContainer(1);
-        ItemStack itemToBeChecked;
-        Optional<SmeltingRecipe> smeltingResult;
-        ArrayList<ItemStack> newDropList = new ArrayList<>(dropList);
-        if (!newDropList.isEmpty())
-            for (int i = 0; i < newDropList.size(); i++) {
-                itemToBeChecked = newDropList.get(i);
-                simpleInv.setItem(0, itemToBeChecked);
-                smeltingResult = recipeManager.getRecipeFor(RecipeType.SMELTING, simpleInv, entity.level);
-                if (smeltingResult.isPresent() && entity instanceof Player playerEntity) {
-                    int count = itemToBeChecked.getCount();
-                    if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool) > 0) {
-                        count = getFortuneCount(world.getRandom(), count, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool));
-                        tool.hurtAndBreak(Math.max(count - 1, 3), playerEntity, player -> player.broadcastBreakEvent(player.getUsedItemHand()));
-                    }
-                    newDropList.set(i, new ItemStack(smeltingResult.get().getResultItem().getItem(), count));
-                    playerEntity.giveExperiencePoints((int) (smeltingResult.get().getExperience() * itemToBeChecked.getCount()));
-                }
-            }
+    public static List<ItemStack> blazingLogic(ServerLevel level, Entity entity, ItemStack tool, List<ItemStack> dropList) {
+        if (tool == null || !(entity instanceof Player)) return dropList;
+        ArrayList<ItemStack> newDropList = new ArrayList<>();
+        dropList.forEach(stack -> newDropList.add(smelt(stack, level)));
         return newDropList;
     }
 
-    public static int getFortuneCount(RandomSource random, int initialCount, int lvl) {
-        if (lvl > 0) {
-            int i = random.nextInt(lvl + 2) - 1;
-            if (i < 0) {
-                i = 0;
-            }
-            return initialCount * (i + 1);
-        } else {
-            return initialCount;
-        }
+    /**
+     * Returns the result of the smelting recipe
+     *
+     * @return The output stack or the input stack if a recipe doesn't exist
+     */
+    public static ItemStack smelt(ItemStack stack, ServerLevel level) {
+        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level)
+                .map(SmeltingRecipe::getResultItem)
+                .filter(itemStack -> !itemStack.isEmpty())
+                .map(itemStack -> {
+                    ItemStack copy = itemStack.copy();
+                    copy.setCount(stack.getCount() * itemStack.getCount());
+                    return copy;
+                })
+                .orElse(stack);
     }
 
     public static List<ItemStack> siphonLogic(Entity entity, List<ItemStack> dropList) {

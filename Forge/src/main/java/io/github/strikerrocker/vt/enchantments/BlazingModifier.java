@@ -3,16 +3,14 @@ package io.github.strikerrocker.vt.enchantments;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -24,27 +22,13 @@ class BlazingModifier extends LootModifier {
     }
 
     @Override
-    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> dropList, LootContext context) {
         ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
-        if (tool == null) return generatedLoot;
-        ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
-        generatedLoot.forEach(stack -> ret.add(smelt(stack, context)));
-        return ret;
-    }
-
-    /**
-     * Returns the result of the smelting recipe
-     *
-     * @param stack   The input stack
-     * @param context The loot context
-     * @return The output stack or the input stack if an recipe doesn't exist
-     */
-    private static ItemStack smelt(ItemStack stack, LootContext context) {
-        return context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel())
-                .map(SmeltingRecipe::getResultItem)
-                .filter(itemStack -> !itemStack.isEmpty())
-                .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount()))
-                .orElse(stack);
+        Entity entity = context.getParam(LootContextParams.THIS_ENTITY);
+        if (tool == null || !(entity instanceof Player)) return dropList;
+        ObjectArrayList<ItemStack> newDropList = new ObjectArrayList<>();
+        dropList.forEach(stack -> newDropList.add(EnchantmentImpl.smelt(stack, context.getLevel())));
+        return newDropList;
     }
 
     public static class Serializer extends GlobalLootModifierSerializer<BlazingModifier> {
