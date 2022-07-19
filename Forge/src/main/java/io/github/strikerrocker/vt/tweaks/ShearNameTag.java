@@ -13,10 +13,10 @@ public class ShearNameTag extends ForgeFeature {
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Entity target = event.getTarget();
         ItemStack heldItem = player.getItemInHand(event.getHand());
-        TweaksImpl.triggerShearNametag(player, heldItem, target, event.getWorld(), shearOffNameTag.get());
+        TweaksImpl.triggerShearNametag(player, heldItem, target, event.getLevel(), shearOffNameTag.get());
     }
 
     @Override

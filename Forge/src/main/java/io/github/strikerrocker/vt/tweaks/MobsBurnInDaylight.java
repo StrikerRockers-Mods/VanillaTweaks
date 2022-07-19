@@ -29,8 +29,8 @@ public class MobsBurnInDaylight extends ForgeFeature {
 
 
     @SubscribeEvent
-    public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity entity = event.getEntityLiving();
+    public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
+        LivingEntity entity = event.getEntity();
         TweaksImpl.triggerMobsBurnInSun(entity, creeperBurnInDaylight.get(), babyZombieBurnInDaylight.get());
     }
 }

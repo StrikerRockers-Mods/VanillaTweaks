@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.enchantments;
 
+import com.mojang.serialization.Codec;
 import io.github.strikerrocker.vt.base.ForgeFeature;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -11,9 +12,9 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,10 +28,10 @@ public class EnchantmentInit extends ForgeFeature {
 
     // Deferred Registries
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MOD_ID);
-    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, MOD_ID);
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> GLM = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MOD_ID);
     // GlobalLootModifierSerializer
-    public static final RegistryObject<GlobalLootModifierSerializer<?>> BLAZING_MODIFIER = LOOT_MODIFIER_SERIALIZERS.register("blazing", BlazingModifier.Serializer::new);
-    public static final RegistryObject<GlobalLootModifierSerializer<?>> SIPHON_MODIFIER = LOOT_MODIFIER_SERIALIZERS.register("siphon", SiphonModifier.Serializer::new);
+    public static final RegistryObject<Codec<BlazingModifier>> BLAZING_MODIFIER = GLM.register("blazing", BlazingModifier.CODEC);
+    public static final RegistryObject<Codec<SiphonModifier>> SIPHON_MODIFIER = GLM.register("siphon", SiphonModifier.CODEC);
     public static ForgeConfigSpec.BooleanValue enableHops;
     public static ForgeConfigSpec.BooleanValue enableNimble;
     public static ForgeConfigSpec.BooleanValue enableSiphon;
@@ -59,11 +60,11 @@ public class EnchantmentInit extends ForgeFeature {
      */
     @SubscribeEvent
     public void useItem(LivingEntityUseItemEvent event) {
-        if (!event.getEntityLiving().getCommandSenderWorld().isClientSide()) {
-            LivingEntity player = event.getEntityLiving();
+        if (!event.getEntity().getCommandSenderWorld().isClientSide()) {
+            LivingEntity player = event.getEntity();
             int homingLvl = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.HOMING.get(), event.getItem());
             if (homingLvl > 0) {
-                LivingEntity target = EnchantmentImpl.getHomingTarget(event.getEntityLiving().getCommandSenderWorld(), player, homingLvl);
+                LivingEntity target = EnchantmentImpl.getHomingTarget(event.getEntity().getCommandSenderWorld(), player, homingLvl);
                 if (target != null)
                     target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 4, 1, true, false, false));
             }
@@ -76,10 +77,10 @@ public class EnchantmentInit extends ForgeFeature {
     @SubscribeEvent
     public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
         if (EnchantmentInit.enableNimble.get()) {
-            EnchantmentImpl.triggerNimble(event.getEntityLiving(), EnchantmentInit.NIMBLE.get());
+            EnchantmentImpl.triggerNimble(event.getEntity(), EnchantmentInit.NIMBLE.get());
         }
         if (EnchantmentInit.enableVigor.get()) {
-            EnchantmentImpl.triggerVigor(event.getEntityLiving(), EnchantmentInit.VIGOR.get());
+            EnchantmentImpl.triggerVigor(event.getEntity(), EnchantmentInit.VIGOR.get());
         }
     }
 
@@ -110,8 +111,8 @@ public class EnchantmentInit extends ForgeFeature {
      */
 
     @SubscribeEvent
-    public void entityJoin(EntityJoinWorldEvent event) {
-        if (!event.getWorld().isClientSide() && EnchantmentInit.enableHoming.get() && event.getEntity() instanceof AbstractArrow arrow && arrow.getOwner() instanceof LivingEntity shooter) {
+    public void entityJoin(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide() && EnchantmentInit.enableHoming.get() && event.getEntity() instanceof AbstractArrow arrow && arrow.getOwner() instanceof LivingEntity shooter) {
             EnchantmentImpl.triggerHoming(arrow, shooter, EnchantmentInit.HOMING.get());
         }
     }
@@ -122,14 +123,14 @@ public class EnchantmentInit extends ForgeFeature {
     @SubscribeEvent
     public void onEquipmentChange(LivingEquipmentChangeEvent event) {
         if (EnchantmentInit.enableHops.get() && !event.getEntity().level.isClientSide()) {
-            EnchantmentImpl.triggerHops(event.getEntityLiving(), EnchantmentInit.HOPS.get());
+            EnchantmentImpl.triggerHops(event.getEntity(), EnchantmentInit.HOPS.get());
         }
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent.WorldTickEvent event) {
-        if (EnchantmentInit.enableVeteran.get() && event.world != null && !event.world.isClientSide()) {
-            ServerLevel world = (ServerLevel) event.world;
+    public void onTick(TickEvent.LevelTickEvent event) {
+        if (EnchantmentInit.enableVeteran.get() && event.level != null && !event.level.isClientSide()) {
+            ServerLevel world = (ServerLevel) event.level;
             world.getEntities(EntityType.EXPERIENCE_ORB, EntitySelector.ENTITY_STILL_ALIVE).forEach(experienceOrb -> EnchantmentImpl.moveXP(experienceOrb, EnchantmentInit.VETERAN.get()));
         }
     }

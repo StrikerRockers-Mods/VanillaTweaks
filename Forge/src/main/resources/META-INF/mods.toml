@@ -7,7 +7,7 @@ issueTrackerURL = "http://github.com/strikerrocker/VanillaTweaks/issues/"
 modId = "vanillatweaks"
 version = "${file.jarVersion}"
 displayName = "VanillaTweaks"
-updateJSONURL = "https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.18-multi-loader/version.json"
+updateJSONURL = "https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.19/version.json"
 displayURL = "http://strikerrocker.github.io/vanillatweaks"
 logoFile = "logo.png"
 credits = ""
@@ -16,7 +16,7 @@ description = '''VanillaTweaks is a Minecraft mod designed to enhance vanilla Mi
 [[dependencies.vanillatweaks]]
 modId = "forge"
 mandatory = true
-versionRange = "[41,)"
+versionRange = "[41.0.79,)"
 ordering = "AFTER"
 side = "BOTH"
 [[dependencies.vanillatweaks]]

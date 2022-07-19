@@ -12,8 +12,8 @@ public class SignEditing extends ForgeFeature {
 
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        BlockEntity be = event.getWorld().getBlockEntity(event.getPos());
-        if (TweaksImpl.triggerSignEditing(event.getWorld(), event.getPlayer(), be, event.getHand(), enableSignEditing.get()))
+        BlockEntity be = event.getLevel().getBlockEntity(event.getPos());
+        if (TweaksImpl.triggerSignEditing(event.getLevel(), event.getEntity(), be, event.getHand(), enableSignEditing.get()))
             event.setCanceled(true);
     }
 

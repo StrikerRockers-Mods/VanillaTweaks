@@ -3,7 +3,7 @@ package io.github.strikerrocker.vt.tweaks;
 import io.github.strikerrocker.vt.base.ForgeFeature;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class TNTIgnition extends ForgeFeature {

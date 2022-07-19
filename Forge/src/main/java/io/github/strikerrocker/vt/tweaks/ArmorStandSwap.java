@@ -24,7 +24,7 @@ public class ArmorStandSwap extends ForgeFeature {
 
     @SubscribeEvent
     public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if (TweaksImpl.triggerArmorStandSwap(player, event.getTarget(), enableArmorStandSwapping.get()))
             event.setCanceled(true);
     }

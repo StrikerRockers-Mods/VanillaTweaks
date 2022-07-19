@@ -50,7 +50,7 @@ public class PedestalBlock extends BasePedestalBlock implements SimpleWaterlogge
                 tile.setChanged();
                 return InteractionResult.SUCCESS;
             } else {
-                NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), Component.translatable("block.vanillatweaks.pedestal")), pos);
+                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), Component.translatable("block.vanillatweaks.pedestal")), pos);
             }
         }
         return InteractionResult.SUCCESS;

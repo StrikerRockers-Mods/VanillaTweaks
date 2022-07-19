@@ -43,7 +43,7 @@ public class VanillaTweaksForge {
         ForgeBlocks.MENU_TYPE.register(modEventBus);
         ForgeBlocks.BLOCK_ENTITY_TYPE.register(modEventBus);
         EnchantmentInit.ENCHANTMENTS.register(modEventBus);
-        EnchantmentInit.LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
+        EnchantmentInit.GLM.register(modEventBus);
         NoMoreLavaPocketGen.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
         registerModules();
         modEventBus.addListener(this::setup);

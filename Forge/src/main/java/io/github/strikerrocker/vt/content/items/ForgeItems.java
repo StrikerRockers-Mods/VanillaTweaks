@@ -37,7 +37,7 @@ import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 public class ForgeItems extends ForgeFeature {
     // Deferred Registries
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MOD_ID);
 
     // EntityType
     public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite", DynamiteItem::new);

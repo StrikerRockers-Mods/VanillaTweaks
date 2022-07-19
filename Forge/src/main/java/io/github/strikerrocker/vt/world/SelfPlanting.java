@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -55,16 +55,16 @@ public class SelfPlanting extends ForgeFeature {
      */
     @SubscribeEvent
     public void itemDecay(ItemExpireEvent event) {
-        if (!plant(event.getEntityItem()))
-            event.setExtraLife(6000 - event.getEntityItem().lifespan);
+        if (!plant(event.getEntity()))
+            event.setExtraLife(6000 - event.getEntity().lifespan);
     }
 
     /**
      * If item is of plant-able then change the lifespan
      */
     @SubscribeEvent
-    public void itemToss(EntityJoinWorldEvent event) {
-        if (enableSelfPlanting.get() && !event.getWorld().isClientSide() && event.getEntity() instanceof ItemEntity itemEntity) {
+    public void itemToss(EntityJoinLevelEvent event) {
+        if (enableSelfPlanting.get() && !event.getLevel().isClientSide() && event.getEntity() instanceof ItemEntity itemEntity) {
             Item item = itemEntity.getItem().getItem();
             Block block = Block.byItem(item);
             if (item instanceof BlockItem && block instanceof IPlantable && !(block instanceof FlowerBlock)) {

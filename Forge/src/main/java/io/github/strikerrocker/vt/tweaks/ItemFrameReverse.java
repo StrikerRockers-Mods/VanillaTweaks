@@ -10,7 +10,7 @@ public class ItemFrameReverse extends ForgeFeature {
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (TweaksImpl.triggerItemFrameReverse(event.getTarget(), event.getPlayer(), itemFrameRotateBackwards.get())) {
+        if (TweaksImpl.triggerItemFrameReverse(event.getTarget(), event.getEntity(), itemFrameRotateBackwards.get())) {
             event.setCanceled(true);
         }
     }
