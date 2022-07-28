@@ -83,11 +83,11 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":Common")
 
-    compileOnly fg.deobf("mezz.jei:jei-${project.minecraft_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${project.minecraft_version}-forge-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-forge-api:${jei_version}")
 
-    runtimeOnly fg.deobf("mezz.jei:jei-${project.minecraft_version}-common:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${project.minecraft_version}-forge:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-common:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-forge:${jei_version}")
 }
 
 tasks.withType(JavaCompile) {
