@@ -9,10 +9,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AirBlock;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,7 +42,7 @@ public abstract class MixinItemEntity extends Entity {
     public void tick(CallbackInfo callbackInfo) {
         ItemStack stack = this.getItem();
         if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof BushBlock plantBlock && VanillaTweaksFabric.config.world.selfPlanting && tickCount > 20) {
-            if (!(plantBlock instanceof DoublePlantBlock)) {
+            if (!(plantBlock instanceof DoublePlantBlock) && !(plantBlock instanceof MangrovePropaguleBlock)) {
                 if (lastChecked > 40) {
                     lastChecked = 0;
                     BlockPos pos = blockPosition();
