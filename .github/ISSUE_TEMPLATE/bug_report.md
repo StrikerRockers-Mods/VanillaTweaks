@@ -1,31 +1,34 @@
 ---
-name: Bug report about: Create a bug report for VanillaTweaks
+name: Bug report
+about: Create a report to help us improve
+title: "[BUG] "
+labels: bug
+assignees: ''
+
 ---
 
-**Describe the bug** (Required)
+**Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce** (Required unless not known)
+**To Reproduce**
 Steps to reproduce the behavior:
+1. Go to '...'
 
-1.
+**Expected behavior**
+A clear and concise description of what you expected to happen.
+
+**Screenshots**
+If applicable, add screenshots to help explain your problem.
+
+**Versions (please complete the following information):**
+ - Forge/Fabric Loader Version:
+ - MC Version:
+ - Mod Version:
+ - JEI Version (if present) :
+ - Fabric API Version (if present) :
 
 **Log output/error (via. [Hastebin](http://hastebin.com/))**
 Get your minecraft log and paste it in the above link and paste the link here.
 
-**Expected behavior** (Required)
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem. This may be skipped/removed.
-
-**Versions:**(check log if you don't know)
-
-- Forge/Fabric Loader Version:
-- MC Version:
-- Mod Version:
-- JEI Version (if present) :
-- Fabric API Version (if present) :
-
 **Additional context**
-Add any other context about the problem here. This may be skipped/removed.
+Add any other context about the problem here.
