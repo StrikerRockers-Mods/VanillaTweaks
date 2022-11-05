@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.content.items;
 
 import io.github.strikerrocker.vt.base.ForgeFeature;
-import io.github.strikerrocker.vt.content.CommonItems;
+import io.github.strikerrocker.vt.content.CommonObjects;
 import io.github.strikerrocker.vt.content.SlimeBucketItem;
 import io.github.strikerrocker.vt.content.blocks.ForgeBlocks;
 import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadItem;
@@ -48,12 +48,12 @@ public class ForgeItems extends ForgeFeature {
     // Items
     public static final RegistryObject<Item> CRAFTING_PAD = ITEMS.register("crafting_pad", CraftingPadItem::new);
     public static final RegistryObject<Item> SLIME_BUCKET = ITEMS.register("slime_bucket", SlimeBucketItem::new);
-    public static final RegistryObject<Item> FRIED_EGG = ITEMS.register("fried_egg", () -> CommonItems.FRIED_EGG);
+    public static final RegistryObject<Item> FRIED_EGG = ITEMS.register("fried_egg", () -> CommonObjects.FRIED_EGG);
 
     // BlockItems
-    public static final RegistryObject<Item> CHARCOAL_BLOCK_ITEM = ITEMS.register("charcoal_block", () -> CommonItems.CHARCOAL_BLOCK);
-    public static final RegistryObject<Item> FLINT_BLOCK_ITEM = ITEMS.register("flint_block", () -> CommonItems.FLINT_BLOCK);
-    public static final RegistryObject<Item> SUGAR_BLOCK_ITEM = ITEMS.register("sugar_block", () -> CommonItems.SUGAR_BLOCK);
+    public static final RegistryObject<Item> CHARCOAL_BLOCK_ITEM = ITEMS.register("charcoal_block", () -> CommonObjects.CHARCOAL_BLOCK_ITEM);
+    public static final RegistryObject<Item> FLINT_BLOCK_ITEM = ITEMS.register("flint_block", () -> CommonObjects.FLINT_BLOCK_ITEM);
+    public static final RegistryObject<Item> SUGAR_BLOCK_ITEM = ITEMS.register("sugar_block", () -> CommonObjects.SUGAR_BLOCK_ITEM);
     public static final RegistryObject<Item> PEDESTAL_ITEM = ITEMS.register("pedestal", () ->
             new BlockItem(ForgeBlocks.PEDESTAL_BLOCK.get(), new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
 
@@ -98,8 +98,10 @@ public class ForgeItems extends ForgeFeature {
         event.enqueueWork(() ->
                 DispenserBlock.registerBehavior(DYNAMITE.get(), new AbstractProjectileDispenseBehavior() {
                     @Override
-                    protected Projectile getProjectile(Level world, Position position, ItemStack stack) {
-                        return new DynamiteEntity(DYNAMITE_TYPE.get(), world);
+                    protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
+                        DynamiteEntity entity = new DynamiteEntity(DYNAMITE_TYPE.get(), level);
+                        entity.setPos(position.x(), position.y(), position.z());
+                        return entity;
                     }
                 }));
     }

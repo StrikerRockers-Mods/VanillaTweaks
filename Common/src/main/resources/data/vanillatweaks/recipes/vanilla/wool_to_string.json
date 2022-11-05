@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "minecraft:wool"
+    }
+  ],
+  "result": {
+    "item": "minecraft:string",
+    "count": 4
+  },
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "string"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "wool_to_string"
+    }
+  ]
+}

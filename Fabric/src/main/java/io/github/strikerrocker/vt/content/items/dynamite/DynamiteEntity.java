@@ -36,6 +36,10 @@ public class DynamiteEntity extends ThrowableItemProjectile {
         super(type, world);
     }
 
+    DynamiteEntity(Level level, double x, double y, double z) {
+        super(FabricItems.DYNAMITE_TYPE, x, y, z, level);
+    }
+
     DynamiteEntity(Level world, LivingEntity entity) {
         super(FabricItems.DYNAMITE_TYPE, entity, world);
     }
@@ -61,22 +65,18 @@ public class DynamiteEntity extends ThrowableItemProjectile {
     public void tick() {
         super.tick();
         if (!this.level.isClientSide) {
-            if (this.isInWaterRainOrBubble())
-                getEntityData().set(TICKS_WET, getEntityData().get(TICKS_WET) + 1);
-            else
-                getEntityData().set(TICKS_WET, 0);
+            if (this.isInWaterRainOrBubble()) getEntityData().set(TICKS_WET, getEntityData().get(TICKS_WET) + 1);
+            else getEntityData().set(TICKS_WET, 0);
             if (getEntityData().get(TICKS_WET) == 0)
                 getEntityData().set(TICKS_SINCE_WET, getEntityData().get(TICKS_SINCE_WET) + 1);
-            else
-                getEntityData().set(TICKS_SINCE_WET, 0);
+            else getEntityData().set(TICKS_SINCE_WET, 0);
         }
-        if (getEntityData().get(TICKS_SINCE_WET) < WET_TICKS && !this.isUnderWater())
-            for (int i = 0; i < 3; ++i) {
-                float xOffset = (random.nextFloat() * 2 - 1) * getBbWidth() * 0.5F;
-                float zOffset = (random.nextFloat() * 2 - 1) * getBbWidth() * 0.5F;
-                BlockPos pos = blockPosition();
-                level.addParticle(ParticleTypes.DRIPPING_WATER, pos.getX() + xOffset, pos.getY(), pos.getZ() + zOffset, getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z);
-            }
+        if (getEntityData().get(TICKS_SINCE_WET) < WET_TICKS && !this.isUnderWater()) for (int i = 0; i < 3; ++i) {
+            float xOffset = (random.nextFloat() * 2 - 1) * getBbWidth() * 0.5F;
+            float zOffset = (random.nextFloat() * 2 - 1) * getBbWidth() * 0.5F;
+            BlockPos pos = blockPosition();
+            level.addParticle(ParticleTypes.DRIPPING_WATER, pos.getX() + xOffset, pos.getY(), pos.getZ() + zOffset, getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z);
+        }
     }
 
     @Override

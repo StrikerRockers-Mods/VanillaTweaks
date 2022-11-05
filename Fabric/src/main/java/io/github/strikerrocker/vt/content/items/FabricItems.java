@@ -2,7 +2,7 @@ package io.github.strikerrocker.vt.content.items;
 
 import io.github.strikerrocker.vt.VanillaTweaksFabric;
 import io.github.strikerrocker.vt.base.Feature;
-import io.github.strikerrocker.vt.content.CommonItems;
+import io.github.strikerrocker.vt.content.CommonObjects;
 import io.github.strikerrocker.vt.content.SlimeBucketItem;
 import io.github.strikerrocker.vt.content.blocks.FabricBlocks;
 import io.github.strikerrocker.vt.content.items.craftingpad.CraftingPadItem;
@@ -36,21 +36,14 @@ public class FabricItems extends Feature {
     public static Item DYNAMITE;
 
     static {
-        if (VanillaTweaksFabric.config.content.enableDynamite)
-            DYNAMITE = Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "dynamite"), new DynamiteItem());
-        if (VanillaTweaksFabric.config.content.enableStorageBlocks) {
-            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "charcoal_block"), CommonItems.CHARCOAL_BLOCK);
-            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "sugar_block"), CommonItems.SUGAR_BLOCK);
-            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "flint_block"), CommonItems.FLINT_BLOCK);
-        }
-        if (VanillaTweaksFabric.config.content.enableCraftingPad)
-            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "crafting_pad"), new CraftingPadItem());
-        if (VanillaTweaksFabric.config.content.enableSlimeBucket)
-            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "slime_bucket"), new SlimeBucketItem());
-        if (VanillaTweaksFabric.config.content.enablePedestal)
-            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "pedestal"), new BlockItem(FabricBlocks.PEDESTAL_BLOCK, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-        if (VanillaTweaksFabric.config.content.enableFriedEgg)
-            Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "fried_egg"), CommonItems.FRIED_EGG);
+        DYNAMITE = Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "dynamite"), new DynamiteItem());
+        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "charcoal_block"), CommonObjects.CHARCOAL_BLOCK_ITEM);
+        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "sugar_block"), CommonObjects.SUGAR_BLOCK_ITEM);
+        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "flint_block"), CommonObjects.FLINT_BLOCK_ITEM);
+        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "crafting_pad"), new CraftingPadItem());
+        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "slime_bucket"), new SlimeBucketItem());
+        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "pedestal"), new BlockItem(FabricBlocks.PEDESTAL_BLOCK, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+        Registry.register(Registry.ITEM, new ResourceLocation(MOD_ID, "fried_egg"), CommonObjects.FRIED_EGG);
     }
 
     /**
@@ -61,8 +54,10 @@ public class FabricItems extends Feature {
         if (VanillaTweaksFabric.config.content.enableDynamite) {
             DispenserBlock.registerBehavior(DYNAMITE, new AbstractProjectileDispenseBehavior() {
                 @Override
-                protected Projectile getProjectile(Level world, Position position, ItemStack stack) {
-                    return new DynamiteEntity(DYNAMITE_TYPE, world);
+                protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
+                    DynamiteEntity entity = new DynamiteEntity(DYNAMITE_TYPE, level);
+                    entity.setPos(position.x(), position.y(), position.z());
+                    return entity;
                 }
             });
         }

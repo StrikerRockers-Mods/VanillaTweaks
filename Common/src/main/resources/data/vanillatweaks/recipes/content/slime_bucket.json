@@ -1,10 +1,4 @@
 {
-  "conditions": [
-    {
-      "type": "vanillatweaks:items",
-      "object": "slime_bucket"
-    }
-  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "BSB",
@@ -20,5 +14,17 @@
   },
   "result": {
     "item": "vanillatweaks:slime_bucket"
-  }
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "slime_bucket"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "vanillatweaks:items",
+      "object": "slime_bucket"
+    }
+  ]
 }

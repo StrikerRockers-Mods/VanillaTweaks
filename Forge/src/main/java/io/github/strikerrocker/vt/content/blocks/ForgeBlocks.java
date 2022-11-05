@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.content.blocks;
 
 import io.github.strikerrocker.vt.base.ForgeFeature;
-import io.github.strikerrocker.vt.content.CommonBlocks;
+import io.github.strikerrocker.vt.content.CommonObjects;
 import io.github.strikerrocker.vt.content.blocks.pedestal.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.inventory.MenuType;
@@ -29,9 +29,9 @@ public class ForgeBlocks extends ForgeFeature {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
     // Blocks
     public static final RegistryObject<Block> PEDESTAL_BLOCK = BLOCKS.register("pedestal", PedestalBlock::new);
-    public static final RegistryObject<Block> CHARCOAL_BLOCK = BLOCKS.register("charcoal_block", () -> CommonBlocks.CHARCOAL_BLOCK);
-    public static final RegistryObject<Block> SUGAR_BLOCK = BLOCKS.register("sugar_block", () -> CommonBlocks.SUGAR_BLOCK);
-    public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> CommonBlocks.FLINT_BLOCK);
+    public static final RegistryObject<Block> CHARCOAL_BLOCK = BLOCKS.register("charcoal_block", () -> CommonObjects.CHARCOAL_BLOCK);
+    public static final RegistryObject<Block> SUGAR_BLOCK = BLOCKS.register("sugar_block", () -> CommonObjects.SUGAR_BLOCK);
+    public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> CommonObjects.FLINT_BLOCK);
     public static final RegistryObject<MenuType<PedestalContainer>> PEDESTAL_MENU_TYPE = MENU_TYPE.register("pedestal",
             () -> IForgeMenuType.create(((windowId, inv, data) -> new PedestalContainer(windowId, inv, data.readBlockPos()))));    // BlockEntityType and MenuType
     // Configs

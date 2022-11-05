@@ -8,10 +8,14 @@
   "cookingtime": 200,
   "fabric:load_conditions": [
     {
-      "condition": "vanillatweaks:item_registered",
-      "values": [
-        "vanillatweaks:fried_egg"
-      ]
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "fried_egg"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "vanillatweaks:items",
+      "object": "fried_egg"
     }
   ]
 }

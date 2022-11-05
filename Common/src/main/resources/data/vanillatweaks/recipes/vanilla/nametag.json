@@ -1,10 +1,4 @@
 {
-  "conditions": [
-    {
-      "type": "vanillatweaks:vanilla",
-      "object": "nametag"
-    }
-  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "  I",
@@ -21,5 +15,17 @@
   },
   "result": {
     "item": "minecraft:name_tag"
-  }
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "name_tag"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "nametag"
+    }
+  ]
 }

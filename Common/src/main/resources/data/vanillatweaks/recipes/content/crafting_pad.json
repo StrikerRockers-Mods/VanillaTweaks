@@ -17,10 +17,14 @@
   },
   "fabric:load_conditions": [
     {
-      "condition": "vanillatweaks:item_registered",
-      "values": [
-        "vanillatweaks:crafting_pad"
-      ]
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "crafting_pad"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "vanillatweaks:items",
+      "object": "crafting_pad"
     }
   ]
 }

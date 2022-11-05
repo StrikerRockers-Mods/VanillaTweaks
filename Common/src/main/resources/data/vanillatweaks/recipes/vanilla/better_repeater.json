@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "R R",
+    "ORO",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "O": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "minecraft:repeater"
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "better_repeater"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "repeater"
+    }
+  ]
+}

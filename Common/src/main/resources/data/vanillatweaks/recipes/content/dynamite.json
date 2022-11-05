@@ -21,10 +21,14 @@
   },
   "fabric:load_conditions": [
     {
-      "condition": "vanillatweaks:item_registered",
-      "values": [
-        "vanillatweaks:dynamite"
-      ]
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "dynamite"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "vanillatweaks:items",
+      "object": "dynamite"
     }
   ]
 }

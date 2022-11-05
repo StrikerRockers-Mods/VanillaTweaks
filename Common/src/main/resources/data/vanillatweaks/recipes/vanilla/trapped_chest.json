@@ -1,10 +1,4 @@
 {
-  "conditions": [
-    {
-      "type": "vanillatweaks:vanilla",
-      "object": "trapped_chest"
-    }
-  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "PPP",
@@ -21,5 +15,17 @@
   },
   "result": {
     "item": "minecraft:trapped_chest"
-  }
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "better_repeater"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "vanillatweaks:vanilla",
+      "object": "trapped_chest"
+    }
+  ]
 }

@@ -11,10 +11,14 @@
   },
   "fabric:load_conditions": [
     {
-      "condition": "vanillatweaks:item_registered",
-      "values": [
-        "vanillatweaks:charcoal_block"
-      ]
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "storage_blocks"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "vanillatweaks:blocks",
+      "object": "storage_blocks"
     }
   ]
 }

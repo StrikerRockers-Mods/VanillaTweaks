@@ -3,7 +3,6 @@
   "package": "io.github.strikerrocker.vt.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MixinRecipeManager",
     "enchantments.MixinBlock",
     "enchantments.MixinItem",
     "events.MixinBlock",
