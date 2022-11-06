@@ -9,11 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - { uses: actions/checkout@v2, with: { fetch-depth: 0 } }
-      - {
-        name: "Set up JDK 17",
-        uses: actions/setup-java@v2,
-        with: { distribution: "temurin", java-version: "17" },
-      }
+      - name: "Set up JDK 17"
+        uses: actions/setup-java@v2
+        with: { distribution: "temurin", java-version: "17" }
       - uses: burrunan/gradle-cache-action@v1
         name: Build with Gradle
         id: build
@@ -28,38 +26,44 @@ jobs:
           gzip: false
           name: "${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.version }}"
           token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: "Upload Fabric to CurseForge"
-        uses: itsmeow/curseforge-upload@master
+      - name: "Publish-Forge-Curseforge"
+        uses: Kir-Antipov/mc-publish@v3.2
         with:
-          changelog: "Changelog not added yet..."
-          file_path: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          game_endpoint: minecraft
-          relations: "${{ steps.build.outputs.curse_relations_fabric }}"
-          game_versions: "${{ steps.build.outputs.curse_versions_fabric }}"
-          project_id: "${{ steps.build.outputs.curse_project_id }}"
-          release_type: release
-          token: "${{ secrets.CF_API_TOKEN }}"
-      - name: "Upload Forge to CurseForge"
-        uses: itsmeow/curseforge-upload@master
+          curseforge-id: 272637
+          curseforge-token: ${{ secrets.CF_API_TOKEN }}
+          modrinth-id: 5DJpA9qi
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          loaders: forge
+          version: ${{ steps.build.outputs.version }}
+          files: "Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          name: "${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          dependencies: |
+            jei | recommends | *
+      - name: "Publish-Fabric-Curseforge"
+        uses: Kir-Antipov/mc-publish@v3.2
         with:
-          changelog: "Changelog not added yet..."
-          file_path: "Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          game_endpoint: minecraft
-          relations: "${{ steps.build.outputs.curse_relations_forge }}"
-          game_versions: "${{ steps.build.outputs.curse_versions_forge }}"
-          project_id: "${{ steps.build.outputs.curse_project_id }}"
-          release_type: release
-          token: "${{ secrets.CF_API_TOKEN }}"
+          curseforge-id: 272637
+          curseforge-token: ${{ secrets.CF_API_TOKEN }}
+          modrinth-id: 5DJpA9qi
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          loaders: fabric
+          version: ${{ steps.build.outputs.version }}
+          files: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          name: "${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          dependencies: |
+            fabric-api | depends | *
+            cloth-config | depends | *
+            modmenu | recommends | *
       - name: "Build Success"
         id: build-success
         uses: itsmeow/webhook-action@master
         env:
           WEBHOOK_URL: "${{ secrets.DISCORD_WEBHOOK_URL }}"
-          data: '{"embeds":[{"title":"${{ steps.build.outputs.modid }} Release Build","url":"https://github.com/${{ github.repository }}/releases/tag/${{ steps.build.outputs.version }}","description":"Tag: ${{ steps.build.outputs.version }}\nStatus: Successful","color":65280,"author":{"name":"${{ github.event.user.login }}","url":"${{ github.event.user.html_url }}","icon_url":"${{ github.event.user.avatar_url }}"}}]}'
+          data: '{"embeds":[{"title":"${{ steps.build.outputs.mod_name }} Release Build","url":"https://github.com/${{ github.repository }}/releases/tag/${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}","description":"Tag: ${{ steps.build.outputs.version }}\nStatus: Successful","color":65280,"author":{"name":"${{ github.event.user.login }}","url":"${{ github.event.user.html_url }}","icon_url":"${{ github.event.user.avatar_url }}"}}]}'
       - name: "Build Fail"
         id: build-fail
         uses: itsmeow/webhook-action@master
         if: failure()
         env:
           WEBHOOK_URL: '${{ secrets.DISCORD_WEBHOOK_URL }}\'
-          data: '{"embeds":[{"title":"${{ steps.build.outputs.modid }} Release Build","url":"https://github.com/${{ github.repository }}/releases/tag/${{ steps.build.outputs.version }}","description":"Tag: ${{ steps.build.outputs.version }}\nStatus: Failed","color":16711680,"author":{"name":"${{ github.event.user.login }}","url":"${{ github.event.user.html_url }}","icon_url":"${{ github.event.user.avatar_url }}"}}]}'
+          data: '{"embeds":[{"title":"${{ steps.build.outputs.mod_name }} Release Build","url":"https://github.com/${{ github.repository }}/releases/tag/${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}","description":"Tag: ${{ steps.build.outputs.version }}\nStatus: Failed","color":16711680,"author":{"name":"${{ github.event.user.login }}","url":"${{ github.event.user.html_url }}","icon_url":"${{ github.event.user.avatar_url }}"}}]}'
