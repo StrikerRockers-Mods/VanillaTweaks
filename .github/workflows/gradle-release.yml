@@ -5,65 +5,19 @@ on:
       - "[0-9]+.[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+"
       - "[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+"
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - { uses: actions/checkout@v2, with: { fetch-depth: 0 } }
-      - name: "Set up JDK 17"
-        uses: actions/setup-java@v2
-        with: { distribution: "temurin", java-version: "17" }
-      - uses: burrunan/gradle-cache-action@v1
-        name: Build with Gradle
-        id: build
-        with:
-          arguments: "setupGithubActions build"
-          gradle-version: "wrapper"
-      - name: "Create a Release"
-        id: create_release
-        uses: meeDamian/github-release@2.0
-        with:
-          files: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          gzip: false
-          name: "${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.version }}"
-          token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: "Publish-Forge-Curseforge"
-        uses: Kir-Antipov/mc-publish@v3.2
-        with:
-          curseforge-id: 272637
-          curseforge-token: ${{ secrets.CF_API_TOKEN }}
-          modrinth-id: 5DJpA9qi
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          loaders: forge
-          version: ${{ steps.build.outputs.version }}
-          files: "Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          name: "${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          dependencies: |
+  build-release:
+    uses: StrikerRockers-Mods/.github/.github/workflows/build-release.yml@latest
+    secrets: inherit
+    with:
+      mod_name: ${{ steps.build.outputs.mod_name }}
+      minecraft_version: ${{ steps.build.outputs.minecraft_version }}
+      version: ${{ steps.build.outputs.version }}
+      forge-cf-id: 272637
+      fabric-cf-id: 272637
+      modrinth-id: 5DJpA9qi
+      forge-dependencies: |
             jei | recommends | *
-      - name: "Publish-Fabric-Curseforge"
-        uses: Kir-Antipov/mc-publish@v3.2
-        with:
-          curseforge-id: 272637
-          curseforge-token: ${{ secrets.CF_API_TOKEN }}
-          modrinth-id: 5DJpA9qi
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          loaders: fabric
-          version: ${{ steps.build.outputs.version }}
-          files: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          name: "${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          dependencies: |
+      fabric-dependencies: |
             fabric-api | depends | *
             cloth-config | depends | *
             modmenu | recommends | *
-      - name: "Build Success"
-        id: build-success
-        uses: itsmeow/webhook-action@master
-        env:
-          WEBHOOK_URL: "${{ secrets.DISCORD_WEBHOOK_URL }}"
-          data: '{"embeds":[{"title":"${{ steps.build.outputs.mod_name }} Release Build","url":"https://github.com/${{ github.repository }}/releases/tag/${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}","description":"Tag: ${{ steps.build.outputs.version }}\nStatus: Successful","color":65280,"author":{"name":"${{ github.event.user.login }}","url":"${{ github.event.user.html_url }}","icon_url":"${{ github.event.user.avatar_url }}"}}]}'
-      - name: "Build Fail"
-        id: build-fail
-        uses: itsmeow/webhook-action@master
-        if: failure()
-        env:
-          WEBHOOK_URL: '${{ secrets.DISCORD_WEBHOOK_URL }}\'
-          data: '{"embeds":[{"title":"${{ steps.build.outputs.mod_name }} Release Build","url":"https://github.com/${{ github.repository }}/releases/tag/${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}","description":"Tag: ${{ steps.build.outputs.version }}\nStatus: Failed","color":16711680,"author":{"name":"${{ github.event.user.login }}","url":"${{ github.event.user.html_url }}","icon_url":"${{ github.event.user.avatar_url }}"}}]}'
