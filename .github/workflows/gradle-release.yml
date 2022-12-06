@@ -9,9 +9,6 @@ jobs:
     uses: StrikerRockers-Mods/.github/.github/workflows/build-release.yml@main
     secrets: inherit
     with:
-      mod_name: ${{ steps.build.outputs.mod_name }}
-      minecraft_version: ${{ steps.build.outputs.minecraft_version }}
-      version: ${{ steps.build.outputs.version }}
       forge-cf-id: 272637
       fabric-cf-id: 272637
       modrinth-id: 5DJpA9qi
