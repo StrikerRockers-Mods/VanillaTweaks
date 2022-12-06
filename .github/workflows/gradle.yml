@@ -18,4 +18,4 @@ on:
       - '.gitignore'
 jobs:
   build:
-    uses:  StrikerRockers-Mods/.github/.github/workflows/build.yml@latest
+    uses:  StrikerRockers-Mods/.github/.github/workflows/build.yml@main
