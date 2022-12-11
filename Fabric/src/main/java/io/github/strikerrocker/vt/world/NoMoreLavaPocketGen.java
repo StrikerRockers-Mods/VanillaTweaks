@@ -6,7 +6,7 @@ import io.github.strikerrocker.vt.base.Feature;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
@@ -18,12 +18,12 @@ public class NoMoreLavaPocketGen extends Feature {
                     add(ModificationPhase.REMOVALS,
                             BiomeSelectors.foundInTheNether(),
                             ctx -> ctx.getGenerationSettings()
-                                    .removeFeature(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, new ResourceLocation("spring_closed"))));
+                                    .removeFeature(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation("spring_closed"))));
             BiomeModifications.create(new ResourceLocation(VanillaTweaks.MOD_ID, "lava_pocket_removal_double")).
                     add(ModificationPhase.REMOVALS,
                             BiomeSelectors.foundInTheNether(),
                             ctx -> ctx.getGenerationSettings()
-                                    .removeFeature(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, new ResourceLocation("spring_closed_double"))));
+                                    .removeFeature(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation("spring_closed_double"))));
         }
     }
 }

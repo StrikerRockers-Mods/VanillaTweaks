@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "vanillatweaks:items/fried_egg"
+    "layer0": "vanillatweaks:item/fried_egg"
   }
 }

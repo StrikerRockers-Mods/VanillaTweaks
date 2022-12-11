@@ -37,7 +37,7 @@ public class SilkSpawner extends ForgeFeature {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onBreak(BlockEvent.BreakEvent event) {
-        if (TweaksImpl.triggerSpawnerBreak(event.getPlayer().getLevel(), event.getPos(), event.getState(), event.getPlayer(), enableSilkSpawner.get())) {
+        if (TweaksImpl.triggerSpawnerBreak(event.getPlayer().getLevel(), event.getPos(), event.getState(), event.getPlayer(), enableSilkSpawner.get(), true)) {
             event.setExpToDrop(0);
             event.setCanceled(true);
         }

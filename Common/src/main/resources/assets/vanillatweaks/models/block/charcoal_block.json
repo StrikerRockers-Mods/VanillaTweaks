@@ -1,7 +1,6 @@
 {
-  "parent": "block/cube_all",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "vanillatweaks:blocks/charcoal_block",
-    "particle": "vanillatweaks:blocks/charcoal_block"
+    "all": "vanillatweaks:block/charcoal_block"
   }
 }

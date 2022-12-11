@@ -242,7 +242,7 @@ public class TweaksImpl {
     /**
      * Handles Spawner break logic
      */
-    public static boolean triggerSpawnerBreak(Level level, BlockPos pos, BlockState state, Player player, boolean config) {
+    public static boolean triggerSpawnerBreak(Level level, BlockPos pos, BlockState state, Player player, boolean config, boolean forge) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         int lvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
         if (state.getBlock() instanceof SpawnerBlock && !level.isClientSide() && blockEntity instanceof SpawnerBlockEntity && config && lvl >= 1) {
@@ -258,6 +258,6 @@ public class TweaksImpl {
             level.destroyBlock(pos, false);
             return true;
         }
-        return false;
+        return !forge;
     }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "vanillatweaks:items/slime_bucket"
+    "layer0": "vanillatweaks:item/slime_bucket"
   }
 }

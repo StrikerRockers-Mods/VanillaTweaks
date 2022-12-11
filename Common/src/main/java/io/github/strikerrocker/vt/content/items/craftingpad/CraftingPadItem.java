@@ -8,14 +8,13 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class CraftingPadItem extends Item {
     public CraftingPadItem() {
-        super(new Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(1));
+        super(new Properties().stacksTo(1));
     }
 
     @Override

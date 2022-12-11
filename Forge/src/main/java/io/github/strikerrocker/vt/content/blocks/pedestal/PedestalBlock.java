@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -39,7 +39,7 @@ public class PedestalBlock extends BasePedestalBlock implements SimpleWaterlogge
             ItemStack heldItem = player.getItemInHand(handIn);
             PedestalBlockEntity tile = getPedestalBE(worldIn, pos);
             if (!player.isCrouching()) {
-                tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
+                tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
                     if (heldItem.isEmpty()) {
                         ItemStack stack = itemHandler.extractItem(0, 64, false);
                         player.setItemInHand(handIn, stack);
@@ -61,7 +61,7 @@ public class PedestalBlock extends BasePedestalBlock implements SimpleWaterlogge
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!worldIn.isClientSide()) {
             PedestalBlockEntity tile = getPedestalBE(worldIn, pos);
-            tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).ifPresent(itemHandler -> {
+            tile.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.NORTH).ifPresent(itemHandler -> {
                 ItemStack stack = itemHandler.getStackInSlot(0);
                 if (!stack.isEmpty()) {
                     ItemEntity item = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "vanillatweaks:items/dynamite"
+    "layer0": "vanillatweaks:item/dynamite"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "vanillatweaks:items/crafting_pad"
+    "layer0": "vanillatweaks:item/crafting_pad"
   }
 }

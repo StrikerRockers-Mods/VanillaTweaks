@@ -3,10 +3,8 @@ package io.github.strikerrocker.vt.content.items.dynamite;
 import io.github.strikerrocker.vt.VanillaTweaks;
 import io.github.strikerrocker.vt.VanillaTweaksFabric;
 import io.github.strikerrocker.vt.content.items.FabricItems;
-import io.github.strikerrocker.vt.misc.EntitySpawnPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -16,16 +14,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class DynamiteEntity extends ThrowableItemProjectile {
+    public static final ResourceLocation PACKET_ID = new ResourceLocation(VanillaTweaks.MOD_ID, "dynamite");
     private static final int WET_TICKS = 20;
     private static final EntityDataAccessor<Integer> TICKS_WET;
     private static final EntityDataAccessor<Integer> TICKS_SINCE_WET;
-    public static final ResourceLocation PACKET_ID = new ResourceLocation(VanillaTweaks.MOD_ID, "dynamite");
 
     static {
         TICKS_WET = SynchedEntityData.defineId(DynamiteEntity.class, EntityDataSerializers.INT);
@@ -90,16 +87,11 @@ public class DynamiteEntity extends ThrowableItemProjectile {
                     return;
                 } else {
                     BlockPos pos = blockPosition();
-                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), VanillaTweaksFabric.config.content.dynamiteExplosionPower, Explosion.BlockInteraction.BREAK);
+                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), VanillaTweaksFabric.config.content.dynamiteExplosionPower, Level.ExplosionInteraction.TNT);
                 }
             }
             this.remove(RemovalReason.DISCARDED);
         }
-    }
-
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return EntitySpawnPacket.create(this, PACKET_ID);
     }
 
     @Override

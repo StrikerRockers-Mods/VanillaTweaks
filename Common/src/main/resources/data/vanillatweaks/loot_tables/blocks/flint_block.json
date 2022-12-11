@@ -18,10 +18,8 @@
   ],
   "fabric:load_conditions": [
     {
-      "condition": "vanillatweaks:item_registered",
-      "values": [
-        "vanillatweaks:flint_block"
-      ]
+      "condition": "vanillatweaks:custom_conditions",
+      "value": "storage_blocks"
     }
   ]
 }

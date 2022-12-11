@@ -2,10 +2,10 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.FabricModule;
 import io.github.strikerrocker.vt.enchantments.*;
-import io.github.strikerrocker.vt.events.EntityEquipmentChangeCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
@@ -17,24 +17,24 @@ import static io.github.strikerrocker.vt.VanillaTweaks.MOD_ID;
 
 public class EnchantmentModule extends FabricModule {
 
-    public static final Enchantment BLAZING = Registry.register(Registry.ENCHANTMENT, new ResourceLocation(MOD_ID, "blazing"),
+    public static final Enchantment BLAZING = Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(MOD_ID, "blazing"),
             new BlazingEnchantment(() -> VanillaTweaksFabric.config.enchanting.enableBlazing, () -> VanillaTweaksFabric.config.enchanting.blazingTreasureOnly));
-    public static final Enchantment HOPS = Registry.register(Registry.ENCHANTMENT, new ResourceLocation(MOD_ID, "hops"),
+    public static final Enchantment HOPS = Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(MOD_ID, "hops"),
             new HopsEnchantment(() -> VanillaTweaksFabric.config.enchanting.enableHops, () -> VanillaTweaksFabric.config.enchanting.hopsTreasureOnly));
-    public static final Enchantment NIMBLE = Registry.register(Registry.ENCHANTMENT, new ResourceLocation(MOD_ID, "nimble"),
+    public static final Enchantment NIMBLE = Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(MOD_ID, "nimble"),
             new NimbleEnchantment(() -> VanillaTweaksFabric.config.enchanting.enableNimble, () -> VanillaTweaksFabric.config.enchanting.nimbleTreasureOnly));
-    public static final Enchantment SIPHON = Registry.register(Registry.ENCHANTMENT, new ResourceLocation(MOD_ID, "siphon"),
+    public static final Enchantment SIPHON = Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(MOD_ID, "siphon"),
             new SiphonEnchantment(() -> VanillaTweaksFabric.config.enchanting.enableSiphon, () -> VanillaTweaksFabric.config.enchanting.siphonTreasureOnly));
-    public static final Enchantment VETERAN = Registry.register(Registry.ENCHANTMENT, new ResourceLocation(MOD_ID, "veteran"),
+    public static final Enchantment VETERAN = Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(MOD_ID, "veteran"),
             new VeteranEnchantment(() -> VanillaTweaksFabric.config.enchanting.enableVeteran, () -> VanillaTweaksFabric.config.enchanting.veteranTreasureOnly));
-    public static final Enchantment VIGOR = Registry.register(Registry.ENCHANTMENT, new ResourceLocation(MOD_ID, "vigor"),
+    public static final Enchantment VIGOR = Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(MOD_ID, "vigor"),
             new VigorEnchantment(() -> VanillaTweaksFabric.config.enchanting.enableVigor, () -> VanillaTweaksFabric.config.enchanting.vigorTreasureOnly));
-    public static final Enchantment HOMING = Registry.register(Registry.ENCHANTMENT, new ResourceLocation(MOD_ID, "homing"),
+    public static final Enchantment HOMING = Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(MOD_ID, "homing"),
             new HomingEnchantment(() -> VanillaTweaksFabric.config.enchanting.enableHoming, () -> VanillaTweaksFabric.config.enchanting.homingTreasureOnly));
 
     @Override
     public void initialize() {
-        EntityEquipmentChangeCallback.EVENT.register(((entity, slot, from, to) -> {
+        ServerEntityEvents.EQUIPMENT_CHANGE.register(((entity, slot, from, to) -> {
             //Nimble functionality
             if (VanillaTweaksFabric.config.enchanting.enableNimble) {
                 EnchantmentImpl.triggerNimble(entity, NIMBLE);

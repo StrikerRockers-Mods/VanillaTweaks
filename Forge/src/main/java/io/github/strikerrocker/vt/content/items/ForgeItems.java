@@ -14,7 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -55,7 +56,7 @@ public class ForgeItems extends ForgeFeature {
     public static final RegistryObject<Item> FLINT_BLOCK_ITEM = ITEMS.register("flint_block", () -> CommonObjects.FLINT_BLOCK_ITEM);
     public static final RegistryObject<Item> SUGAR_BLOCK_ITEM = ITEMS.register("sugar_block", () -> CommonObjects.SUGAR_BLOCK_ITEM);
     public static final RegistryObject<Item> PEDESTAL_ITEM = ITEMS.register("pedestal", () ->
-            new BlockItem(ForgeBlocks.PEDESTAL_BLOCK.get(), new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+            new BlockItem(ForgeBlocks.PEDESTAL_BLOCK.get(), new Item.Properties()));
 
     // Configs
     public static ForgeConfigSpec.IntValue dynamiteCooldown;
@@ -104,6 +105,29 @@ public class ForgeItems extends ForgeFeature {
                         return entity;
                     }
                 }));
+    }
+
+    @Override
+    public boolean usesEvents() {
+        return true;
+    }
+
+    @SubscribeEvent
+    public void itemGroup(CreativeModeTabEvent.BuildContents event) {
+        if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(CommonObjects.CHARCOAL_BLOCK_ITEM);
+            event.accept(CommonObjects.FLINT_BLOCK_ITEM);
+            event.accept(CommonObjects.SUGAR_BLOCK_ITEM);
+            event.accept(PEDESTAL_ITEM.get());
+        }
+        if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            event.accept(CommonObjects.FRIED_EGG);
+        }
+        if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(CRAFTING_PAD.get());
+            event.accept(SLIME_BUCKET.get());
+            event.accept(DYNAMITE.get());
+        }
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)

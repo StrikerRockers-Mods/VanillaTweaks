@@ -5,6 +5,7 @@ import io.github.strikerrocker.vt.world.loot_conditions.KilledByFoxLootCondition
 import io.github.strikerrocker.vt.world.loot_conditions.KilledByOcelotLootCondition;
 import io.github.strikerrocker.vt.world.loot_conditions.KilledByWolfLootCondition;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.Serializer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -19,7 +20,7 @@ public class WorldModule extends FabricModule {
      * Registers LootConditionType
      */
     private static LootItemConditionType register(String id, Serializer<? extends LootItemCondition> serializer) {
-        return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(id), new LootItemConditionType(serializer));
+        return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, new ResourceLocation(id), new LootItemConditionType(serializer));
     }
 
     @Override

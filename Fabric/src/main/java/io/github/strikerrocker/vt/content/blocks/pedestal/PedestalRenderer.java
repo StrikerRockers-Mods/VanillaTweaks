@@ -1,7 +1,7 @@
 package io.github.strikerrocker.vt.content.blocks.pedestal;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -22,7 +22,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
         ItemStack stack = blockEntity.getItem(0);
         double offset = Math.sin((blockEntity.getLevel().getGameTime() + tickDelta) / 8.0) / 4.0;
         matrices.translate(0.5, 1.25 + offset, 0.5);
-        matrices.mulPose(Vector3f.YP.rotationDegrees((blockEntity.getLevel().getGameTime() + tickDelta) * 4));
+        matrices.mulPose(Axis.YP.rotationDegrees((blockEntity.getLevel().getGameTime() + tickDelta) * 4));
         float scale = 1.25f;
         matrices.scale(scale, scale, scale);
         int lightAbove = LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().above());

@@ -3,7 +3,6 @@ package io.github.strikerrocker.vt.content.items.dynamite;
 import io.github.strikerrocker.vt.content.items.ForgeItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -12,11 +11,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 public class DynamiteEntity extends ThrowableItemProjectile {
     private static final int WET_TICKS = 20;
@@ -86,15 +83,10 @@ public class DynamiteEntity extends ThrowableItemProjectile {
                     return;
                 } else {
                     BlockPos pos = blockPosition();
-                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), ForgeItems.dynamiteExplosionPower.get(), Explosion.BlockInteraction.BREAK);
+                    level.explode(this, pos.getX(), pos.getY(), pos.getZ(), ForgeItems.dynamiteExplosionPower.get(), Level.ExplosionInteraction.TNT);
                 }
             }
             this.remove(RemovalReason.KILLED);
         }
-    }
-
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

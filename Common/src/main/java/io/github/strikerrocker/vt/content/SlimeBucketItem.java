@@ -5,7 +5,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
@@ -15,7 +14,7 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 
 public class SlimeBucketItem extends Item {
     public SlimeBucketItem() {
-        super(new Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1));
+        super(new Properties().stacksTo(1));
     }
 
     @Override

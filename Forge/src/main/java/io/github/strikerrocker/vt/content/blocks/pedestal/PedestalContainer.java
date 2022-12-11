@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class PedestalContainer extends AbstractContainerMenu {
@@ -16,7 +16,7 @@ public class PedestalContainer extends AbstractContainerMenu {
         super(ForgeBlocks.PEDESTAL_MENU_TYPE.get(), id);
         PedestalBlockEntity pedestal = (PedestalBlockEntity) playerInv.player.level.getBlockEntity(pos);
         if (pedestal != null) {
-            pedestal.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            pedestal.getCapability(ForgeCapabilities.ITEM_HANDLER)
                     .ifPresent(inv -> addSlot(new SlotItemHandler(inv, 0, 80, 20) {
                         @Override
                         public void setChanged() {
