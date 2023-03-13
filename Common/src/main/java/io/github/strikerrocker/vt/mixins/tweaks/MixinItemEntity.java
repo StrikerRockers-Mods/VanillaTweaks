@@ -1,8 +1,9 @@
 package io.github.strikerrocker.vt.mixins.tweaks;
 
-import io.github.strikerrocker.vt.VanillaTweaksFabric;
+import io.github.strikerrocker.vt.VTServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -41,12 +42,12 @@ public abstract class MixinItemEntity extends Entity {
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;tick()V"))
     public void tick(CallbackInfo callbackInfo) {
         ItemStack stack = this.getItem();
-        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof BushBlock plantBlock && VanillaTweaksFabric.config.world.selfPlanting && tickCount > 20) {
-            if (!(plantBlock instanceof DoublePlantBlock) && !(plantBlock instanceof MangrovePropaguleBlock)) {
+        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof BushBlock plantBlock && VTServices.SERVICES.isSelfPlantingEnabled() && tickCount > 20) {
+            if (!VTServices.SERVICES.selfPlantingBlackList().contains(Registry.ITEM.getKey(blockItem).toString()) && !(plantBlock instanceof DoublePlantBlock)) {
                 if (lastChecked > 40) {
                     lastChecked = 0;
                     BlockPos pos = blockPosition();
-                    if (level.getBlockState(pos).getBlock() instanceof FarmBlock)
+                    if (level.getBlockState(pos).getBlock() instanceof FarmBlock || level.getBlockState(pos).getBlock() instanceof SoulSandBlock)
                         pos = pos.relative(Direction.UP);
                     BlockState state = level.getBlockState(pos);
                     if (plantBlock.canSurvive(state, level, pos) && state.getBlock() instanceof AirBlock) {

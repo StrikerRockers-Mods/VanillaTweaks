@@ -7,7 +7,6 @@
     "enchantments.MixinItem",
     "events.MixinBlock",
     "events.MixinLivingEntity",
-    "tweaks.MixinItemEntity",
     "tweaks.MixinSpawnerBlock"
   ],
   "client": [
