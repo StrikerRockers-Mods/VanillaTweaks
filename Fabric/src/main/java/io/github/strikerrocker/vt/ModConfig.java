@@ -4,6 +4,9 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Config(name = "vanillatweaks")
 public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
@@ -89,6 +92,12 @@ public class ModConfig implements ConfigData {
         public boolean realisticRelationship = true;
         public boolean disableLavaPockets = true;
         public boolean selfPlanting = true;
+
+        public List<String> selfPlantingBlackList;
+
+        public World() {
+            this.selfPlantingBlackList = Arrays.asList("minecraft:mangrove_propagule", "supplementaries:flax");
+        }
     }
 
     public static class Recipe {
