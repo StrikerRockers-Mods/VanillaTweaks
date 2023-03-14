@@ -26,6 +26,6 @@ public class SelfPlanting extends ForgeFeature {
         selfPlantingBlacklist = builder
                 .translation("config.vanillatweaks:selfPlantingBlacklist")
                 .comment("List of item ID's to blacklist for self planting")
-                .defineList("selfPlantingBlacklist", List.of("minecraft:mangrove_propagule"), id -> id instanceof String && ForgeRegistries.ITEMS.containsKey(new ResourceLocation((String) id)));
+                .defineList("selfPlantingBlacklist", List.of("minecraft:mangrove_propagule", "supplementaries:flax_seeds"), id -> id instanceof String && ForgeRegistries.ITEMS.containsKey(new ResourceLocation((String) id)));
     }
 }

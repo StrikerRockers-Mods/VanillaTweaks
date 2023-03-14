@@ -96,7 +96,7 @@ public class ModConfig implements ConfigData {
         public List<String> selfPlantingBlackList;
 
         public World() {
-            this.selfPlantingBlackList = Arrays.asList("minecraft:mangrove_propagule", "supplementaries:flax");
+            this.selfPlantingBlackList = Arrays.asList("minecraft:mangrove_propagule", "supplementaries:flax_seeds");
         }
     }
 
