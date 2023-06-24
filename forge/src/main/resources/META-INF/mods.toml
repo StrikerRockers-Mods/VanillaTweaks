@@ -1,0 +1,33 @@
+modLoader = "javafml"
+loaderVersion = "[41,)"
+license = "MIT"
+issueTrackerURL = "http://github.com/strikerrocker/VanillaTweaks/issues/"
+
+[[mods]]
+modId = "vanillatweaks"
+version = "${file.jarVersion}"
+displayName = "VanillaTweaks"
+updateJSONURL = "https://raw.githubusercontent.com/StrikerRockers-Mods/VanillaTweaks/1.20/version.json"
+displayURL = "http://strikerrocker.github.io/vanillatweaks"
+logoFile = "logo.png"
+credits = ""
+authors = "StrikerRocker , Subararki for textures"
+description = '''VanillaTweaks is a Minecraft mod designed to enhance vanilla Minecraft without going overboard. It is designed to be minimally invasive and configurable to create a user experience like none others.'''
+[[dependencies.vanillatweaks]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "AFTER"
+side = "BOTH"
+[[dependencies.vanillatweaks]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20,)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.vanillatweaks]]
+modId = "jei"
+mandatory = false
+versionRange = "[15,)"
+ordering = "NONE"
+side = "BOTH"

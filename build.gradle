@@ -1,9 +1,16 @@
+plugins {
+    id 'fabric-loom' version '1.2-SNAPSHOT' apply(false)
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)' apply(false)
+    id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT' apply(false)
+    id("org.spongepowered.mixin") version "0.7-SNAPSHOT" apply(false)
+}
+
 subprojects {
     apply plugin: 'java'
-
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-    //java.withSourcesJar()
-    //java.withJavadocJar()
+//    java.withSourcesJar()
+//    java.withJavadocJar()
+
     jar {
         from(rootProject.file("LICENSE")) {
             rename { "${it}_${mod_name}" }
@@ -30,32 +37,40 @@ subprojects {
             name = 'Sponge / Mixin'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
+        maven {
+            name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf)'
+            url = 'https://maven.blamejared.com'
+        }
     }
-
-
     tasks.withType(JavaCompile).configureEach {
         it.options.encoding = 'UTF-8'
-        it.options.release = 17
+        it.options.getRelease().set(17)
+    }
+
+    processResources {
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'mods.toml', '*.mixins.json']) {
+            expand project.properties
+        }
     }
 
     // Disables Gradle's custom module metadata from being published to maven. The
     // metadata includes mapped dependencies which are not reasonably consumable by
     // other mod developers.
-    tasks.withType(GenerateModuleMetadata) {
+    tasks.withType(GenerateModuleMetadata).configureEach {
         enabled = false
     }
 }
 
-task setupGithubActions() {
+tasks.register('setupGithubActions') {
     doLast {
         exec {
-            commandLine "echo", "##[set-output name=version;]${rootProject.version}"
+            commandLine "sh", "-c", "echo version=${rootProject.version} >> \$GITHUB_OUTPUT"
         }
         exec {
-            commandLine "echo", "##[set-output name=mod_name;]${rootProject.mod_name}"
+            commandLine "sh", "-c", "echo mod_name=${rootProject.mod_name} >> \$GITHUB_OUTPUT"
         }
         exec {
-            commandLine "echo", "##[set-output name=minecraft_version;]${rootProject.minecraft_version}"
+            commandLine "sh", "-c", "echo minecraft_version=${rootProject.minecraft_version} >> \$GITHUB_OUTPUT"
         }
     }
 }
