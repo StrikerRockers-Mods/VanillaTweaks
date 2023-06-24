@@ -30,7 +30,7 @@ public class NimbleEnchantment extends ConfigEnchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.FEET) &&
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getEquipmentSlot().equals(EquipmentSlot.FEET) &&
                 enableEnchantment.get();
     }
 

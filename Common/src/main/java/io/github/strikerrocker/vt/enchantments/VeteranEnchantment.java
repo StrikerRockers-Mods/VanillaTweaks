@@ -29,7 +29,7 @@ public class VeteranEnchantment extends ConfigEnchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlot().equals(EquipmentSlot.HEAD) &&
+        return stack.getItem() instanceof ArmorItem armorItem && armorItem.getEquipmentSlot().equals(EquipmentSlot.HEAD) &&
                 enableEnchantment.get();
     }
 
