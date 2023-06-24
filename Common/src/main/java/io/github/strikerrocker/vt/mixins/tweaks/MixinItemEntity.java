@@ -1,8 +1,6 @@
 package io.github.strikerrocker.vt.mixins.tweaks;
 
 import io.github.strikerrocker.vt.VTServices;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -10,8 +8,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,21 +40,17 @@ public abstract class MixinItemEntity extends Entity {
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;tick()V"))
     public void tick(CallbackInfo callbackInfo) {
         ItemStack stack = this.getItem();
-        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof BushBlock plantBlock && VTServices.SERVICES.isSelfPlantingEnabled() && tickCount > 20) {
-            if (!VTServices.SERVICES.selfPlantingBlackList().contains(BuiltInRegistries.ITEM.getKey(blockItem).toString()) && !(plantBlock instanceof DoublePlantBlock)) {
-                if (lastChecked > 40) {
-                    lastChecked = 0;
-                    BlockPos pos = blockPosition();
-                    if (level.getBlockState(pos).getBlock() instanceof FarmBlock || level.getBlockState(pos).getBlock() instanceof SoulSandBlock)
-                        pos = pos.relative(Direction.UP);
-                    BlockState state = level.getBlockState(pos);
-                    if (plantBlock.canSurvive(state, level, pos) && state.getBlock() instanceof AirBlock) {
-                        level.setBlockAndUpdate(pos, ((BlockItem) stack.getItem()).getBlock().defaultBlockState());
-                        stack.shrink(1);
-                    }
-                } else {
-                    lastChecked++;
+        if (!level.isClientSide() && stack.getItem() instanceof BlockItem blockItem
+                && blockItem.getBlock() instanceof BushBlock plantBlock
+                && VTServices.SERVICES.isSelfPlantingEnabled() && tickCount > 20) {
+            if (lastChecked > VTServices.SERVICES.getSelfPlantingInterval()) {
+                lastChecked = 0;
+                if (!VTServices.SERVICES.selfPlantingBlackList().contains(BuiltInRegistries.ITEM.getKey(blockItem).toString()) && !(plantBlock instanceof DoublePlantBlock)) {
+                    if (VTServices.SERVICES.place((ItemEntity) (Object) this, level)) stack.shrink(1);
+
                 }
+            } else {
+                lastChecked++;
             }
         }
     }
