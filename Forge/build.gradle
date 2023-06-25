@@ -17,8 +17,8 @@ apply plugin: 'org.spongepowered.mixin'
 
 repositories {
     maven {
-        name = "JEI maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf)'
+        url = 'https://maven.blamejared.com'
     }
 }
 

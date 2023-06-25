@@ -158,7 +158,7 @@ public class TweaksImpl {
      * Open sign editor even when its already placed
      */
     public static boolean triggerSignEditing(Level level, Player player, BlockEntity blockEntity, InteractionHand hand, boolean config) {
-        if (blockEntity instanceof SignBlockEntity sign && !level.isClientSide() && player.isCrouching() && config) {
+        if (blockEntity instanceof SignBlockEntity sign && !level.isClientSide() && !player.isCrouching() && config) {
             sign.setEditable(true);
             player.openTextEdit(sign);
             player.swing(hand);
