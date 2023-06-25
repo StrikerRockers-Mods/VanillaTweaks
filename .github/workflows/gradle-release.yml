@@ -6,7 +6,7 @@ on:
       - "[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+"
 jobs:
   build-release:
-    uses: StrikerRockers-Mods/.github/.github/workflows/build-release.yml@main
+    uses: StrikerRockers-Mods/.github/.github/workflows/build-release-v2.yml@main
     secrets: inherit
     with:
       forge-cf-id: 272637
