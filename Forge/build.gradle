@@ -17,8 +17,8 @@ apply plugin: 'org.spongepowered.mixin'
 
 repositories {
     maven {
-        name = "JEI maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf)'
+        url = 'https://maven.blamejared.com'
     }
 }
 
@@ -90,10 +90,10 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":Common")
     annotationProcessor 'org.spongepowered:mixin:0.8.4-SNAPSHOT:processor'
-//    compileOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-common-api:${jei_version}")
 
-//    runtimeOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-common:${jei_version}")
-//    runtimeOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-forge:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-common:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${project.jei_minecraft_version}-forge:${jei_version}")
 }
 
 tasks.withType(JavaCompile) {

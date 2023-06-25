@@ -112,8 +112,7 @@ public class ForgeItems extends ForgeFeature {
         return true;
     }
 
-    @SubscribeEvent
-    public void itemGroup(CreativeModeTabEvent.BuildContents event) {
+    public static void itemGroup(CreativeModeTabEvent.BuildContents event) {
         if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(CommonObjects.CHARCOAL_BLOCK_ITEM);
             event.accept(CommonObjects.FLINT_BLOCK_ITEM);

@@ -48,6 +48,7 @@ public class VanillaTweaksForge {
         registerModules();
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::registerRecipeSerializers);
+        modEventBus.addListener(ForgeItems::itemGroup);
     }
 
     private static void registerModules() {
