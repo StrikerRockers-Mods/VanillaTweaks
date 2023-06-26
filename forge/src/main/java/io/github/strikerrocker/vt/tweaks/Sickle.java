@@ -25,7 +25,6 @@ public class Sickle extends ForgeFeature {
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
-        //TODO not working
         TweaksImpl.triggerSickle(player, player.getItemInHand(player.getUsedItemHand()), player.getCommandSenderWorld(), event.getPos(), event.getState(), hoeActsAsSickle.get());
     }
 }

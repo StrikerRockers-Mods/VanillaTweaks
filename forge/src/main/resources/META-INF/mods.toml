@@ -16,7 +16,7 @@ description = '''VanillaTweaks is a Minecraft mod designed to enhance vanilla Mi
 [[dependencies.vanillatweaks]]
 modId = "forge"
 mandatory = true
-versionRange = "[47,)"
+versionRange = "[46,)"
 ordering = "AFTER"
 side = "BOTH"
 [[dependencies.vanillatweaks]]
@@ -28,6 +28,6 @@ side = "BOTH"
 [[dependencies.vanillatweaks]]
 modId = "jei"
 mandatory = false
-versionRange = "[15,)"
+versionRange = "[14,)"
 ordering = "NONE"
 side = "BOTH"

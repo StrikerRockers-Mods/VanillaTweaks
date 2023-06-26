@@ -70,6 +70,7 @@
   "text.autoconfig.vanillatweaks.option.world.realisticRelationship": "Is realistic predator/prey relationships activated?",
   "text.autoconfig.vanillatweaks.option.world.disableLavaPockets": "Don't want that that pesky lava pockets in nether to kill you?",
   "text.autoconfig.vanillatweaks.option.world.selfPlantingBlackList": "List of item ID's to blacklist for self planting",
+  "text.autoconfig.vanillatweaks.option.world.selfPlantingInterval": "The number of ticks to wait to check whether a plant can be planted",
   "text.autoconfig.vanillatweaks.option.recipe.betterChestRecipe": "Wanna craft multiple chests at one go?",
   "text.autoconfig.vanillatweaks.option.recipe.betterTrappedChestRecipe": "Wanna easier recipe for trapped chest?",
   "text.autoconfig.vanillatweaks.option.recipe.woolToString": "Have wool but need string?",
