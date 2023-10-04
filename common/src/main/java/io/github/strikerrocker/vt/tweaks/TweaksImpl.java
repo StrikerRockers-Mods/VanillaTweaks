@@ -37,8 +37,11 @@ public class TweaksImpl {
     public static void swapSlot(Player player, ArmorStand armorStand, EquipmentSlot slot) {
         ItemStack playerItem = player.getItemBySlot(slot);
         ItemStack armorStandItem = armorStand.getItemBySlot(slot);
-        player.setItemSlot(slot, armorStandItem);
-        armorStand.setItemSlot(slot, playerItem);
+
+        if (player.isCreative() || (!EnchantmentHelper.hasBindingCurse(playerItem) && !EnchantmentHelper.hasBindingCurse(armorStandItem))) {
+            player.setItemSlot(slot, armorStandItem);
+            armorStand.setItemSlot(slot, playerItem);
+        }
     }
 
     /**
