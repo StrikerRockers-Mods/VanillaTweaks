@@ -7,8 +7,8 @@
     "enchantments.MixinItem",
     "events.MixinBlock",
     "events.MixinLivingEntity",
-    "tweaks.MixinSpawnerBlock",
-    "tweaks.MixinLootTableAccessor"
+    "tweaks.MixinLootTableAccessor",
+    "tweaks.MixinSpawnerBlock"
   ],
   "client": [
   ],

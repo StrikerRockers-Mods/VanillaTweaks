@@ -3,7 +3,6 @@ package io.github.strikerrocker.vt.content.items;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.strikerrocker.vt.VanillaTweaks;
-import io.github.strikerrocker.vt.recipes.VanillaRecipeConditions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 

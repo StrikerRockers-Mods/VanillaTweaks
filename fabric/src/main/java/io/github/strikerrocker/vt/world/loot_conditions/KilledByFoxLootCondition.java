@@ -1,8 +1,5 @@
 package io.github.strikerrocker.vt.world.loot_conditions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
 import com.mojang.serialization.Codec;
 import io.github.strikerrocker.vt.world.WorldModule;
 import net.minecraft.world.entity.animal.Fox;

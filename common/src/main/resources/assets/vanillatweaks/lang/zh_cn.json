@@ -26,7 +26,7 @@
   "enchantment.vanillatweaks.siphon.desc": "掉落物会直接进入物品栏",
   "enchantment.vanillatweaks.homing.desc": "射出的箭会自动瞄准目标",
   "_comment": "Fabric config translations",
-  "text.autoconfig.vanillatweaks.title":"VanillaTweaks 配置",
+  "text.autoconfig.vanillatweaks.title": "VanillaTweaks 配置",
   "text.autoconfig.vanillatweaks.option.content": "内容",
   "text.autoconfig.vanillatweaks.option.enchanting": "附魔",
   "text.autoconfig.vanillatweaks.option.loot": "战利品",
