@@ -36,17 +36,12 @@ public class EnchantmentImpl {
         AttributeInstance vigorAttribute = livingEntity.getAttribute(Attributes.MAX_HEALTH);
         AttributeModifier vigorModifier = new AttributeModifier(vigorUUID, "vigor", (float) lvl / 10, AttributeModifier.Operation.MULTIPLY_BASE);
         if (vigorAttribute != null) {
+            vigorAttribute.removeModifier(vigorUUID);
             if (lvl > 0) {
-                if (vigorAttribute.getModifier(vigorUUID) == null) {
-                    vigorAttribute.addPermanentModifier(vigorModifier);
-                }
-            } else {
-                if (vigorAttribute.getModifier(vigorUUID) != null) {
-                    vigorAttribute.removeModifier(vigorModifier);
-                    if (livingEntity.getHealth() > livingEntity.getMaxHealth())
-                        livingEntity.setHealth(livingEntity.getMaxHealth());
-                }
+                vigorAttribute.addPermanentModifier(vigorModifier);
             }
+            if (livingEntity.getHealth() > livingEntity.getMaxHealth())
+                livingEntity.setHealth(livingEntity.getMaxHealth());
         }
     }
 
@@ -74,12 +69,9 @@ public class EnchantmentImpl {
         AttributeInstance speedAttribute = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
         AttributeModifier speedModifier = new AttributeModifier(nimbleUUID, "Nimble", lvl * 0.20000000298023224, AttributeModifier.Operation.MULTIPLY_TOTAL);
         if (speedAttribute != null) {
+            speedAttribute.removeModifier(nimbleUUID);
             if (lvl > 0) {
-                if (speedAttribute.getModifier(nimbleUUID) == null) {
-                    speedAttribute.addPermanentModifier(speedModifier);
-                }
-            } else if (speedAttribute.getModifier(nimbleUUID) != null) {
-                speedAttribute.removeModifier(speedModifier);
+                speedAttribute.addPermanentModifier(speedModifier);
             }
         }
     }
@@ -142,7 +134,7 @@ public class EnchantmentImpl {
      */
     public static ItemStack smelt(ItemStack stack, ServerLevel level) {
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level)
-                .map(smeltingRecipe -> smeltingRecipe.getResultItem(level.registryAccess()))
+                .map(smeltingRecipe -> smeltingRecipe.value().getResultItem(level.registryAccess()))
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(itemStack -> {
                     ItemStack copy = itemStack.copy();

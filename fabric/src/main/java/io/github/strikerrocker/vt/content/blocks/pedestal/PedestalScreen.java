@@ -31,7 +31,7 @@ public class PedestalScreen extends AbstractContainerScreen<PedestalScreenHandle
 
     @Override
     public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, i, j, f);
         super.render(guiGraphics, i, j, f);
         renderTooltip(guiGraphics, i, j);
     }

@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -50,7 +49,7 @@ public class PedestalBlock extends BasePedestalBlock implements SimpleWaterlogge
                 tile.setChanged();
                 return InteractionResult.SUCCESS;
             } else {
-                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), Component.translatable("block.vanillatweaks.pedestal")), pos);
+                ((ServerPlayer) player).openMenu(new SimpleMenuProvider((id, playerInv, playerIn) -> new PedestalContainer(id, playerInv, pos), Component.translatable("block.vanillatweaks.pedestal")), pos);
             }
         }
         return InteractionResult.SUCCESS;

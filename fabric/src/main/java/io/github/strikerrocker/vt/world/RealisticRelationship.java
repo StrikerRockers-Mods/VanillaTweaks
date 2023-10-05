@@ -2,6 +2,7 @@ package io.github.strikerrocker.vt.world;
 
 import io.github.strikerrocker.vt.VanillaTweaksFabric;
 import io.github.strikerrocker.vt.base.Feature;
+import io.github.strikerrocker.vt.mixins.tweaks.MixinLootTableAccessor;
 import io.github.strikerrocker.vt.world.loot_conditions.KilledByFoxLootCondition;
 import io.github.strikerrocker.vt.world.loot_conditions.KilledByOcelotLootCondition;
 import io.github.strikerrocker.vt.world.loot_conditions.KilledByWolfLootCondition;
@@ -40,7 +41,7 @@ public class RealisticRelationship extends Feature {
      */
     public LootTable addConditionToPool(LootItemCondition condition, LootTable original) {
         LootTable.Builder builder = new LootTable.Builder();
-        for (LootPool pool : original.pools) {
+        for (LootPool pool : ((MixinLootTableAccessor) original).getPools()) {
             builder.withPool(FabricLootPoolBuilder.copyOf(pool).conditionally(condition));
         }
         return builder.build();

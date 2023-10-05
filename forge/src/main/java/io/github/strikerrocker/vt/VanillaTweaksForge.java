@@ -74,9 +74,9 @@ public class VanillaTweaksForge {
 
     public void registerRecipeSerializers(RegisterEvent event) {
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) {
-            CraftingHelper.register(ItemConditions.Serializer.INSTANCE);
-            CraftingHelper.register(BlockConditions.Serializer.INSTANCE);
-            CraftingHelper.register(VanillaRecipeConditions.Serializer.INSTANCE);
+            CraftingHelper.register(ItemConditions.NAME, ItemConditions.CODEC);
+            CraftingHelper.register(BlockConditions.NAME, BlockConditions.CODEC);
+            CraftingHelper.register(VanillaRecipeConditions.NAME, VanillaRecipeConditions.CODEC);
         }
     }
 }
