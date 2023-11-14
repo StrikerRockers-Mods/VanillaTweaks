@@ -1,5 +1,6 @@
 package io.github.strikerrocker.vt.tweaks;
 
+import io.github.strikerrocker.vt.VanillaTweaks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -102,12 +103,21 @@ public class TweaksImpl {
                         continue;
                     BlockPos pos = blockPos.offset(i, 0, k);
                     BlockState state = world.getBlockState(pos);
+                    Block block = state.getBlock();
                     if (TweaksImpl.canHarvest(state)) {
-                        Block block = state.getBlock();
-                        if (player.hasCorrectToolForDrops(state))
-                            block.playerDestroy(world, player, pos, state, world.getBlockEntity(pos), stack);
-                        world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                        world.playSound(player, player.blockPosition(), block.getSoundType(state).getBreakSound(), SoundSource.BLOCKS, 1f, 1f);
+                        // Preventing an ClassCastException here. Not the best solution but it prevents the game from
+                        // outright crashing.
+                        try {
+                            if (player.hasCorrectToolForDrops(state))
+                                block.playerDestroy(world, player, pos, state, world.getBlockEntity(pos), stack);
+                            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                            world.playSound(player, player.blockPosition(), block.getSoundType(state).getBreakSound(), SoundSource.BLOCKS, 1f, 1f);
+                        } catch (Exception exception) {
+                            VanillaTweaks.LOGGER.warn("{} suppressed whilst triggering sickle ({} @ {})",
+                                    exception.getClass().getSimpleName(),
+                                    block.getName(),
+                                    pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
+                        }
                     }
                 }
             }
