@@ -1,0 +1,18 @@
+{
+  "type": "vanillatweaks:siphon",
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "enchantments": [
+          {
+            "enchantment": "vanillatweaks:siphon",
+            "levels": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

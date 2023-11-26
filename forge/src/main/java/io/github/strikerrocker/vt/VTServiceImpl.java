@@ -3,7 +3,6 @@ package io.github.strikerrocker.vt;
 import io.github.strikerrocker.vt.world.SelfPlanting;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class VTServiceImpl implements IVTService {
 
     @Override
     public Player getFakePlayer(ServerLevel serverLevel) {
-        return FakePlayerFactory.getMinecraft(serverLevel);
+        // TODO Return Fake Player ( Not available in forge now )
+        return null;
     }
 }

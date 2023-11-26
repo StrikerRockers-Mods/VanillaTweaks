@@ -60,7 +60,7 @@ public class EnchantmentInit extends ForgeFeature {
      */
     @SubscribeEvent
     public void useItem(LivingEntityUseItemEvent event) {
-        if (!event.getEntity().getCommandSenderWorld().isClientSide()) {
+        if (!event.getEntity().getCommandSenderWorld().isClientSide() && enableHoming.get()) {
             LivingEntity player = event.getEntity();
             int homingLvl = event.getItem().getEnchantmentLevel(EnchantmentInit.HOMING.get());
             if (homingLvl > 0) {

@@ -2,20 +2,16 @@ package io.github.strikerrocker.vt;
 
 import io.github.strikerrocker.vt.base.ForgeModule;
 import io.github.strikerrocker.vt.content.ContentModule;
-import io.github.strikerrocker.vt.content.blocks.BlockConditions;
 import io.github.strikerrocker.vt.content.blocks.ForgeBlocks;
 import io.github.strikerrocker.vt.content.items.ForgeItems;
-import io.github.strikerrocker.vt.content.items.ItemConditions;
 import io.github.strikerrocker.vt.enchantments.EnchantmentInit;
 import io.github.strikerrocker.vt.enchantments.EnchantmentModule;
 import io.github.strikerrocker.vt.loot.LootModule;
 import io.github.strikerrocker.vt.recipes.RecipeModule;
-import io.github.strikerrocker.vt.recipes.VanillaRecipeConditions;
 import io.github.strikerrocker.vt.tweaks.TweaksModule;
 import io.github.strikerrocker.vt.world.NoMoreLavaPocketGen;
 import io.github.strikerrocker.vt.world.WorldModule;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -74,9 +70,10 @@ public class VanillaTweaksForge {
 
     public void registerRecipeSerializers(RegisterEvent event) {
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) {
-            CraftingHelper.register(ItemConditions.NAME, ItemConditions.CODEC);
-            CraftingHelper.register(BlockConditions.NAME, BlockConditions.CODEC);
-            CraftingHelper.register(VanillaRecipeConditions.NAME, VanillaRecipeConditions.CODEC);
+            // TODO : Configs for recipe doesn't work due to removal of conditions in forge
+//            CraftingHelper.register(ItemConditions.NAME, ItemConditions.CODEC);
+//            CraftingHelper.register(BlockConditions.NAME, BlockConditions.CODEC);
+//            CraftingHelper.register(VanillaRecipeConditions.NAME, VanillaRecipeConditions.CODEC);
         }
     }
 }

@@ -56,12 +56,14 @@ public abstract class MixinItemEntity extends Entity {
                 if (!VTServices.SERVICES.selfPlantingBlackList().contains(BuiltInRegistries.ITEM.getKey(blockItem).toString()) && !(plantBlock instanceof DoublePlantBlock)) {
                     if (level() instanceof ServerLevel serverLevel) {
                         Player fakePlayer = VTServices.SERVICES.getFakePlayer(serverLevel);
-                        Vec3 entityVec = new Vec3(getX(), getY(), getZ());
-                        BlockHitResult rayTraceResult = level().clip(
-                                new ClipContext(entityVec.add(0, 2, 0), entityVec.add(0, -1, 0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-                        InteractionResult result = getItem().getItem().useOn(new UseOnContext(fakePlayer, InteractionHand.MAIN_HAND, rayTraceResult));
-                        if (result == InteractionResult.SUCCESS || result == InteractionResult.CONSUME)
-                            stack.shrink(1);
+                        if (fakePlayer != null) {
+                            Vec3 entityVec = new Vec3(getX(), getY(), getZ());
+                            BlockHitResult rayTraceResult = level().clip(
+                                    new ClipContext(entityVec.add(0, 2, 0), entityVec.add(0, -1, 0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+                            InteractionResult result = getItem().getItem().useOn(new UseOnContext(fakePlayer, InteractionHand.MAIN_HAND, rayTraceResult));
+                            if (result == InteractionResult.SUCCESS || result == InteractionResult.CONSUME)
+                                stack.shrink(1);
+                        }
                     }
                 }
             } else {

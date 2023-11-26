@@ -79,8 +79,10 @@ public class EnchantmentImpl {
     public static void triggerHops(LivingEntity livingEntity, Enchantment enchantment) {
         int lvl = EnchantmentHelper.getItemEnchantmentLevel(enchantment, livingEntity.getItemBySlot(EquipmentSlot.FEET));
         if (lvl > 0) {
+            if (livingEntity.hasEffect(MobEffects.JUMP) && livingEntity.getEffect(MobEffects.JUMP).isInfiniteDuration())
+                livingEntity.removeEffect(MobEffects.JUMP);
             if (!livingEntity.hasEffect(MobEffects.JUMP)) {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.JUMP, Integer.MAX_VALUE, lvl, true, false, false));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.JUMP, -1, lvl, true, false, false));
             }
         } else {
             if (livingEntity.hasEffect(MobEffects.JUMP)) {
